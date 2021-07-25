@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{352F7DC0-B5DA-4F3F-BE78-F571F571C01B}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>AlgoritmPrizm</RootNamespace>
+    <AssemblyName>AlgoritmPrizm</AssemblyName>
+    <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>true</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>
+    </ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="AsyncIO, Version=0.1.69.0, Culture=neutral, PublicKeyToken=44a94435bd6f33f8, processorArchitecture=MSIL">
+      <HintPath>..\packages\AsyncIO.0.1.69\lib\net40\AsyncIO.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="NaCl, Version=0.1.13.0, Culture=neutral, PublicKeyToken=827c20e50a9775fa, processorArchitecture=MSIL">
+      <HintPath>..\packages\NaCl.Net.0.1.13\lib\net45\NaCl.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Newtonsoft.Json">
+      <HintPath>..\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RestSharp, Version=106.12.0.0, Culture=neutral, PublicKeyToken=598062e77f915f75, processorArchitecture=MSIL">
+      <HintPath>..\packages\RestSharp.106.12.0\lib\net452\RestSharp.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Memory, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Memory.4.5.3\lib\netstandard2.0\System.Memory.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.1, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\portable-net40+sl4+win8+wp8\System.ValueTuple.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BLL\Custumer.cs" />
+    <Compile Include="BLL\JsonGetDocuments.cs" />
+    <Compile Include="BLL\JsonGetDocumentsItem.cs" />
+    <Compile Include="BLL\JsonPrintFiscDoc.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocHeader.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocItem.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocItemHeader.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocItemHrefs.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocItemParam.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocParam.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
+    <Compile Include="Client.cs" />
+    <Compile Include="Com\Config.cs" />
+    <Compile Include="Com\FR.cs" />
+    <Compile Include="Com\Lic.cs" />
+    <Compile Include="Com\LicLib\CChar.cs" />
+    <Compile Include="Com\LicLib\onLicEventKey.cs" />
+    <Compile Include="Com\LicLib\onLicItem.cs" />
+    <Compile Include="Com\LicLib\Osnova.cs" />
+    <Compile Include="Com\LicLib\SistemaSchislenia.cs" />
+    <Compile Include="FCashiries.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCashiries.Designer.cs">
+      <DependentUpon>FCashiries.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FConfig.Designer.cs">
+      <DependentUpon>FConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FLic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FLic.Designer.cs">
+      <DependentUpon>FLic.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Lib\EnFrTyp.cs" />
+    <Compile Include="Lib\FfdEn.cs" />
+    <Compile Include="Lib\FieldItemEn.cs" />
+    <Compile Include="Lib\FrStatError.cs" />
+    <Compile Include="Com\Log.cs" />
+    <Compile Include="Com\Web.cs" />
+    <Compile Include="FStart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FStart.Designer.cs">
+      <DependentUpon>FStart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FR.cs" />
+    <Compile Include="Lib\EventConvertor.cs" />
+    <Compile Include="Lib\EventEn.cs" />
+    <Compile Include="Lib\EventLog.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Server.cs" />
+    <EmbeddedResource Include="FCashiries.resx">
+      <DependentUpon>FCashiries.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FConfig.resx">
+      <DependentUpon>FConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FLic.resx">
+      <DependentUpon>FLic.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FStart.resx">
+      <DependentUpon>FStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <COMReference Include="DrvFRLib">
+      <Guid>{332C8050-469C-4B4D-A192-68CD3CB252BA}</Guid>
+      <VersionMajor>1</VersionMajor>
+      <VersionMinor>3</VersionMinor>
+      <Lcid>0</Lcid>
+      <WrapperTool>tlbimp</WrapperTool>
+      <Isolated>False</Isolated>
+      <EmbedInteropTypes>False</EmbedInteropTypes>
+    </COMReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icon.ico" />
+    <Content Include="Pic\AKS.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

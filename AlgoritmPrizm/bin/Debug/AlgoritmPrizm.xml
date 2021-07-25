@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AlgoritmPrizm Version="1" Trace="False" Host="CHUDAKOV" Port="5000" TenderTypeCash="0" TenderTypeCredit="2" TenderTypeGiftCert="9" TenderTypeGiftCard="10" GiftCardCode="GFT" GiftCardEnable="False" GiftCardTax="5" Ffd="v1_05" FrPort="1" FieldItem="Description2" HostPrizmApi="http://172.16.1.102" PrizmApiSystemLogon="sysadmin" PrizmApiSystemPassord="6VA-6YP-6YW-6YH-6Y1-6YA-6YK-6Y7-6YE" PrizmApiTimeLiveTockenMinute="5">
+  <Lics>
+    <Key MachineName="CHUDAKOV" UserName="User" ActivNumber="CHUDAKOV@User:(4HH-4J2-4J5-4IU-4IW)" LicKey="2HO-2J7-2J6-2J2-2J8-2J0-2JJ-2KQ-2KR-2KU-2KW-2KN-2L4-2KS-2JY-2KW-2KT-2L5-2KR-2IZ-2JA-2J3-2J4-2J3-2J9-2J5-2J5-2J3-2J5-2JO-2L0-2KJ-2L2-2L4-2KT-2KS-2KP-2L6-2L7" ValidToYYYYMMDD="20211231" HashUserOS="False">
+    </Key>
+  </Lics>
+  <Customers>
+    <Customer Login="sysadmin" Fio="Куприянчук Вадим" INN="501210148104" />
+  </Customers>
+</AlgoritmPrizm>

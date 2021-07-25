@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<AlgoritmPrizm Version="1" Trace="False" Host="CHUDAKOV" Port="5000" GiftCardCode="GFT" GiftCardEnable="True" GiftCardTax="5">
+  <Lics>
+    <Key MachineName="CHUDAKOV" UserName="User" ActivNumber="481-49M-49L-49K-49G" LicKey="2HO-2J7-2J6-2J2-2J8-2J0-2JJ-2KQ-2KR-2KU-2KW-2KN-2L4-2KS-2JY-2KW-2KT-2L5-2KR-2IZ-2JA-2J3-2J4-2J3-2J9-2J5-2J5-2J3-2J5-2JO-2L0-2KJ-2L2-2L4-2KT-2KS-2KP-2L6-2L7" ValidToYYYYMMDD="20211231" Info="" HashUserOS="False">
+    </Key>
+  </Lics>
+  <Customers>
+    <Customer Login="sysadmin" Fio="Жирникова Анастасия" INN="561142439622" />
+  </Customers>
+</AlgoritmPrizm>
