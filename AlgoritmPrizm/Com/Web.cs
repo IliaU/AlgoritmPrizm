@@ -177,7 +177,7 @@ namespace AlgoritmPrizm.Com
                                     // Запрос данных
                                     List<JsonGetDocumentsItem> Docs = GetDocumentsRestSharp(fil);
                                     // Возврат страницы пользователю
-                                    responceString = @"Наш отчёт"+ AuthSession;
+                                    responceString = RenderReportDocument(Docs);
                                     break;
                                 default:
                                     break;
@@ -216,6 +216,43 @@ namespace AlgoritmPrizm.Com
                 throw ae;
             }
         }
+
+        /// <summary>
+        ///  Прорисовка отчёта который передадим пользователю
+        /// </summary>
+        /// <param name="Docs"></param>
+        private static string RenderReportDocument(List<JsonGetDocumentsItem> Docs)
+        {
+            // https://html5book.ru/html5-forms/
+            string rez ="";
+            try
+            {
+                rez = @"<!DOCYUPE html>";
+                rez += @"<html>";
+                //rez += @"   <meta charset=""utf-8"">";
+                rez += @"<head>";
+                rez += @"</head>";
+                rez += @"<body>";
+                rez += @"   <form>";
+                rez += @"       <fieldset>";
+                rez += @"           <legend>Контактная информация</legend>";
+                rez += @"           <p><label for=""name"">Имя <em>*</em></label><input type=""text"" id=""name""></p>";
+                rez += @"           <p><label for=""email"">E-mail</label><input type=""email"" id=""email""></p>";
+                rez += @"     </fieldset>";
+                rez += @"    <p><input type=""submit"" value=""Отправить""></p>";
+                rez += @"    </form>";
+                rez += @"</body>";
+                rez += @"</html>";
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.Web.RenderReportDocument", EventEn.Error);
+                throw ae;
+            }
+        }
+
 
         /// <summary>
         /// Делигат для получения документов построчно и принятия решения о выводе документа на основе фильтрации
