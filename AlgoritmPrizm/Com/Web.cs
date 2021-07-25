@@ -134,6 +134,7 @@ namespace AlgoritmPrizm.Com
                     HttpListenerResponse response = context.Response;
                     string origin = request.Headers["Origin"];
                     string SecFetchMode = request.Headers["Sec-Fetch-Mode"];
+                    string ContentType = "application/json";
 
                     try
                     {
@@ -178,6 +179,7 @@ namespace AlgoritmPrizm.Com
                                     List<JsonGetDocumentsItem> Docs = GetDocumentsRestSharp(fil);
                                     // Возврат страницы пользователю
                                     responceString = RenderReportDocument(Docs);
+                                    ContentType = "text/html; charset=utf-8";
                                     break;
                                 default:
                                     break;
@@ -185,7 +187,7 @@ namespace AlgoritmPrizm.Com
                         }
 
                         // Передаём ответ серверу
-                        response.ContentType = "application/json";
+                        response.ContentType = ContentType;
                         response.Headers.Add("Access-Control-Allow-Origin", origin);
                         response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
                         //response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
