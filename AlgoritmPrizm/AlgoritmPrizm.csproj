@@ -90,8 +90,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\Custumer.cs" />
+    <Compile Include="BLL\JsonGetDocumentJournal.cs" />
+    <Compile Include="BLL\JsonGetDocumentJournalHrefs.cs" />
     <Compile Include="BLL\JsonGetDocuments.cs" />
-    <Compile Include="BLL\JsonGetDocumentsItem.cs" />
+    <Compile Include="BLL\JsonGetDocumentsData.cs" />
+    <Compile Include="BLL\JsonGetInventory.cs" />
+    <Compile Include="BLL\JsonGetInventoryExtended.cs" />
+    <Compile Include="BLL\JsonGetInventoryHrefs.cs" />
+    <Compile Include="BLL\JsonGetInventorySbsinventoryactiveprices.cs" />
+    <Compile Include="BLL\JsonGetInventorySbsinventoryprices.cs" />
+    <Compile Include="BLL\JsonGetInventorySbsinventoryqtys.cs" />
+    <Compile Include="BLL\JsonGetInventorySbsinventorystoreqtys.cs" />
     <Compile Include="BLL\JsonPrintFiscDoc.cs" />
     <Compile Include="BLL\JsonPrintFiscDocHeader.cs" />
     <Compile Include="BLL\JsonPrintFiscDocItem.cs" />
@@ -100,6 +109,7 @@
     <Compile Include="BLL\JsonPrintFiscDocItemParam.cs" />
     <Compile Include="BLL\JsonPrintFiscDocParam.cs" />
     <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
+    <Compile Include="BLL\JsonRestError.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
     <Compile Include="Com\FR.cs" />

@@ -37,9 +37,11 @@ namespace AlgoritmPrizm
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
 
-                //* Тест Json объектов
-                BLL.JsonGetDocuments  doc = BLL.JsonGetDocuments.DeserializeJson(BLL.JsonGetDocuments.SampleTest);
-                //*/
+                /* Тест Json объектов
+                    //BLL.JsonGetDocuments  doc = BLL.JsonGetDocuments.DeserializeJson(BLL.JsonGetDocuments.SampleTest);
+                    //List<BLL.JsonGetDocumentJournal> jr = BLL.JsonGetDocumentJournal.DeserializeJson(BLL.JsonGetDocumentJournal.SampleTest);
+                    List<BLL.JsonGetInventory> inv = BLL.JsonGetInventory.DeserializeJson(BLL.JsonGetInventory.SampleTest);
+                */
 
 
                 Application.EnableVisualStyles();
