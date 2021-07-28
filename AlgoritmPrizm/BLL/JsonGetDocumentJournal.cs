@@ -24,7 +24,7 @@ namespace AlgoritmPrizm.BLL
         public DateTime? modified_datetime;
         public string controller_sid;
         public string origin_application;
-        public DateTime post_date;
+        public DateTime? post_date;
         public Int64 row_version;
         public string tenant_sid;
         public string document_sid;

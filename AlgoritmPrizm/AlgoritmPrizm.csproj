@@ -119,6 +119,7 @@
     <Compile Include="Com\LicLib\onLicItem.cs" />
     <Compile Include="Com\LicLib\Osnova.cs" />
     <Compile Include="Com\LicLib\SistemaSchislenia.cs" />
+    <Compile Include="Com\WebReportDocumentItemsMovement.cs" />
     <Compile Include="FCashiries.cs">
       <SubType>Form</SubType>
     </Compile>

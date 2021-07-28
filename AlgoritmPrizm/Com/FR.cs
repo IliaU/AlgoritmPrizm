@@ -495,6 +495,11 @@ namespace AlgoritmPrizm.Com
 
                 // Печать концовки чека
                 CloseReceipt(Doc, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
+
+
+                // Опрашиваем фискальник на предмет получения последнего номера документа
+                Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
+
             }
             catch (Exception ex)
             {

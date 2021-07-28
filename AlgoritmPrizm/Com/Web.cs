@@ -20,7 +20,7 @@ using System.Threading;
 
 namespace AlgoritmPrizm.Com
 {
-    public class Web
+    public partial class Web
     {
         private static Thread ThrWeb;
 
@@ -115,6 +115,26 @@ namespace AlgoritmPrizm.Com
 
 
         /// <summary>
+        /// Обновление  документа в базе Prizm записываем фискальный номер документа
+        /// </summary>
+        /// <param name="Doc">Документ с которым работаем</param>
+        /// <param name="NDocNum">Номер фискального документа</param>
+        public static void UpdateFiskDocNum(JsonPrintFiscDoc Doc, int NDocNum)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.Web.UpdateFiskDocNum", EventEn.Error);
+                throw ae;
+            }
+        }
+
+
+        /// <summary>
         /// Запуск литнера
         /// </summary>
         /// <param name="Host"></param>
@@ -172,18 +192,15 @@ namespace AlgoritmPrizm.Com
                                     FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
                                     break;
                                 case @"/AksRepItemHistory":
-
-                                    List<JsonGetInventory> tt = GetInventoryRestSharp();
-
                                     try
                                     {
                                         // Получаем токен
                                         //string AuthSession = GetAuthenticationToken();
                                         ColbackDocument fil = FilterReportDocument;
                                         // Запрос данных
-                                        List<JsonGetDocumentsData> Docs = GetDocumentsRestSharp(fil);
+                                        List<JsonGetDocumentsData> Docs = GetDocumentsRestSharp(fil, true);
                                         // Возврат страницы пользователю
-                                        responceString = RenderReportDocument(Docs);
+                                        responceString = RenderReportDocumentItemsMovement(Docs);
                                         ContentType = "text/html; charset=utf-8";
                                     }
                                     catch (Exception ex)
@@ -230,40 +247,7 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-        /// <summary>
-        ///  Прорисовка отчёта который передадим пользователю
-        /// </summary>
-        /// <param name="Docs"></param>
-        private static string RenderReportDocument(List<JsonGetDocumentsData> Docs)
-        {
-            // https://html5book.ru/html5-forms/
-            string rez ="";
-            try
-            {
-                rez = @"<!DOCYUPE html>";
-                rez += @"<html>";
-                rez += @"<head>";
-                rez += @"</head>";
-                rez += @"<body>";
-                rez += @"   <form>";
-                rez += @"       <fieldset>";
-                rez += @"           <legend>Контактная информация</legend>";
-                rez += @"           <p><label for=""name"">Имя <em>*</em></label><input type=""text"" id=""name""></p>";
-                rez += @"           <p><label for=""email"">E-mail</label><input type=""email"" id=""email""></p>";
-                rez += @"     </fieldset>";
-                rez += @"    <p><input type=""submit"" value=""Отправить""></p>";
-                rez += @"    </form>";
-                rez += @"</body>";
-                rez += @"</html>";
-                return rez;
-            }
-            catch (Exception ex)
-            {
-                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, "Com.Web.RenderReportDocument", EventEn.Error);
-                throw ae;
-            }
-        }
+
 
 
         /// <summary>
@@ -271,21 +255,24 @@ namespace AlgoritmPrizm.Com
         /// </summary>
         /// <param name="Document">Документ который возвращает призм и который можно филтрануть</param>
         /// <returns>Результат фильтрации если True то добавить в ответ, если False</returns>
-        private delegate bool ColbackDocument(JsonGetDocumentsData Document);
+        private delegate List<JsonGetDocumentJournal> ColbackDocument(JsonGetDocumentsData Document);
 
         /// <summary>
         /// Обработка фильтра для  принятия решения нужен нам этот документ или нет для отчёта движение товара
         /// </summary>
         /// <param name="Document">Документ который считался (его заголовок)</param>
         /// <returns></returns>
-        private static bool FilterReportDocument(JsonGetDocumentsData Document)
+        private static List<JsonGetDocumentJournal> FilterReportDocument(JsonGetDocumentsData Document)
         {
+            List<JsonGetDocumentJournal> rez = new List<JsonGetDocumentJournal>();
             try
             {
                 // Получаем информацию по строкам документа
                 List<JsonGetDocumentJournal> journal = GetDocumentsJournalRestSharp(Document);
 
-                return true;
+                rez = journal;
+
+                return rez;
             }
             catch (Exception ex)
             {
@@ -299,7 +286,8 @@ namespace AlgoritmPrizm.Com
         /// Получение списка документов удовлетворяющих фильтрации
         /// </summary>
         /// <param name="ColbackItemFilter">Можно передать делигат для того чтобы фильтрануть данные. || Если указать null то будет считать что без фильтрации</param>
-        private static List<JsonGetDocumentsData> GetDocumentsRestSharp(ColbackDocument ColbackDocumentFilter)
+        /// <param name="HashJournal">включить строчки тела документа (journal)</param>
+        private static List<JsonGetDocumentsData> GetDocumentsRestSharp(ColbackDocument ColbackDocumentFilter, bool HashJournal)
         {
             List<JsonGetDocumentsData> Rez = new List<JsonGetDocumentsData>();
             string ResContent = null;
@@ -343,11 +331,19 @@ namespace AlgoritmPrizm.Com
                         foreach (JsonGetDocumentsData item in doc.data)
                         {
                             // Проверяем наличие фильтра если его нет то фильтрацию пропускаем и добавляем документ в список
-                            if (ColbackDocumentFilter == null) Rez.Add(item);
+                            if (ColbackDocumentFilter == null)
+                            {
+                                item.journal = GetDocumentsJournalRestSharp(item);
+                                Rez.Add(item);
+                            }
                             else
                             {
-                                // Если успашна проверка то документ тоже добавляем в результат
-                                if (ColbackDocumentFilter(item)) Rez.Add(item);
+                                if (HashJournal)
+                                {
+                                    // Если успашна проверка то документ тоже добавляем в результат
+                                    item.journal = ColbackDocumentFilter(item);
+                                    Rez.Add(item);
+                                }
                             }
                         }
 
@@ -423,19 +419,21 @@ namespace AlgoritmPrizm.Com
             try
             {
                 // Проверяем наличие токена и если он протух то продлеваем его
+
                 GetAuthenticationToken();
 
-                string url = string.Format("{0}/v1/rest/inventory?cols=*&page_no=1&page_size=10", Config.HostPrizmApi);
+                string url = string.Format("{0}/api/backoffice/inventory?cols=*&page_no=1&page_size=10", Config.HostPrizmApi);
                 RestClient _httpClient = new RestClient(url);
                 RestRequest request = new RestRequest { Method = Method.GET };
                 request.AddHeader("Accept", "application/json,version=2");
-                request.AddHeader("Auth-Session", AuthSession);
+                request.AddHeader("Content-Type", "application/json,version=2");
+                request.AddHeader("Auth-Session", AuthSession); // 
 
                 // Получаем ответ
                 IRestResponse response = _httpClient.Execute(request);
                 ResContent = response.Content;
 
-                List<JsonRestError> Er = JsonRestError.DeserializeJson(ResContent);
+                //List<JsonRestError> Er = JsonRestError.DeserializeJson(ResContent);
 
                 // Получаем предварительный список документов и парсим
                 rez = JsonGetInventory.DeserializeJson(ResContent);
@@ -456,7 +454,7 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-
+        
         /// <summary>
         /// получаем токен для работы через API
         /// </summary>
@@ -464,7 +462,7 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
-                //  Проверяем нужно липолучать токен заново или подойдёт существующий
+                //  Проверяем нужно ли получать токен заново или подойдёт существующий
                 if (GetLastAuthSession.AddMinutes(Config.PrizmApiTimeLiveTockenMinute) < DateTime.Now || AuthSession==null)
                 {
                     // Делаем запрос1 для получения  числа
@@ -496,7 +494,7 @@ namespace AlgoritmPrizm.Com
 
 
                     // Запрос 2 для получения токена
-                    url = string.Format("{0}/v1/rest/auth?usr=sysadmin&pwd=sysadmin", Config.HostPrizmApi, Config.PrizmApiSystemLogon, Config.PrizmApiSystemPassord);
+                    url = string.Format("{0}/v1/rest/auth?usr={1}&pwd={2}", Config.HostPrizmApi, Config.PrizmApiSystemLogon, Config.PrizmApiSystemPassord);
                     WebRequest req2 = HttpWebRequest.Create(url);
                     req2.Method = "GET";
                     req2.ContentType = "application/json; charset=UTF-8";
@@ -514,6 +512,25 @@ namespace AlgoritmPrizm.Com
 
                     // получить токен
                     AuthSession = resp2.Headers["Auth-Session"].ToString();
+
+
+                    // Фиксируем вход в Prizm https://{SERVERNAME}/v1/rest/sit?ws={WORKSTATIONNAME}
+                    url = string.Format("{0}/v1/rest/sit?ws={1}", Config.HostPrizmApi, Environment.MachineName);
+                    WebRequest req3 = HttpWebRequest.Create(url);
+                    req3.Method = "GET";
+                    req3.ContentType = "application/json; charset=UTF-8";
+                    req3.Headers.Add(HttpRequestHeader.ContentEncoding, "utf-8");
+                    req3.Headers.Add("ContentRangeEnd", "-1");
+                    req3.Headers.Add("ContentRangeStart", "-1");
+                    req3.Headers.Add("ContentRangeInstanceLength", "-1");
+                    req3.Headers.Add(HttpRequestHeader.AcceptEncoding, "gzip, deflate, br");
+                    req3.Headers.Add(HttpRequestHeader.AcceptLanguage, "en-US,en;q=0.9");
+                    req3.Headers.Add("Auth-Session", AuthSession);
+
+
+                    WebResponse resp3 = req3.GetResponse();
+
+
 
                     // запоминаем время когда получили токен
                     GetLastAuthSession = DateTime.Now;

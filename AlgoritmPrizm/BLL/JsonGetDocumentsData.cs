@@ -460,5 +460,11 @@ namespace AlgoritmPrizm.BLL
         public string employee5name;
         public int? employee5origsbsno;
         public string origintimezone;
+
+        /// <summary>
+        /// Строки  документа
+        /// </summary>
+        [JsonIgnore]
+        public List<JsonGetDocumentJournal> journal = new List<JsonGetDocumentJournal>();
     }
 }
