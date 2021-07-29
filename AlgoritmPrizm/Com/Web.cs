@@ -13,7 +13,8 @@ using RestSharp;
 
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.BLL;
-using System.Threading;
+using AlgoritmPrizm.Com.Report;
+
 
 //https://habr.com/ru/post/120157/
 //https://metanit.com/sharp/net/7.1.php
@@ -194,13 +195,14 @@ namespace AlgoritmPrizm.Com
                                 case @"/AksRepItemHistory":
                                     try
                                     {
-                                        // Получаем токен
-                                        //string AuthSession = GetAuthenticationToken();
-                                        ColbackDocument fil = FilterReportDocument;
-                                        // Запрос данных
-                                        List<JsonGetDocumentsData> Docs = GetDocumentsRestSharp(fil, true);
-                                        // Возврат страницы пользователю
-                                        responceString = RenderReportDocumentItemsMovement(Docs);
+                                        // Выставляем параемтры отчёта
+                                        ReportItemsMovement Rep = new ReportItemsMovement(DateTime.Now);
+
+                                        // Получаем данные в отчёт
+                                        Rep.Docs = GetDocumentsRestSharp(Rep, true);
+
+                                        // Отрисовываем отчёт
+                                        responceString = Rep.RenderReport();
                                         ContentType = "text/html; charset=utf-8";
                                     }
                                     catch (Exception ex)
@@ -251,43 +253,18 @@ namespace AlgoritmPrizm.Com
 
 
         /// <summary>
-        /// Делигат для получения документов построчно и принятия решения о выводе документа на основе фильтрации
+        /// Делигат для получения строки и принятия решения о выводе документа на основе фильтрации
         /// </summary>
-        /// <param name="Document">Документ который возвращает призм и который можно филтрануть</param>
+        /// <param name="journal">Строка которую фильтруем</param>
         /// <returns>Результат фильтрации если True то добавить в ответ, если False</returns>
-        private delegate List<JsonGetDocumentJournal> ColbackDocument(JsonGetDocumentsData Document);
-
-        /// <summary>
-        /// Обработка фильтра для  принятия решения нужен нам этот документ или нет для отчёта движение товара
-        /// </summary>
-        /// <param name="Document">Документ который считался (его заголовок)</param>
-        /// <returns></returns>
-        private static List<JsonGetDocumentJournal> FilterReportDocument(JsonGetDocumentsData Document)
-        {
-            List<JsonGetDocumentJournal> rez = new List<JsonGetDocumentJournal>();
-            try
-            {
-                // Получаем информацию по строкам документа
-                List<JsonGetDocumentJournal> journal = GetDocumentsJournalRestSharp(Document);
-
-                rez = journal;
-
-                return rez;
-            }
-            catch (Exception ex)
-            {
-                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, "Com.Web.FilterReportDocument", EventEn.Error);
-                throw ae;
-            }
-        }
+        public delegate bool ColbackDocumentJournal(JsonGetDocumentJournal journal);
 
         /// <summary>
         /// Получение списка документов удовлетворяющих фильтрации
         /// </summary>
         /// <param name="ColbackItemFilter">Можно передать делигат для того чтобы фильтрануть данные. || Если указать null то будет считать что без фильтрации</param>
         /// <param name="HashJournal">включить строчки тела документа (journal)</param>
-        private static List<JsonGetDocumentsData> GetDocumentsRestSharp(ColbackDocument ColbackDocumentFilter, bool HashJournal)
+        public static List<JsonGetDocumentsData> GetDocumentsRestSharp(ReportLib.BReport ColbackDocumentFilter, bool HashJournal)
         {
             List<JsonGetDocumentsData> Rez = new List<JsonGetDocumentsData>();
             string ResContent = null;
@@ -333,7 +310,10 @@ namespace AlgoritmPrizm.Com
                             // Проверяем наличие фильтра если его нет то фильтрацию пропускаем и добавляем документ в список
                             if (ColbackDocumentFilter == null)
                             {
-                                item.journal = GetDocumentsJournalRestSharp(item);
+                                if (HashJournal)
+                                {
+                                    item.journal = GetDocumentsJournalRestSharp(item, null);
+                                }
                                 Rez.Add(item);
                             }
                             else
@@ -341,8 +321,8 @@ namespace AlgoritmPrizm.Com
                                 if (HashJournal)
                                 {
                                     // Если успашна проверка то документ тоже добавляем в результат
-                                    item.journal = ColbackDocumentFilter(item);
-                                    Rez.Add(item);
+                                    item.journal = ColbackDocumentFilter.ColbackDocument(item);
+                                    if (item.journal.Count>0) Rez.Add(item);
                                 }
                             }
                         }
@@ -367,35 +347,64 @@ namespace AlgoritmPrizm.Com
         /// </summary>
         /// <param name="doc">Документ к которому мы хотим получить строки</param>
         /// <returns>Список строк в документе</returns>
-        private static List<JsonGetDocumentJournal> GetDocumentsJournalRestSharp(JsonGetDocumentsData doc)
+        public static List<JsonGetDocumentJournal> GetDocumentsJournalRestSharp(JsonGetDocumentsData doc, ColbackDocumentJournal ColbackDocumentJournalFilter)
         {
             List<JsonGetDocumentJournal> rez = new List<JsonGetDocumentJournal>();
             string ResContent = null;
 
             try
             {
-                // Проверяем наличие токена и если он протух то продлеваем его
-                GetAuthenticationToken();
-                
-                string url = string.Format("{0}/v1/rest/document/{1}/item?cols=*&page_no=1&page_size=10", Config.HostPrizmApi, doc.sid);
-                RestClient _httpClient = new RestClient(url);
-                RestRequest request = new RestRequest { Method = Method.GET };
-                request.AddHeader("Accept", "application/json,version=2");
-                request.AddHeader("Auth-Session", AuthSession);
+                int Page = 1;
 
-                // Получаем ответ
-                IRestResponse response = _httpClient.Execute(request);
-                ResContent = response.Content;
-                
-
-                // Получаем предварительный список документов и парсим
-                rez = JsonGetDocumentJournal.DeserializeJson(ResContent);
-
-                /* // Тут если надо делам ответ
-                if (response.IsSuccessful && response.ResponseStatus == ResponseStatus.Completed)
+                // Бесконечный цыкл для того чтобы пробежать по всем страницам
+                while (true)
                 {
+                    // Проверяем наличие токена и если он протух то продлеваем его
+                    GetAuthenticationToken();
 
-                }*/
+                    string url = string.Format("{0}/v1/rest/document/{1}/item?cols=*&page_no={2}&page_size=10", Config.HostPrizmApi, doc.sid, Page);
+                    RestClient _httpClient = new RestClient(url);
+                    RestRequest request = new RestRequest { Method = Method.GET };
+                    request.AddHeader("Accept", "application/json,version=2");
+                    request.AddHeader("Auth-Session", AuthSession);
+
+                    // Получаем ответ
+                    IRestResponse response = _httpClient.Execute(request);
+                    ResContent = response.Content;
+
+
+                    // Получаем предварительный список документов и парсим
+                    List<JsonGetDocumentJournal> tmp = JsonGetDocumentJournal.DeserializeJson(ResContent);
+
+
+                    /* // Тут если надо делам ответ
+                    if (response.IsSuccessful && response.ResponseStatus == ResponseStatus.Completed)
+                    {
+
+                    }*/
+
+                    // Проверяем есть ли результат
+                    if (tmp.Count>0)
+                    {
+                        if (ColbackDocumentJournalFilter==null)
+                        {
+                            rez = tmp;
+                        }
+                        else
+                        {
+                            foreach (JsonGetDocumentJournal item in tmp)
+                            {
+                                if (ColbackDocumentJournalFilter(item))
+                                {
+                                    rez.Add(item);
+                                }
+                            }
+                        }
+                    }
+                    else break; // Если документов больше нет, то идём на выход
+
+                    Page++;
+                }
 
                 return rez;
             }

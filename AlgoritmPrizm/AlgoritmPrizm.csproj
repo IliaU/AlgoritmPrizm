@@ -113,13 +113,16 @@
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
     <Compile Include="Com\FR.cs" />
+    <Compile Include="Com\ReportLib\BReport.cs" />
+    <Compile Include="Com\ReportLib\IColbackDocument.cs" />
     <Compile Include="Com\Lic.cs" />
     <Compile Include="Com\LicLib\CChar.cs" />
     <Compile Include="Com\LicLib\onLicEventKey.cs" />
     <Compile Include="Com\LicLib\onLicItem.cs" />
     <Compile Include="Com\LicLib\Osnova.cs" />
     <Compile Include="Com\LicLib\SistemaSchislenia.cs" />
-    <Compile Include="Com\WebReportDocumentItemsMovement.cs" />
+    <Compile Include="Com\ReportLib\IColbackDocumentJournal.cs" />
+    <Compile Include="Com\Report\ReportItemsMovement.cs" />
     <Compile Include="FCashiries.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -208,6 +211,7 @@
     <EmbeddedResource Include="Icon.ico" />
     <Content Include="Pic\AKS.jpg" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
