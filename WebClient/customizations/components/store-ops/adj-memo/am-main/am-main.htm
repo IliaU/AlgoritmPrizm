@@ -1,0 +1,41 @@
+<div ng-if="gridReady" class="panel panel-default">
+    <div class="panel-heading">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="row top-margin">
+                    <item-search disable="{{(adjMemo.memo.status!==3)||(!adjMemo.isEdit)||(adjMemo.saving)||(adjMemo.memo.creatingdoctype === 9)}}" autofocus></item-search>
+                </div>
+            </div>
+            <div class="col-xs-7">
+                <am-value-entry-cbx></am-value-entry-cbx>
+                <am-adv-item-lookup-button memo-sid="stateParams.sid" parent-grid-options="gridOptions"></am-adv-item-lookup-button>
+                <am-memo-details-button></am-memo-details-button>
+                <am-remove-item-button></am-remove-item-button>
+                <am-item-details-button></am-item-details-button>
+                <label for="file" class="btn btn-info">Load from file</label>
+                <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this, 'adjustment')" style="display: none">
+            </div>
+        </div>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="am-items-list">
+                    <div class="row">
+                        <div ng-if="adjMemo.isEdit" ui-grid-resize-columns ui-grid-cellnav ui-grid-edit ui-grid-selection ui-grid="gridOptions" external-scopes="gridHandlers" class="grid slips-item-grid"></div>
+                        <div ng-if="(!adjMemo.isEdit)" ui-grid-resize-columns ui-grid-selection ui-grid="gridOptions" external-scopes="gridHandlers" class="grid slips-item-grid"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="panel-footer">
+        <div class="row">
+            <div class="col-xs-12">
+                <div class="row" style="width:99.8%;">
+                    <am-summary></am-summary>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
