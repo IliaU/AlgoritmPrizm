@@ -1,0 +1,80 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="row">
+      <div class="col-xs-3">
+        <item-search ng-show="purchaseOrder.isEdit" respect-vendor="{{purchaseOrder.active.vendorsid}}"></item-search>
+        <input ng-show="!purchaseOrder.isEdit" type="text" class="form-control" ng-disabled="true">
+        <div class="input-group">
+
+          <!--<span class="input-group-btn">
+            <po-advanced-inventory-search-button></po-advanced-inventory-search-button>
+          </span>-->
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <po-advanced-inventory-search-button></po-advanced-inventory-search-button>
+        <po-details-button></po-details-button>
+        <po-remove-item-button></po-remove-item-button>
+        <po-item-details-button></po-item-details-button>
+      </div>
+      <div class="col-xs-3">
+        <div class="row">
+          <div class="col-xs-10">
+            <allocation-pattern ng-if="purchaseOrder.isEdit"></allocation-pattern>
+          </div>
+          <div class="col-xs-2">
+            <label for="file" class="btn btn-info">Verification</label>
+            <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this, 'adjustment')" style="display: none">
+          </div>
+        </div>
+      </div>
+      <div class="col-xs-2 text-right">
+        <button class="btn btn-default" ng-init="lockAllocations=true" ng-click="lockAllocations=!lockAllocations">
+          <span class="glyphicon glyphicon-ban-circle" ng-if="lockAllocations"></span>
+          <span class="glyphicon glyphicon-check" ng-if="!lockAllocations"></span>
+          &nbsp;&nbsp;<span data-translate="6479">Show Allocations</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="panel-body">
+    <div class="col-xs-12">
+      <div class="grid-items-list">
+        <div class="row po form-group">
+          <div ui-i18n="{{lang}}">
+            <div ui-grid-resize-columns="" class="po-item-grid" id="grid1" ng-if="(purchaseOrder.isEdit&&gridOptions)&&!ap.saving" ui-grid-cellnav="" ui-grid-edit="" ui-grid-selection="" ui-grid="gridOptions" external-scopes="gridHandlers"></div>
+            <div ui-grid-resize-columns="" class="po-item-grid" ng-if="!purchaseOrder.isEdit&&gridOptions" ui-grid="gridOptions2" ui-grid-selection="" external-scopes="gridHandlers"></div>
+          </div>
+        </div>
+        <div class="row form-group">
+          <div class="col-xs-4">
+            <div class="row form-group" ng-if="purchaseOrder.activeItems.length===1&&!lockAllocations">
+              <div class="col-xs-8">
+                <input type="text" class="form-control" placeholder="{{ '5396' | translate }}" ng-model="filter.value" ng-change="filterStores()">
+              </div>
+              <div class="col-xs-4">
+                <button type="button" class="btn btn-default" ng-disabled="!gridApi.grid.rows[activeIndex+1]" ng-click="moveActiveItem('+')">
+                  <span class="glyphicon glyphicon-arrow-down"></span>
+                </button>
+                <button type="button" class="btn btn-default" ng-disabled="!gridApi.grid.rows[activeIndex-1]" ng-click="moveActiveItem('-')">
+                  <span class="glyphicon glyphicon-arrow-up"></span>
+                </button>
+              </div>
+            </div>
+          </div>
+          <div class="col-xs-4 text-center">
+            <paging-control ng-if="purchaseOrder.totalItems&&!addingItems()" results-per-page="20" grid-reference="gridApi" call-back="getPage" total-records="purchaseOrder.totalItems"></paging-control>
+            <paging-control ng-if="!purchaseOrder.totalItems" results-per-page="20" total-records="1"></paging-control>
+            <div class="well well-sm" ng-if="addingItems()" style="padding-top:6px;padding-bottom:6px;margin:0;">
+                <span data-translate="3733">Processing Items</span> {{addingItems()}} <span data-translate="2994">Remaining</span>
+            </div>
+          </div>
+        </div>
+        <div class="row margbot-3p">
+          <po-summary ng-if="purchaseOrder.activeItems.length!==1||lockAllocations"></po-summary>
+          <po-store-allocations ng-if="purchaseOrder.activeItems.length===1&&!lockAllocations"></po-store-allocations>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
