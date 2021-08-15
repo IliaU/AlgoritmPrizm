@@ -143,6 +143,7 @@
     </Compile>
     <Compile Include="Lib\EnFrTyp.cs" />
     <Compile Include="Lib\FfdEn.cs" />
+    <Compile Include="Lib\FieldDocNumEn.cs" />
     <Compile Include="Lib\FieldItemEn.cs" />
     <Compile Include="Lib\FrStatError.cs" />
     <Compile Include="Com\Log.cs" />

@@ -85,5 +85,30 @@ namespace AlgoritmPrizm.Lib
                 return DefaulfFieldItem;
             }
         }
+
+        /// <summary>
+        /// Конвертация в объект FieldDocNumEn
+        /// </summary>
+        /// <param name="FieldDocNumStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaulfFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static FieldDocNumEn Convert(string FieldDocNumStr, FieldDocNumEn DefaulfFieldDocNum)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(FieldDocNumStr))
+                {
+                    foreach (FieldDocNumEn item in FfdEn.GetValues(typeof(FieldDocNumEn)))
+                    {
+                        if (item.ToString().ToUpper() == FieldDocNumStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaulfFieldDocNum;
+            }
+            catch (Exception)
+            {
+                return DefaulfFieldDocNum;
+            }
+        }
     }
 }

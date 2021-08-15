@@ -71,6 +71,19 @@ namespace AlgoritmPrizm
                 }
                 if (SelectPositionFieldItem > -1) cmbBoxFieldItem.SelectedIndex = SelectPositionFieldItem;
 
+
+                this.cmbBoxFieldDocNum.Items.Clear();
+                int PositionFieldDocNum = -1;
+                int SelectPositionFieldDocNum = -1;
+                foreach (FieldDocNumEn item in FieldDocNumEn.GetValues(typeof(FieldDocNumEn)))
+                {
+                    PositionFieldDocNum++;
+                    cmbBoxFieldDocNum.Items.Add(item.ToString());
+                    if (item == Config.FieldDocNum) SelectPositionFieldDocNum = PositionFieldDocNum;
+                }
+                if (SelectPositionFieldDocNum > -1) cmbBoxFieldDocNum.SelectedIndex = SelectPositionFieldDocNum;
+
+
                 this.txtBoxHostPrizmApi.Text = Config.HostPrizmApi;
                 this.txtBoxPrizmApiSystemLogon.Text = Config.PrizmApiSystemLogon;
                 this.txtBoxPrizmApiSystemPassord.Text = Config.PrizmApiSystemPassord;
@@ -156,6 +169,8 @@ namespace AlgoritmPrizm
 
                 Config.FieldItem = EventConvertor.Convert(cmbBoxFieldItem.Items[cmbBoxFieldItem.SelectedIndex].ToString(), Config.FieldItem);
 
+                Config.FieldDocNum = EventConvertor.Convert(cmbBoxFieldDocNum.Items[cmbBoxFieldDocNum.SelectedIndex].ToString(), Config.FieldDocNum);
+
                 Config.HostPrizmApi = this.txtBoxHostPrizmApi.Text;
                 Config.PrizmApiSystemLogon = this.txtBoxPrizmApiSystemLogon.Text;
                 Config.PrizmApiSystemPassord = this.txtBoxPrizmApiSystemPassord.Text;
@@ -176,6 +191,51 @@ namespace AlgoritmPrizm
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }
+        }
+
+        private void lblHostPrizmApi_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBoxHostPrizmApi_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPrizmApiSystemLogon_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBoxPrizmApiSystemLogon_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBoxPrizmApiSystemPassord_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPrizmApiSystemPassord_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void lblPrizmApiTimeLiveTockenMinute_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void txtBoxPrizmApiTimeLiveTockenMinute_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void cmbBoxFieldItem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
