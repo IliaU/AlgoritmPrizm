@@ -62,6 +62,8 @@
             this.lblPrizmApiSystemPassord = new System.Windows.Forms.Label();
             this.txtBoxPrizmApiTimeLiveTockenMinute = new System.Windows.Forms.TextBox();
             this.lblPrizmApiTimeLiveTockenMinute = new System.Windows.Forms.Label();
+            this.cmbBoxFieldDocNum = new System.Windows.Forms.ComboBox();
+            this.lblFieldDocNum = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -264,6 +266,7 @@
             this.cmbBoxFieldItem.Name = "cmbBoxFieldItem";
             this.cmbBoxFieldItem.Size = new System.Drawing.Size(121, 21);
             this.cmbBoxFieldItem.TabIndex = 25;
+            this.cmbBoxFieldItem.SelectedIndexChanged += new System.EventHandler(this.cmbBoxFieldItem_SelectedIndexChanged);
             // 
             // lblFieldItem
             // 
@@ -276,73 +279,101 @@
             // 
             // txtBoxHostPrizmApi
             // 
-            this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(316, 273);
+            this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(316, 307);
             this.txtBoxHostPrizmApi.Name = "txtBoxHostPrizmApi";
             this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(91, 20);
             this.txtBoxHostPrizmApi.TabIndex = 27;
+            this.txtBoxHostPrizmApi.TextChanged += new System.EventHandler(this.txtBoxHostPrizmApi_TextChanged);
             // 
             // lblHostPrizmApi
             // 
             this.lblHostPrizmApi.AutoSize = true;
-            this.lblHostPrizmApi.Location = new System.Drawing.Point(12, 276);
+            this.lblHostPrizmApi.Location = new System.Drawing.Point(12, 310);
             this.lblHostPrizmApi.Name = "lblHostPrizmApi";
             this.lblHostPrizmApi.Size = new System.Drawing.Size(277, 13);
             this.lblHostPrizmApi.TabIndex = 26;
             this.lblHostPrizmApi.Text = "Хост с приложением Prizm на котором развёрнут API";
+            this.lblHostPrizmApi.Click += new System.EventHandler(this.lblHostPrizmApi_Click);
             // 
             // txtBoxPrizmApiSystemLogon
             // 
-            this.txtBoxPrizmApiSystemLogon.Location = new System.Drawing.Point(316, 299);
+            this.txtBoxPrizmApiSystemLogon.Location = new System.Drawing.Point(316, 333);
             this.txtBoxPrizmApiSystemLogon.Name = "txtBoxPrizmApiSystemLogon";
             this.txtBoxPrizmApiSystemLogon.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemLogon.TabIndex = 29;
+            this.txtBoxPrizmApiSystemLogon.TextChanged += new System.EventHandler(this.txtBoxPrizmApiSystemLogon_TextChanged);
             // 
             // lblPrizmApiSystemLogon
             // 
             this.lblPrizmApiSystemLogon.AutoSize = true;
-            this.lblPrizmApiSystemLogon.Location = new System.Drawing.Point(12, 302);
+            this.lblPrizmApiSystemLogon.Location = new System.Drawing.Point(12, 336);
             this.lblPrizmApiSystemLogon.Name = "lblPrizmApiSystemLogon";
             this.lblPrizmApiSystemLogon.Size = new System.Drawing.Size(278, 13);
             this.lblPrizmApiSystemLogon.TabIndex = 28;
             this.lblPrizmApiSystemLogon.Text = "Login системного пользовательеля для доступа к api";
+            this.lblPrizmApiSystemLogon.Click += new System.EventHandler(this.lblPrizmApiSystemLogon_Click);
             // 
             // txtBoxPrizmApiSystemPassord
             // 
-            this.txtBoxPrizmApiSystemPassord.Location = new System.Drawing.Point(316, 325);
+            this.txtBoxPrizmApiSystemPassord.Location = new System.Drawing.Point(316, 359);
             this.txtBoxPrizmApiSystemPassord.Name = "txtBoxPrizmApiSystemPassord";
             this.txtBoxPrizmApiSystemPassord.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemPassord.TabIndex = 31;
+            this.txtBoxPrizmApiSystemPassord.TextChanged += new System.EventHandler(this.txtBoxPrizmApiSystemPassord_TextChanged);
             // 
             // lblPrizmApiSystemPassord
             // 
             this.lblPrizmApiSystemPassord.AutoSize = true;
-            this.lblPrizmApiSystemPassord.Location = new System.Drawing.Point(12, 328);
+            this.lblPrizmApiSystemPassord.Location = new System.Drawing.Point(12, 362);
             this.lblPrizmApiSystemPassord.Name = "lblPrizmApiSystemPassord";
             this.lblPrizmApiSystemPassord.Size = new System.Drawing.Size(298, 13);
             this.lblPrizmApiSystemPassord.TabIndex = 30;
             this.lblPrizmApiSystemPassord.Text = "Password системного пользовательеля для доступа к api";
+            this.lblPrizmApiSystemPassord.Click += new System.EventHandler(this.lblPrizmApiSystemPassord_Click);
             // 
             // txtBoxPrizmApiTimeLiveTockenMinute
             // 
-            this.txtBoxPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(316, 351);
+            this.txtBoxPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(316, 385);
             this.txtBoxPrizmApiTimeLiveTockenMinute.Name = "txtBoxPrizmApiTimeLiveTockenMinute";
             this.txtBoxPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiTimeLiveTockenMinute.TabIndex = 33;
+            this.txtBoxPrizmApiTimeLiveTockenMinute.TextChanged += new System.EventHandler(this.txtBoxPrizmApiTimeLiveTockenMinute_TextChanged);
             // 
             // lblPrizmApiTimeLiveTockenMinute
             // 
             this.lblPrizmApiTimeLiveTockenMinute.AutoSize = true;
-            this.lblPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(12, 354);
+            this.lblPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(12, 388);
             this.lblPrizmApiTimeLiveTockenMinute.Name = "lblPrizmApiTimeLiveTockenMinute";
             this.lblPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(308, 13);
             this.lblPrizmApiTimeLiveTockenMinute.TabIndex = 32;
             this.lblPrizmApiTimeLiveTockenMinute.Text = "Тайм аут жизни токена после которого он обновится (мин)";
+            this.lblPrizmApiTimeLiveTockenMinute.Click += new System.EventHandler(this.lblPrizmApiTimeLiveTockenMinute_Click);
+            // 
+            // cmbBoxFieldDocNum
+            // 
+            this.cmbBoxFieldDocNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldDocNum.FormattingEnabled = true;
+            this.cmbBoxFieldDocNum.Location = new System.Drawing.Point(141, 279);
+            this.cmbBoxFieldDocNum.Name = "cmbBoxFieldDocNum";
+            this.cmbBoxFieldDocNum.Size = new System.Drawing.Size(121, 21);
+            this.cmbBoxFieldDocNum.TabIndex = 35;
+            // 
+            // lblFieldDocNum
+            // 
+            this.lblFieldDocNum.AutoSize = true;
+            this.lblFieldDocNum.Location = new System.Drawing.Point(12, 282);
+            this.lblFieldDocNum.Name = "lblFieldDocNum";
+            this.lblFieldDocNum.Size = new System.Drawing.Size(114, 13);
+            this.lblFieldDocNum.TabIndex = 34;
+            this.lblFieldDocNum.Text = "Поле с номером ФД";
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(494, 480);
+            this.Controls.Add(this.cmbBoxFieldDocNum);
+            this.Controls.Add(this.lblFieldDocNum);
             this.Controls.Add(this.txtBoxPrizmApiTimeLiveTockenMinute);
             this.Controls.Add(this.lblPrizmApiTimeLiveTockenMinute);
             this.Controls.Add(this.txtBoxPrizmApiSystemPassord);
@@ -420,5 +451,7 @@
         private System.Windows.Forms.Label lblPrizmApiSystemPassord;
         private System.Windows.Forms.TextBox txtBoxPrizmApiTimeLiveTockenMinute;
         private System.Windows.Forms.Label lblPrizmApiTimeLiveTockenMinute;
+        private System.Windows.Forms.ComboBox cmbBoxFieldDocNum;
+        private System.Windows.Forms.Label lblFieldDocNum;
     }
 }

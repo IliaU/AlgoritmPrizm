@@ -492,14 +492,15 @@ namespace AlgoritmPrizm.Com
 
                 //************** ОПЛАТЫ ПО ЧЕКУ ******************************************
 
+                //Web.UpdateFiskDocNum(Doc, Fr.OpenDocumentNumber);
 
                 // Печать концовки чека
                 CloseReceipt(Doc, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
 
 
-                // Опрашиваем фискальник на предмет получения последнего номера документа
+                // Обновляем статус и опрашиваем фискальник на предмет получения последнего номера документа
+                Fr.FNGetStatus();
                 Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
-
             }
             catch (Exception ex)
             {
