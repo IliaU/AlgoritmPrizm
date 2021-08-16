@@ -14,7 +14,7 @@ using RestSharp;
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.BLL;
 using AlgoritmPrizm.Com.Report;
-
+using System.Net.Http;
 
 //https://habr.com/ru/post/120157/
 //https://metanit.com/sharp/net/7.1.php
@@ -76,6 +76,8 @@ namespace AlgoritmPrizm.Com
                         listener = new HttpListener();
                         listener.Prefixes.Add(string.Format("http://{0}:{1}/", Host, Port));
                         listener.Start();
+
+                        Log.EventSave(string.Format("Успешно запустили Listen (http://{0}:{1})", Host, Port), "Com.Web.AWeb", EventEn.Message);
 
                         Listen(Host, Port);
                     }
@@ -242,8 +244,27 @@ namespace AlgoritmPrizm.Com
                     }
                     catch (Exception exw)
                     {
-                        ApplicationException ae = new ApplicationException(string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message));
+                        string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
+                        ApplicationException ae = new ApplicationException(ErrorMessage);
                         Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Warning);
+
+                        // пытаемся передать ошибку но при неудачи падать нельзя
+                        try
+                        {
+                            // Передаём ответ серверу
+                            response.ContentType = ContentType;
+                            response.Headers.Add("Access-Control-Allow-Origin", origin);
+                            response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
+                            //response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                            response.KeepAlive = true;
+                            response.StatusCode = (int)HttpStatusCode.NotFound;
+                            //
+                            byte[] buffer = Encoding.UTF8.GetBytes(ErrorMessage);
+                            response.ContentLength64 = buffer.Length;
+                            Stream output = response.OutputStream;
+                            output.Write(buffer, 0, buffer.Length);
+                        }
+                        catch (Exception exxe){}
                     }
 
 
