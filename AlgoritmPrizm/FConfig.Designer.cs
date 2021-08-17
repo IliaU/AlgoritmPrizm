@@ -266,7 +266,6 @@
             this.cmbBoxFieldItem.Name = "cmbBoxFieldItem";
             this.cmbBoxFieldItem.Size = new System.Drawing.Size(121, 21);
             this.cmbBoxFieldItem.TabIndex = 25;
-            this.cmbBoxFieldItem.SelectedIndexChanged += new System.EventHandler(this.cmbBoxFieldItem_SelectedIndexChanged);
             // 
             // lblFieldItem
             // 
@@ -283,7 +282,6 @@
             this.txtBoxHostPrizmApi.Name = "txtBoxHostPrizmApi";
             this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(91, 20);
             this.txtBoxHostPrizmApi.TabIndex = 27;
-            this.txtBoxHostPrizmApi.TextChanged += new System.EventHandler(this.txtBoxHostPrizmApi_TextChanged);
             // 
             // lblHostPrizmApi
             // 
@@ -293,7 +291,6 @@
             this.lblHostPrizmApi.Size = new System.Drawing.Size(277, 13);
             this.lblHostPrizmApi.TabIndex = 26;
             this.lblHostPrizmApi.Text = "Хост с приложением Prizm на котором развёрнут API";
-            this.lblHostPrizmApi.Click += new System.EventHandler(this.lblHostPrizmApi_Click);
             // 
             // txtBoxPrizmApiSystemLogon
             // 
@@ -301,7 +298,6 @@
             this.txtBoxPrizmApiSystemLogon.Name = "txtBoxPrizmApiSystemLogon";
             this.txtBoxPrizmApiSystemLogon.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemLogon.TabIndex = 29;
-            this.txtBoxPrizmApiSystemLogon.TextChanged += new System.EventHandler(this.txtBoxPrizmApiSystemLogon_TextChanged);
             // 
             // lblPrizmApiSystemLogon
             // 
@@ -311,7 +307,6 @@
             this.lblPrizmApiSystemLogon.Size = new System.Drawing.Size(278, 13);
             this.lblPrizmApiSystemLogon.TabIndex = 28;
             this.lblPrizmApiSystemLogon.Text = "Login системного пользовательеля для доступа к api";
-            this.lblPrizmApiSystemLogon.Click += new System.EventHandler(this.lblPrizmApiSystemLogon_Click);
             // 
             // txtBoxPrizmApiSystemPassord
             // 
@@ -319,7 +314,6 @@
             this.txtBoxPrizmApiSystemPassord.Name = "txtBoxPrizmApiSystemPassord";
             this.txtBoxPrizmApiSystemPassord.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemPassord.TabIndex = 31;
-            this.txtBoxPrizmApiSystemPassord.TextChanged += new System.EventHandler(this.txtBoxPrizmApiSystemPassord_TextChanged);
             // 
             // lblPrizmApiSystemPassord
             // 
@@ -329,7 +323,6 @@
             this.lblPrizmApiSystemPassord.Size = new System.Drawing.Size(298, 13);
             this.lblPrizmApiSystemPassord.TabIndex = 30;
             this.lblPrizmApiSystemPassord.Text = "Password системного пользовательеля для доступа к api";
-            this.lblPrizmApiSystemPassord.Click += new System.EventHandler(this.lblPrizmApiSystemPassord_Click);
             // 
             // txtBoxPrizmApiTimeLiveTockenMinute
             // 
@@ -337,7 +330,6 @@
             this.txtBoxPrizmApiTimeLiveTockenMinute.Name = "txtBoxPrizmApiTimeLiveTockenMinute";
             this.txtBoxPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiTimeLiveTockenMinute.TabIndex = 33;
-            this.txtBoxPrizmApiTimeLiveTockenMinute.TextChanged += new System.EventHandler(this.txtBoxPrizmApiTimeLiveTockenMinute_TextChanged);
             // 
             // lblPrizmApiTimeLiveTockenMinute
             // 
@@ -347,7 +339,6 @@
             this.lblPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(308, 13);
             this.lblPrizmApiTimeLiveTockenMinute.TabIndex = 32;
             this.lblPrizmApiTimeLiveTockenMinute.Text = "Тайм аут жизни токена после которого он обновится (мин)";
-            this.lblPrizmApiTimeLiveTockenMinute.Click += new System.EventHandler(this.lblPrizmApiTimeLiveTockenMinute_Click);
             // 
             // cmbBoxFieldDocNum
             // 

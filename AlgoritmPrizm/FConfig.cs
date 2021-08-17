@@ -192,50 +192,5 @@ namespace AlgoritmPrizm
                 throw ae;
             }
         }
-
-        private void lblHostPrizmApi_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtBoxHostPrizmApi_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblPrizmApiSystemLogon_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtBoxPrizmApiSystemLogon_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtBoxPrizmApiSystemPassord_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblPrizmApiSystemPassord_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void lblPrizmApiTimeLiveTockenMinute_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void txtBoxPrizmApiTimeLiveTockenMinute_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void cmbBoxFieldItem_SelectedIndexChanged(object sender, EventArgs e)
-        {
-
-        }
     }
 }

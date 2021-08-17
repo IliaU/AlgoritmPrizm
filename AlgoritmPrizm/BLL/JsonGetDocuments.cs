@@ -1916,7 +1916,7 @@ namespace AlgoritmPrizm.BLL
                 _settings.Error = (sender, args) =>
                 {
                     if (object.Equals(args.ErrorContext.Member, "note1") &&
-                      args.ErrorContext.OriginalObject.GetType() == typeof(JsonPrintFiscDoc))
+                      args.ErrorContext.OriginalObject.GetType() == typeof(JsonGetDocuments))
                     {
                         args.ErrorContext.Handled = true;
                     }

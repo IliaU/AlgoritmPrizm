@@ -41,6 +41,10 @@ namespace AlgoritmPrizm
                     //BLL.JsonGetDocuments  doc = BLL.JsonGetDocuments.DeserializeJson(BLL.JsonGetDocuments.SampleTest);
                     //List<BLL.JsonGetDocumentJournal> jr = BLL.JsonGetDocumentJournal.DeserializeJson(BLL.JsonGetDocumentJournal.SampleTest);
                     List<BLL.JsonGetInventory> inv = BLL.JsonGetInventory.DeserializeJson(BLL.JsonGetInventory.SampleTest);
+
+                    //Вывод конфига через API
+                    string ssss = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
+                    BLL.JsonConfig conf = BLL.JsonConfig.DeserializeJson(ssss);
                 */
 
 

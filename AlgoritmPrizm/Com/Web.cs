@@ -224,6 +224,9 @@ namespace AlgoritmPrizm.Com
                                     }
                                     
                                     break;
+                                case @"/config":
+                                    responceString=BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
+                                    break;
                                 default:
                                     break;
                             }

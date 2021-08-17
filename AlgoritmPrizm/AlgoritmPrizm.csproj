@@ -90,6 +90,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\Custumer.cs" />
+    <Compile Include="BLL\JsonConfig.cs" />
+    <Compile Include="BLL\JsonConfigFfdConverter.cs" />
+    <Compile Include="BLL\JsonConfigFieldDocNumConverter.cs" />
+    <Compile Include="BLL\JsonConfigFieldItemConverter.cs" />
     <Compile Include="BLL\JsonGetDocumentJournal.cs" />
     <Compile Include="BLL\JsonGetDocumentJournalHrefs.cs" />
     <Compile Include="BLL\JsonGetDocuments.cs" />
