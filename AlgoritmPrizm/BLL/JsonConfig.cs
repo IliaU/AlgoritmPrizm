@@ -15,24 +15,24 @@ namespace AlgoritmPrizm.BLL
         private static JsonSerializerSettings _settings;
 
 
-        public bool Trace = Config.Trace;
-        public string Host = Config.Host;
-        public int Port = Config.Port;
-        public int TenderTypeCash = Config.TenderTypeCash;
-        public int TenderTypeCredit = Config.TenderTypeCredit;
-        public int TenderTypeGiftCert = Config.TenderTypeGiftCert;
-        public int TenderTypeGiftCard = Config.TenderTypeGiftCard;
+        public bool Trace;
+        public string Host;
+        public int Port;
+        public int TenderTypeCash;
+        public int TenderTypeCredit;
+        public int TenderTypeGiftCert;
+        public int TenderTypeGiftCard;
 
         public List<Custumer> customers = new List<Custumer>();
 
-        public string GiftCardCode = Config.GiftCardCode;
-        public bool GiftCardEnable = Config.GiftCardEnable;
-        public int GiftCardTax = Config.GiftCardTax;
+        public string GiftCardCode;
+        public bool GiftCardEnable;
+        public int GiftCardTax;
 
         [JsonConverter(typeof(JsonConfigFfdConverter))]
         public FfdEn Ffd = Config.Ffd;
 
-        public int FrPort = Config.FrPort;
+        public int FrPort;
 
         [JsonConverter(typeof(JsonConfigFieldItemConverter))]
         public FieldItemEn FieldItem = Config.FieldItem;
@@ -40,10 +40,9 @@ namespace AlgoritmPrizm.BLL
         [JsonConverter(typeof(JsonConfigFieldDocNumConverter))]
         public FieldDocNumEn FieldDocNum = Config.FieldDocNum;
 
-        public string HostPrizmApi = Config.HostPrizmApi;
-        public string PrizmApiSystemLogon = Config.PrizmApiSystemLogon;
-        public string PrizmApiSystemPassord = Config.PrizmApiSystemPassord;
-        public int PrizmApiTimeLiveTockenMinute = Config.PrizmApiTimeLiveTockenMinute;
+        public string HostPrizmApi;
+        public string PrizmApiSystemLogon;
+        public int PrizmApiTimeLiveTockenMinute;
 
 
 
@@ -75,7 +74,6 @@ namespace AlgoritmPrizm.BLL
     ""FieldDocNum"":""Comment2"",
     ""HostPrizmApi"":""http://172.16.1.102"",
     ""PrizmApiSystemLogon"":""sysadmin"",
-    ""PrizmApiSystemPassord"":""sysadmin"",
     ""PrizmApiTimeLiveTockenMinute"":5}
 }";
         /// <summary>
@@ -86,7 +84,31 @@ namespace AlgoritmPrizm.BLL
         {
             if (InitTek)
             {
+                this.Trace = Config.Trace;
+                this.Host = Config.Host;
+                this.Port = Config.Port;
+                this.TenderTypeCash = Config.TenderTypeCash;
+                this.TenderTypeCredit = Config.TenderTypeCredit;
+                this.TenderTypeGiftCert = Config.TenderTypeGiftCert;
+                this.TenderTypeGiftCard = Config.TenderTypeGiftCard;
+
                 this.customers = Config.customers;
+
+                this.GiftCardCode = Config.GiftCardCode;
+                this.GiftCardEnable = Config.GiftCardEnable;
+                this.GiftCardTax = Config.GiftCardTax;
+
+                this.Ffd = Config.Ffd;
+
+                this.FrPort = Config.FrPort;
+
+                this.FieldItem = Config.FieldItem;
+
+                this.FieldDocNum = Config.FieldDocNum;
+
+                this.HostPrizmApi = Config.HostPrizmApi;
+                this.PrizmApiSystemLogon = Config.PrizmApiSystemLogon;
+                this.PrizmApiTimeLiveTockenMinute = Config.PrizmApiTimeLiveTockenMinute;
             }
         }
         public JsonConfig() :this(false)
