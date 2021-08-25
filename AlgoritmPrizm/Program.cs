@@ -33,6 +33,7 @@ namespace AlgoritmPrizm
 
                 // Подключаем логирование
                 Com.Log Lg = new Com.Log();
+                Com.FileCheckLog LgCh = new Com.FileCheckLog();
 
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();

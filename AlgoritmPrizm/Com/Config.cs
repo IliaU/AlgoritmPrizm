@@ -139,6 +139,11 @@ namespace AlgoritmPrizm.Com
         /// Тайм аут жизни токена после которого требуется обновление токена
         /// </summary>
         private static int _PrizmApiTimeLiveTockenMinute = 5;
+
+        /// <summary>
+        /// Файл для лога чеков
+        /// </summary>
+        private static string _FileCheckLog = "AlgoritmSale.Log";
         #endregion
 
         #region Public Param
@@ -472,6 +477,23 @@ namespace AlgoritmPrizm.Com
                 _PrizmApiTimeLiveTockenMinute = value;
             }
         }
+
+        /// <summary>
+        /// Файл для лога чеков
+        /// </summary>
+        public static string FileCheckLog
+        {
+            get
+            {
+                return _FileCheckLog;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FileCheckLog", value.ToString());
+                Save();
+                _FileCheckLog = value.ToString();
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -632,6 +654,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrizmApiSystemLogon", _PrizmApiSystemLogon);
                     xmlMain.SetAttribute("PrizmApiSystemPassord", "");
                     xmlMain.SetAttribute("PrizmApiTimeLiveTockenMinute", _PrizmApiTimeLiveTockenMinute.ToString());
+                    xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -698,6 +721,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemLogon") try { _PrizmApiSystemLogon = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemPassord") try { _PrizmApiSystemPassord = Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiTimeLiveTockenMinute") try { _PrizmApiTimeLiveTockenMinute = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                     }
 
                     // Получаем список вложенных объектов

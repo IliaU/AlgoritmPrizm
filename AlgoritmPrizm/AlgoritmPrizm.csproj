@@ -116,6 +116,7 @@
     <Compile Include="BLL\JsonRestError.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
+    <Compile Include="Com\FileCheckLog.cs" />
     <Compile Include="Com\FR.cs" />
     <Compile Include="Com\ReportLib\BReport.cs" />
     <Compile Include="Com\ReportLib\IColbackDocument.cs" />

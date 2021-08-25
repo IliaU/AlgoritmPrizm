@@ -627,11 +627,15 @@ namespace AlgoritmPrizm.Com
                         Fr.StringForPrinting = item.item_description1;
                         break;
                 }
-                
+
 
                 // Если есть матрих код то количество не может быть более 1
                 if (string.IsNullOrWhiteSpace(note)) Fr.Quantity = item.quantity;
-                else Fr.Quantity = 1;                            // Код маркировки есть значит количество 1
+                else
+                {  // Матрикс код обнаружен Логируем инфу
+                    Fr.Quantity = 1;                            // Код маркировки есть значит количество 1
+                    FileCheckLog.EventPrintSave(note, Doc.sid, (decimal)item.price, DocCustTyp, Doc.receipt_type, item.sid);
+                }
                 Fr.Price = (decimal)item.price;             // Цена в строке  (decimal)1.56;
 
                 // В зависимости от типа документа

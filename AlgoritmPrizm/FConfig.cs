@@ -88,6 +88,7 @@ namespace AlgoritmPrizm
                 this.txtBoxPrizmApiSystemLogon.Text = Config.PrizmApiSystemLogon;
                 this.txtBoxPrizmApiSystemPassord.Text = Config.PrizmApiSystemPassord;
                 this.txtBoxPrizmApiTimeLiveTockenMinute.Text = Config.PrizmApiTimeLiveTockenMinute.ToString();
+                this.txtBoxFileCheckLog.Text = Config.FileCheckLog;
             }
             catch (Exception ex)
             {
@@ -182,6 +183,8 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxPrizmApiTimeLiveTockenMinute.Text), GetType().Name, EventEn.Message);
                 }
+
+                Config.FileCheckLog = this.txtBoxFileCheckLog.Text;
 
                 this.Close();
             }
