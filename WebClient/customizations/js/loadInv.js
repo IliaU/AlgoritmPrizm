@@ -53,7 +53,7 @@ function loadFile(input, documentType) {
 		console.log(invItems);
 		await addDocumentItems(invItems, documentSID, documentType);
 
-		// reloadPage();
+		reloadPage();
 	};
 
 	reader.onerror = function() {

@@ -15,8 +15,7 @@
         <voucher-show-cost-button callback="overrideSeeItemCost.action" disable="overrideSeeItemCost.disable"></voucher-show-cost-button>
         <label for="file" class="btn btn-info">Load from file</label>
         <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this, 'voucher')" style="display: none">
-        <label for="verification-file" class="btn btn-info">Verification</label>
-        <input accept=".txt,.dat" type="file" id="verification-file" onchange="loadFile(this, 'voucher')" style="display: none">
+        <button id="verification-buttton" class="btn btn-info" onclick="openVerification('voucher')">Verification</button>
         </div>
     </div>
   </div>>

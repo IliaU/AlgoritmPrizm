@@ -17,21 +17,22 @@ const verificationTypeParams = {
     }
 };
 const session = JSON.parse(sessionStorage.getItem("session"));
+const verificationField = "note";
+
+const urlParams = new URLSearchParams(window.location.search);
+const verificationType = urlParams.get("type");
+const SID = urlParams.get("sid");
 
 var documentItems = [];
 
-
-async function init () {const urlParams = new URLSearchParams(window.location.search);
-    const verificationType = urlParams.get("type");
-    const SID = urlParams.get("sid");
-
+async function loadDocumentContent () {
     if (!(verificationType && SID)) {
         alert("Недостаточно данных для верификации");
         window.close();
     }
 
     const items = await getItemsFromAPI(SID, verificationType);
-    initTable();
+    initItemsTable();
 
     for (let i = 0; i < items.length; i++) {
         items[i].quantity = items[i][verificationTypeParams[verificationType].itemQty];
@@ -41,7 +42,17 @@ async function init () {const urlParams = new URLSearchParams(window.location.se
     documentItems = items;
 }
 
-function loadFile(input) {
+async function loadFile(input) {
+    let itemTable = $("#table");
+    let errorTable = $("#error-table");
+    let errorBlock = $("#errors");
+
+    itemTable.bootstrapTable("removeAll");
+    errorTable.bootstrapTable("removeAll");
+    errorBlock[0].style.display = "none";
+
+    await loadDocumentContent();
+
     let file = input.files[0];
     let reader = new FileReader()
     reader.readAsText(file);
@@ -62,11 +73,16 @@ function loadFile(input) {
                     if (verifiedItem) {
                         lostItems = lostItems.filter(item => item.itempos !== verifiedItem.itempos);
                     } else {
-                        let error = {
-                            upc: UPC,
-                            description: "Этого UPC нет в документе"
-                        };
-                        invalidItems.push(error);  
+                        let newItem = await getItemInfo(UPC);
+                        if (newItem) {
+                            addItem(newItem);
+                        } else {
+                            let error = {
+                                upc: UPC,
+                                description: "Этого UPC нет в документе"
+                            };
+                            invalidItems.push(error);
+                        }
                     }
                 } else {
                     let error = {
@@ -79,13 +95,20 @@ function loadFile(input) {
         }
 
         for (let i = 0; i < lostItems.length; i++) {
-            $("#table").bootstrapTable('updateByUniqueId', {
+            itemTable.bootstrapTable('updateByUniqueId', {
                 id: lostItems[i].itempos,
                 row: {
                     read: 0,
                     difference: 0 - lostItems[i].quantity,
                 }
             });
+        }
+
+        if (invalidItems) {
+            initErrorTable();
+            for (let i = 0; i < invalidItems.length; i++) {
+                errorTable.bootstrapTable("append", invalidItems[i]);
+            }
         }
     }
 }
@@ -100,7 +123,7 @@ function verifyItem (UPC, quantity) {
     let difference = quantity - item.quantity;
 
     $("#table").bootstrapTable('updateByUniqueId', {
-        id: item.itempos,
+        id: item["itempos"],
         row: {
             read: quantity,
             difference: difference,
@@ -110,7 +133,7 @@ function verifyItem (UPC, quantity) {
     return item;
 }
 
-async function loadItemInfo (UPC) {
+async function getItemInfo (UPC) {
     const cols = ["description1", "description2"];
     let url = HOSTNAME + "/v1/rest/inventory?cols=upc," + cols.join() + "&filter=upc,eq," + UPC;
     let response = await fetch(url, {
@@ -120,10 +143,15 @@ async function loadItemInfo (UPC) {
         },
     });
     let result = await response.json();
-    console.log(result);
+
+    if (result) {
+        return result[0];
+    } else {
+        return null;
+    }
 }
 
-function initTable () {
+function initItemsTable () {
     $('#table').bootstrapTable({
         columns: [{
             field: 'position',
@@ -150,6 +178,19 @@ function initTable () {
         uniqueId: 'position',
         sortName: 'position',
         sortOrder: 'asc'
+    });
+}
+
+function initErrorTable () {
+    $("#errors")[0].style.display = "block";
+    $("#error-table").bootstrapTable({
+        columns: [{
+            field: "upc",
+            title: "UPC"
+        }, {
+            field: "description",
+            title: "Описание ошибки"
+        }]
     });
 }
 
@@ -194,6 +235,75 @@ async function getItemsFromAPI(SID, verificationType) {
     }
 }
 
+async function updateField (fieldName, newValue, verificationType) {
+    let url =
+        HOSTNAME +
+        "/api/backoffice/" +
+        verificationTypeParams[verificationType].documentName +
+        "/" +
+        SID +
+        "?cols=rowversion";
 
-init();
+    let response = await fetch(url, {
+        method: "GET",
+        headers: {
+            'Content-Type': 'application/json, version=2',
+            'Accept': 'application/json, version=2',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Auth-Session': session.token
+        }
+    });
+
+    response = await response.json();
+
+    if (!response.data.length) {
+        return null;
+    }
+
+    console.log(response.data);
+    let rowVersion = response.data[0]["rowversion"];
+
+    url =
+        HOSTNAME +
+        "/api/backoffice/" +
+        verificationTypeParams[verificationType].documentName +
+        "/" +
+        SID +
+        "?filter=rowversion,eq," +
+        rowVersion;
+
+    response = await fetch(url, {
+        method: "PUT",
+        headers: {
+            'Content-Type': 'application/json, version=2',
+            'Accept': 'application/json, version=2',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Auth-Session': session.token
+        },
+        body: `{"data":[{"rowversion":${rowVersion},"${fieldName}":"${newValue}"}]}`
+    });
+
+    response = await response.json();
+
+    if (!response.data.length) {
+        return null;
+    }
+}
+
+function verifyDocument () {
+    const d = new Date();
+    const userSID = session["employeesid"] ?? null;  // add user sid from session data
+
+    if (!userSID) {
+        return null;
+    }
+
+    let verificationInformation = `Верифицировано ${userSID}:${d.toJSON()}`;
+    let verification = updateField(verificationField, verificationInformation, verificationType);
+
+    return verification;
+}
+
+
+loadDocumentContent();
 

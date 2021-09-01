@@ -23,8 +23,7 @@
             <allocation-pattern ng-if="purchaseOrder.isEdit"></allocation-pattern>
           </div>
           <div class="col-xs-2">
-            <label for="file" class="btn btn-info">Verification</label>
-            <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this, 'adjustment')" style="display: none">
+            <button id="verification-buttton" class="btn btn-info" onclick="openVerification('po')">Verification</button>
           </div>
         </div>
       </div>

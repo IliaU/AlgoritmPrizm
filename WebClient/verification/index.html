@@ -14,7 +14,7 @@
 </head>
 <body>
 <div class="container-fluid col" style="padding-top: 30px">
-    <div class="container-fluid pb-5" style="width: 100%">
+    <div class="container-fluid pb-4" style="width: 100%">
         <div class="card bg-secondary" style="width: 100%">
             <div class="card-header text-light">
                 <div class="row align-items-center">
@@ -26,7 +26,7 @@
                         <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this)" style="display: none">
                     </div>
                     <div class="col-2 align-items-end">
-                        <button type="button" class="btn btn-success col">Верификация</button>
+                        <button type="button" class="btn btn-success col" onclick="verifyDocument()">Верификация</button>
                     </div>
                 </div>
             </div>
@@ -34,7 +34,9 @@
                 <table id="table"></table>
             </div>
         </div>
-        <!-- <div class="card bg-secondary mt-4" style="width: 100%">
+    </div>
+    <div class="container-fluid pb-5" id="errors" style="width: 100%; display: none">
+        <div class="card bg-danger" style="width: 100%">
             <div class="card-header text-light">
                 <div class="row align-items-center">
                     <div class="col h4 mb-0">
@@ -43,9 +45,9 @@
                 </div>
             </div>
             <div class="card-body bg-light" style="overflow-y: auto; max-height: 500px;">
-                <table id="error_table"></table>
+                <table id="error-table"></table>
             </div>
-        </div> -->
+        </div>
     </div>
 </div>
 </body>
