@@ -1172,8 +1172,9 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+                
                 // Если скдки нет то печатать нечего
-                if (Doc.discount_perc == 0) return;
+                if (Doc.discount_perc == null || Doc.discount_perc == 0) return;
 
                 //LogMsg(Format('Скидка/Наценка на чек: %.2f', [DiscPerc]));
                 //AssertMsg(Format('Скидка/Наценка на чек: %.2f', [DiscPerc]));
@@ -1193,7 +1194,7 @@ namespace AlgoritmPrizm.Com
                 {
                     if (Doc.discount_perc > 0)
                     {
-                        Fr.DiscountOnCheck = Doc.discount_perc;
+                        Fr.DiscountOnCheck = (double)Doc.discount_perc;
                     }
                     else
                     {

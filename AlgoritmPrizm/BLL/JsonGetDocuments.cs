@@ -1091,8 +1091,8 @@ namespace AlgoritmPrizm.BLL
 ""usedshippingamt"":null,
 ""orderchangedflag"":false,
 ""promogdmandisc"":false,
-""originalstoresid"":""603242764000178005""
-,""receipttype"":0,
+""originalstoresid"":""603242764000178005"",
+""receipttype"":0,
 ""ordertype"":null,
 ""hassale"":true,
 ""hasreturn"":false,
