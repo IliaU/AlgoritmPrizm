@@ -131,13 +131,14 @@ namespace AlgoritmPrizm.Com
 
                 // Запрос на изменение номера фискального документа
                 string url = string.Format("{0}/v1/rest/document/{1}?filter=row_version,eq,{2}&cols=*", Config.HostPrizmApi, Doc.sid, Doc.row_version);
-                string ResContent = null;
                 RestClient _httpClient = new RestClient(url);
                 RestRequest request = new RestRequest { Method = Method.PUT };
                 request.AddHeader("Accept", "application/json,version=2");
                 request.AddHeader("Auth-Session", AuthSession);
                 string payload = string.Format("[{{\"rowversion\": {0},\"{1}\": {2}}}]", Doc.row_version + 1, Config.FieldDocNum.ToString(), NDocNum);
                 request.AddJsonBody(payload);
+                IRestResponse response = _httpClient.Execute(request);
+                string ResContent = response.Content;
             }
             catch (Exception ex)
             {
