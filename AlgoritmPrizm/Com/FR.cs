@@ -790,7 +790,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при печати строчки матрич кода: {0}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при печати строчки матрикс кода: {0}", ex.Message));
                 Log.EventSave(ae.Message, "Com.FR.PrintCheckItem", EventEn.Error);
                 throw ae;
             }
