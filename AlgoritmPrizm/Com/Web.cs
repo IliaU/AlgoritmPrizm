@@ -188,8 +188,12 @@ namespace AlgoritmPrizm.Com
                             switch (request.RawUrl)
                             {
                                 case @"/marking":
-                                    responceString = @"{""scan_marking"":""True""}";
-                                   // responceString = @"{""error_data"":""True""}";
+
+                                    bool HashProductClass = false;
+                                    bool Mandatory = false;
+
+                                    if (Config.GetMatrixAlways || HashProductClass) responceString = string.Format(@"{""scan_marking"":""True"", ""Mandatory"":""{0}""}", Mandatory);
+
                                     break;
                                 case @"/xreport":
                                     FR.XREport();

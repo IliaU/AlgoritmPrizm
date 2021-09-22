@@ -15,11 +15,22 @@ namespace AlgoritmPrizm
 {
     public partial class FConfig : Form
     {
+        DataTable dt;
+        DataView dv;
+
         public FConfig()
         {
             try
             {
                 InitializeComponent();
+
+                // создание таблицы
+                if (this.dt == null)
+                {
+                    this.dt = new DataTable();
+                    this.dt.Columns.Add(new DataColumn("ProductClass", typeof(string)));
+                    this.dt.Columns.Add(new DataColumn("Mandatory", typeof(bool)));
+                }
             }
             catch (Exception ex)
             {
@@ -89,6 +100,22 @@ namespace AlgoritmPrizm
                 this.txtBoxPrizmApiSystemPassord.Text = Config.PrizmApiSystemPassord;
                 this.txtBoxPrizmApiTimeLiveTockenMinute.Text = Config.PrizmApiTimeLiveTockenMinute.ToString();
                 this.txtBoxFileCheckLog.Text = Config.FileCheckLog;
+
+                this.chkBox_GetMatrixAlways.Checked = Config.GetMatrixAlways;
+                // Наполняем таблицу данными и подключаем к гриду
+                if (this.dt != null && this.dt.Rows.Count == 0)
+                {
+                    foreach (BLL.ProdictMatrixClass item in Config.ProdictMatrixClassList)
+                    {
+                        DataRow nrow = this.dt.NewRow();
+                        nrow["ProductClass"] = item.ProductClass;
+                        nrow["Mandatory"] = item.Mandatory;
+                        this.dt.Rows.Add(nrow);
+                    }
+
+                    this.dv = new DataView(dt);
+                    this.dgProdictMatrixClass.DataSource = this.dv;
+                }
             }
             catch (Exception ex)
             {
@@ -185,6 +212,29 @@ namespace AlgoritmPrizm
                 }
 
                 Config.FileCheckLog = this.txtBoxFileCheckLog.Text;
+
+                Config.GetMatrixAlways = this.chkBox_GetMatrixAlways.Checked;
+                List<BLL.ProdictMatrixClass> NewProdictMatrixClass = new List<BLL.ProdictMatrixClass>();
+                for (int i = 0; i < this.dgProdictMatrixClass.Rows.Count; i++)
+                {
+                    string strProductClass = null;
+                    if (this.dgProdictMatrixClass.Rows[i].Cells["ProductClass"].Value != null) strProductClass = this.dgProdictMatrixClass.Rows[i].Cells["ProductClass"].Value.ToString();
+                    bool boolMandatory = false;
+                    if (this.dgProdictMatrixClass.Rows[i].Cells["Mandatory"].Value != null) try { boolMandatory = Boolean.Parse(this.dgProdictMatrixClass.Rows[i].Cells["Mandatory"].Value.ToString()); } catch (Exception){}
+                        
+                    if (strProductClass != null)
+                    {
+                        if (string.IsNullOrWhiteSpace(strProductClass))
+                        {
+                            Log.EventSave("Не указано обязательное поле с индетификатором класса продуктов строчка будет пропущена", GetType().Name, EventEn.Warning);
+                            continue;
+                        }
+
+                        NewProdictMatrixClass.Add(new BLL.ProdictMatrixClass(strProductClass, boolMandatory));
+                    }
+                }
+
+                Config.SetProdictMatrixClassList(NewProdictMatrixClass);
 
                 this.Close();
             }

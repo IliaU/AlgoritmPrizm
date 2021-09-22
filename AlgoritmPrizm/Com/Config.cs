@@ -65,6 +65,11 @@ namespace AlgoritmPrizm.Com
         private static XmlElement xmlCustomers;
 
         /// <summary>
+        /// Корневой элемент нашего списка со списком классов
+        /// </summary>
+        private static XmlElement xmlProdictMatrixClassList;
+
+        /// <summary>
         /// Идентификатор типа оплаты за нал
         /// </summary>
         private static int _TenderTypeCash = 0;
@@ -144,6 +149,16 @@ namespace AlgoritmPrizm.Com
         /// Файл для лога чеков
         /// </summary>
         private static string _FileCheckLog = "AlgoritmSale.Log";
+
+        /// <summary>
+        /// Всегда требовать запрос матрикс кода
+        /// </summary>
+        private static bool _GetMatrixAlways = false;
+
+        /// <summary>
+        /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
+        /// </summary>
+        private static List<ProdictMatrixClass> _ProdictMatrixClassList = new List<ProdictMatrixClass>();
         #endregion
 
         #region Public Param
@@ -494,6 +509,35 @@ namespace AlgoritmPrizm.Com
                 _FileCheckLog = value.ToString();
             }
         }
+
+        /// <summary>
+        /// Всегда требовать запрос матрикс кода
+        /// </summary>
+        public static bool GetMatrixAlways
+        {
+            get
+            {
+                return _GetMatrixAlways;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("GetMatrixAlways", value.ToString());
+                Save();
+                _GetMatrixAlways = value;
+            }
+        }
+
+        /// <summary>
+        /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
+        /// </summary>
+        public static List<ProdictMatrixClass> ProdictMatrixClassList
+        {
+            get
+            {
+                return _ProdictMatrixClassList;
+            }
+            private set {}
+        }
         #endregion
 
         #region Puplic Method
@@ -570,8 +614,48 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузкесохранении нового списка кассиров с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка кассиров с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".SetCustomers", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Создание нового списка с классами продуктов по которым нужно запросить матрикс код
+        /// </summary>
+        /// <param name="NewProdictMatrixClass"></param>
+        public static void SetProdictMatrixClassList(List<ProdictMatrixClass> NewProdictMatrixClass)
+        {
+            try
+            {
+                // Если не существует узла то создаём его
+                if (xmlProdictMatrixClassList==null)
+                {
+                    xmlProdictMatrixClassList = Document.CreateElement("ProdictMatrixClassList");
+                    xmlRoot.AppendChild(xmlProdictMatrixClassList);
+                }
+                
+                foreach (XmlElement item in xmlProdictMatrixClassList.ChildNodes)
+                {
+                    xmlProdictMatrixClassList.RemoveChild(item);
+                }
+
+                foreach (ProdictMatrixClass item in NewProdictMatrixClass)
+                {
+                    XmlElement xmlProdictMatrixClass = Document.CreateElement("ProdictMatrixClass");
+                    xmlProdictMatrixClass.SetAttribute("ProductClass", item.ProductClass);
+                    xmlProdictMatrixClass.SetAttribute("Mandatory", item.Mandatory.ToString());
+                    xmlProdictMatrixClassList.AppendChild(xmlProdictMatrixClass);
+                }
+
+                Save();
+
+                _ProdictMatrixClassList = NewProdictMatrixClass;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка с классами продуктов по которым нужно запросить матрикс код: {0}", ex.Message));
+                Log.EventSave(ae.Message, ".SetProdictMatrixClassList", EventEn.Error);
                 throw ae;
             }
         }
@@ -655,6 +739,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrizmApiSystemPassord", "");
                     xmlMain.SetAttribute("PrizmApiTimeLiveTockenMinute", _PrizmApiTimeLiveTockenMinute.ToString());
                     xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
+                    xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -722,6 +807,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemPassord") try { _PrizmApiSystemPassord = Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiTimeLiveTockenMinute") try { _PrizmApiTimeLiveTockenMinute = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
 
                     // Получаем список вложенных объектов
@@ -774,6 +860,36 @@ namespace AlgoritmPrizm.Com
                                         }
                                     }
                                     catch { } // Если ключь прочитать не удалось или он не подходит, то исключения выдавать не нужно
+                                }
+                                break;
+                            case "ProdictMatrixClassList":
+                                xmlProdictMatrixClassList = iMain;
+                                // Получаем список вложенных объектов
+                                foreach (XmlElement iProdictMatrixClass in iMain.ChildNodes)
+                                {
+                                    switch (iProdictMatrixClass.Name)
+                                    {
+                                        case "ProdictMatrixClass":
+
+                                            string ProductClass = null;
+                                            bool Mandatory = false;
+
+                                            // Получаем значения из заголовка
+                                            for (int i = 0; i < iProdictMatrixClass.Attributes.Count; i++)
+                                            {
+                                                if (iProdictMatrixClass.Attributes[i].Name == "ProductClass") try { ProductClass = iProdictMatrixClass.Attributes[i].Value.ToString(); } catch (Exception) { }
+                                                if (iProdictMatrixClass.Attributes[i].Name == "Mandatory") try { Mandatory = Boolean.Parse(iProdictMatrixClass.Attributes[i].Value.ToString()); } catch (Exception) { }
+                                            }
+
+                                            if (!string.IsNullOrWhiteSpace(ProductClass))
+                                            {
+                                                _ProdictMatrixClassList.Add(new ProdictMatrixClass(ProductClass, Mandatory));
+                                            }
+
+                                            break;
+                                        default:
+                                            break;
+                                    }
                                 }
                                 break;
                             case "Customers":

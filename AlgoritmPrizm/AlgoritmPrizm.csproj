@@ -114,6 +114,7 @@
     <Compile Include="BLL\JsonPrintFiscDocParam.cs" />
     <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
     <Compile Include="BLL\JsonRestError.cs" />
+    <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
     <Compile Include="Com\FileCheckLog.cs" />

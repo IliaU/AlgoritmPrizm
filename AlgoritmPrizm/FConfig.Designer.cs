@@ -68,23 +68,34 @@
             this.lblFileCheckLog = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.pnl_ProdictMatrixClassFill = new System.Windows.Forms.Panel();
+            this.dgProdictMatrixClass = new System.Windows.Forms.DataGridView();
+            this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
+            this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
+            this.ProductClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.tabPage2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage7.SuspendLayout();
+            this.pnl_ProdictMatrixClassFill.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).BeginInit();
+            this.pnl_ProdictMatrixClassTop.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
             this.SuspendLayout();
@@ -403,11 +414,12 @@
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
+            this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(448, 303);
+            this.tabControl1.Size = new System.Drawing.Size(477, 303);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
@@ -423,28 +435,10 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(440, 277);
+            this.tabPage1.Size = new System.Drawing.Size(469, 277);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
-            // 
-            // tabPage2
-            // 
-            this.tabPage2.Controls.Add(this.lblHostPrizmApi);
-            this.tabPage2.Controls.Add(this.txtBoxHostPrizmApi);
-            this.tabPage2.Controls.Add(this.lblPrizmApiSystemLogon);
-            this.tabPage2.Controls.Add(this.txtBoxPrizmApiTimeLiveTockenMinute);
-            this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemLogon);
-            this.tabPage2.Controls.Add(this.lblPrizmApiTimeLiveTockenMinute);
-            this.tabPage2.Controls.Add(this.lblPrizmApiSystemPassord);
-            this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemPassord);
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(440, 277);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "Api";
-            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // groupBox1
             // 
@@ -475,17 +469,35 @@
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(440, 277);
+            this.tabPage3.Size = new System.Drawing.Size(469, 277);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.lblHostPrizmApi);
+            this.tabPage2.Controls.Add(this.txtBoxHostPrizmApi);
+            this.tabPage2.Controls.Add(this.lblPrizmApiSystemLogon);
+            this.tabPage2.Controls.Add(this.txtBoxPrizmApiTimeLiveTockenMinute);
+            this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemLogon);
+            this.tabPage2.Controls.Add(this.lblPrizmApiTimeLiveTockenMinute);
+            this.tabPage2.Controls.Add(this.lblPrizmApiSystemPassord);
+            this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemPassord);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(469, 277);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Api";
+            this.tabPage2.UseVisualStyleBackColor = true;
             // 
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.tabControl2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(440, 277);
+            this.tabPage4.Size = new System.Drawing.Size(469, 277);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -500,7 +512,7 @@
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(440, 277);
+            this.tabControl2.Size = new System.Drawing.Size(469, 277);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -513,7 +525,7 @@
             this.tabPage5.Location = new System.Drawing.Point(23, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(413, 269);
+            this.tabPage5.Size = new System.Drawing.Size(442, 269);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -523,10 +535,51 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(498, 359);
+            this.tabPage6.Size = new System.Drawing.Size(413, 269);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // tabPage7
+            // 
+            this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassFill);
+            this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Size = new System.Drawing.Size(469, 277);
+            this.tabPage7.TabIndex = 4;
+            this.tabPage7.Text = "Матрикс коды";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            // 
+            // pnl_ProdictMatrixClassFill
+            // 
+            this.pnl_ProdictMatrixClassFill.Controls.Add(this.dgProdictMatrixClass);
+            this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 29);
+            this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(469, 248);
+            this.pnl_ProdictMatrixClassFill.TabIndex = 2;
+            // 
+            // dgProdictMatrixClass
+            // 
+            this.dgProdictMatrixClass.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgProdictMatrixClass.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.ProductClass,
+            this.Mandatory});
+            this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
+            this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(469, 248);
+            this.dgProdictMatrixClass.TabIndex = 0;
+            // 
+            // pnl_ProdictMatrixClassTop
+            // 
+            this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBox_GetMatrixAlways);
+            this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
+            this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(469, 29);
+            this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
             // pnlBotton
             // 
@@ -534,7 +587,7 @@
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBotton.Location = new System.Drawing.Point(0, 303);
             this.pnlBotton.Name = "pnlBotton";
-            this.pnlBotton.Size = new System.Drawing.Size(448, 36);
+            this.pnlBotton.Size = new System.Drawing.Size(477, 36);
             this.pnlBotton.TabIndex = 39;
             // 
             // pnlFill
@@ -543,14 +596,39 @@
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(448, 303);
+            this.pnlFill.Size = new System.Drawing.Size(477, 303);
             this.pnlFill.TabIndex = 40;
+            // 
+            // chkBox_GetMatrixAlways
+            // 
+            this.chkBox_GetMatrixAlways.AutoSize = true;
+            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 6);
+            this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
+            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(254, 17);
+            this.chkBox_GetMatrixAlways.TabIndex = 0;
+            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам";
+            this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
+            // 
+            // ProductClass
+            // 
+            this.ProductClass.DataPropertyName = "ProductClass";
+            this.ProductClass.HeaderText = "Идентификатор класса продуктов";
+            this.ProductClass.Name = "ProductClass";
+            this.ProductClass.Width = 300;
+            // 
+            // Mandatory
+            // 
+            this.Mandatory.DataPropertyName = "Mandatory";
+            this.Mandatory.HeaderText = "Необходимый";
+            this.Mandatory.Name = "Mandatory";
+            this.Mandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Mandatory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(448, 339);
+            this.ClientSize = new System.Drawing.Size(477, 339);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -560,16 +638,21 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
-            this.tabPage2.ResumeLayout(false);
-            this.tabPage2.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
+            this.tabPage2.ResumeLayout(false);
+            this.tabPage2.PerformLayout();
             this.tabPage4.ResumeLayout(false);
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage7.ResumeLayout(false);
+            this.pnl_ProdictMatrixClassFill.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).EndInit();
+            this.pnl_ProdictMatrixClassTop.ResumeLayout(false);
+            this.pnl_ProdictMatrixClassTop.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -626,5 +709,12 @@
         private System.Windows.Forms.TabPage tabPage6;
         private System.Windows.Forms.Panel pnlBotton;
         private System.Windows.Forms.Panel pnlFill;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.DataGridView dgProdictMatrixClass;
+        private System.Windows.Forms.Panel pnl_ProdictMatrixClassFill;
+        private System.Windows.Forms.Panel pnl_ProdictMatrixClassTop;
+        private System.Windows.Forms.CheckBox chkBox_GetMatrixAlways;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ProductClass;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Mandatory;
     }
 }
