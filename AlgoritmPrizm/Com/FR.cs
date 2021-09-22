@@ -552,17 +552,20 @@ namespace AlgoritmPrizm.Com
                 throw ae;
             }
         }
-
+        //
         /// <summary>
         /// Печать обычной строки
         /// </summary>
         /// <param name="S">Строка которую надо напечатать</param>
+        /// <param name="AlingRirht">Выравнивание справа</param>
         /// <returns></returns>
-        private static void PrintLine(string S)
+        private static void PrintLine(string S, bool AlingRirht)
         {
             try
             {
-                Fr.StringForPrinting = S;
+                if (AlingRirht) Fr.StringForPrinting = string.Format("{0}{1}", new string(' ', nLenLine - S.Length), S);
+                else Fr.StringForPrinting = S;
+
                 if (Fr.PrintString() != 0)
                 {
                     FrStatError rez = Verification(Fr);
@@ -576,9 +579,26 @@ namespace AlgoritmPrizm.Com
                 Log.EventSave(ae.Message, "Com.FR.PrintLine", EventEn.Error);
                 throw ae;
             }
-
         }
-
+        //
+        /// <summary>
+        /// Печать обычной строки
+        /// </summary>
+        /// <param name="S">Строка которую надо напечатать</param>
+        /// <returns></returns>
+        private static void PrintLine(string S)
+        {
+            try
+            {
+                PrintLine(S, false);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при печати чека: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.FR.PrintLine", EventEn.Error);
+                throw ae;
+            }
+        }
 
         /// <summary>
         /// Отчеркиваем заголовок или ещё какую часть чека
@@ -785,6 +805,12 @@ namespace AlgoritmPrizm.Com
                         Verification(Fr);
                         throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
                     }*/
+
+                    // Печать инфа по скидке по позиции
+                    if (item.discount_amt != 0)
+                    {
+                        PrintLine(string.Format("Скидка {0} руб.", item.discount_amt), true);
+                    }
                 }
 
             }
@@ -1174,7 +1200,8 @@ namespace AlgoritmPrizm.Com
             {
                 
                 // Если скдки нет то печатать нечего
-                if (Doc.discount_perc == null || Doc.discount_perc == 0) return;
+                if ((Doc.discount_perc == null || Doc.discount_perc == 0) 
+                    || (Doc.total_discount_amt == null || Doc.total_discount_amt == 0)) return;
 
                 //LogMsg(Format('Скидка/Наценка на чек: %.2f', [DiscPerc]));
                 //AssertMsg(Format('Скидка/Наценка на чек: %.2f', [DiscPerc]));
@@ -1182,52 +1209,61 @@ namespace AlgoritmPrizm.Com
                 // Отчёркиваем линию
                 PrintSeparator();
 
-                // Печатаем скидку
-                if (AsCopy)
+                // Скидка в процентах на чек
+                if (Doc.discount_perc != null && Doc.discount_perc != 0)
                 {
-                    PrintSeparator();       // Отчёркиваем линию
-
-                    Print2in1Line(string.Format("Скидка на чек   {0}", Doc.discount_perc),
-                            string.Format("={0}", Doc.discount_amount));
-                }
-                else
-                {
-                    if (Doc.discount_perc > 0)
+                    
+                    // Печатаем скидку
+                    if (AsCopy)
                     {
-                        Fr.DiscountOnCheck = (double)Doc.discount_perc;
+                        PrintSeparator();       // Отчёркиваем линию
+
+                        Print2in1Line(string.Format("Скидка на чек   {0}", Doc.discount_perc),
+                                string.Format("={0}", Doc.discount_amount));
                     }
                     else
                     {
-                        // Пробегаем по типу оплаты
-                        foreach (JsonPrintFiscDocTender item in Doc.tenders)
+                        if (Doc.discount_perc > 0)
                         {
-                            //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
-                            switch (Doc.receipt_type)
+                            Fr.DiscountOnCheck = (double)Doc.discount_perc;
+                        }
+                        else
+                        {
+                            // Пробегаем по типу оплаты
+                            foreach (JsonPrintFiscDocTender item in Doc.tenders)
                             {
-                                case 0:
-                                    Fr.Summ1 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
-                                    break;
-                                case 1:
-                                    Fr.Summ4 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
-                                    break;
-                                case 2:
-                                    Fr.Summ2 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
-                                    break;
-                                default:
-                                    throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                                switch (Doc.receipt_type)
+                                {
+                                    case 0:
+                                        Fr.Summ1 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
+                                        break;
+                                    case 1:
+                                        Fr.Summ4 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
+                                        break;
+                                    case 2:
+                                        Fr.Summ2 = (decimal)(Doc.discount_amount < 0 ? Doc.discount_amount * -1 : Doc.discount_amount);
+                                        break;
+                                    default:
+                                        throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                }
+                            }
+                            
+
+                            //Метод регистрирует надбавку на сумму, задаваемую в свойстве Summ1, с вычислением налогов.
+                            if (Fr.Charge() != 0)
+                            {
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли напечатать надбавку при регистрации чека: {0}", Status.Description));
                             }
                         }
-
-
-                        
-
-                        //Метод регистрирует надбавку на сумму, задаваемую в свойстве Summ1, с вычислением налогов.
-                        if (Fr.Charge() != 0)
-                        {
-                            Verification(Fr);
-                            throw new ApplicationException(string.Format("Не смогли напечатать надбавку при регистрации чека: {0}", Status.Description));
-                        }
                     }
+                }
+
+                if (Doc.total_discount_amt != null || Doc.total_discount_amt != 0)
+                {
+                    Print2in1Line(string.Format("Скидка на чек   {0}", Doc.total_discount_amt),
+                                string.Format("={0}", Doc.total_discount_amt));
                 }
             }
             catch (Exception ex)

@@ -11,3 +11,5 @@ log4net.2.0.12
 net start http /y
 
 C:\ProgramData\RetailPro\Server\WebClient
+Для скидок ))
+update invn_sbs_item set max_disc_perc1 = '100' , max_disc_perc2 = '100'
