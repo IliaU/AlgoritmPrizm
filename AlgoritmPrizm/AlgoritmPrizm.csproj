@@ -94,6 +94,8 @@
     <Compile Include="BLL\JsonConfigFfdConverter.cs" />
     <Compile Include="BLL\JsonConfigFieldDocNumConverter.cs" />
     <Compile Include="BLL\JsonConfigFieldItemConverter.cs" />
+    <Compile Include="BLL\JsonDocMarking.cs" />
+    <Compile Include="BLL\JsonDocMarkingHrefs.cs" />
     <Compile Include="BLL\JsonGetDocumentJournal.cs" />
     <Compile Include="BLL\JsonGetDocumentJournalHrefs.cs" />
     <Compile Include="BLL\JsonGetDocuments.cs" />

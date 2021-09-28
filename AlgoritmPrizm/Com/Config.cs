@@ -159,6 +159,11 @@ namespace AlgoritmPrizm.Com
         /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
         /// </summary>
         private static List<ProdictMatrixClass> _ProdictMatrixClassList = new List<ProdictMatrixClass>();
+
+        /// <summary>
+        /// Поведение при запросе матрикс кода если он не найтен в текущих группах товаров и не стоит галочка GetMatrixAlways=true
+        /// </summary>
+        private static bool _MandatoryDefault = false;
         #endregion
 
         #region Public Param
@@ -538,6 +543,23 @@ namespace AlgoritmPrizm.Com
             }
             private set {}
         }
+
+        /// <summary>
+        /// Поведение при запросе матрикс кода если он не найтен в текущих группах товаров и не стоит галочка GetMatrixAlways=true
+        /// </summary>
+        public static bool MandatoryDefault
+        {
+            get
+            {
+                return _MandatoryDefault;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("MandatoryDefault", value.ToString());
+                Save();
+                _MandatoryDefault = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -740,6 +762,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrizmApiTimeLiveTockenMinute", _PrizmApiTimeLiveTockenMinute.ToString());
                     xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
                     xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
+                    xmlMain.SetAttribute("MandatoryDefault", _MandatoryDefault.ToString());
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -808,6 +831,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrizmApiTimeLiveTockenMinute") try { _PrizmApiTimeLiveTockenMinute = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
 
                     // Получаем список вложенных объектов

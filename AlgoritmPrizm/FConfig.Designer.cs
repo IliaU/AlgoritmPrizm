@@ -78,12 +78,13 @@
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.pnl_ProdictMatrixClassFill = new System.Windows.Forms.Panel();
             this.dgProdictMatrixClass = new System.Windows.Forms.DataGridView();
-            this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
-            this.pnlBotton = new System.Windows.Forms.Panel();
-            this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.ProductClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
+            this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
+            this.pnlBotton = new System.Windows.Forms.Panel();
+            this.pnlFill = new System.Windows.Forms.Panel();
+            this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -535,7 +536,7 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(413, 269);
+            this.tabPage6.Size = new System.Drawing.Size(442, 269);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -572,14 +573,41 @@
             this.dgProdictMatrixClass.Size = new System.Drawing.Size(469, 248);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
+            // ProductClass
+            // 
+            this.ProductClass.DataPropertyName = "ProductClass";
+            this.ProductClass.HeaderText = "Идентификатор класса продуктов";
+            this.ProductClass.Name = "ProductClass";
+            this.ProductClass.Width = 300;
+            // 
+            // Mandatory
+            // 
+            this.Mandatory.DataPropertyName = "Mandatory";
+            this.Mandatory.HeaderText = "Необходимый";
+            this.Mandatory.Name = "Mandatory";
+            this.Mandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Mandatory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            // 
             // pnl_ProdictMatrixClassTop
             // 
+            this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBoxMandatoryDefault);
             this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBox_GetMatrixAlways);
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
             this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(469, 29);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
+            // 
+            // chkBox_GetMatrixAlways
+            // 
+            this.chkBox_GetMatrixAlways.AutoSize = true;
+            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 6);
+            this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
+            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(254, 17);
+            this.chkBox_GetMatrixAlways.TabIndex = 0;
+            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам";
+            this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
+            this.chkBox_GetMatrixAlways.CheckedChanged += new System.EventHandler(this.chkBox_GetMatrixAlways_CheckedChanged);
             // 
             // pnlBotton
             // 
@@ -599,30 +627,15 @@
             this.pnlFill.Size = new System.Drawing.Size(477, 303);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkBox_GetMatrixAlways
+            // chkBoxMandatoryDefault
             // 
-            this.chkBox_GetMatrixAlways.AutoSize = true;
-            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 6);
-            this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
-            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(254, 17);
-            this.chkBox_GetMatrixAlways.TabIndex = 0;
-            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам";
-            this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
-            // 
-            // ProductClass
-            // 
-            this.ProductClass.DataPropertyName = "ProductClass";
-            this.ProductClass.HeaderText = "Идентификатор класса продуктов";
-            this.ProductClass.Name = "ProductClass";
-            this.ProductClass.Width = 300;
-            // 
-            // Mandatory
-            // 
-            this.Mandatory.DataPropertyName = "Mandatory";
-            this.Mandatory.HeaderText = "Необходимый";
-            this.Mandatory.Name = "Mandatory";
-            this.Mandatory.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.Mandatory.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.chkBoxMandatoryDefault.AutoSize = true;
+            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(291, 6);
+            this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
+            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(171, 17);
+            this.chkBoxMandatoryDefault.TabIndex = 1;
+            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию";
+            this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
             // 
             // FConfig
             // 
@@ -716,5 +729,6 @@
         private System.Windows.Forms.CheckBox chkBox_GetMatrixAlways;
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductClass;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Mandatory;
+        private System.Windows.Forms.CheckBox chkBoxMandatoryDefault;
     }
 }

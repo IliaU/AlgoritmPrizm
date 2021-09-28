@@ -101,6 +101,7 @@ namespace AlgoritmPrizm
                 this.txtBoxPrizmApiTimeLiveTockenMinute.Text = Config.PrizmApiTimeLiveTockenMinute.ToString();
                 this.txtBoxFileCheckLog.Text = Config.FileCheckLog;
 
+                this.chkBoxMandatoryDefault.Checked = Config.MandatoryDefault;
                 this.chkBox_GetMatrixAlways.Checked = Config.GetMatrixAlways;
                 // Наполняем таблицу данными и подключаем к гриду
                 if (this.dt != null && this.dt.Rows.Count == 0)
@@ -214,6 +215,8 @@ namespace AlgoritmPrizm
                 Config.FileCheckLog = this.txtBoxFileCheckLog.Text;
 
                 Config.GetMatrixAlways = this.chkBox_GetMatrixAlways.Checked;
+                if (!Config.GetMatrixAlways) Config.MandatoryDefault = this.chkBoxMandatoryDefault.Checked;
+
                 List<BLL.ProdictMatrixClass> NewProdictMatrixClass = new List<BLL.ProdictMatrixClass>();
                 for (int i = 0; i < this.dgProdictMatrixClass.Rows.Count; i++)
                 {
@@ -244,6 +247,22 @@ namespace AlgoritmPrizm
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }
+        }
+
+        private void chkBox_GetMatrixAlways_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.chkBox_GetMatrixAlways.Checked) this.chkBoxMandatoryDefault.Visible = false;
+                else this.chkBoxMandatoryDefault.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при попытке изменить видимость элемента chkBoxMandatoryDefault: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                throw ae;
+            }
+
         }
     }
 }

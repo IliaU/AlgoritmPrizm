@@ -190,9 +190,27 @@ namespace AlgoritmPrizm.Com
                                 case @"/marking":
 
                                     bool HashProductClass = false;
-                                    bool Mandatory = false;
+                                    bool Mandatory = Config.MandatoryDefault;
 
-                                    if (Config.GetMatrixAlways || HashProductClass) responceString = string.Format(@"{""scan_marking"":""True"", ""Mandatory"":""{0}""}", Mandatory);
+                                    if (!Config.GetMatrixAlways)
+                                    {
+                                        JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
+                                        string dcs_code = FineDoc.dcs_code;
+                                        foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
+                                        {
+                                            if (dcs_code == item.ProductClass)
+                                            {
+                                                Mandatory = item.Mandatory;
+                                                break;
+                                            }
+                                        }
+                                    }
+
+                                    if (Config.GetMatrixAlways || HashProductClass)
+                                    {
+                                        string  sssstmp = "{"+string.Format(@"""scan_marking"":""True"", ""Mandatory"":""{0}""", Mandatory)+"}";
+                                        responceString = sssstmp;
+                                    }
 
                                     break;
                                 case @"/xreport":
