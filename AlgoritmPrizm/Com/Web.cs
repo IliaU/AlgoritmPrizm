@@ -201,6 +201,7 @@ namespace AlgoritmPrizm.Com
                                             if (dcs_code == item.ProductClass)
                                             {
                                                 Mandatory = item.Mandatory;
+                                                HashProductClass = true;
                                                 break;
                                             }
                                         }
