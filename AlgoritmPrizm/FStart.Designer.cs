@@ -31,11 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FStart));
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.TSMItemGonfig = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemGonfigCashiries = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemGonfigOther = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tSSLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Pnl = new System.Windows.Forms.Panel();
-            this.TSMItemGonfigCashiries = new System.Windows.Forms.ToolStripMenuItem();
-            this.TSMItemGonfigOther = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemLic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -54,10 +55,25 @@
             // 
             this.TSMItemGonfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMItemGonfigCashiries,
-            this.TSMItemGonfigOther});
+            this.TSMItemGonfigOther,
+            this.TSMItemLic});
             this.TSMItemGonfig.Name = "TSMItemGonfig";
             this.TSMItemGonfig.Size = new System.Drawing.Size(78, 20);
             this.TSMItemGonfig.Text = "Настройка";
+            // 
+            // TSMItemGonfigCashiries
+            // 
+            this.TSMItemGonfigCashiries.Name = "TSMItemGonfigCashiries";
+            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(152, 22);
+            this.TSMItemGonfigCashiries.Text = "Кассиры";
+            this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
+            // 
+            // TSMItemGonfigOther
+            // 
+            this.TSMItemGonfigOther.Name = "TSMItemGonfigOther";
+            this.TSMItemGonfigOther.Size = new System.Drawing.Size(152, 22);
+            this.TSMItemGonfigOther.Text = "Основные";
+            this.TSMItemGonfigOther.Click += new System.EventHandler(this.TSMItemGonfigOther_Click);
             // 
             // statusStrip
             // 
@@ -83,19 +99,12 @@
             this.Pnl.Size = new System.Drawing.Size(521, 323);
             this.Pnl.TabIndex = 2;
             // 
-            // TSMItemGonfigCashiries
+            // TSMItemLic
             // 
-            this.TSMItemGonfigCashiries.Name = "TSMItemGonfigCashiries";
-            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(152, 22);
-            this.TSMItemGonfigCashiries.Text = "Кассиры";
-            this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
-            // 
-            // TSMItemGonfigOther
-            // 
-            this.TSMItemGonfigOther.Name = "TSMItemGonfigOther";
-            this.TSMItemGonfigOther.Size = new System.Drawing.Size(152, 22);
-            this.TSMItemGonfigOther.Text = "Основные";
-            this.TSMItemGonfigOther.Click += new System.EventHandler(this.TSMItemGonfigOther_Click);
+            this.TSMItemLic.Name = "TSMItemLic";
+            this.TSMItemLic.Size = new System.Drawing.Size(152, 22);
+            this.TSMItemLic.Text = "Лицензия";
+            this.TSMItemLic.Click += new System.EventHandler(this.TSMItemLic_Click);
             // 
             // FStart
             // 
@@ -132,6 +141,7 @@
         private System.Windows.Forms.Panel Pnl;
         private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigCashiries;
         private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigOther;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemLic;
     }
 }
 

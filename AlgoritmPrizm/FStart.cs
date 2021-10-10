@@ -326,6 +326,7 @@ namespace AlgoritmPrizm
             }
         }
 
+
         // Основные настройки
         private void TSMItemGonfigOther_Click(object sender, EventArgs e)
         {
@@ -337,6 +338,20 @@ namespace AlgoritmPrizm
             catch (Exception ex)
             {
                 Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "TSMItemGonfigOther_Click", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
+            }
+        }
+
+        // Пользователь вызывает форму с лицензиями
+        private void TSMItemLic_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FLic Frm = new FLic();
+                Frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "TSMItemLic_Click", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
             }
         }
     }

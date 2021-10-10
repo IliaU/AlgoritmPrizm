@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.Text;
+
 //https://habr.com/ru/post/120157/
 
 
@@ -38,6 +40,63 @@ namespace AlgoritmPrizm
 
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
+
+
+                /*
+ 
+  
+                // Тестирование SMTP
+                Com.SQLList.Add(new Com.Data.ItemSQL("ee","tt"), true);
+
+                // Создаём сервер с нужными нам параметрами
+                //Com.SmtpFarm.SmtpList.AddSmtpClient("ALFAMOS3.MOSCOW.ALFAINTRA.NET", 0, null, null, new Com.Data.Mail("Ipogodin@Alfabank.ru", "Ipogodin@Alfabank.ru", "Sub1", "Bod1"));
+                //Com.SmtpFarm.SmtpList.AddSmtpClient("ALFAMOS3.MOSCOW.ALFAINTRA.NET", 0, null, null, new Com.Data.Mail("Ipogodin@Alfabank.ru", "Ipogodin@Alfabank.ru", "Sub2", "Bod2"));
+                //Com.SmtpFarm.SmtpList.StopSend(); 
+  
+
+                //Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "ilia82@mail.ru", "`1174306A", true, null);
+                Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "k007k@list.ru", "Soun3008", true, null);
+                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "alex-ily67:proBA12345#:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
+                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "alex-ily67:proBA12345#:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
+                SmtpCli.StartSend();
+                SmtpCli.StopSend();
+
+
+
+
+                // Тестирование HTTP
+                Com.SmtpLib.HTTPClient ccc = new Com.SmtpLib.HTTPClient(@"https://api.infobip.com/sms/1/text/single", @"application/json", @"application/json", Com.SmtpLib.EnHttpMethod.POST, Com.SmtpLib.EnHttpAuthorizTyp.BasicToBase64, @"fp_rus", @"g$3Tc7A7&1*");
+                ccc.AddEmail(new Com.SmtpLib.Mail("", "", "", @"
+                {  
+                   ""from"":""InfoSMS"",
+                   ""to"":""+79163253757"",
+                   ""text"":""My first первое Infobip SMS""
+                }
+                ", "Тест1", System.Text.Encoding.Default, null));
+                ccc.AddEmail(new Com.SmtpLib.Mail("", "", "", @"
+                {  
+                   ""from"":""InfoSMS"",
+                   ""to"":""+79265605713"",
+                   ""text"":""Первое  SMS""
+                }
+                ", "Тест1", System.Text.Encoding.Default, null));
+                ccc.StartSend();
+                ccc.StopSend();
+*/
+
+
+
+                /*
+                //Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "ilia82@mail.ru", "`1174306A", true, null);
+                Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "k007k@list.ru", "Soun3008", true, null);
+                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "alex-ily67:proBA12345#:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
+                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "alex-ily67:proBA12345#:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
+                SmtpCli.StartSend();
+                SmtpCli.StopSend();
+                */
+
+
+
 
                 /* Тест Json объектов
                     //BLL.JsonGetDocuments  doc = BLL.JsonGetDocuments.DeserializeJson(BLL.JsonGetDocuments.SampleTest);
