@@ -33,10 +33,12 @@
             this.TSMItemGonfig = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemGonfigCashiries = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemGonfigOther = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemLic = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemAboutPrv = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemConfigDB = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tSSLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Pnl = new System.Windows.Forms.Panel();
-            this.TSMItemLic = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -56,7 +58,9 @@
             this.TSMItemGonfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMItemGonfigCashiries,
             this.TSMItemGonfigOther,
-            this.TSMItemLic});
+            this.TSMItemLic,
+            this.TSMItemAboutPrv,
+            this.TSMItemConfigDB});
             this.TSMItemGonfig.Name = "TSMItemGonfig";
             this.TSMItemGonfig.Size = new System.Drawing.Size(78, 20);
             this.TSMItemGonfig.Text = "Настройка";
@@ -64,16 +68,36 @@
             // TSMItemGonfigCashiries
             // 
             this.TSMItemGonfigCashiries.Name = "TSMItemGonfigCashiries";
-            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(152, 22);
+            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(231, 22);
             this.TSMItemGonfigCashiries.Text = "Кассиры";
             this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
             // 
             // TSMItemGonfigOther
             // 
             this.TSMItemGonfigOther.Name = "TSMItemGonfigOther";
-            this.TSMItemGonfigOther.Size = new System.Drawing.Size(152, 22);
+            this.TSMItemGonfigOther.Size = new System.Drawing.Size(231, 22);
             this.TSMItemGonfigOther.Text = "Основные";
             this.TSMItemGonfigOther.Click += new System.EventHandler(this.TSMItemGonfigOther_Click);
+            // 
+            // TSMItemLic
+            // 
+            this.TSMItemLic.Name = "TSMItemLic";
+            this.TSMItemLic.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemLic.Text = "Лицензия";
+            this.TSMItemLic.Click += new System.EventHandler(this.TSMItemLic_Click);
+            // 
+            // TSMItemAboutPrv
+            // 
+            this.TSMItemAboutPrv.Name = "TSMItemAboutPrv";
+            this.TSMItemAboutPrv.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemAboutPrv.Text = "Доступные провайдеры";
+            // 
+            // TSMItemConfigDB
+            // 
+            this.TSMItemConfigDB.Name = "TSMItemConfigDB";
+            this.TSMItemConfigDB.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemConfigDB.Text = "Подключение к базе данных";
+            this.TSMItemConfigDB.Click += new System.EventHandler(this.TSMItemConfigDB_Click);
             // 
             // statusStrip
             // 
@@ -99,13 +123,6 @@
             this.Pnl.Size = new System.Drawing.Size(521, 323);
             this.Pnl.TabIndex = 2;
             // 
-            // TSMItemLic
-            // 
-            this.TSMItemLic.Name = "TSMItemLic";
-            this.TSMItemLic.Size = new System.Drawing.Size(152, 22);
-            this.TSMItemLic.Text = "Лицензия";
-            this.TSMItemLic.Click += new System.EventHandler(this.TSMItemLic_Click);
-            // 
             // FStart
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,6 +140,7 @@
             this.Text = "Сервис обслуживающий Prizm";
             this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
+            this.Load += new System.EventHandler(this.FStart_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
             this.statusStrip.ResumeLayout(false);
@@ -142,6 +160,8 @@
         private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigCashiries;
         private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigOther;
         private System.Windows.Forms.ToolStripMenuItem TSMItemLic;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemAboutPrv;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemConfigDB;
     }
 }
 

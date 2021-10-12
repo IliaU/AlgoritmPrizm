@@ -227,7 +227,38 @@ namespace AlgoritmPrizm.Com
                                     // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
                                     break;
                                 case @"/printfiscdoc":
-                                    FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
+
+                                    // Десериализуем наш объект
+                                    JsonPrintFiscDoc Doc = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
+
+                                    // Пробегаем по типу оплаты
+                                    decimal SumDoc = 0;
+                                    foreach (JsonPrintFiscDocTender item in Doc.tenders)
+                                    {
+                                        //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                                        switch (Doc.receipt_type)
+                                        {
+                                            case 0:
+                                                // Если тип оплаты нал
+                                                if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc =+ (decimal)item.taken;
+                                                
+                                                break;
+                                            case 1:
+                                                // Если тип оплаты нал
+                                                if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc =+ (decimal)item.given*-1;
+                                                
+                                                break;
+                                            case 2:
+                                                // Депозит
+                                                
+                                                break;
+                                            default:
+                                                throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                        }
+                                    }
+
+                                    // Отправляем на печать
+                                    FR.PrintCheck(Doc, 1, "Рога и копыта");
                                     break;
                                 case @"/AksRepItemHistory":
                                     try

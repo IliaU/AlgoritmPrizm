@@ -71,7 +71,12 @@ namespace AlgoritmPrizm
             Com.Log.onEventLog += new EventHandler<Lib.EventLog>(Log_onEventLog); //Com.Log.EventSave("Тест", this.GetType().Name, EventEn.Error);
             //Com.Lic.onRegNewKeyAfte += new EventHandler<Com.LicLib.onLicEventKey>(Lic_onRegNewKey);
 
-
+            // Подключаем список доступных провайдеров для подключения ToolStripMenuItem
+            // TSMItemAboutPrv
+            foreach (string item in Com.ProviderFarm.ListProviderName())
+            {
+                this.TSMItemAboutPrv.DropDownItems.Add((new Lib.UProvider(item)).InfoToolStripMenuItem());
+            }
         }
 
         /// <summary>
@@ -354,5 +359,36 @@ namespace AlgoritmPrizm
                 Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "TSMItemLic_Click", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
             }
         }
+
+        private void FStart_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                // Если есть подключение
+                if (Com.ProviderFarm.HashConnect())
+                {
+                    if (Com.ProviderFarm.CurrentPrv == null || !Com.ProviderFarm.CurrentPrv.HashConnect) throw new ApplicationException("Не установлено подключение с базой данных.");
+                    else
+                    {
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(ex.Message, GetType().Name + ".FStart_Load", Lib.EventEn.Error, true, true);
+            }
+        }
+       
+        // Пользователь решил поправить подключение
+        private void TSMItemConfigDB_Click(object sender, EventArgs e)
+        {
+            using (FConnetSetup Frm = new FConnetSetup())
+            {
+                Frm.ShowDialog();
+            }
+        }
+
+
     }
 }

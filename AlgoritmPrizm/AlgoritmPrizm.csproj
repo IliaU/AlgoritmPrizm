@@ -123,6 +123,22 @@
     <Compile Include="Com\Config.cs" />
     <Compile Include="Com\FileCheckLog.cs" />
     <Compile Include="Com\FR.cs" />
+    <Compile Include="Com\ProviderFarm.cs" />
+    <Compile Include="Com\Provider\Lib\ProviderBase.cs" />
+    <Compile Include="Com\Provider\Lib\ProviderI.cs" />
+    <Compile Include="Com\Provider\ODBCprv.cs" />
+    <Compile Include="Com\Provider\ODBC\FInfo.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Com\Provider\ODBC\FInfo.Designer.cs">
+      <DependentUpon>FInfo.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Com\Provider\ODBC\FSetupConnectDB.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Com\Provider\ODBC\FSetupConnectDB.Designer.cs">
+      <DependentUpon>FSetupConnectDB.cs</DependentUpon>
+    </Compile>
     <Compile Include="Com\ReportLib\BReport.cs" />
     <Compile Include="Com\ReportLib\IColbackDocument.cs" />
     <Compile Include="Com\Lic.cs" />
@@ -154,6 +170,12 @@
     <Compile Include="FConfig.Designer.cs">
       <DependentUpon>FConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="FConnetSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FConnetSetup.Designer.cs">
+      <DependentUpon>FConnetSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="FLic.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -162,6 +184,7 @@
     </Compile>
     <Compile Include="Lib\EnFrTyp.cs" />
     <Compile Include="Lib\EnSmtpTyp.cs" />
+    <Compile Include="Lib\EventProviderFarm.cs" />
     <Compile Include="Lib\EventSmtpListStatus.cs" />
     <Compile Include="Lib\EventSQLList.cs" />
     <Compile Include="Lib\FfdEn.cs" />
@@ -183,9 +206,13 @@
     <Compile Include="Lib\Param.cs" />
     <Compile Include="Lib\ParamList.cs" />
     <Compile Include="Lib\SMTPList.cs" />
+    <Compile Include="Lib\UProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Server.cs" />
+    <EmbeddedResource Include="Com\Provider\ODBC\FInfo.resx">
+      <DependentUpon>FInfo.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FCashiries.resx">
       <DependentUpon>FCashiries.cs</DependentUpon>
     </EmbeddedResource>
@@ -223,6 +250,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Pic\DB.jpg" />
     <EmbeddedResource Include="Icon.ico" />
     <Content Include="Pic\AKS.jpg" />
   </ItemGroup>
@@ -237,6 +265,7 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

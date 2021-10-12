@@ -588,6 +588,7 @@ namespace AlgoritmPrizm.Com
                 // Подписываемся на события
                 Com.Lic.onCreatedLicKey += new EventHandler<LicLib.onLicEventKey>(Lic_onCreatedLicKey);
                 Com.Lic.onRegNewKey += new EventHandler<LicLib.onLicItem>(Lic_onRegNewKey);
+                Com.ProviderFarm.onEventSetup += new EventHandler<EventProviderFarm>(ProviderFarm_onEventSetup);
             }
             catch (Exception ex)
             {
@@ -743,6 +744,8 @@ namespace AlgoritmPrizm.Com
                     XmlElement xmlMain = Document.CreateElement("AlgoritmPrizm");
                     xmlMain.SetAttribute("Version", _Version.ToString());
                     xmlMain.SetAttribute("Trace", _Trace.ToString());
+                    xmlMain.SetAttribute("PrvFullName", null);
+                    xmlMain.SetAttribute("ConnectionString", "");
                     xmlMain.SetAttribute("Host", _Host);
                     xmlMain.SetAttribute("Port", _Port.ToString());
                     xmlMain.SetAttribute("Ffd", _Ffd.ToString());
@@ -808,10 +811,16 @@ namespace AlgoritmPrizm.Com
                     if (Version < int.Parse(xmlRoot.GetAttribute("Version"))) throw appV;
                     if (Version > int.Parse(xmlRoot.GetAttribute("Version"))) UpdateVersionXml(xmlRoot, int.Parse(xmlRoot.GetAttribute("Version")));
 
+                    string PrvFullName = null;
+                    string ConnectionString = null;
+
                     // Получаем значения из заголовка
                     for (int i = 0; i < xmlRoot.Attributes.Count; i++)
                     {
                         if (xmlRoot.Attributes[i].Name == "Trace") try {_Trace = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception){}
+                        if (xmlRoot.Attributes[i].Name == "PrvFullName") PrvFullName = xmlRoot.Attributes[i].Value.ToString();
+                        try { if (xmlRoot.Attributes[i].Name == "ConnectionString") ConnectionString = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
+                        catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Host") try { _Host = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Port") try { _Port = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Ffd") try { _Ffd = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _Ffd); } catch (Exception) { }
@@ -833,6 +842,13 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
+
+                    // Подгружаем провайдер
+                    try
+                    {
+                        Com.ProviderFarm.Setup(new UProvider(PrvFullName, ConnectionString), false);
+                    }
+                    catch (Exception) { }
 
                     // Получаем список вложенных объектов
                     foreach (XmlElement iMain in xmlRoot.ChildNodes)
@@ -1048,6 +1064,34 @@ namespace AlgoritmPrizm.Com
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении во время создания нового ключа в файл xml: {0}", ex.Message));
                 Log.EventSave(ae.Message, obj.GetType().Name + ".Lic_onCreatedLicKey()", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        // Событие изменения текщего провайдера
+        private void ProviderFarm_onEventSetup(object sender, EventProviderFarm e)
+        {
+            try
+            {
+                XmlElement root = Document.DocumentElement;
+
+                root.SetAttribute("PrvFullName", e.Uprv.PrvInType);
+                try { root.SetAttribute("ConnectionString", Com.Lic.InCode(e.Uprv.ConnectionString)); }
+                catch (Exception) { }
+
+
+
+                // Получаем список объектов
+                //foreach (XmlElement item in root.ChildNodes)
+                //{
+                //}
+
+                Save();
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException("Упали при изменении файла конфигурации с ошибкой: " + ex.Message);
+                Log.EventSave(ae.Message, obj.GetType().Name + ".ProviderFarm_onEventSetup()", EventEn.Error);
                 throw ae;
             }
         }
