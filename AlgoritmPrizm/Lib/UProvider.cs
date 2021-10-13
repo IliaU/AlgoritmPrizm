@@ -258,6 +258,28 @@ namespace AlgoritmPrizm.Lib
         {
             this.PrvB.setData(SQL);
         }
-        
+
+        /// <summary>
+        /// Устанавливаем факт по чеку
+        /// </summary>
+        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="InvcNo">Сид докумнета</param>
+        /// <param name="PosDate">Дата документа</param>
+        /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
+        public void SetPrizmCustPorog(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum)
+        {
+            this.PrvI.SetPrizmCustPorog(CustSid, InvcNo, PosDate, TotalCashSum);
+        }
+
+        /// <summary>
+        /// Получить сумму по клиенту за дату
+        /// </summary>
+        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="Dt">Дата смены</param>
+        /// <returns>Сумму по клиенту за выбранную дату</returns>
+        public decimal GetTotalCashSum(string CustSid, DateTime Dt)
+        {
+            return this.PrvI.GetTotalCashSum(CustSid, Dt);
+        }
     }
 }

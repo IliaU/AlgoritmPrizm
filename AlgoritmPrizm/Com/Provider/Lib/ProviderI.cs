@@ -31,13 +31,22 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// </summary>
         /// <returns>Строка подклюения с замасированной секретной информацией</returns>
         string PrintConnectionString();
-/*
+
         /// <summary>
-        /// Объединение клиентов
+        /// Устанавливаем факт по чеку
         /// </summary>
-        /// <param name="MergeClientMain">Основной клиент</param>
-        /// <param name="MergeClientDonors">Клинеты доноры</param>
-        void MergeClient(Customer MergeClientMain, List<Customer> MergeClientDonors);
-        */
+        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="InvcNo">Сид докумнета</param>
+        /// <param name="PosDate">Дата документа</param>
+        /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
+        void SetPrizmCustPorog(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum);
+
+        /// <summary>
+        /// Получить сумму по клиенту за дату
+        /// </summary>
+        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="Dt">Дата смены</param>
+        /// <returns>Сумму по клиенту за выбранную дату</returns>
+        decimal GetTotalCashSum(string CustSid, DateTime Dt);
     }
 }

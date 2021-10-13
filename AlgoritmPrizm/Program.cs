@@ -41,6 +41,12 @@ namespace AlgoritmPrizm
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
 
+                /*
+                тестируем запись в базу
+                
+                Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog("1245332", "323454523", DateTime.Now, (decimal)45.0 / 2);
+                decimal rrr =Com.ProviderFarm.CurrentPrv.GetTotalCashSum("1245332", DateTime.Now);
+                */
 
                 /*
  

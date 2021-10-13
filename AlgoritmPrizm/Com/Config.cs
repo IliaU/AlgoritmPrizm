@@ -242,7 +242,7 @@ namespace AlgoritmPrizm.Com
             {
                 xmlRoot.SetAttribute("TenderTypeCash", value.ToString());
                 Save();
-                _Port = value;
+                _TenderTypeCash = value;
             }
         }
 
@@ -259,7 +259,7 @@ namespace AlgoritmPrizm.Com
             {
                 xmlRoot.SetAttribute("TenderTypeCredit", value.ToString());
                 Save();
-                _Port = value;
+                _TenderTypeCredit = value;
             }
         }
 
@@ -276,7 +276,7 @@ namespace AlgoritmPrizm.Com
             {
                 xmlRoot.SetAttribute("TenderTypeGiftCert", value.ToString());
                 Save();
-                _Port = value;
+                _TenderTypeGiftCert = value;
             }
         }
 
@@ -293,7 +293,7 @@ namespace AlgoritmPrizm.Com
             {
                 xmlRoot.SetAttribute("TenderTypeGiftCard", value.ToString());
                 Save();
-                _Port = value;
+                _TenderTypeGiftCard = value;
             }
         }
 

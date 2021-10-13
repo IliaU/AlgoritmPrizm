@@ -257,6 +257,17 @@ namespace AlgoritmPrizm.Com
                                         }
                                     }
 
+                                    try
+                                    {
+                                        if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect && !string.IsNullOrWhiteSpace(Doc.bt_cuid))
+                                        {
+                                            Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(Doc.bt_cuid, Doc.sid, Doc.created_datetime, SumDoc);
+                                            SumDoc = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(Doc.bt_cuid, Doc.created_datetime);
+                                        }
+                                    }
+                                    catch (Exception){}
+                                    
+
                                     // Отправляем на печать
                                     FR.PrintCheck(Doc, 1, "Рога и копыта");
                                     break;
