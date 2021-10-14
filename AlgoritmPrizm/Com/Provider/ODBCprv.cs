@@ -220,11 +220,11 @@ namespace AlgoritmPrizm.Com.Provider
         /// <summary>
         /// Устанавливаем факт по чеку
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="InvcNo">Сид докумнета</param>
         /// <param name="PosDate">Дата документа</param>
         /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
-        public void SetPrizmCustPorog(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum)
+        public void SetPrizmCustPorog(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum)
         {
             try
             {
@@ -237,10 +237,10 @@ namespace AlgoritmPrizm.Com.Provider
                     {
                         case "SQORA32.DLL":
                         case "SQORA64.DLL":
-                            SetPrizmCustPorogORA(CustSid, InvcNo, PosDate, TotalCashSum);
+                            SetPrizmCustPorogORA(CustInn, InvcNo, PosDate, TotalCashSum);
                             break;
                         case "myodbc8a.dll":
-                            SetPrizmCustPorogMySql(CustSid, InvcNo, PosDate, TotalCashSum);
+                            SetPrizmCustPorogMySql(CustInn, InvcNo, PosDate, TotalCashSum);
                             break;
                         default:
                             throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
@@ -262,10 +262,10 @@ namespace AlgoritmPrizm.Com.Provider
         /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="Dt">Дата смены</param>
         /// <returns>Сумму по клиенту за выбранную дату</returns>
-        public decimal GetTotalCashSum(string CustSid, DateTime Dt)
+        public decimal GetTotalCashSum(string CustInn, DateTime Dt)
         {
             try
             {
@@ -278,9 +278,9 @@ namespace AlgoritmPrizm.Com.Provider
                     {
                         case "SQORA32.DLL":
                         case "SQORA64.DLL":
-                            return GetTotalCashSumORA(CustSid, Dt);
+                            return GetTotalCashSumORA(CustInn, Dt);
                         case "myodbc8a.dll":
-                            return GetTotalCashSumMySql(CustSid, Dt);
+                            return GetTotalCashSumMySql(CustInn, Dt);
                         default:
                             throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
                             //break;
@@ -478,13 +478,13 @@ namespace AlgoritmPrizm.Com.Provider
         /// <summary>
         /// Устанавливаем факт по чеку
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="InvcNo">Сид докумнета</param>
         /// <param name="PosDate">Дата документа</param>
         /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
-        public void SetPrizmCustPorogORA(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum)
+        public void SetPrizmCustPorogORA(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum)
         {
-            string CommandSql = String.Format(@"insert into aks.prizm_cust_porog(cust_sid, invc_no, dt, pos_date, total_cash_sum) Values('{0}', '{1}', TO_DATE('{2}.{3}.{4}', 'YYYY.MM.DD'), STR_TO_DATE('{2}.{3}.{4} {5}:{6}:{7}', 'YYYY.MM.DD HH24:MI:SS'), {8})", CustSid, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',', '.'));
+            string CommandSql = String.Format(@"insert into aks.prizm_cust_porog(cust_inn, invc_no, dt, pos_date, total_cash_sum) Values('{0}', '{1}', TO_DATE('{2}.{3}.{4}', 'YYYY.MM.DD'), STR_TO_DATE('{2}.{3}.{4} {5}:{6}:{7}', 'YYYY.MM.DD HH24:MI:SS'), {8})", CustInn, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',', '.'));
 
             try
             {
@@ -520,15 +520,15 @@ namespace AlgoritmPrizm.Com.Provider
         /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="Dt">Дата смены</param>
         /// <returns>Сумму по клиенту за выбранную дату</returns>
-        public decimal GetTotalCashSumORA(string CustSid, DateTime Dt)
+        public decimal GetTotalCashSumORA(string CustInn, DateTime Dt)
         {
             string CommandSql = String.Format(@"Select Sum(total_cash_sum) As total_cash_sum 
 From aks.prizm_cust_porog
 Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
-    and CustSid='{0}'", CustSid, Dt.Year, Dt.Month, Dt.Day);
+    and Cust_inn='{0}'", CustInn, Dt.Year, Dt.Month, Dt.Day);
 
             try
             {
@@ -708,13 +708,13 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
         /// <summary>
         /// Устанавливаем факт по чеку
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="InvcNo">Сид докумнета</param>
         /// <param name="PosDate">Дата документа</param>
         /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
-        public void SetPrizmCustPorogMySql(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum)
+        public void SetPrizmCustPorogMySql(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum)
         {
-            string CommandSql = String.Format(@"insert into `aks`.`prizm_cust_porog`(`cust_sid`,`invc_no`,`dt`,`pos_date`, `total_cash_sum`) Values({0}, {1}, STR_TO_DATE('{2},{3},{4}', '%Y,%m,%d'), STR_TO_DATE('{2},{3},{4} {5},{6},{7}', '%Y,%m,%d %H,%i,%s'), {8})", CustSid, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',','.'));
+            string CommandSql = String.Format(@"insert into `aks`.`prizm_cust_porog`(`cust_inn`,`invc_no`,`dt`,`pos_date`, `total_cash_sum`) Values('{0}', {1}, STR_TO_DATE('{2},{3},{4}', '%Y,%m,%d'), STR_TO_DATE('{2},{3},{4} {5},{6},{7}', '%Y,%m,%d %H,%i,%s'), {8})", CustInn, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',','.'));
 
             try
             {
@@ -750,15 +750,15 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
         /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="Dt">Дата смены</param>
         /// <returns>Сумму по клиенту за выбранную дату</returns>
-        public decimal GetTotalCashSumMySql(string CustSid, DateTime Dt)
+        public decimal GetTotalCashSumMySql(string CustInn, DateTime Dt)
         {
             string CommandSql = String.Format(@"Select Sum(total_cash_sum) As total_cash_sum 
 From `aks`.`prizm_cust_porog`
 Where `dt`=STR_TO_DATE('{1},{2},{3}', '%Y,%m,%d')
-    and `cust_sid`='{0}'", CustSid, Dt.Year, Dt.Month, Dt.Day);
+    and `cust_inn`='{0}'", CustInn, Dt.Year, Dt.Month, Dt.Day);
 
             try
             {

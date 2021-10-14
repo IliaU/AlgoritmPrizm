@@ -102,7 +102,7 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="evn">Тип события</param>
         public void EventSave(string Message, string Source, EventEn evn)
         {
-            Log.EventSave(Message, Source + " (" + this.PlugInType.Name + ")", evn);
+            Log.EventSave(Message, Source + " (" + this.PlugInType.Name + ")", evn, true, false);
         }
 
         /// <summary>

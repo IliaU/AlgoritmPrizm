@@ -35,18 +35,18 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <summary>
         /// Устанавливаем факт по чеку
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="InvcNo">Сид докумнета</param>
         /// <param name="PosDate">Дата документа</param>
         /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
-        void SetPrizmCustPorog(string CustSid, string InvcNo, DateTime PosDate, decimal TotalCashSum);
+        void SetPrizmCustPorog(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum);
 
         /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
-        /// <param name="CustSid">Сид покупателя</param>
+        /// <param name="CustInn">Инн покупателя</param>
         /// <param name="Dt">Дата смены</param>
         /// <returns>Сумму по клиенту за выбранную дату</returns>
-        decimal GetTotalCashSum(string CustSid, DateTime Dt);
+        decimal GetTotalCashSum(string CustInn, DateTime Dt);
     }
 }
