@@ -163,7 +163,12 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Наименование поля с номером ФД
         /// </summary>
-        private static FieldDocNumEn _FieldDocNum = FieldDocNumEn.Comment1;
+        private static FieldDocNumEn _FieldDocNum = FieldDocNumEn.Comment2;
+
+        /// <summary>
+        /// Наименование поля которое показывает что за клиент юрик или физик и его ИНН
+        /// </summary>
+        private static FieldDocNumEn _FieldInnTyp = FieldDocNumEn.Comment1;
 
         /// <summary>
         /// Хост с приложением Prizm на котором развёрнут API
@@ -614,6 +619,23 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
+        /// Наименование поля которое показывает что за клиент юрик или физик и его ИНН
+        /// </summary>
+        public static FieldDocNumEn FieldInnTyp
+        {
+            get
+            {
+                return _FieldInnTyp;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldInnTyp", value.ToString());
+                Save();
+                _FieldInnTyp = value;
+            }
+        }
+
+        /// <summary>
         /// Хост с приложением Prizm на котором развёрнут API
         /// </summary>
         public static string HostPrizmApi
@@ -961,6 +983,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("GiftCardTax", _GiftCardTax.ToString());
                     xmlMain.SetAttribute("FieldItem", _FieldItem.ToString());
                     xmlMain.SetAttribute("FieldDocNum", _FieldDocNum.ToString());
+                    xmlMain.SetAttribute("FieldInnTyp", _FieldInnTyp.ToString());
                     xmlMain.SetAttribute("HostPrizmApi", _HostPrizmApi);
                     xmlMain.SetAttribute("PrizmApiSystemLogon", _PrizmApiSystemLogon);
                     xmlMain.SetAttribute("PrizmApiSystemPassord", "");
@@ -1048,6 +1071,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "GiftCardTax") try { _GiftCardTax = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldItem") try {_FieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem);} catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldDocNum") try {_FieldDocNum = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldDocNum); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldInnTyp") try { _FieldDocNum = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldInnTyp); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "HostPrizmApi") try { _HostPrizmApi = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemLogon") try { _PrizmApiSystemLogon = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemPassord") try { _PrizmApiSystemPassord = Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }

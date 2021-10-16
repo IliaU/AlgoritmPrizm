@@ -240,11 +240,27 @@ namespace AlgoritmPrizm.Com
                                     {
                                         if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
                                         {
-                                            string[] coment;
-                                            if (!string.IsNullOrWhiteSpace(Doc.comment1))
+                                            // проверяем что в настройках стоит в качестве поля в котором хранится инфа
+                                            string FieldInnTyp;
+                                            switch (Config.FieldInnTyp)
                                             {
+                                                case FieldDocNumEn.Comment1:
+                                                    FieldInnTyp = Doc.comment1;
+                                                    break;
+                                                case FieldDocNumEn.Comment2:
+                                                    FieldInnTyp = Doc.comment2;
+                                                    break;
+                                                default:
+                                                    FieldInnTyp = null;
+                                                    break;
+                                            }
+
+                                            string[] coment;
+                                            if (!string.IsNullOrWhiteSpace(FieldInnTyp))
+                                            {
+                                                coment= FieldInnTyp.Split(';');
+
                                                 //Если это юрик
-                                                coment = Doc.comment1.Split(';');
                                                 if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
                                                 {
                                                     if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");

@@ -68,6 +68,8 @@
             this.lblFileCheckLog = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblNameCompany = new System.Windows.Forms.Label();
+            this.txtBoxNameCompany = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblSmsTypGatewayPassword = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
@@ -103,8 +105,8 @@
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.lblNameCompany = new System.Windows.Forms.Label();
-            this.txtBoxNameCompany = new System.Windows.Forms.TextBox();
+            this.cmbBoxFieldInnTyp = new System.Windows.Forms.ComboBox();
+            this.lblFieldInnTyp = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -467,6 +469,22 @@
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // lblNameCompany
+            // 
+            this.lblNameCompany.AutoSize = true;
+            this.lblNameCompany.Location = new System.Drawing.Point(159, 10);
+            this.lblNameCompany.Name = "lblNameCompany";
+            this.lblNameCompany.Size = new System.Drawing.Size(110, 13);
+            this.lblNameCompany.TabIndex = 39;
+            this.lblNameCompany.Text = "Название компании";
+            // 
+            // txtBoxNameCompany
+            // 
+            this.txtBoxNameCompany.Location = new System.Drawing.Point(276, 7);
+            this.txtBoxNameCompany.Name = "txtBoxNameCompany";
+            this.txtBoxNameCompany.Size = new System.Drawing.Size(379, 20);
+            this.txtBoxNameCompany.TabIndex = 40;
+            // 
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayPassword);
@@ -629,6 +647,8 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.cmbBoxFieldInnTyp);
+            this.tabPage3.Controls.Add(this.lblFieldInnTyp);
             this.tabPage3.Controls.Add(this.txtBoxTenderTypeCredit);
             this.tabPage3.Controls.Add(this.lblTenderTypeCash);
             this.tabPage3.Controls.Add(this.lblFieldItem);
@@ -828,21 +848,23 @@
             this.pnlFill.Size = new System.Drawing.Size(709, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // lblNameCompany
+            // cmbBoxFieldInnTyp
             // 
-            this.lblNameCompany.AutoSize = true;
-            this.lblNameCompany.Location = new System.Drawing.Point(159, 10);
-            this.lblNameCompany.Name = "lblNameCompany";
-            this.lblNameCompany.Size = new System.Drawing.Size(110, 13);
-            this.lblNameCompany.TabIndex = 39;
-            this.lblNameCompany.Text = "Название компании";
+            this.cmbBoxFieldInnTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldInnTyp.FormattingEnabled = true;
+            this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(204, 174);
+            this.cmbBoxFieldInnTyp.Name = "cmbBoxFieldInnTyp";
+            this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(121, 21);
+            this.cmbBoxFieldInnTyp.TabIndex = 37;
             // 
-            // txtBoxNameCompany
+            // lblFieldInnTyp
             // 
-            this.txtBoxNameCompany.Location = new System.Drawing.Point(276, 7);
-            this.txtBoxNameCompany.Name = "txtBoxNameCompany";
-            this.txtBoxNameCompany.Size = new System.Drawing.Size(379, 20);
-            this.txtBoxNameCompany.TabIndex = 40;
+            this.lblFieldInnTyp.AutoSize = true;
+            this.lblFieldInnTyp.Location = new System.Drawing.Point(10, 177);
+            this.lblFieldInnTyp.Name = "lblFieldInnTyp";
+            this.lblFieldInnTyp.Size = new System.Drawing.Size(188, 13);
+            this.lblFieldInnTyp.TabIndex = 36;
+            this.lblFieldInnTyp.Text = "Поле в котором тип клиента и ИНН";
             // 
             // FConfig
             // 
@@ -963,5 +985,7 @@
         private System.Windows.Forms.TextBox txtBoxSmsTypGatewaySmtpLogin;
         private System.Windows.Forms.Label lblNameCompany;
         private System.Windows.Forms.TextBox txtBoxNameCompany;
+        private System.Windows.Forms.ComboBox cmbBoxFieldInnTyp;
+        private System.Windows.Forms.Label lblFieldInnTyp;
     }
 }

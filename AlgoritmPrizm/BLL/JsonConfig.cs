@@ -40,6 +40,9 @@ namespace AlgoritmPrizm.BLL
         [JsonConverter(typeof(JsonConfigFieldDocNumConverter))]
         public FieldDocNumEn FieldDocNum = Config.FieldDocNum;
 
+        [JsonConverter(typeof(JsonConfigFieldDocNumConverter))]
+        public FieldDocNumEn FieldInnTyp = Config.FieldInnTyp;
+
         public string HostPrizmApi;
         public string PrizmApiSystemLogon;
         public int PrizmApiTimeLiveTockenMinute;
@@ -72,6 +75,7 @@ namespace AlgoritmPrizm.BLL
     ""FrPort"":1,
     ""FieldItem"":""Description2"",
     ""FieldDocNum"":""Comment2"",
+    ""FieldInnTyp"":""Comment1""
     ""HostPrizmApi"":""http://172.16.1.102"",
     ""PrizmApiSystemLogon"":""sysadmin"",
     ""PrizmApiTimeLiveTockenMinute"":5}
@@ -105,6 +109,8 @@ namespace AlgoritmPrizm.BLL
                 this.FieldItem = Config.FieldItem;
 
                 this.FieldDocNum = Config.FieldDocNum;
+
+                this.FieldInnTyp = Config.FieldInnTyp;
 
                 this.HostPrizmApi = Config.HostPrizmApi;
                 this.PrizmApiSystemLogon = Config.PrizmApiSystemLogon;

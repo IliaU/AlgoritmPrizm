@@ -116,6 +116,18 @@ namespace AlgoritmPrizm
                 }
                 if (SelectPositionFieldDocNum > -1) cmbBoxFieldDocNum.SelectedIndex = SelectPositionFieldDocNum;
 
+                this.cmbBoxFieldInnTyp.Items.Clear();
+                int PositionFieldInnTyp = -1;
+                int SelectPositionFieldInnTyp = -1;
+                foreach (FieldDocNumEn item in FieldDocNumEn.GetValues(typeof(FieldDocNumEn)))
+                {
+                    PositionFieldInnTyp++;
+                    cmbBoxFieldInnTyp.Items.Add(item.ToString());
+                    if (item == Config.FieldInnTyp) SelectPositionFieldInnTyp = PositionFieldInnTyp;
+                }
+                if (SelectPositionFieldInnTyp > -1) cmbBoxFieldInnTyp.SelectedIndex = SelectPositionFieldInnTyp;
+
+
 
                 this.txtBoxHostPrizmApi.Text = Config.HostPrizmApi;
                 this.txtBoxPrizmApiSystemLogon.Text = Config.PrizmApiSystemLogon;
@@ -243,6 +255,8 @@ namespace AlgoritmPrizm
                 Config.FieldItem = EventConvertor.Convert(cmbBoxFieldItem.Items[cmbBoxFieldItem.SelectedIndex].ToString(), Config.FieldItem);
 
                 Config.FieldDocNum = EventConvertor.Convert(cmbBoxFieldDocNum.Items[cmbBoxFieldDocNum.SelectedIndex].ToString(), Config.FieldDocNum);
+
+                Config.FieldInnTyp = EventConvertor.Convert(cmbBoxFieldInnTyp.Items[cmbBoxFieldInnTyp.SelectedIndex].ToString(), Config.FieldInnTyp);
 
                 Config.HostPrizmApi = this.txtBoxHostPrizmApi.Text;
                 Config.PrizmApiSystemLogon = this.txtBoxPrizmApiSystemLogon.Text;
