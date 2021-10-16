@@ -45,6 +45,7 @@ namespace AlgoritmPrizm
             try
             {
                 this.chkTrace.Checked = Config.Trace;
+                this.txtBoxNameCompany.Text = Config.NameCompany;
                 this.txtBoxHost.Text = Config.Host;
                 this.txtBoxPort.Text = Config.Port.ToString();
                 
@@ -60,6 +61,27 @@ namespace AlgoritmPrizm
                 if (SelectPosition > -1) cmbBoxFfd.SelectedIndex = SelectPosition;
 
                 this.txtBoxFrPort.Text = Config.FrPort.ToString();
+
+                cmbBoxSmsTypGateway.SelectedIndexChanged -= cmbBoxSmsTypGateway_SelectedIndexChanged;
+                cmbBoxSmsTypGateway.Items.Clear();
+                Position = -1;
+                SelectPosition = -1;
+                foreach (EnSmsTypGateway item in EnSmsTypGateway.GetValues(typeof(EnSmsTypGateway)))
+                {
+                    Position++;
+                    cmbBoxSmsTypGateway.Items.Add(item.ToString());
+                    if (item == Config.SmsTypGateway) SelectPosition = Position;
+                }
+                if (SelectPosition > -1) cmbBoxSmsTypGateway.SelectedIndex = SelectPosition;
+                cmbBoxSmsTypGateway.SelectedIndexChanged += cmbBoxSmsTypGateway_SelectedIndexChanged;
+                cmbBoxSmsTypGateway_SelectedIndexChanged(null,null);
+
+                this.txtBoxSmsTypGatewaySmtp.Text = Config.SmsTypGatewaySmtp;
+                this.txtBoxSmsTypGatewayPort.Text = Config.SmsTypGatewayPort.ToString();
+                this.txtBoxSmsTypGatewayLogin.Text = Config.SmsTypGatewayLogin;
+                this.txtBoxSmsTypGatewaySmtpLogin.Text = Config.SmsTypGatewaySmtpLogin;
+                this.txtBoxSmsTypGatewayPassword.Text = Config.SmsTypGatewayPassword;
+                this.txtBoxSmsTypGatewaySmtpPassword.Text = Config.SmsTypGatewaySmtpPassword;
 
                 this.txtBoxTenderTypeCash.Text = Config.TenderTypeCash.ToString();
                 this.txtBoxTenderTypeCredit.Text = Config.TenderTypeCredit.ToString();
@@ -119,6 +141,7 @@ namespace AlgoritmPrizm
                 }
 
                 this.txtBoxLimitCachForUrik.Text = Config.LimitCachForUrik.ToString();
+                
 
             }
             catch (Exception ex)
@@ -134,6 +157,7 @@ namespace AlgoritmPrizm
             try
             {
                 Com.Config.Trace = this.chkTrace.Checked;
+                Config.NameCompany = this.txtBoxNameCompany.Text;
                 Com.Config.Host = this.txtBoxHost.Text;
                 try
                 {
@@ -145,6 +169,23 @@ namespace AlgoritmPrizm
                 }
 
                 Config.Ffd = EventConvertor.Convert(cmbBoxFfd.Items[cmbBoxFfd.SelectedIndex].ToString(),Config.Ffd);
+
+                Config.SmsTypGateway = EventConvertor.Convert(cmbBoxSmsTypGateway.Items[cmbBoxSmsTypGateway.SelectedIndex].ToString(), Config.SmsTypGateway);
+
+                Config.SmsTypGatewaySmtp = this.txtBoxSmsTypGatewaySmtp.Text;
+                try
+                {
+                    Config.SmsTypGatewayPort = int.Parse(this.txtBoxSmsTypGatewayPort.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxSmsTypGatewayPort.Text), GetType().Name, EventEn.Message);
+                }
+                Config.SmsTypGatewayLogin= this.txtBoxSmsTypGatewayLogin.Text;
+                Config.SmsTypGatewaySmtpLogin = this.txtBoxSmsTypGatewaySmtpLogin.Text;
+                Config.SmsTypGatewayPassword= this.txtBoxSmsTypGatewayPassword.Text;
+                Config.SmsTypGatewaySmtpPassword = this.txtBoxSmsTypGatewaySmtpPassword.Text;
+
                 try
                 {
                     Com.Config.FrPort = int.Parse(this.txtBoxFrPort.Text);
@@ -275,6 +316,37 @@ namespace AlgoritmPrizm
                 throw ae;
             }
 
+        }
+
+        // Пользователь меняет тип СМС провайдера
+        private void cmbBoxSmsTypGateway_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                EnSmsTypGateway TypSms = EventConvertor.Convert(cmbBoxSmsTypGateway.Items[cmbBoxSmsTypGateway.SelectedIndex].ToString(), EnSmsTypGateway.Empty);
+
+                this.lblSmsTypGatewayLogin.Visible = false;
+                this.txtBoxSmsTypGatewayLogin.Visible = false;
+                this.lblSmsTypGatewayPassword.Visible = false;
+                this.txtBoxSmsTypGatewayPassword.Visible = false;
+                this.PnlSmsTypGateway.Visible = false;
+
+                if (TypSms != EnSmsTypGateway.Empty)
+                {
+                    this.lblSmsTypGatewayLogin.Visible = true;
+                    this.txtBoxSmsTypGatewayLogin.Visible = true;
+                    this.lblSmsTypGatewayPassword.Visible = true;
+                    this.txtBoxSmsTypGatewayPassword.Visible = true;
+                }
+
+                if (TypSms == EnSmsTypGateway.Smsc_RU) PnlSmsTypGateway.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при попытке изменить видимость элемента cmbBoxSmsTypGateway_SelectedIndexChanged: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                throw ae;
+            }
         }
     }
 }

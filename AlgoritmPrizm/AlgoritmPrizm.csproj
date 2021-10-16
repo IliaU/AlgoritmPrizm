@@ -118,6 +118,7 @@
     <Compile Include="BLL\JsonPrintFiscDocParam.cs" />
     <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
     <Compile Include="BLL\JsonRestError.cs" />
+    <Compile Include="BLL\JsonSms.cs" />
     <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
@@ -149,6 +150,7 @@
     <Compile Include="Com\LicLib\SistemaSchislenia.cs" />
     <Compile Include="Com\ReportLib\IColbackDocumentJournal.cs" />
     <Compile Include="Com\Report\ReportItemsMovement.cs" />
+    <Compile Include="Com\SmsFarm.cs" />
     <Compile Include="Com\SmtpFarm.cs" />
     <Compile Include="Com\SmtpLib\EnHttpAuthorizTyp.cs" />
     <Compile Include="Com\SmtpLib\EnHttpMethod.cs" />
@@ -183,6 +185,7 @@
       <DependentUpon>FLic.cs</DependentUpon>
     </Compile>
     <Compile Include="Lib\EnFrTyp.cs" />
+    <Compile Include="Lib\EnSmsTypGateway.cs" />
     <Compile Include="Lib\EnSmtpTyp.cs" />
     <Compile Include="Lib\EventProviderFarm.cs" />
     <Compile Include="Lib\EventSmtpListStatus.cs" />

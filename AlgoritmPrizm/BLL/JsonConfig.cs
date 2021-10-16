@@ -161,7 +161,16 @@ namespace AlgoritmPrizm.BLL
         /// <returns></returns>
         public static JsonConfig DeserializeJson(string json)
         {
-            return JsonConvert.DeserializeObject<BLL.JsonConfig>(json, BLL.JsonConfig.GetSettings());
+            try
+            {
+                return JsonConvert.DeserializeObject<BLL.JsonConfig>(json, BLL.JsonConfig.GetSettings());
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при десериализации объекта JsonConfig с ошибкой: {)}", ex.Message));
+                Log.EventSave(ae.Message, ".DeserializeJson", EventEn.Error);
+                throw ae;
+            }
         }
 
         /// <summary>
@@ -177,8 +186,8 @@ namespace AlgoritmPrizm.BLL
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {)}", ex.Message));
-                Log.EventSave(ae.Message, ".UpdateVersionXml(XmlElement root, int oldVersion)", EventEn.Error);
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сериализации объекта JsonConfig с ошибкой: {)}", ex.Message));
+                Log.EventSave(ae.Message, ".SerializeObject", EventEn.Error);
                 throw ae;
             }
         }

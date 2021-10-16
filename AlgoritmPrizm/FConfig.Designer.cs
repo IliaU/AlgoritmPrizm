@@ -68,6 +68,22 @@
             this.lblFileCheckLog = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.lblSmsTypGatewayPassword = new System.Windows.Forms.Label();
+            this.label1 = new System.Windows.Forms.Label();
+            this.txtBoxSmsTypGatewayPassword = new System.Windows.Forms.TextBox();
+            this.cmbBoxSmsTypGateway = new System.Windows.Forms.ComboBox();
+            this.lblSmsTypGatewayLogin = new System.Windows.Forms.Label();
+            this.PnlSmsTypGateway = new System.Windows.Forms.Panel();
+            this.lblSmsTypGatewaySmtpPassword = new System.Windows.Forms.Label();
+            this.txtBoxSmsTypGatewaySmtpPassword = new System.Windows.Forms.TextBox();
+            this.lblSmsTypGatewaySmtpLogin = new System.Windows.Forms.Label();
+            this.txtBoxSmsTypGatewaySmtpLogin = new System.Windows.Forms.TextBox();
+            this.lblSmsTypGatewayPort = new System.Windows.Forms.Label();
+            this.txtBoxSmsTypGatewayPort = new System.Windows.Forms.TextBox();
+            this.lblSmsTypGatewaySmtp = new System.Windows.Forms.Label();
+            this.txtBoxSmsTypGatewaySmtp = new System.Windows.Forms.TextBox();
+            this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -75,6 +91,8 @@
             this.tabControl2 = new System.Windows.Forms.TabControl();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.txtBoxLimitCachForUrik = new System.Windows.Forms.TextBox();
+            this.lbl_LimitCachForUrik = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.pnl_ProdictMatrixClassFill = new System.Windows.Forms.Panel();
             this.dgProdictMatrixClass = new System.Windows.Forms.DataGridView();
@@ -85,10 +103,12 @@
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.lbl_LimitCachForUrik = new System.Windows.Forms.Label();
-            this.txtBoxLimitCachForUrik = new System.Windows.Forms.TextBox();
+            this.lblNameCompany = new System.Windows.Forms.Label();
+            this.txtBoxNameCompany = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBox2.SuspendLayout();
+            this.PnlSmsTypGateway.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -126,7 +146,7 @@
             // 
             // txtBoxHost
             // 
-            this.txtBoxHost.Location = new System.Drawing.Point(45, 32);
+            this.txtBoxHost.Location = new System.Drawing.Point(54, 54);
             this.txtBoxHost.Name = "txtBoxHost";
             this.txtBoxHost.Size = new System.Drawing.Size(177, 20);
             this.txtBoxHost.TabIndex = 3;
@@ -134,7 +154,7 @@
             // lblHost
             // 
             this.lblHost.AutoSize = true;
-            this.lblHost.Location = new System.Drawing.Point(8, 35);
+            this.lblHost.Location = new System.Drawing.Point(17, 57);
             this.lblHost.Name = "lblHost";
             this.lblHost.Size = new System.Drawing.Size(31, 13);
             this.lblHost.TabIndex = 4;
@@ -143,7 +163,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(273, 31);
+            this.lblPort.Location = new System.Drawing.Point(282, 53);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(32, 13);
             this.lblPort.TabIndex = 5;
@@ -151,7 +171,7 @@
             // 
             // txtBoxPort
             // 
-            this.txtBoxPort.Location = new System.Drawing.Point(310, 28);
+            this.txtBoxPort.Location = new System.Drawing.Point(319, 50);
             this.txtBoxPort.Name = "txtBoxPort";
             this.txtBoxPort.Size = new System.Drawing.Size(100, 20);
             this.txtBoxPort.TabIndex = 6;
@@ -398,7 +418,7 @@
             // 
             // txtBoxFileCheckLog
             // 
-            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(310, 63);
+            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(319, 85);
             this.txtBoxFileCheckLog.Name = "txtBoxFileCheckLog";
             this.txtBoxFileCheckLog.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFileCheckLog.TabIndex = 37;
@@ -406,7 +426,7 @@
             // lblFileCheckLog
             // 
             this.lblFileCheckLog.AutoSize = true;
-            this.lblFileCheckLog.Location = new System.Drawing.Point(6, 66);
+            this.lblFileCheckLog.Location = new System.Drawing.Point(15, 88);
             this.lblFileCheckLog.Name = "lblFileCheckLog";
             this.lblFileCheckLog.Size = new System.Drawing.Size(271, 13);
             this.lblFileCheckLog.TabIndex = 36;
@@ -423,11 +443,14 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(477, 303);
+            this.tabControl1.Size = new System.Drawing.Size(709, 416);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblNameCompany);
+            this.tabPage1.Controls.Add(this.txtBoxNameCompany);
+            this.tabPage1.Controls.Add(this.groupBox2);
             this.tabPage1.Controls.Add(this.groupBox1);
             this.tabPage1.Controls.Add(this.txtBoxFileCheckLog);
             this.tabPage1.Controls.Add(this.chkTrace);
@@ -439,10 +462,157 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(469, 277);
+            this.tabPage1.Size = new System.Drawing.Size(701, 390);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBox2
+            // 
+            this.groupBox2.Controls.Add(this.lblSmsTypGatewayPassword);
+            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayPassword);
+            this.groupBox2.Controls.Add(this.cmbBoxSmsTypGateway);
+            this.groupBox2.Controls.Add(this.lblSmsTypGatewayLogin);
+            this.groupBox2.Controls.Add(this.PnlSmsTypGateway);
+            this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
+            this.groupBox2.Location = new System.Drawing.Point(11, 216);
+            this.groupBox2.Name = "groupBox2";
+            this.groupBox2.Size = new System.Drawing.Size(682, 115);
+            this.groupBox2.TabIndex = 38;
+            this.groupBox2.TabStop = false;
+            this.groupBox2.Text = "Провайдер для отправки SMS";
+            // 
+            // lblSmsTypGatewayPassword
+            // 
+            this.lblSmsTypGatewayPassword.AutoSize = true;
+            this.lblSmsTypGatewayPassword.Location = new System.Drawing.Point(262, 86);
+            this.lblSmsTypGatewayPassword.Name = "lblSmsTypGatewayPassword";
+            this.lblSmsTypGatewayPassword.Size = new System.Drawing.Size(45, 13);
+            this.lblSmsTypGatewayPassword.TabIndex = 13;
+            this.lblSmsTypGatewayPassword.Text = "Пароль";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(6, 25);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(133, 13);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Какой шлюз используем";
+            // 
+            // txtBoxSmsTypGatewayPassword
+            // 
+            this.txtBoxSmsTypGatewayPassword.Location = new System.Drawing.Point(324, 83);
+            this.txtBoxSmsTypGatewayPassword.Name = "txtBoxSmsTypGatewayPassword";
+            this.txtBoxSmsTypGatewayPassword.Size = new System.Drawing.Size(172, 20);
+            this.txtBoxSmsTypGatewayPassword.TabIndex = 14;
+            // 
+            // cmbBoxSmsTypGateway
+            // 
+            this.cmbBoxSmsTypGateway.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxSmsTypGateway.FormattingEnabled = true;
+            this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(145, 22);
+            this.cmbBoxSmsTypGateway.Name = "cmbBoxSmsTypGateway";
+            this.cmbBoxSmsTypGateway.Size = new System.Drawing.Size(149, 21);
+            this.cmbBoxSmsTypGateway.TabIndex = 8;
+            this.cmbBoxSmsTypGateway.SelectedIndexChanged += new System.EventHandler(this.cmbBoxSmsTypGateway_SelectedIndexChanged);
+            // 
+            // lblSmsTypGatewayLogin
+            // 
+            this.lblSmsTypGatewayLogin.AutoSize = true;
+            this.lblSmsTypGatewayLogin.Location = new System.Drawing.Point(11, 86);
+            this.lblSmsTypGatewayLogin.Name = "lblSmsTypGatewayLogin";
+            this.lblSmsTypGatewayLogin.Size = new System.Drawing.Size(38, 13);
+            this.lblSmsTypGatewayLogin.TabIndex = 11;
+            this.lblSmsTypGatewayLogin.Text = "Логин";
+            // 
+            // PnlSmsTypGateway
+            // 
+            this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewaySmtpPassword);
+            this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewaySmtpPassword);
+            this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewaySmtpLogin);
+            this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewaySmtpLogin);
+            this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewayPort);
+            this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewayPort);
+            this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewaySmtp);
+            this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewaySmtp);
+            this.PnlSmsTypGateway.Location = new System.Drawing.Point(6, 14);
+            this.PnlSmsTypGateway.Name = "PnlSmsTypGateway";
+            this.PnlSmsTypGateway.Size = new System.Drawing.Size(670, 63);
+            this.PnlSmsTypGateway.TabIndex = 9;
+            this.PnlSmsTypGateway.Visible = false;
+            // 
+            // lblSmsTypGatewaySmtpPassword
+            // 
+            this.lblSmsTypGatewaySmtpPassword.AutoSize = true;
+            this.lblSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(427, 37);
+            this.lblSmsTypGatewaySmtpPassword.Name = "lblSmsTypGatewaySmtpPassword";
+            this.lblSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(45, 13);
+            this.lblSmsTypGatewaySmtpPassword.TabIndex = 17;
+            this.lblSmsTypGatewaySmtpPassword.Text = "Пароль";
+            // 
+            // txtBoxSmsTypGatewaySmtpPassword
+            // 
+            this.txtBoxSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(489, 34);
+            this.txtBoxSmsTypGatewaySmtpPassword.Name = "txtBoxSmsTypGatewaySmtpPassword";
+            this.txtBoxSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(172, 20);
+            this.txtBoxSmsTypGatewaySmtpPassword.TabIndex = 18;
+            // 
+            // lblSmsTypGatewaySmtpLogin
+            // 
+            this.lblSmsTypGatewaySmtpLogin.AutoSize = true;
+            this.lblSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(176, 37);
+            this.lblSmsTypGatewaySmtpLogin.Name = "lblSmsTypGatewaySmtpLogin";
+            this.lblSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(38, 13);
+            this.lblSmsTypGatewaySmtpLogin.TabIndex = 15;
+            this.lblSmsTypGatewaySmtpLogin.Text = "Логин";
+            // 
+            // txtBoxSmsTypGatewaySmtpLogin
+            // 
+            this.txtBoxSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(220, 34);
+            this.txtBoxSmsTypGatewaySmtpLogin.Name = "txtBoxSmsTypGatewaySmtpLogin";
+            this.txtBoxSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(172, 20);
+            this.txtBoxSmsTypGatewaySmtpLogin.TabIndex = 16;
+            // 
+            // lblSmsTypGatewayPort
+            // 
+            this.lblSmsTypGatewayPort.AutoSize = true;
+            this.lblSmsTypGatewayPort.Location = new System.Drawing.Point(542, 11);
+            this.lblSmsTypGatewayPort.Name = "lblSmsTypGatewayPort";
+            this.lblSmsTypGatewayPort.Size = new System.Drawing.Size(65, 13);
+            this.lblSmsTypGatewayPort.TabIndex = 9;
+            this.lblSmsTypGatewayPort.Text = "SMTP Порт";
+            // 
+            // txtBoxSmsTypGatewayPort
+            // 
+            this.txtBoxSmsTypGatewayPort.Location = new System.Drawing.Point(613, 8);
+            this.txtBoxSmsTypGatewayPort.Name = "txtBoxSmsTypGatewayPort";
+            this.txtBoxSmsTypGatewayPort.Size = new System.Drawing.Size(48, 20);
+            this.txtBoxSmsTypGatewayPort.TabIndex = 10;
+            // 
+            // lblSmsTypGatewaySmtp
+            // 
+            this.lblSmsTypGatewaySmtp.AutoSize = true;
+            this.lblSmsTypGatewaySmtp.Location = new System.Drawing.Point(304, 11);
+            this.lblSmsTypGatewaySmtp.Name = "lblSmsTypGatewaySmtp";
+            this.lblSmsTypGatewaySmtp.Size = new System.Drawing.Size(77, 13);
+            this.lblSmsTypGatewaySmtp.TabIndex = 7;
+            this.lblSmsTypGatewaySmtp.Text = "SMTP Сервер";
+            // 
+            // txtBoxSmsTypGatewaySmtp
+            // 
+            this.txtBoxSmsTypGatewaySmtp.Location = new System.Drawing.Point(387, 8);
+            this.txtBoxSmsTypGatewaySmtp.Name = "txtBoxSmsTypGatewaySmtp";
+            this.txtBoxSmsTypGatewaySmtp.Size = new System.Drawing.Size(137, 20);
+            this.txtBoxSmsTypGatewaySmtp.TabIndex = 8;
+            // 
+            // txtBoxSmsTypGatewayLogin
+            // 
+            this.txtBoxSmsTypGatewayLogin.Location = new System.Drawing.Point(55, 83);
+            this.txtBoxSmsTypGatewayLogin.Name = "txtBoxSmsTypGatewayLogin";
+            this.txtBoxSmsTypGatewayLogin.Size = new System.Drawing.Size(172, 20);
+            this.txtBoxSmsTypGatewayLogin.TabIndex = 12;
             // 
             // groupBox1
             // 
@@ -473,7 +643,7 @@
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(469, 277);
+            this.tabPage3.Size = new System.Drawing.Size(701, 390);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -491,7 +661,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(469, 277);
+            this.tabPage2.Size = new System.Drawing.Size(701, 390);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -501,7 +671,7 @@
             this.tabPage4.Controls.Add(this.tabControl2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(469, 277);
+            this.tabPage4.Size = new System.Drawing.Size(701, 390);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -516,7 +686,7 @@
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(469, 277);
+            this.tabControl2.Size = new System.Drawing.Size(701, 390);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -529,7 +699,7 @@
             this.tabPage5.Location = new System.Drawing.Point(23, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(442, 269);
+            this.tabPage5.Size = new System.Drawing.Size(674, 382);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -541,10 +711,26 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(442, 269);
+            this.tabPage6.Size = new System.Drawing.Size(674, 382);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
+            // 
+            // txtBoxLimitCachForUrik
+            // 
+            this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(220, 9);
+            this.txtBoxLimitCachForUrik.Name = "txtBoxLimitCachForUrik";
+            this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(167, 20);
+            this.txtBoxLimitCachForUrik.TabIndex = 1;
+            // 
+            // lbl_LimitCachForUrik
+            // 
+            this.lbl_LimitCachForUrik.AutoSize = true;
+            this.lbl_LimitCachForUrik.Location = new System.Drawing.Point(6, 12);
+            this.lbl_LimitCachForUrik.Name = "lbl_LimitCachForUrik";
+            this.lbl_LimitCachForUrik.Size = new System.Drawing.Size(208, 13);
+            this.lbl_LimitCachForUrik.TabIndex = 0;
+            this.lbl_LimitCachForUrik.Text = "Лимит по юр лицам при покупке за нал";
             // 
             // tabPage7
             // 
@@ -552,7 +738,7 @@
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(469, 277);
+            this.tabPage7.Size = new System.Drawing.Size(701, 390);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Матрикс коды";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -563,7 +749,7 @@
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 29);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(469, 248);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 361);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -575,7 +761,7 @@
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(469, 248);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 361);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -600,7 +786,7 @@
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(469, 29);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 29);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
             // chkBoxMandatoryDefault
@@ -628,9 +814,9 @@
             // 
             this.pnlBotton.Controls.Add(this.btnSave);
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotton.Location = new System.Drawing.Point(0, 303);
+            this.pnlBotton.Location = new System.Drawing.Point(0, 416);
             this.pnlBotton.Name = "pnlBotton";
-            this.pnlBotton.Size = new System.Drawing.Size(477, 36);
+            this.pnlBotton.Size = new System.Drawing.Size(709, 36);
             this.pnlBotton.TabIndex = 39;
             // 
             // pnlFill
@@ -639,30 +825,30 @@
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(477, 303);
+            this.pnlFill.Size = new System.Drawing.Size(709, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // lbl_LimitCachForUrik
+            // lblNameCompany
             // 
-            this.lbl_LimitCachForUrik.AutoSize = true;
-            this.lbl_LimitCachForUrik.Location = new System.Drawing.Point(6, 12);
-            this.lbl_LimitCachForUrik.Name = "lbl_LimitCachForUrik";
-            this.lbl_LimitCachForUrik.Size = new System.Drawing.Size(208, 13);
-            this.lbl_LimitCachForUrik.TabIndex = 0;
-            this.lbl_LimitCachForUrik.Text = "Лимит по юр лицам при покупке за нал";
+            this.lblNameCompany.AutoSize = true;
+            this.lblNameCompany.Location = new System.Drawing.Point(159, 10);
+            this.lblNameCompany.Name = "lblNameCompany";
+            this.lblNameCompany.Size = new System.Drawing.Size(110, 13);
+            this.lblNameCompany.TabIndex = 39;
+            this.lblNameCompany.Text = "Название компании";
             // 
-            // txtBoxLimitCachForUrik
+            // txtBoxNameCompany
             // 
-            this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(220, 9);
-            this.txtBoxLimitCachForUrik.Name = "txtBoxLimitCachForUrik";
-            this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(167, 20);
-            this.txtBoxLimitCachForUrik.TabIndex = 1;
+            this.txtBoxNameCompany.Location = new System.Drawing.Point(276, 7);
+            this.txtBoxNameCompany.Name = "txtBoxNameCompany";
+            this.txtBoxNameCompany.Size = new System.Drawing.Size(379, 20);
+            this.txtBoxNameCompany.TabIndex = 40;
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(477, 339);
+            this.ClientSize = new System.Drawing.Size(709, 452);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -672,6 +858,10 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBox2.ResumeLayout(false);
+            this.groupBox2.PerformLayout();
+            this.PnlSmsTypGateway.ResumeLayout(false);
+            this.PnlSmsTypGateway.PerformLayout();
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.tabPage3.ResumeLayout(false);
@@ -755,5 +945,23 @@
         private System.Windows.Forms.CheckBox chkBoxMandatoryDefault;
         private System.Windows.Forms.TextBox txtBoxLimitCachForUrik;
         private System.Windows.Forms.Label lbl_LimitCachForUrik;
+        private System.Windows.Forms.GroupBox groupBox2;
+        private System.Windows.Forms.ComboBox cmbBoxSmsTypGateway;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Panel PnlSmsTypGateway;
+        private System.Windows.Forms.Label lblSmsTypGatewaySmtp;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewaySmtp;
+        private System.Windows.Forms.Label lblSmsTypGatewayPassword;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewayPassword;
+        private System.Windows.Forms.Label lblSmsTypGatewayLogin;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewayLogin;
+        private System.Windows.Forms.Label lblSmsTypGatewayPort;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewayPort;
+        private System.Windows.Forms.Label lblSmsTypGatewaySmtpPassword;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewaySmtpPassword;
+        private System.Windows.Forms.Label lblSmsTypGatewaySmtpLogin;
+        private System.Windows.Forms.TextBox txtBoxSmsTypGatewaySmtpLogin;
+        private System.Windows.Forms.Label lblNameCompany;
+        private System.Windows.Forms.TextBox txtBoxNameCompany;
     }
 }

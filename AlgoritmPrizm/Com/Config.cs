@@ -30,6 +30,11 @@ namespace AlgoritmPrizm.Com
         private static bool _Trace = false;
 
         /// <summary>
+        /// Название компании будет учавствовать в письмах от кого и в сообщениях
+        /// </summary>
+        private static string _NameCompany = "";
+
+        /// <summary>
         /// Хост на котором будет крутиться вебсервис
         /// </summary>
         private static string _Host = Environment.MachineName;
@@ -109,6 +114,41 @@ namespace AlgoritmPrizm.Com
         /// Версия фискальной памяти
         /// </summary>
         private static FfdEn _Ffd = FfdEn.v1_05;
+        
+        /// <summary>
+        /// Какой используется провайдер для отправки SMS
+        /// </summary>
+        private static EnSmsTypGateway _SmsTypGateway = EnSmsTypGateway.Empty;
+
+        /// <summary>
+        /// SMTP сервер для отправки почтовых сообщений при доставке СМС
+        /// </summary>
+        private static string _SmsTypGatewaySmtp = "smtp.mail.ru";
+
+        /// <summary>
+        /// Порт на котором работает SMTP сервер для отправки почтовых сообщений при доставке СМС
+        /// </summary>
+        private static int _SmsTypGatewayPort = 25;
+
+        /// <summary>
+        /// Логин который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// </summary>
+        private static string _SmsTypGatewayLogin = @"fp_rus";
+
+        /// <summary>
+        /// Логин который используется для отправки сообщений например при SMTP "ilia82@mail.ru" при отправки с использованием писем
+        /// </summary>
+        private static string _SmsTypGatewaySmtpLogin = @"ilia82@mail.ru";
+
+        /// <summary>
+        /// Пароль который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// </summary>
+        private static string _SmsTypGatewayPassword = "";
+
+        /// <summary>
+        /// Пароль который используется для отправки сообщений например при SMTP "ilia82@mail.ru" при отправки с использованием писем
+        /// </summary>
+        private static string _SmsTypGatewaySmtpPassword = "";
 
         /// <summary>
         /// Порт на котором будет крутится Web сервис
@@ -197,6 +237,23 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("Trace", value.ToString());
                 Save();
                 _Trace = value;
+            }
+        }
+
+        /// <summary>
+        /// Название компании будет учавствовать в письмах от кого и в сообщениях
+        /// </summary>
+        public static string NameCompany
+        {
+            get
+            {
+                return _NameCompany;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("NameCompany", value.ToString());
+                Save();
+                _NameCompany = value;
             }
         }
 
@@ -380,6 +437,128 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("Ffd", val.ToString());
                 Save();
                 _Ffd = val;
+            }
+        }
+
+        /// <summary>
+        /// Какой используется провайдер для отправки SMS
+        /// </summary>
+        public static EnSmsTypGateway SmsTypGateway
+        {
+            get
+            {
+                return _SmsTypGateway;
+            }
+            set
+            {
+                EnSmsTypGateway val = EventConvertor.Convert(value.ToString(), _SmsTypGateway);
+                xmlRoot.SetAttribute("SmsTypGateway", val.ToString());
+                Save();
+                _SmsTypGateway = val;
+            }
+        }
+
+        /// <summary>
+        /// SMTP сервер для отправки почтовых сообщений при доставке СМС
+        /// </summary>
+        public static string SmsTypGatewaySmtp
+        {
+            get
+            {
+                return _SmsTypGatewaySmtp;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("SmsTypGatewaySmtp", value.ToString());
+                Save();
+                _SmsTypGatewaySmtp = value;
+            }
+        }
+
+        /// <summary>
+        /// Порт на котором работает SMTP сервер для отправки почтовых сообщений при доставке СМС
+        /// </summary>
+        public static int SmsTypGatewayPort
+        {
+            get
+            {
+                return _SmsTypGatewayPort;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("SmsTypGatewayPort", value.ToString());
+                Save();
+                _SmsTypGatewayPort = value;
+            }
+        }
+
+        /// <summary>
+        /// Логин который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// </summary>
+        public static string SmsTypGatewayLogin
+        {
+            get
+            {
+                return _SmsTypGatewayLogin;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("SmsTypGatewayLogin", value.ToString());
+                Save();
+                _SmsTypGatewayLogin = value;
+            }
+        }
+
+        /// <summary>
+        /// Логин который используется для отправки сообщений например при SMTP "ilia82@mail.ru" при отправки с использованием писем
+        /// </summary>
+        public static string SmsTypGatewaySmtpLogin
+        {
+            get
+            {
+                return _SmsTypGatewaySmtpLogin;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("SmsTypGatewaySmtpLogin", value.ToString());
+                Save();
+                _SmsTypGatewaySmtpLogin = value;
+            }
+        }
+
+        /// <summary>
+        /// Пароль который используется для отправки сообщений например при HTTP "fp_rus" или ilia82@mail.ru при отправки с использованием писем
+        /// </summary>
+        public static string SmsTypGatewayPassword
+        {
+            get
+            {
+                return _SmsTypGatewayPassword;
+            }
+            set
+            {
+                string pwd = Lic.InCode(value.ToString());
+                xmlRoot.SetAttribute("SmsTypGatewayPassword", pwd);
+                Save();
+                _SmsTypGatewayPassword = pwd;
+            }
+        }
+
+        /// <summary>
+        /// Пароль который используется для отправки сообщений например при SMTP "ilia82@mail.ru" при отправки с использованием писем
+        /// </summary>
+        public static string SmsTypGatewaySmtpPassword
+        {
+            get
+            {
+                return _SmsTypGatewaySmtpPassword;
+            }
+            set
+            {
+                string pwd = Lic.InCode(value.ToString());
+                xmlRoot.SetAttribute("SmsTypGatewaySmtpPassword", pwd);
+                Save();
+                _SmsTypGatewaySmtpPassword = pwd;
             }
         }
 
@@ -766,6 +945,7 @@ namespace AlgoritmPrizm.Com
                     XmlElement xmlMain = Document.CreateElement("AlgoritmPrizm");
                     xmlMain.SetAttribute("Version", _Version.ToString());
                     xmlMain.SetAttribute("Trace", _Trace.ToString());
+                    xmlMain.SetAttribute("NameCompany", _NameCompany);
                     xmlMain.SetAttribute("PrvFullName", null);
                     xmlMain.SetAttribute("ConnectionString", "");
                     xmlMain.SetAttribute("Host", _Host);
@@ -789,6 +969,13 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
                     xmlMain.SetAttribute("MandatoryDefault", _MandatoryDefault.ToString());
                     xmlMain.SetAttribute("LimitCachForUrik", _LimitCachForUrik.ToString());
+                    xmlMain.SetAttribute("SmsTypGateway", _SmsTypGateway.ToString());
+                    xmlMain.SetAttribute("SmsTypGatewaySmtp", _SmsTypGatewaySmtp);
+                    xmlMain.SetAttribute("SmsTypGatewayPort", _SmsTypGatewayPort.ToString());
+                    xmlMain.SetAttribute("SmsTypGatewayLogin", _SmsTypGatewayLogin);
+                    xmlMain.SetAttribute("SmsTypGatewaySmtpLogin", _SmsTypGatewaySmtpLogin);
+                    xmlMain.SetAttribute("SmsTypGatewayPassword", _SmsTypGatewayPassword);
+                    xmlMain.SetAttribute("SmsTypGatewaySmtpPassword", _SmsTypGatewaySmtpPassword);
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -802,6 +989,9 @@ namespace AlgoritmPrizm.Com
                     xmlCustomerTest.SetAttribute("Fio", "Сидоров Иван Петрович");
                     xmlCustomerTest.SetAttribute("INN", "1234567890");
                     xmlCustomers.AppendChild(xmlCustomerTest);
+
+
+
 
 
                     // Сохраняем документ
@@ -841,6 +1031,7 @@ namespace AlgoritmPrizm.Com
                     for (int i = 0; i < xmlRoot.Attributes.Count; i++)
                     {
                         if (xmlRoot.Attributes[i].Name == "Trace") try {_Trace = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception){}
+                        if (xmlRoot.Attributes[i].Name == "NameCompany") try { _NameCompany = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrvFullName") PrvFullName = xmlRoot.Attributes[i].Value.ToString();
                         try { if (xmlRoot.Attributes[i].Name == "ConnectionString") ConnectionString = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
                         catch (Exception) { }
@@ -865,8 +1056,17 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "LimitCachForUrik") try { _LimitCachForUrik = decimal.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "SmsTypGateway") try { _SmsTypGateway = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _SmsTypGateway); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "SmsTypGatewaySmtp") _SmsTypGatewaySmtp = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "SmsTypGatewayPort") try { _SmsTypGatewayPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "SmsTypGatewayLogin") _SmsTypGatewayLogin = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "SmsTypGatewaySmtpLogin") _SmsTypGatewaySmtpLogin = xmlRoot.Attributes[i].Value.ToString();
+                        try { if (xmlRoot.Attributes[i].Name == "SmsTypGatewayPassword") _SmsTypGatewayPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
+                        catch (Exception) { }
+                        try { if (xmlRoot.Attributes[i].Name == "SmsTypGatewaySmtpPassword") _SmsTypGatewaySmtpPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
+                        catch (Exception) { }
                     }
-
+                    
                     // Подгружаем провайдер
                     try
                     {

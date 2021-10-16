@@ -226,6 +226,10 @@ namespace AlgoritmPrizm.Com
                                 case @"/sale":
                                     // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
                                     break;
+                                case @"/smsgateway":
+                                    JsonSms Sms = JsonSms.DeserializeJson(BufPostRequest);
+                                    SmsFarm.AddMessageSms(Sms, null);
+                                    break;
                                 case @"/printfiscdoc":
 
                                     // Десериализуем наш объект

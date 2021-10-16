@@ -110,5 +110,31 @@ namespace AlgoritmPrizm.Lib
                 return DefaulfFieldDocNum;
             }
         }
+
+
+        /// <summary>
+        /// Конвертация в объект EnSmsTypGateway
+        /// </summary>
+        /// <param name="SmsTypGatewayStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaultSmsTypGateway">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static EnSmsTypGateway Convert(string SmsTypGatewayStr, EnSmsTypGateway DefaultSmsTypGateway)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(SmsTypGatewayStr))
+                {
+                    foreach (EnSmsTypGateway item in EnSmsTypGateway.GetValues(typeof(EnSmsTypGateway)))
+                    {
+                        if (item.ToString().ToUpper() == SmsTypGatewayStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaultSmsTypGateway;
+            }
+            catch (Exception)
+            {
+                return DefaultSmsTypGateway;
+            }
+        }
     }
 }

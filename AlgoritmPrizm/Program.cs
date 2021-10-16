@@ -41,6 +41,7 @@ namespace AlgoritmPrizm
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
 
+
                 /*
                 тестируем запись в базу
                 
@@ -156,11 +157,17 @@ namespace AlgoritmPrizm
                     //Server Srv = new Server(5000);
                     //FR.testcM();
 
-                    
+                    // Запуск отправки сообщений
+                    Com.SmsFarm.SmsStart();
 
+                    // Запуск формы
                     Application.Run(new FStart());
 
+                    // Остановка слушителя веб морды
                     Com.Web.StopAWeb();
+
+                    // Остановка отправки сообщений
+                    Com.SmsFarm.SmsStop();
                 }
 
 
