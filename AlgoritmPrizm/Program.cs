@@ -49,6 +49,12 @@ namespace AlgoritmPrizm
                 */
 
                 /*
+                 Получение токина
+                string str = Com.Web.GetAuthenticationToken();
+                 */
+
+
+                /*
  
   
                 // Тестирование SMTP
@@ -89,10 +95,6 @@ namespace AlgoritmPrizm
                 ccc.StartSend();
                 ccc.StopSend();
 */
-
-
-
-
 
 
 

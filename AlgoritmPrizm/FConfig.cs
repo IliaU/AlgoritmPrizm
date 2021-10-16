@@ -117,6 +117,9 @@ namespace AlgoritmPrizm
                     this.dv = new DataView(dt);
                     this.dgProdictMatrixClass.DataSource = this.dv;
                 }
+
+                this.txtBoxLimitCachForUrik.Text = Config.LimitCachForUrik.ToString();
+
             }
             catch (Exception ex)
             {
@@ -238,6 +241,15 @@ namespace AlgoritmPrizm
                 }
 
                 Config.SetProdictMatrixClassList(NewProdictMatrixClass);
+                
+                try
+                {
+                    Config.LimitCachForUrik = decimal.Parse(this.txtBoxLimitCachForUrik.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в формат decimal.", this.txtBoxLimitCachForUrik.Text), GetType().Name, EventEn.Message);
+                }
 
                 this.Close();
             }

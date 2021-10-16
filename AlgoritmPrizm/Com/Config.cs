@@ -164,6 +164,11 @@ namespace AlgoritmPrizm.Com
         /// Поведение при запросе матрикс кода если он не найтен в текущих группах товаров и не стоит галочка GetMatrixAlways=true
         /// </summary>
         private static bool _MandatoryDefault = false;
+
+        /// <summary>
+        /// Лимит для Юрлиц
+        /// </summary>
+        private static decimal _LimitCachForUrik = 100000;
         #endregion
 
         #region Public Param
@@ -560,6 +565,23 @@ namespace AlgoritmPrizm.Com
                 _MandatoryDefault = value;
             }
         }
+
+        /// <summary>
+        /// Лимит для Юрлиц
+        /// </summary>
+        public static decimal LimitCachForUrik
+        {
+            get
+            {
+                return _LimitCachForUrik;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("LimitCachForUrik", value.ToString());
+                Save();
+                _LimitCachForUrik = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -766,6 +788,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
                     xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
                     xmlMain.SetAttribute("MandatoryDefault", _MandatoryDefault.ToString());
+                    xmlMain.SetAttribute("LimitCachForUrik", _LimitCachForUrik.ToString());
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -841,6 +864,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "LimitCachForUrik") try { _LimitCachForUrik = decimal.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
 
                     // Подгружаем провайдер

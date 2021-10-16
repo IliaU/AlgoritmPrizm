@@ -230,59 +230,62 @@ namespace AlgoritmPrizm.Com
 
                                     // Десериализуем наш объект
                                     JsonPrintFiscDoc Doc = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
-                                    
+
                                     // Проверка подключения к базе
-                                    if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect && !string.IsNullOrWhiteSpace(Doc.bt_cuid))
+                                    if (!string.IsNullOrWhiteSpace(Doc.bt_cuid))
                                     {
-                                        string[] coment;
-                                        if (!string.IsNullOrWhiteSpace(Doc.comment1))
+                                        if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
                                         {
-                                            //Если это юрик
-                                            coment = Doc.comment1.Split(';');
-                                            if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
+                                            string[] coment;
+                                            if (!string.IsNullOrWhiteSpace(Doc.comment1))
                                             {
-                                                if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
-                                                else
+                                                //Если это юрик
+                                                coment = Doc.comment1.Split(';');
+                                                if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
                                                 {
-                                                    // Пробегаем по типу оплаты
-                                                    decimal SumDoc = 0;
-                                                    foreach (JsonPrintFiscDocTender item in Doc.tenders)
+                                                    if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
+                                                    else
                                                     {
-                                                        //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
-                                                        switch (Doc.receipt_type)
+                                                        // Пробегаем по типу оплаты
+                                                        decimal SumDoc = 0;
+                                                        foreach (JsonPrintFiscDocTender item in Doc.tenders)
                                                         {
-                                                            case 0:
-                                                                // Если тип оплаты нал
-                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
+                                                            //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                                                            switch (Doc.receipt_type)
+                                                            {
+                                                                case 0:
+                                                                    // Если тип оплаты нал
+                                                                    if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
 
-                                                                break;
-                                                            case 1:
-                                                                // Если тип оплаты нал
-                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
+                                                                    break;
+                                                                case 1:
+                                                                    // Если тип оплаты нал
+                                                                    if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
 
-                                                                break;
-                                                            case 2:
-                                                                // Депозит
+                                                                    break;
+                                                                case 2:
+                                                                    // Депозит
 
-                                                                break;
-                                                            default:
-                                                                throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                                                    break;
+                                                                default:
+                                                                    throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                                            }
                                                         }
+
+                                                        // Сумма за текущий день по юрлицу
+                                                        Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(coment[1].Trim().ToLower(), Doc.created_datetime);
+
+                                                        // Если есть привышение то ругаемся
+                                                        if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
+
+                                                        // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
+                                                        Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(coment[1].Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
                                                     }
-
-                                                    // Сумма за текущий день по юрлицу
-                                                    Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(coment[1].Trim().ToLower(), Doc.created_datetime);
-
-                                                    // Если есть привышение то ругаемся
-                                                    if (SumDoc + SumDocOld >= 100000) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
-
-                                                    // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
-                                                    Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(coment[1].Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
                                                 }
                                             }
                                         }
+                                        else throw new ApplicationException("Нет подключения к базе данных");
                                     }
-                                    else throw new ApplicationException("Нет подключения к базе данных");
                                     
 
                                     // Отправляем на печать
@@ -585,7 +588,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// получаем токен для работы через API
         /// </summary>
-        private static string GetAuthenticationToken()
+        public static string GetAuthenticationToken()
         {
             try
             {

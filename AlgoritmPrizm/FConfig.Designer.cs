@@ -81,10 +81,12 @@
             this.ProductClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
+            this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
+            this.lbl_LimitCachForUrik = new System.Windows.Forms.Label();
+            this.txtBoxLimitCachForUrik = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -93,6 +95,7 @@
             this.tabPage4.SuspendLayout();
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
+            this.tabPage6.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.pnl_ProdictMatrixClassFill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).BeginInit();
@@ -533,6 +536,8 @@
             // 
             // tabPage6
             // 
+            this.tabPage6.Controls.Add(this.txtBoxLimitCachForUrik);
+            this.tabPage6.Controls.Add(this.lbl_LimitCachForUrik);
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
@@ -598,6 +603,16 @@
             this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(469, 29);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
+            // chkBoxMandatoryDefault
+            // 
+            this.chkBoxMandatoryDefault.AutoSize = true;
+            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(291, 6);
+            this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
+            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(171, 17);
+            this.chkBoxMandatoryDefault.TabIndex = 1;
+            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию";
+            this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
+            // 
             // chkBox_GetMatrixAlways
             // 
             this.chkBox_GetMatrixAlways.AutoSize = true;
@@ -627,15 +642,21 @@
             this.pnlFill.Size = new System.Drawing.Size(477, 303);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkBoxMandatoryDefault
+            // lbl_LimitCachForUrik
             // 
-            this.chkBoxMandatoryDefault.AutoSize = true;
-            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(291, 6);
-            this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
-            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(171, 17);
-            this.chkBoxMandatoryDefault.TabIndex = 1;
-            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию";
-            this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
+            this.lbl_LimitCachForUrik.AutoSize = true;
+            this.lbl_LimitCachForUrik.Location = new System.Drawing.Point(6, 12);
+            this.lbl_LimitCachForUrik.Name = "lbl_LimitCachForUrik";
+            this.lbl_LimitCachForUrik.Size = new System.Drawing.Size(208, 13);
+            this.lbl_LimitCachForUrik.TabIndex = 0;
+            this.lbl_LimitCachForUrik.Text = "Лимит по юр лицам при покупке за нал";
+            // 
+            // txtBoxLimitCachForUrik
+            // 
+            this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(220, 9);
+            this.txtBoxLimitCachForUrik.Name = "txtBoxLimitCachForUrik";
+            this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(167, 20);
+            this.txtBoxLimitCachForUrik.TabIndex = 1;
             // 
             // FConfig
             // 
@@ -661,6 +682,8 @@
             this.tabControl2.ResumeLayout(false);
             this.tabPage5.ResumeLayout(false);
             this.tabPage5.PerformLayout();
+            this.tabPage6.ResumeLayout(false);
+            this.tabPage6.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.pnl_ProdictMatrixClassFill.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).EndInit();
@@ -730,5 +753,7 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ProductClass;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Mandatory;
         private System.Windows.Forms.CheckBox chkBoxMandatoryDefault;
+        private System.Windows.Forms.TextBox txtBoxLimitCachForUrik;
+        private System.Windows.Forms.Label lbl_LimitCachForUrik;
     }
 }

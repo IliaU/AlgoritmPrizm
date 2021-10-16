@@ -44,7 +44,7 @@ namespace AlgoritmPrizm.BLL
         public string PrizmApiSystemLogon;
         public int PrizmApiTimeLiveTockenMinute;
 
-
+        public int LimitCachForUrik;
 
         /// <summary>
         /// Пример на котором тестировали
@@ -109,6 +109,8 @@ namespace AlgoritmPrizm.BLL
                 this.HostPrizmApi = Config.HostPrizmApi;
                 this.PrizmApiSystemLogon = Config.PrizmApiSystemLogon;
                 this.PrizmApiTimeLiveTockenMinute = Config.PrizmApiTimeLiveTockenMinute;
+
+                this.LimitCachForUrik = (int)Config.LimitCachForUrik;
             }
         }
         public JsonConfig() :this(false)
