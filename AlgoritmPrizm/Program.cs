@@ -33,7 +33,7 @@ namespace AlgoritmPrizm
                     nlist.Add(new BLL.Custumer("1111", "2222", "3333"));
                     Com.Config.SetCustomers(nlist);
                 */
-
+                
                 // Подключаем логирование
                 Com.Log Lg = new Com.Log();
                 Com.FileCheckLog LgCh = new Com.FileCheckLog();

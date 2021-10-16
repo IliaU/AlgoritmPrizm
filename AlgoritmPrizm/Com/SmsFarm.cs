@@ -94,11 +94,11 @@ namespace AlgoritmPrizm.Com
                     case Lib.EnSmsTypGateway.Infobip_Com:
                         if (HttpCli == null) throw new ApplicationException("Не инициирован класс HttpCli отправка сообщения невозможна");
                         MesEmeilBody = string.Format(@"
-{  
+{{  
     ""from"":""{0}"",
     ""to"":""{1}"",
     ""text"":""{2}""
-}", TxtFrom, JsnSms.phone, JsnSms.text);
+}}", TxtFrom, JsnSms.phone, JsnSms.text);
                         HttpCli.AddEmail(new Com.SmtpLib.Mail(TxtFrom, JsnSms.phone, "", MesEmeilBody, JsnSms.text, System.Text.Encoding.Default, null));
                         break;
                     default:
