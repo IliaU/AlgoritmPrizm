@@ -89,7 +89,7 @@ namespace AlgoritmPrizm.Com
                     case Lib.EnSmsTypGateway.Smsc_RU:
                         if (SmtpCli == null) throw new ApplicationException("Не инициирован класс SmtpCli отправка сообщения невозможна");
                         MesEmeilBody = string.Format("{0}:{1}:::,0,,1:{2}:{3}", Config.SmsTypGatewayLogin, Config.SmsTypGatewayPassword, JsnSms.phone, JsnSms.text);
-                        SmtpCli.AddEmail(new Com.SmtpLib.Mail(Config.SmsTypGatewayLogin, "send@send.smsc.ru", "Null", MesEmeilBody, null, Encoding.GetEncoding("koi8-r"), null));
+                        SmtpCli.AddEmail(new Com.SmtpLib.Mail(Config.SmsTypGatewaySmtpLogin, "send@send.smsc.ru", "Null", MesEmeilBody, null, Encoding.GetEncoding("koi8-r"), null));
                         break;
                     case Lib.EnSmsTypGateway.Infobip_Com:
                         if (HttpCli == null) throw new ApplicationException("Не инициирован класс HttpCli отправка сообщения невозможна");

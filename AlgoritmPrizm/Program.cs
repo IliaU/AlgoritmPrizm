@@ -41,6 +41,8 @@ namespace AlgoritmPrizm
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
 
+                // Подключаем модуль который потом будет у нас печатать отчёты
+                Com.ReportWordDotxFarm WDotx = new Com.ReportWordDotxFarm();
 
                 /*
                 тестируем запись в базу

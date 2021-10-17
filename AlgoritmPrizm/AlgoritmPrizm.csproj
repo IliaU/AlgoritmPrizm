@@ -87,6 +87,9 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WordDotx">
+      <HintPath>.\WordDotx.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BLL\ClientParam.cs" />
@@ -149,6 +152,7 @@
     <Compile Include="Com\LicLib\Osnova.cs" />
     <Compile Include="Com\LicLib\SistemaSchislenia.cs" />
     <Compile Include="Com\ReportLib\IColbackDocumentJournal.cs" />
+    <Compile Include="Com\ReportWordDotxFarm.cs" />
     <Compile Include="Com\Report\ReportItemsMovement.cs" />
     <Compile Include="Com\SmsFarm.cs" />
     <Compile Include="Com\SmtpFarm.cs" />

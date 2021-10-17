@@ -214,6 +214,16 @@ namespace AlgoritmPrizm.Com
         /// Лимит для Юрлиц
         /// </summary>
         private static decimal _LimitCachForUrik = 100000;
+
+        /// <summary>
+        /// Имя папки источника с шаблонами отчётов
+        /// </summary>
+        private static string _WordDotxSource = "DOTX";
+
+        /// <summary>
+        /// Имя папки получателя в который будут складываться отчёты
+        /// </summary>
+        private static string _WordDotxTarget = "Report";
         #endregion
 
         #region Public Param
@@ -783,6 +793,40 @@ namespace AlgoritmPrizm.Com
                 _LimitCachForUrik = value;
             }
         }
+
+        /// <summary>
+        /// Имя папки источника с шаблонами отчётов
+        /// </summary>
+        public static string WordDotxSource
+        {
+            get
+            {
+                return _WordDotxSource;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("WordDotxSource", value.ToString());
+                Save();
+                _WordDotxSource = value.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Имя папки получателя в который будут складываться отчёты
+        /// </summary>
+        public static string WordDotxTarget
+        {
+            get
+            {
+                return _WordDotxTarget;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("WordDotxTarget", value.ToString());
+                Save();
+                _WordDotxTarget = value.ToString();
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -815,7 +859,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             } 
@@ -923,7 +967,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".Load()", EventEn.Error);
                 throw ae;
             }
@@ -943,7 +987,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации в файл с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации в файл с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".Save()", EventEn.Error);
                 throw ae;
             }
@@ -999,6 +1043,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("SmsTypGatewaySmtpLogin", _SmsTypGatewaySmtpLogin);
                     xmlMain.SetAttribute("SmsTypGatewayPassword", _SmsTypGatewayPassword);
                     xmlMain.SetAttribute("SmsTypGatewaySmtpPassword", _SmsTypGatewaySmtpPassword);
+                    xmlMain.SetAttribute("WordDotxSource", _WordDotxSource);
+                    xmlMain.SetAttribute("WordDotxTarget", _WordDotxTarget);
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -1023,7 +1069,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при соpдании конфигурационного файла с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при соpдании конфигурационного файла с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".Create()", EventEn.Error);
                 throw ae;
             }
@@ -1089,6 +1135,8 @@ namespace AlgoritmPrizm.Com
                         catch (Exception) { }
                         try { if (xmlRoot.Attributes[i].Name == "SmsTypGatewaySmtpPassword") _SmsTypGatewaySmtpPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
                         catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "WordDotxSource") _WordDotxSource = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "WordDotxTarget") _WordDotxTarget = xmlRoot.Attributes[i].Value.ToString();
                     }
                     
                     // Подгружаем провайдер
@@ -1221,7 +1269,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при разборе конфигурационного файла с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при разборе конфигурационного файла с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".GetDate()", EventEn.Error);
                 throw ae;
             }
@@ -1246,7 +1294,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {0}}", ex.Message));
                 Log.EventSave(ae.Message, ".UpdateVersionXml(XmlElement root, int oldVersion)", EventEn.Error);
                 throw ae;
             }
