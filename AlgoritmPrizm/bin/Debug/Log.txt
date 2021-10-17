@@ -738,3 +738,334 @@ CodeResult = 211(Код товара не распознан)
 17.10.2021 14:41:36	Message	FileCheckLog	Запуск модуля логирования чеков
 17.10.2021 14:41:36	Message	Config	Чтение конфигурационного файла
 17.10.2021 14:41:38	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 20:37:34	Message	Log	Запуск программы
+17.10.2021 20:37:34	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 20:37:34	Message	Config	Чтение конфигурационного файла
+17.10.2021 20:43:03	Message	Log	Запуск программы
+17.10.2021 20:43:03	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 20:43:03	Message	Config	Чтение конфигурационного файла
+17.10.2021 21:56:43	Message	Log	Запуск программы
+17.10.2021 21:56:43	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 21:56:43	Message	Config	Чтение конфигурационного файла
+17.10.2021 21:56:44	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 21:56:58	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 22:01:08	Message	Log	Запуск программы
+17.10.2021 22:01:08	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 22:01:08	Message	Config	Чтение конфигурационного файла
+17.10.2021 22:01:08	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 22:01:08	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 22:02:45	Message	Log	Запуск программы
+17.10.2021 22:02:45	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 22:02:45	Message	Config	Чтение конфигурационного файла
+17.10.2021 22:02:45	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 22:02:45	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:38:58	Message	Log	Запуск программы
+17.10.2021 23:38:58	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:38:58	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:38:59	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:38:59	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:38:59	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:41:28	Message	Log	Запуск программы
+17.10.2021 23:41:28	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:41:28	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:41:28	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:41:28	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:41:28	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:42:56	Message	Log	Запуск программы
+17.10.2021 23:42:56	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:42:56	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:42:56	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:42:56	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:42:57	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:42:58	Message	FR	Запуск драйвера для работы с фискальным регистратором
+17.10.2021 23:42:59	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+17.10.2021 23:42:59	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+17.10.2021 23:43:11	Message	Log	Запуск программы
+17.10.2021 23:43:12	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:43:12	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:43:12	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:43:12	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:43:12	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:44:50	Message	Log	Запуск программы
+17.10.2021 23:44:50	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:44:50	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:44:50	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:44:50	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:44:50	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:46:13	Message	FR	Запуск драйвера для работы с фискальным регистратором
+17.10.2021 23:46:14	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+17.10.2021 23:46:14	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+17.10.2021 23:47:13	Message	Log	Запуск программы
+17.10.2021 23:47:13	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:47:13	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:47:14	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:47:14	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:47:14	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+17.10.2021 23:59:22	Message	Log	Запуск программы
+17.10.2021 23:59:22	Message	FileCheckLog	Запуск модуля логирования чеков
+17.10.2021 23:59:22	Message	Config	Чтение конфигурационного файла
+17.10.2021 23:59:22	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+17.10.2021 23:59:22	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+17.10.2021 23:59:22	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 0:00:43	Message	Log	Запуск программы
+18.10.2021 0:00:43	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 0:00:43	Message	Config	Чтение конфигурационного файла
+18.10.2021 0:00:43	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 0:00:43	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 0:00:44	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 0:08:00	Message	Log	Запуск программы
+18.10.2021 0:08:00	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 0:08:00	Message	Config	Чтение конфигурационного файла
+18.10.2021 0:08:00	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 0:08:00	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 0:08:00	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 0:08:48	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: WordDotxServer.StartCreateReport   Упали с ошибкой: (Отсутствует доступ к отдельным строкам, поскольку таблица имеет ячейки, объединенные по вертикали.)
+18.10.2021 0:08:48	Error	ReportWordDotxFarm	Упали при запуске модуля отрисовки отчётов с ошибкой: Упали при формировании отчёта с ошибкой: WordDotxServer.StartCreateReport   Упали с ошибкой: (Отсутствует доступ к отдельным строкам, поскольку таблица имеет ячейки, объединенные по вертикали.)
+18.10.2021 0:09:38	Message	Log	Запуск программы
+18.10.2021 0:09:38	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 0:09:38	Message	Config	Чтение конфигурационного файла
+18.10.2021 0:09:39	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 0:09:39	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 0:09:39	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 0:11:22	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: WordDotxServer.StartCreateReport   Упали с ошибкой: (Отсутствует доступ к отдельным строкам, поскольку таблица имеет ячейки, объединенные по вертикали.)
+18.10.2021 0:11:22	Error	ReportWordDotxFarm	Упали при запуске модуля отрисовки отчётов с ошибкой: Упали при формировании отчёта с ошибкой: WordDotxServer.StartCreateReport   Упали с ошибкой: (Отсутствует доступ к отдельным строкам, поскольку таблица имеет ячейки, объединенные по вертикали.)
+18.10.2021 0:12:00	Message	Log	Запуск программы
+18.10.2021 0:12:00	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 0:12:00	Message	Config	Чтение конфигурационного файла
+18.10.2021 0:12:00	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 0:12:00	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 0:12:00	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 0:12:25	Message	Log	Запуск программы
+18.10.2021 0:12:25	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 0:12:25	Message	Config	Чтение конфигурационного файла
+18.10.2021 0:12:25	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 0:12:25	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 0:12:25	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid

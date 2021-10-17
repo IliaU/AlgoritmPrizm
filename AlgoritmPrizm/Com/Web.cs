@@ -328,7 +328,17 @@ namespace AlgoritmPrizm.Com
                                     {
                                         responceString = ex.Message;
                                     }
-                                    
+                                    break;
+                                case @"/AksRepItem":
+                                    try
+                                    {
+                                        // Выставляем параемтры отчёта
+                                        List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BLL.JsonWordDotxParams.SampleTest);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        responceString = ex.Message;
+                                    }
                                     break;
                                 case @"/config":
                                     responceString=BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
