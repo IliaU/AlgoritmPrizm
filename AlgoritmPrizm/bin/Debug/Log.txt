@@ -1069,3 +1069,80 @@ Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
   nxvid, price, qty, scan_qty, scan_price, suminv
 From T
 Order by sid
+18.10.2021 10:33:58	Message	Log	Запуск программы
+18.10.2021 10:33:58	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 10:33:58	Message	Config	Чтение конфигурационного файла
+18.10.2021 10:33:58	Message	FR	Запуск драйвера для работы с фискальным регистратором
+18.10.2021 10:34:00	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+18.10.2021 10:34:00	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+18.10.2021 11:07:07	Message	Log	Запуск программы
+18.10.2021 11:07:07	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 11:07:07	Message	Config	Чтение конфигурационного файла
+18.10.2021 11:07:07	Message	FR	Запуск драйвера для работы с фискальным регистратором
+18.10.2021 11:07:08	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+18.10.2021 11:07:08	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+18.10.2021 19:48:29	Message	Log	Запуск программы
+18.10.2021 19:48:29	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 19:48:29	Message	Config	Чтение конфигурационного файла
+18.10.2021 19:48:30	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 19:48:30	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 19:48:30	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 19:51:22	Message	Log	Запуск программы
+18.10.2021 19:51:22	Message	FileCheckLog	Запуск модуля логирования чеков
+18.10.2021 19:51:22	Message	Config	Чтение конфигурационного файла
+18.10.2021 19:51:34	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+18.10.2021 19:51:52	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612235637000223014'
+18.10.2021 19:52:10	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid
+    Where D.sid ='612235637000223014')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+18.10.2021 21:41:55	Message	FR	Запуск драйвера для работы с фискальным регистратором
+18.10.2021 21:41:56	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+18.10.2021 21:41:56	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+21.10.2021 15:31:35	Message	Log	Запуск программы
+21.10.2021 15:31:35	Message	FileCheckLog	Запуск модуля логирования чеков
+21.10.2021 15:31:35	Message	Config	Чтение конфигурационного файла
+21.10.2021 15:31:36	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+21.10.2021 15:31:36	Message	FR	Запуск драйвера для работы с фискальным регистратором
+21.10.2021 15:31:37	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+21.10.2021 15:31:37	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+21.10.2021 15:33:47	Message	Log	Запуск программы
+21.10.2021 15:33:47	Message	FileCheckLog	Запуск модуля логирования чеков
+21.10.2021 15:33:47	Message	Config	Чтение конфигурационного файла
+21.10.2021 15:33:47	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+21.10.2021 15:33:47	Message	FR	Запуск драйвера для работы с фискальным регистратором
+21.10.2021 15:33:48	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+21.10.2021 15:33:48	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)

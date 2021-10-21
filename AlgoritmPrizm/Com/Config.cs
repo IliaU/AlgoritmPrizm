@@ -555,7 +555,7 @@ namespace AlgoritmPrizm.Com
                 string pwd = Lic.InCode(value.ToString());
                 xmlRoot.SetAttribute("SmsTypGatewayPassword", pwd);
                 Save();
-                _SmsTypGatewayPassword = pwd;
+                _SmsTypGatewayPassword = value.ToString();
             }
         }
 
@@ -573,7 +573,7 @@ namespace AlgoritmPrizm.Com
                 string pwd = Lic.InCode(value.ToString());
                 xmlRoot.SetAttribute("SmsTypGatewaySmtpPassword", pwd);
                 Save();
-                _SmsTypGatewaySmtpPassword = pwd;
+                _SmsTypGatewaySmtpPassword = value.ToString();
             }
         }
 
@@ -693,7 +693,7 @@ namespace AlgoritmPrizm.Com
                 string pwd = Lic.InCode(value.ToString());
                 xmlRoot.SetAttribute("PrizmApiSystemPassord", pwd);
                 Save();
-                _PrizmApiSystemPassord = pwd;
+                _PrizmApiSystemPassord = value.ToString();
             }
         }
 

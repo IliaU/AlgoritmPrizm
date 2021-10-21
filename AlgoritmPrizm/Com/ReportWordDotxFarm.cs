@@ -29,11 +29,8 @@ namespace AlgoritmPrizm.Com
                 // Инициализация наших классов
                 if (WordDotx==null)
                 {
-                    /*
-                    List<BLL.JsonWordDotxParams> sdl =BLL.JsonWordDotxParams.DeserializeJson(BLL.JsonWordDotxParams.SampleTest);
-                    string dd = BLL.JsonWordDotxParams.SerializeJson(sdl);
-                    */
-
+                    
+     
                     // Проверка валидности версии нашей dll
                     if (Wrd.FarmWordDotx.VersionDll[0] != Vers) throw new ApplicationException(string.Format("Версия файла WordDotx не поддерживается нужна версия {0}", Vers));
 
@@ -49,7 +46,8 @@ namespace AlgoritmPrizm.Com
                     // Создаём сервер которы будет формировать отчёты
                     Wrd.FarmWordDotx.CreateWordDotxServer(Sorce, Target);
 
-                    this.CreateReportInf3("612235637000223014");
+                    //this.CreateReportInf3("612235637000223014");
+                   
                 }
             }
             catch (Exception ex)
