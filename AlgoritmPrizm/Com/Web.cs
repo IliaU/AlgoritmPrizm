@@ -333,7 +333,55 @@ namespace AlgoritmPrizm.Com
                                     try
                                     {
                                         // Выставляем параемтры отчёта
-                                        List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BLL.JsonWordDotxParams.SampleTest);
+                                        List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
+
+                                        // Объект который будем возвращать пользователю
+                                        JsonWebMessageResponce resp = new JsonWebMessageResponce();
+                                        resp.Message = "Не известная ошибка";
+
+                                        try
+                                        {
+                                            // Если есть какой нибудь параметр
+                                            if (JsWdDotxPor.Count > 0 && !string.IsNullOrWhiteSpace(JsWdDotxPor[0].valueString))
+                                            {
+                                                switch (JsWdDotxPor[0].valueString)
+                                                {
+                                                    case "ИНВ-3":
+                                                        if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                            resp.Message = ReportWordDotxFarm.CreateReportInf3(JsWdDotxPor[1].valueString);
+                                                        break;
+                                                    case "ИНВ-8А":
+                                                        break;
+                                                    case "ИНВ-19":
+                                                        break;
+                                                    case "PL":   // Прайс лист
+                                                        break;
+                                                    default:
+                                                        resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
+                                                        break;
+                                                }
+                                            } 
+                                            else resp.Message = string.Format("Ни один параметр не задан не знаем как обрабатывать команду");
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            // Если проверка выдала исключение то сообщаем об этом пользователю
+                                            resp.Message = ex.Message;
+                                        }
+                                        // Формируем сообщение для пользователя
+                                        responceString = BLL.JsonWebMessageResponce.SerializeJson(resp);
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        responceString = ex.Message;
+                                    }
+                                    break;
+                                case @"/AksRepStat":
+                                    try
+                                    {
+                                        // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
+                                        responceString = ReportWordDotxFarm.AksRepStat();
+                                        ContentType = "text/html; charset=utf-8";
                                     }
                                     catch (Exception ex)
                                     {

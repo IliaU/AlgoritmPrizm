@@ -17,10 +17,8 @@ namespace AlgoritmPrizm.BLL
         // http://ruggmoofffod1.emea.guccigroup.dom/v1/rest/inventory?cols=*
         private static JsonSerializerSettings _settings;
 
-        public string string1;
-        public string string2;
-        public int? int1;
-        public int? int2;
+        public string valueString;
+        public int? valueInt;
 
         /// <summary>
         /// Пример на котором тестировали
@@ -28,10 +26,8 @@ namespace AlgoritmPrizm.BLL
         [JsonIgnore]
         public static string SampleTest = @"[
     {
-        ""string1"": null,
-        ""string2"": null,
-        ""int1"":null,
-        ""int2"":null
+        ""valueString"": null,
+        ""valueInt"":null
     }
 ]";
 

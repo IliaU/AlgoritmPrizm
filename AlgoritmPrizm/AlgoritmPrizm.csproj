@@ -122,6 +122,7 @@
     <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
     <Compile Include="BLL\JsonRestError.cs" />
     <Compile Include="BLL\JsonSms.cs" />
+    <Compile Include="BLL\JsonWebMessageResponce.cs" />
     <Compile Include="BLL\JsonWordDotxParams.cs" />
     <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />

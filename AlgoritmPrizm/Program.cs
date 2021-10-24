@@ -41,9 +41,6 @@ namespace AlgoritmPrizm
                 // Подключаем конфиг
                 Com.Config Cnf = new Com.Config();
 
-                // Подключаем модуль который потом будет у нас печатать отчёты
-                Com.ReportWordDotxFarm WDotx = new Com.ReportWordDotxFarm();
-
                 /*
                 тестируем запись в базу
                 
@@ -159,6 +156,9 @@ namespace AlgoritmPrizm
                     //Server Srv = new Server(5000);
                     //FR.testcM();
 
+                    // Подключаем модуль который потом будет у нас печатать отчёты
+                    Com.ReportWordDotxFarm WDotx = new Com.ReportWordDotxFarm();
+
                     // Запуск отправки сообщений
                     Com.SmsFarm.SmsStart();
 
@@ -170,6 +170,9 @@ namespace AlgoritmPrizm
 
                     // Остановка отправки сообщений
                     Com.SmsFarm.SmsStop();
+
+                    // Останавливаем процесс который рисуетотчёты
+                    WDotx.Join();
                 }
 
 
