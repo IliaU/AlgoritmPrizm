@@ -65,7 +65,11 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-        private static void AWeb()
+
+        /// <summary>
+        /// Асинхронный старт головоного процесса
+        /// </summary>
+        private void AWeb()
         {
             try
             {
@@ -148,255 +152,288 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-
         /// <summary>
-        /// Запуск литнера
+        /// Запуск литнера синхронно
         /// </summary>
-        /// <param name="Host"></param>
-        /// <param name="Port"></param>
-        private static void Listen(string Host, int Port)
+        /// <param name="Host">Сервер</param>
+        /// <param name="Port">Порт</param>
+        private void  Listen(string Host, int Port)
         {
             try
             {
                 // Цыкл для риёма запросов от пользователя
                 while (IsRunAsin)
                 {
-                    string responceString = "";
-
                     //Получаем заголовки
                     HttpListenerContext context = listener.GetContext();
-                    HttpListenerRequest request = context.Request;
-                    HttpListenerResponse response = context.Response;
-                    string origin = request.Headers["Origin"];
-                    string SecFetchMode = request.Headers["Sec-Fetch-Mode"];
-                    string ContentType = "application/json";
 
-                    try
+                    // Асинхронный запуск процесса
+                    Thread Thr = new Thread(AListen); //Запуск с параметрами   
+                    Thr.Name = "AListen";
+                    Thr.IsBackground = true;
+                    Thr.Start(context);
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Асинхронная обраотка запроса
+        /// </summary>
+        /// <param name="obj">Параметр HttpListenerContext</param>
+        private void AListen(object obj)
+        {
+            try
+            {
+                // Получаеи контекст который в рамках подключения пользователя
+                HttpListenerContext context = (HttpListenerContext)obj;
+
+                // Переменная для ответа пользователю
+                string responceString = "";
+                bool HashFileResponce = false;      // По умолчанию мы не файл отправляем а текс
+
+                //HttpListenerContext context = await listener.GetContextAsync();
+                HttpListenerRequest request = context.Request;
+                HttpListenerResponse response = context.Response;
+                string origin = request.Headers["Origin"];
+                string SecFetchMode = request.Headers["Sec-Fetch-Mode"];
+                string ContentType = "application/json";
+
+                try
+                {
+                    // усли равен cors значит это предварительный запрос
+                    if (string.IsNullOrWhiteSpace(SecFetchMode) || SecFetchMode != "cors")
                     {
-                        // усли равен cors значит это предварительный запрос
-                        if (string.IsNullOrWhiteSpace(SecFetchMode) || SecFetchMode != "cors")
+                        // Читаем что передало приложение
+                        string BufPostRequest = null;
+                        using (var reader = new StreamReader(request.InputStream))
                         {
-                            // Читаем что передало приложение
-                            string BufPostRequest = null;
-                            using (var reader = new StreamReader(request.InputStream))
-                            {
-                                BufPostRequest = reader.ReadToEnd();
-                            }
-
-
-                            // В зависимости от того что хотят выполняем нужные опрации
-                            switch (request.RawUrl)
-                            {
-                                case @"/marking":
-
-                                    bool HashProductClass = false;
-                                    bool Mandatory = Config.MandatoryDefault;
-
-                                    if (!Config.GetMatrixAlways)
-                                    {
-                                        JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
-                                        string dcs_code = FineDoc.dcs_code;
-                                        foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
-                                        {
-                                            if (dcs_code == item.ProductClass)
-                                            {
-                                                Mandatory = item.Mandatory;
-                                                HashProductClass = true;
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    if (Config.GetMatrixAlways || HashProductClass)
-                                    {
-                                        string  sssstmp = "{"+string.Format(@"""scan_marking"":""True"", ""Mandatory"":""{0}""", Mandatory)+"}";
-                                        responceString = sssstmp;
-                                    }
-
-                                    break;
-                                case @"/xreport":
-                                    FR.XREport();
-                                    break;
-                                case @"/zreport":
-                                    FR.ZREport();
-                                    break;
-                                case @"/openshift":
-                                    FR.OpenShift();
-                                    break;
-                                case @"/sale":
-                                    // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
-                                    break;
-                                case @"/smsgateway":
-                                    JsonSms Sms = JsonSms.DeserializeJson(BufPostRequest);
-                                    SmsFarm.AddMessageSms(Sms, null);
-                                    break;
-                                case @"/printfiscdoc":
-
-                                    // Десериализуем наш объект
-                                    JsonPrintFiscDoc Doc = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
-
-                                    // Проверка подключения к базе
-                                    if (!string.IsNullOrWhiteSpace(Doc.bt_cuid))
-                                    {
-                                        if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
-                                        {
-                                            // проверяем что в настройках стоит в качестве поля в котором хранится инфа
-                                            string FieldInnTyp;
-                                            switch (Config.FieldInnTyp)
-                                            {
-                                                case FieldDocNumEn.Comment1:
-                                                    FieldInnTyp = Doc.comment1;
-                                                    break;
-                                                case FieldDocNumEn.Comment2:
-                                                    FieldInnTyp = Doc.comment2;
-                                                    break;
-                                                default:
-                                                    FieldInnTyp = null;
-                                                    break;
-                                            }
-
-                                            string[] coment;
-                                            if (!string.IsNullOrWhiteSpace(FieldInnTyp))
-                                            {
-                                                coment= FieldInnTyp.Split(';');
-
-                                                //Если это юрик
-                                                if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
-                                                {
-                                                    if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
-                                                    else
-                                                    {
-                                                        // Пробегаем по типу оплаты
-                                                        decimal SumDoc = 0;
-                                                        foreach (JsonPrintFiscDocTender item in Doc.tenders)
-                                                        {
-                                                            //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
-                                                            switch (Doc.receipt_type)
-                                                            {
-                                                                case 0:
-                                                                    // Если тип оплаты нал
-                                                                    if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
-
-                                                                    break;
-                                                                case 1:
-                                                                    // Если тип оплаты нал
-                                                                    if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
-
-                                                                    break;
-                                                                case 2:
-                                                                    // Депозит
-
-                                                                    break;
-                                                                default:
-                                                                    throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
-                                                            }
-                                                        }
-
-                                                        // Сумма за текущий день по юрлицу
-                                                        Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(coment[1].Trim().ToLower(), Doc.created_datetime);
-
-                                                        // Если есть привышение то ругаемся
-                                                        if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
-
-                                                        // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
-                                                        Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(coment[1].Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                        else throw new ApplicationException("Нет подключения к базе данных");
-                                    }
-                                    
-
-                                    // Отправляем на печать
-                                    FR.PrintCheck(Doc, 1, "Рога и копыта");
-                                    break;
-                                case @"/AksRepItemHistory":
-                                    try
-                                    {
-                                        // Выставляем параемтры отчёта
-                                        ReportItemsMovement Rep = new ReportItemsMovement(DateTime.Now);
-
-                                        // Получаем данные в отчёт
-                                        Rep.Docs = GetDocumentsRestSharp(Rep, true);
-
-                                        // Отрисовываем отчёт
-                                        responceString = Rep.RenderReport();
-                                        ContentType = "text/html; charset=utf-8";
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        responceString = ex.Message;
-                                    }
-                                    break;
-                                case @"/AksRepItem":
-                                    try
-                                    {
-                                        // Выставляем параемтры отчёта
-                                        List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
-
-                                        // Объект который будем возвращать пользователю
-                                        JsonWebMessageResponce resp = new JsonWebMessageResponce();
-                                        resp.Message = "Не известная ошибка";
-
-                                        try
-                                        {
-                                            // Если есть какой нибудь параметр
-                                            if (JsWdDotxPor.Count > 0 && !string.IsNullOrWhiteSpace(JsWdDotxPor[0].valueString))
-                                            {
-                                                switch (JsWdDotxPor[0].valueString)
-                                                {
-                                                    case "ИНВ-3":
-                                                        if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
-                                                            resp.Message = ReportWordDotxFarm.CreateReportInf3(JsWdDotxPor[1].valueString);
-                                                        break;
-                                                    case "ИНВ-8А":
-                                                        break;
-                                                    case "ИНВ-19":
-                                                        break;
-                                                    case "PL":   // Прайс лист
-                                                        break;
-                                                    default:
-                                                        resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
-                                                        break;
-                                                }
-                                            } 
-                                            else resp.Message = string.Format("Ни один параметр не задан не знаем как обрабатывать команду");
-                                        }
-                                        catch (Exception ex)
-                                        {
-                                            // Если проверка выдала исключение то сообщаем об этом пользователю
-                                            resp.Message = ex.Message;
-                                        }
-                                        // Формируем сообщение для пользователя
-                                        responceString = BLL.JsonWebMessageResponce.SerializeJson(resp);
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        responceString = ex.Message;
-                                    }
-                                    break;
-                                case @"/AksRepStat":
-                                    try
-                                    {
-                                        // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
-                                        responceString = ReportWordDotxFarm.AksRepStat();
-                                        ContentType = "text/html; charset=utf-8";
-                                    }
-                                    catch (Exception ex)
-                                    {
-                                        responceString = ex.Message;
-                                    }
-                                    break;
-                                case @"/config":
-                                    responceString=BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
-                                    break;
-                                default:
-                                    break;
-                            }
+                            BufPostRequest = reader.ReadToEnd();
                         }
 
-                        // Передаём ответ серверу
+
+                        // В зависимости от того что хотят выполняем нужные опрации
+                        switch (request.RawUrl)
+                        {
+                            case @"/marking":
+
+                                bool HashProductClass = false;
+                                bool Mandatory = Config.MandatoryDefault;
+
+                                if (!Config.GetMatrixAlways)
+                                {
+                                    JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
+                                    string dcs_code = FineDoc.dcs_code;
+                                    foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
+                                    {
+                                        if (dcs_code == item.ProductClass)
+                                        {
+                                            Mandatory = item.Mandatory;
+                                            HashProductClass = true;
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (Config.GetMatrixAlways || HashProductClass)
+                                {
+                                    string sssstmp = "{" + string.Format(@"""scan_marking"":""True"", ""Mandatory"":""{0}""", Mandatory) + "}";
+                                    responceString = sssstmp;
+                                }
+
+                                break;
+                            case @"/xreport":
+                                FR.XREport();
+                                break;
+                            case @"/zreport":
+                                FR.ZREport();
+                                break;
+                            case @"/openshift":
+                                FR.OpenShift();
+                                break;
+                            case @"/sale":
+                                // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
+                                break;
+                            case @"/smsgateway":
+                                JsonSms Sms = JsonSms.DeserializeJson(BufPostRequest);
+                                SmsFarm.AddMessageSms(Sms, null);
+                                break;
+                            case @"/printfiscdoc":
+
+                                // Десериализуем наш объект
+                                JsonPrintFiscDoc Doc = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
+
+                                // Проверка подключения к базе
+                                if (!string.IsNullOrWhiteSpace(Doc.bt_cuid))
+                                {
+                                    if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
+                                    {
+                                        // проверяем что в настройках стоит в качестве поля в котором хранится инфа
+                                        string FieldInnTyp;
+                                        switch (Config.FieldInnTyp)
+                                        {
+                                            case FieldDocNumEn.Comment1:
+                                                FieldInnTyp = Doc.comment1;
+                                                break;
+                                            case FieldDocNumEn.Comment2:
+                                                FieldInnTyp = Doc.comment2;
+                                                break;
+                                            default:
+                                                FieldInnTyp = null;
+                                                break;
+                                        }
+
+                                        string[] coment;
+                                        if (!string.IsNullOrWhiteSpace(FieldInnTyp))
+                                        {
+                                            coment = FieldInnTyp.Split(';');
+
+                                            //Если это юрик
+                                            if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
+                                            {
+                                                if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
+                                                else
+                                                {
+                                                    // Пробегаем по типу оплаты
+                                                    decimal SumDoc = 0;
+                                                    foreach (JsonPrintFiscDocTender item in Doc.tenders)
+                                                    {
+                                                        //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                                                        switch (Doc.receipt_type)
+                                                        {
+                                                            case 0:
+                                                                // Если тип оплаты нал
+                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
+
+                                                                break;
+                                                            case 1:
+                                                                // Если тип оплаты нал
+                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
+
+                                                                break;
+                                                            case 2:
+                                                                // Депозит
+
+                                                                break;
+                                                            default:
+                                                                throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                                        }
+                                                    }
+
+                                                    // Сумма за текущий день по юрлицу
+                                                    Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(coment[1].Trim().ToLower(), Doc.created_datetime);
+
+                                                    // Если есть привышение то ругаемся
+                                                    if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
+
+                                                    // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
+                                                    Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(coment[1].Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    else throw new ApplicationException("Нет подключения к базе данных");
+                                }
+
+
+                                // Отправляем на печать
+                                FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                break;
+                            case @"/AksRepItemHistory":
+                                try
+                                {
+                                    // Выставляем параемтры отчёта
+                                    ReportItemsMovement Rep = new ReportItemsMovement(DateTime.Now);
+
+                                    // Получаем данные в отчёт
+                                    Rep.Docs = GetDocumentsRestSharp(Rep, true);
+
+                                    // Отрисовываем отчёт
+                                    responceString = Rep.RenderReport();
+                                    ContentType = "text/html; charset=utf-8";
+                                }
+                                catch (Exception ex)
+                                {
+                                    responceString = ex.Message;
+                                }
+                                break;
+                            case @"/AksRepItem":
+                                try
+                                {
+                                    // Выставляем параемтры отчёта
+                                    List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
+
+                                    // Объект который будем возвращать пользователю
+                                    JsonWebMessageResponce resp = new JsonWebMessageResponce();
+                                    resp.Message = "Не известная ошибка";
+
+                                    try
+                                    {
+                                        // Если есть какой нибудь параметр
+                                        if (JsWdDotxPor.Count > 0 && !string.IsNullOrWhiteSpace(JsWdDotxPor[0].valueString))
+                                        {
+                                            switch (JsWdDotxPor[0].valueString)
+                                            {
+                                                case "ИНВ-3":
+                                                    if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                        resp.Message = ReportWordDotxFarm.CreateReportInf3(JsWdDotxPor[1].valueString);
+                                                    break;
+                                                case "ИНВ-8А":
+                                                    break;
+                                                case "ИНВ-19":
+                                                    break;
+                                                case "PL":   // Прайс лист
+                                                    break;
+                                                default:
+                                                    resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
+                                                    break;
+                                            }
+                                        }
+                                        else resp.Message = string.Format("Ни один параметр не задан не знаем как обрабатывать команду");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        // Если проверка выдала исключение то сообщаем об этом пользователю
+                                        resp.Message = ex.Message;
+                                    }
+                                    // Формируем сообщение для пользователя
+                                    responceString = BLL.JsonWebMessageResponce.SerializeJson(resp);
+                                }
+                                catch (Exception ex)
+                                {
+                                    responceString = ex.Message;
+                                }
+                                break;
+                            case @"/AksRepStat":
+                                try
+                                {
+                                    // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
+                                    responceString = ReportWordDotxFarm.AksRepStat();
+                                    ContentType = "text/html; charset=utf-8";
+
+                                    //HashFileResponce = true;
+                                }
+                                catch (Exception ex)
+                                {
+                                    responceString = ex.Message;
+                                }
+                                break;
+                            case @"/config":
+                                responceString = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                    // Передаём ответ серверу
+                    if (!HashFileResponce)  // По умолчанию текст а нефайл
+                    {
                         response.ContentType = ContentType;
                         response.Headers.Add("Access-Control-Allow-Origin", origin);
                         response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
@@ -409,46 +446,133 @@ namespace AlgoritmPrizm.Com
                         Stream output = response.OutputStream;
                         output.Write(buffer, 0, buffer.Length);
                     }
-                    catch (Exception exw)
+                    else
                     {
-                        string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
-                        ApplicationException ae = new ApplicationException(ErrorMessage);
-                        Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Warning);
+                        responceString = @"C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx";
+                        String FileName = responceString;
+                        response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
+                        response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(FileName));
+                        
+                        // Получаем поток для передачи пользователю
+                        Stream output = response.OutputStream;
 
-                        // пытаемся передать ошибку но при неудачи падать нельзя
-                        try
+                        // Читаем поток файловый и передаём его пользователю
+                        using (FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read))
                         {
-                            // Передаём ответ серверу
-                            response.ContentType = ContentType;
-                            response.Headers.Add("Access-Control-Allow-Origin", origin);
-                            response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
-                            //response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-                            response.KeepAlive = true;
-                            response.StatusCode = (int)HttpStatusCode.NotFound;
-                            //
-                            byte[] buffer = Encoding.UTF8.GetBytes(ErrorMessage);
-                            response.ContentLength64 = buffer.Length;
-                            Stream output = response.OutputStream;
-                            output.Write(buffer, 0, buffer.Length);
+                            byte[] buftmpb = new byte[read.Length];
+                            response.ContentLength64 = buftmpb.Length;
+                            read.Read(buftmpb, 0, buftmpb.Length);
+                            output.Write(buftmpb,0, buftmpb.Length);
                         }
-                        catch (Exception exxe){}
                     }
-
-
-                    
-                    response.Close();
-
                 }
+                catch (Exception exw)
+                {
+                    string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
+                    ApplicationException ae = new ApplicationException(ErrorMessage);
+                    Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Warning);
+
+                    // пытаемся передать ошибку но при неудачи падать нельзя
+                    try
+                    {
+                        // Передаём ответ серверу
+                        response.ContentType = ContentType;
+                        response.Headers.Add("Access-Control-Allow-Origin", origin);
+                        response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
+                        //response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                        response.KeepAlive = true;
+                        response.StatusCode = (int)HttpStatusCode.NotFound;
+                        //
+                        byte[] buffer = Encoding.UTF8.GetBytes(ErrorMessage);
+                        response.ContentLength64 = buffer.Length;
+                        Stream output = response.OutputStream;
+                        output.Write(buffer, 0, buffer.Length);
+                    }
+                    catch (Exception exxe) { }
+                }
+                response.Close();
             }
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Error);
+                Log.EventSave(ae.Message, "Com.Web.AListen", EventEn.Error);
                 throw ae;
             }
         }
 
-
+        /*  список медиа форматов
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+   Inernet Media Types
+   http://en.wikipedia.org/wiki/Internet_media_type
+-->
+<mediaTypes>
+   <mediaType>
+      <contentType>application/vnd.ms-excel</contentType>
+      <name>Microsoft Excel (tm)</name>
+      <refUrl>http://www.iana.org/assignments/media-types/application/vnd.ms-excel</refUrl>
+      <fileExtensions>
+         <fileExtension>.xls</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>application/msword</contentType>
+      <name>Microsoft Word</name>
+      <refUrl>http://www.iana.org/assignments/media-types/application/msword</refUrl>
+      <fileExtensions>
+         <fileExtension>.doc</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>application/vnd.ms-powerpoint</contentType>
+      <name>Microsoft Powerpoint (tm)</name>
+      <refUrl>http://www.iana.org/assignments/media-types/application/vnd.ms-powerpoint</refUrl>
+      <fileExtensions>
+         <fileExtension>.ppt</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>application/pdf</contentType>
+      <name>Portable Document Format</name>
+      <refUrl>http://www.iana.org/assignments/media-types/application/vnd.ms-powerpoint</refUrl>
+      <fileExtensions>
+         <fileExtension>.pdf</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>image/jpeg</contentType>
+      <name>JPEG JFIF image</name>
+      <fileExtensions>
+         <fileExtension>.jpg</fileExtension>
+         <fileExtension>.jpeg</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>image/gif</contentType>
+      <name>GIF image</name>
+      <fileExtensions>
+         <fileExtension>.gif</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>image/vnd.microsoft.icon</contentType>
+      <name>ICO image</name>
+      <refUrl>http://www.iana.org/assignments/media-types/image/vnd.microsoft.icon</refUrl>
+      <fileExtensions>
+         <fileExtension>.ico</fileExtension>
+      </fileExtensions>
+   </mediaType>
+   <mediaType>
+      <contentType>application/zip</contentType>
+      <name>ZIP file</name>
+      <refUrl>http://www.iana.org/assignments/media-types/application/zip</refUrl>
+      <fileExtensions>
+         <fileExtension>.zip</fileExtension>
+      </fileExtensions>
+   </mediaType>
+</mediaTypes>
+             
+         */
 
 
         /// <summary>
