@@ -88,9 +88,21 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+
+                // for (int i = 0; i < Wrd.FarmWordDotx.PoolWorkerList.Count; i++)
+                //{
+                //    Wrd.EnStatusWorkercs ddd = Wrd.FarmWordDotx.PoolWorkerList[i].StatusWorker;
+                //}
+                //foreach (Wrd.Worker item in Wrd.FarmWordDotx.PoolWorkerList)
+                //{
+                //    Wrd.EnStatusWorkercs ddd = item.StatusWorker;
+                //}
+
+
                 // Палитра
                 Color ColorDefFond = ColorTranslator.FromHtml("#02014f");   // Цвет шрифта по умолчанию
                 Color ColorDefBack = ColorTranslator.FromHtml("#bebdff");   // Цвет фона по умолчанию
+                Color ColorDefBackBody = ColorTranslator.FromHtml("#fff");   // Цвет фона по умолчанию
                 Color ColorErrFond = ColorTranslator.FromHtml("#91060f");   // Цвет шрифта при ошибке
                 Color ColorErrBack = ColorTranslator.FromHtml("#fcc5c9");   // Цвет фона при ошибке
                 Color ColorWarFond = ColorTranslator.FromHtml("#ffc803");   // Цвет шрифта при предупреждении
@@ -139,27 +151,33 @@ namespace AlgoritmPrizm.Com
                     // определяем стиль для строки чтобы подсветить нужным цветом наши задания
                     Color ColorCurFond = ColorDefFond;
                     Color ColorCurBack = ColorDefBack;
+                    Color ColorCurBackBody = ColorDefBackBody;
                     string StyleForRol = "";
+                    string StyleForRolBody = "";
                     switch (item.StatusTask)
                     {
                         case Wrd.EnStatusTask.Success:
                             ColorCurFond = ColorSucFond;
                             ColorCurBack = ColorSucBack;
+                            ColorCurBackBody = ColorSucBack;
                             break;
                         case Wrd.EnStatusTask.WARNING:
                             ColorCurFond = ColorWarFond;
                             ColorCurBack = ColorWarBack;
+                            ColorCurBackBody = ColorWarBack;
                             break;
                         case Wrd.EnStatusTask.ERROR:
                             ColorCurFond = ColorErrFond;
                             ColorCurBack = ColorErrBack;
+                            ColorCurBackBody = ColorErrBack;
                             break;
                         default:
                             break;
                     }
                     StyleForRol =string.Format(@" style=""color: {0}; background: {1}; font-size: large; border: 1px {0};""", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBack));
+                    StyleForRolBody = string.Format(@" style=""color: {0}; background: {1}; font-size: large; border: 1px {0};""", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody));
 
-                    rez += string.Format(@"  <tr{0}>", " " + StyleForRol);
+                    rez += string.Format(@"  <tr{0}>", " " + StyleForRolBody);
                     rez += string.Format(@"   <td>{0}</td>", Path.GetFileName(item.Target));
                     rez += string.Format(@"   <td style=""text-align: center;"">{0}</td>", item.StatusTask.ToString());
                     rez += string.Format(@"   <td>");
@@ -190,7 +208,7 @@ namespace AlgoritmPrizm.Com
                         rez += string.Format(@"     <tbody style=""border: 1px {0};"">", ColorTranslator.ToHtml(ColorCurFond));
                         for (int iAfRowRez = 0; iAfRowRez < item.RezTsk.TableInWordAffectedRowList.Count; iAfRowRez++)
                         {
-                            rez += string.Format(@"      <tr>");
+                            rez += string.Format(@"      <tr style=""border: 1px {0}; {1}"">", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody));
                             rez += string.Format(@"       <td>{0}</td>", iAfRowRez+1);
                             rez += string.Format(@"       <td>{0}</td>", item.RezTsk.TableInWordAffectedRowList[iAfRowRez].AffectedRow);
                             rez += string.Format(@"       <td>{0}</td>", item.RezTsk.TableInWordAffectedRowList[iAfRowRez].Tbl.TableValue.Rows.Count);
@@ -207,15 +225,15 @@ namespace AlgoritmPrizm.Com
                     rez += string.Format(@"     <tbody style=""border: 1px {0};"">", ColorTranslator.ToHtml(ColorCurFond));
                     rez += string.Format(@"      <tr>");
                     rez += string.Format(@"       <td>Создание задания</td>");
-                    rez += string.Format(@"       <td>{0}</td>", item.CraeteDt.ToString());
+                    rez += string.Format(@"       <td style=""border: 1px {0}; {1}"">{2}</td>", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody), item.CraeteDt.ToString());
                     rez += string.Format(@"      </tr>");
                     rez += string.Format(@"      <tr>");
                     rez += string.Format(@"       <td>Реальное время начала построения отчёта</td>");
-                    rez += string.Format(@"       <td>{0}</td>", (item.StartProcessing != null ? ((DateTime)item.StartProcessing).ToString() : ""));
+                    rez += string.Format(@"       <td style=""border: 1px {0}; {1}"">{2}</td>", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody), (item.StartProcessing != null ? ((DateTime)item.StartProcessing).ToString() : ""));
                     rez += string.Format(@"      </tr>");
                     rez += string.Format(@"      <tr>");
                     rez += string.Format(@"       <td>Реальное время кокнчания процесса построения отчёта</td>");
-                    rez += string.Format(@"       <td>{0}</td>", (item.EndProcessing != null ? ((DateTime)item.EndProcessing).ToString() : ""));
+                    rez += string.Format(@"       <td style=""border: 1px {0}; {1}"">{2}</td>", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody), (item.EndProcessing != null ? ((DateTime)item.EndProcessing).ToString() : ""));
                     rez += string.Format(@"      </tr>");
                     rez += string.Format(@"     <tbody>");
                     rez += string.Format(@"    </table>");
@@ -317,27 +335,68 @@ namespace AlgoritmPrizm.Com
         /// Формирование отчёта по ИНВ-19
         /// </summary>
         /// <param name="DocSid">Сид документа инвентаризации</param>
-        public static void CreateReportInf19(string DocSid)
+        public static string CreateReportInf19(string DocSid)
         {
             try
             {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-3 ({0}).doc", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
                 // Создаём список закладок
                 Wrd.BookmarkList BkmL = new Wrd.BookmarkList();
+                if (TblBkm.Rows.Count == 1)
+                {
+                    BkmL.Add(new Wrd.Bookmark("doc_num0", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("doc_num1", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("create_dt", TblBkm.Rows[0]["create_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt0", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt1", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt2", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                }
+
+                // Создаём запрос для получения таблицы
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='{0}')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid", DocSid));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("T1", TblVal), true);
 
                 // Создаём список итогов
                 Wrd.TotalList Ttl = new Wrd.TotalList();
 
                 // Создаём задание и получаем объект которым будем смотреть результат
-                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Шаблон.dotx", @"Результат.doc", BkmL, TblL);
+                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Унифицированная форма ИНВ-19.dotx", TargetFile, BkmL, TblL);
 
                 // Добавляем в кешь чтобы потом следить за отчётом
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
                 Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
             }
             catch (Exception ex)
             {
@@ -351,27 +410,68 @@ namespace AlgoritmPrizm.Com
         /// Формирование отчёта по ИНВ-8
         /// </summary>
         /// <param name="DocSid">Сид документа инвентаризации</param>
-        public static void CreateReportInf8(string DocSid)
+        public static string CreateReportInf8a(string DocSid)
         {
             try
             {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-3 ({0}).doc", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
                 // Создаём список закладок
                 Wrd.BookmarkList BkmL = new Wrd.BookmarkList();
+                if (TblBkm.Rows.Count == 1)
+                {
+                    BkmL.Add(new Wrd.Bookmark("doc_num0", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("doc_num1", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("create_dt", TblBkm.Rows[0]["create_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt0", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt1", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt2", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                }
+
+                // Создаём запрос для получения таблицы
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='{0}')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid", DocSid));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("T1", TblVal), true);
 
                 // Создаём список итогов
                 Wrd.TotalList Ttl = new Wrd.TotalList();
 
                 // Создаём задание и получаем объект которым будем смотреть результат
-                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Шаблон.dotx", @"Результат.doc", BkmL, TblL);
+                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Унифицированная форма ИНВ-8a.dotx", TargetFile, BkmL, TblL);
 
                 // Добавляем в кешь чтобы потом следить за отчётом
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
                 Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
             }
             catch (Exception ex)
             {

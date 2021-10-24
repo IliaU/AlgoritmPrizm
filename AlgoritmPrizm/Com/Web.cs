@@ -384,8 +384,12 @@ namespace AlgoritmPrizm.Com
                                                         resp.Message = ReportWordDotxFarm.CreateReportInf3(JsWdDotxPor[1].valueString);
                                                     break;
                                                 case "ИНВ-8А":
+                                                    if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                        resp.Message = ReportWordDotxFarm.CreateReportInf8a(JsWdDotxPor[1].valueString);
                                                     break;
                                                 case "ИНВ-19":
+                                                    if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                        resp.Message = ReportWordDotxFarm.CreateReportInf19(JsWdDotxPor[1].valueString);
                                                     break;
                                                 case "PL":   // Прайс лист
                                                     break;
@@ -451,7 +455,8 @@ namespace AlgoritmPrizm.Com
                         responceString = @"C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx";
                         String FileName = responceString;
                         response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
-                        response.AddHeader("Content-Disposition", "attachment; filename=" + Path.GetFileName(FileName));
+                        string ffftmp = Path.GetFileName(FileName).Replace(".dotx", ".doc");
+                        response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
                         
                         // Получаем поток для передачи пользователю
                         Stream output = response.OutputStream;
