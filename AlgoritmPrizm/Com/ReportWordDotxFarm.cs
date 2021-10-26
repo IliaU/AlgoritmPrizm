@@ -111,6 +111,34 @@ namespace AlgoritmPrizm.Com
                 Color ColorSucBack = ColorTranslator.FromHtml("#e3fce7");   // Цвет фона при успехе
 
                 string rez = null;
+                rez += string.Format(@"<script>");
+                rez += string.Format(@" async function pushReport (design) {{");
+                rez += string.Format(@"  let response = await fetch(");
+                rez += string.Format(@"   ""http://{0}:{1}/AksRepStat"",",Web.Host, Web.Port);
+                rez += string.Format(@"   {{");
+                rez += string.Format(@"    method: 'POST',");
+                rez += string.Format(@"    headers: {{");
+                rez += string.Format(@"     'Content-Type': 'application/json, version=2',");
+                rez += string.Format(@"     'Accept': 'application/json, version=2',");
+                rez += string.Format(@"     'Accept-Encoding': 'gzip, deflate, br'");
+                //rez += string.Format(@"     'Auth-Session': session.token");
+                rez += string.Format(@"    }},");
+                rez += string.Format(@"    body: JSON.stringify([{{");
+                rez += string.Format(@"     valueString: design");
+                rez += string.Format(@"    }}])");
+                rez += string.Format(@"   }}");
+                rez += string.Format(@"  );");
+                rez += string.Format(@"  await response.arrayBuffer();");
+                //rez += string.Format(@"  let result = await response.json();");
+                //rez += string.Format(@"  if (result[""Message""])");
+                //rez += string.Format(@"  {{");
+                //rez += string.Format(@"  alert(result[""Message""]);");
+                //rez += string.Format(@"  }}");
+                rez += string.Format(@" }}");
+                rez += string.Format(@"</script>");
+
+                rez += string.Format(@"        <p onclick=""pushReport('ggg')"">Скачать файл</p>");
+
                 rez += string.Format(@"<table border=""1"" style=""width: 100%; text-align: center; color: {0}; border-collapse: collapse; border: 1px solid black; "">", ColorTranslator.ToHtml(ColorDefFond));
                 rez += string.Format(@" <caption style=""color: {0}; font-size: x-large; font-weight: bold"">Статистика модуля формирования отчётов на основе шаблонов Word</caption>", ColorTranslator.ToHtml(ColorDefFond));
                 rez += string.Format(@" <thead style=""color: {0}; background: {1}; font-size: large; border: 1px {0};"">", ColorTranslator.ToHtml(ColorDefFond), ColorTranslator.ToHtml(ColorDefBack));
@@ -226,6 +254,12 @@ namespace AlgoritmPrizm.Com
                     rez += string.Format(@"      <tr>");
                     rez += string.Format(@"       <td>Создание задания</td>");
                     rez += string.Format(@"       <td style=""border: 1px {0}; {1}"">{2}</td>", ColorTranslator.ToHtml(ColorCurFond), ColorTranslator.ToHtml(ColorCurBackBody), item.CraeteDt.ToString());
+                    rez += string.Format(@"       <td rowapan=""3"">");
+                    if (item.StatusTask == Wrd.EnStatusTask.Success)
+                    {
+                        rez += string.Format(@"        <p onclick=""pushReport('{0}')"">Скачать файл</p>", Path.GetFileName(item.Target));
+                    }
+                    rez += string.Format(@"       </td>");
                     rez += string.Format(@"      </tr>");
                     rez += string.Format(@"      <tr>");
                     rez += string.Format(@"       <td>Реальное время начала построения отчёта</td>");
@@ -237,7 +271,6 @@ namespace AlgoritmPrizm.Com
                     rez += string.Format(@"      </tr>");
                     rez += string.Format(@"     <tbody>");
                     rez += string.Format(@"    </table>");
-
 
                     rez += string.Format(@"   </td>");
                     rez += string.Format(@"  </tr>");
@@ -623,7 +656,7 @@ Order by sid", DocSid));
                     string FName = item.Target;
                     if (FName.IndexOf(@"\") > 0) FName = Path.GetFileName(FName);
 
-                    if (Filename == FName && item.StatusTask != Wrd.EnStatusTask.Success)
+                    if (Filename == FName && item.StatusTask != Wrd.EnStatusTask.Success && item.StatusTask != Wrd.EnStatusTask.ERROR)
                     {
                         rez = true;
                         break;

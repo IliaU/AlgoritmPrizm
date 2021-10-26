@@ -400,3 +400,478 @@ From T
 Order by sid
 25.10.2021 0:40:25	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
 25.10.2021 0:40:26	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:49:42	Message	Log	Запуск программы
+25.10.2021 0:49:42	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 0:49:42	Message	Config	Чтение конфигурационного файла
+25.10.2021 0:49:43	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 0:49:44	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 0:49:44	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 0:49:44	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 0:50:10	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '610444449000210592'
+25.10.2021 0:50:10	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='610444449000210592')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:50:11	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:50:20	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '614601285000284125'
+25.10.2021 0:50:20	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='614601285000284125')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:50:20	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:50:21	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:50:35	Error	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошла ошибка при отрисовки отчёта Унифицированная форма ИНВ-3.dotx: (WordDotxServer.StartCreateReport   Упали с ошибкой: (Сервер RPC недоступен. (Исключение из HRESULT: 0x800706BA)))
+25.10.2021 0:50:49	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: Такое задание по этому документу Унифицированная форма ИНВ-3 (610444449000210592).doc уже сущестаует
+25.10.2021 0:51:14	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: Такое задание по этому документу Унифицированная форма ИНВ-3 (610444449000210592).doc уже сущестаует
+25.10.2021 0:53:29	Message	Log	Запуск программы
+25.10.2021 0:53:29	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 0:53:29	Message	Config	Чтение конфигурационного файла
+25.10.2021 0:53:29	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 0:53:30	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 0:53:30	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 0:53:30	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 0:53:42	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '610444449000210592'
+25.10.2021 0:53:42	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='610444449000210592')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:53:42	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:53:58	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '614601285000284125'
+25.10.2021 0:53:58	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='614601285000284125')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:54:00	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:54:01	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:54:07	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: Такое задание по этому документу Унифицированная форма ИНВ-3 (610444449000210592).doc уже сущестаует
+25.10.2021 0:54:22	Error	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошла ошибка при отрисовки отчёта Унифицированная форма ИНВ-3.dotx: (WordDotxServer.StartCreateReport   Упали с ошибкой: (Сервер RPC недоступен. (Исключение из HRESULT: 0x800706BA)))
+25.10.2021 0:54:32	Error	ReportWordDotxFarm.CreateReportInf3	Упали при формировании отчёта с ошибкой: Такое задание по этому документу Унифицированная форма ИНВ-3 (610444449000210592).doc уже сущестаует
+25.10.2021 0:55:51	Message	Log	Запуск программы
+25.10.2021 0:55:51	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 0:55:51	Message	Config	Чтение конфигурационного файла
+25.10.2021 0:55:52	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 0:55:53	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 0:55:53	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 0:55:53	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 0:56:06	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '610444449000210592'
+25.10.2021 0:56:06	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='610444449000210592')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:56:08	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:56:16	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '614601285000284125'
+25.10.2021 0:56:16	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='614601285000284125')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:56:17	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:56:18	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:56:30	Error	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошла ошибка при отрисовки отчёта Унифицированная форма ИНВ-3.dotx: (WordDotxServer.StartCreateReport   Упали с ошибкой: (Сервер RPC недоступен. (Исключение из HRESULT: 0x800706BA)))
+25.10.2021 0:56:50	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '610444449000210592'
+25.10.2021 0:56:50	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='610444449000210592')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:56:53	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:57:10	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '614601285000284125'
+25.10.2021 0:57:10	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='614601285000284125')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:57:11	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:57:12	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 0:57:29	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612058065000221451'
+25.10.2021 0:57:29	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='612058065000221451')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 0:57:32	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 2:16:13	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 2:23:55	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 22:09:04	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+Where sid = '612058065000221451'
+25.10.2021 22:09:04	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1
+    Where D.sid ='612058065000221451')
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+25.10.2021 22:09:05	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта Унифицированная форма ИНВ-3.dotx
+25.10.2021 22:40:15	Message	Log	Запуск программы
+25.10.2021 22:40:15	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 22:40:15	Message	Config	Чтение конфигурационного файла
+25.10.2021 22:40:15	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 22:40:16	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 22:40:16	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 22:40:16	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 22:40:24	Error	ReportWordDotxFarm.AksRepStat	Упали при получении статистики от модуля отрисовки отчётов с ошибкой: Входная строка имела неверный формат.
+25.10.2021 22:42:12	Message	Log	Запуск программы
+25.10.2021 22:42:12	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 22:42:12	Message	Config	Чтение конфигурационного файла
+25.10.2021 22:42:13	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 22:42:14	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 22:42:14	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 22:42:14	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 22:43:12	Message	Log	Запуск программы
+25.10.2021 22:43:12	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 22:43:12	Message	Config	Чтение конфигурационного файла
+25.10.2021 22:43:12	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 22:43:13	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 22:43:13	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 22:43:13	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 22:44:25	Message	Log	Запуск программы
+25.10.2021 22:44:25	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 22:44:25	Message	Config	Чтение конфигурационного файла
+25.10.2021 22:44:25	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 22:44:26	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 22:44:26	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 22:44:27	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 22:47:54	Message	Log	Запуск программы
+25.10.2021 22:47:54	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 22:47:54	Message	Config	Чтение конфигурационного файла
+25.10.2021 22:47:54	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 22:47:56	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 22:47:56	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 22:47:56	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 23:00:34	Message	Log	Запуск программы
+25.10.2021 23:00:34	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 23:00:34	Message	Config	Чтение конфигурационного файла
+25.10.2021 23:00:34	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 23:00:35	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 23:00:35	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 23:00:35	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 23:02:42	Message	Log	Запуск программы
+25.10.2021 23:02:42	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 23:02:42	Message	Config	Чтение конфигурационного файла
+25.10.2021 23:02:42	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 23:02:43	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 23:02:43	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 23:02:43	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 23:06:35	Message	Log	Запуск программы
+25.10.2021 23:06:35	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 23:06:35	Message	Config	Чтение конфигурационного файла
+25.10.2021 23:06:36	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 23:06:37	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 23:06:37	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 23:06:37	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 23:07:08	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Процесс не может получить доступ к файлу "C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx", так как этот файл используется другим процессом.
+25.10.2021 23:07:09	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Процесс не может получить доступ к файлу "C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx", так как этот файл используется другим процессом.
+25.10.2021 23:07:14	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Процесс не может получить доступ к файлу "C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx", так как этот файл используется другим процессом.
+25.10.2021 23:07:18	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Процесс не может получить доступ к файлу "C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx", так как этот файл используется другим процессом.
+25.10.2021 23:08:11	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Процесс не может получить доступ к файлу "C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx", так как этот файл используется другим процессом.
+25.10.2021 23:08:40	Message	Log	Запуск программы
+25.10.2021 23:08:41	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 23:08:41	Message	Config	Чтение конфигурационного файла
+25.10.2021 23:08:41	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 23:08:42	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 23:08:42	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 23:08:42	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+25.10.2021 23:14:24	Message	Log	Запуск программы
+25.10.2021 23:14:24	Message	FileCheckLog	Запуск модуля логирования чеков
+25.10.2021 23:14:24	Message	Config	Чтение конфигурационного файла
+25.10.2021 23:14:24	Message	FR	Запуск драйвера для работы с фискальным регистратором
+25.10.2021 23:14:25	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+25.10.2021 23:14:25	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+25.10.2021 23:14:25	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:14:31	Message	Log	Запуск программы
+26.10.2021 22:14:31	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:14:31	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:14:31	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:14:33	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:14:33	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:14:33	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:19:12	Message	Log	Запуск программы
+26.10.2021 22:19:12	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:19:12	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:19:13	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:19:14	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:19:14	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:19:14	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:41:06	Message	Log	Запуск программы
+26.10.2021 22:41:06	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:41:06	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:41:07	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:41:08	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:41:08	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:41:08	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:43:02	Message	Log	Запуск программы
+26.10.2021 22:43:02	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:43:02	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:43:02	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:43:03	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:43:03	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:43:04	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:43:46	Message	Log	Запуск программы
+26.10.2021 22:43:46	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:43:46	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:43:46	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:43:47	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:43:47	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:43:47	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:45:10	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: {"Message":"Процесс не может получить доступ к файлу \"C:\\Users\\User\\Documents\\Visual Studio 2015\\Projects\\AlgoritmPrizm\\AlgoritmPrizm\\bin\\Debug\\DOTX\\Унифицированная форма ИНВ-3.dotx\", так как этот файл используется другим процессом."}
+26.10.2021 22:47:38	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: {"Message":"Процесс не может получить доступ к файлу \"C:\\Users\\User\\Documents\\Visual Studio 2015\\Projects\\AlgoritmPrizm\\AlgoritmPrizm\\bin\\Debug\\DOTX\\Унифицированная форма ИНВ-3.dotx\", так как этот файл используется другим процессом."}
+26.10.2021 22:47:45	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: {"Message":"Процесс не может получить доступ к файлу \"C:\\Users\\User\\Documents\\Visual Studio 2015\\Projects\\AlgoritmPrizm\\AlgoritmPrizm\\bin\\Debug\\DOTX\\Унифицированная форма ИНВ-3.dotx\", так как этот файл используется другим процессом."}
+26.10.2021 22:48:08	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: {"Message":"Процесс не может получить доступ к файлу \"C:\\Users\\User\\Documents\\Visual Studio 2015\\Projects\\AlgoritmPrizm\\AlgoritmPrizm\\bin\\Debug\\DOTX\\Унифицированная форма ИНВ-3.dotx\", так как этот файл используется другим процессом."}
+26.10.2021 22:48:11	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: {"Message":"Процесс не может получить доступ к файлу \"C:\\Users\\User\\Documents\\Visual Studio 2015\\Projects\\AlgoritmPrizm\\AlgoritmPrizm\\bin\\Debug\\DOTX\\Унифицированная форма ИНВ-3.dotx\", так как этот файл используется другим процессом."}
+26.10.2021 22:49:23	Message	Log	Запуск программы
+26.10.2021 22:49:23	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:49:23	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:49:23	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:49:24	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:49:24	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:49:24	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:55:37	Message	Log	Запуск программы
+26.10.2021 22:55:37	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:55:37	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:55:37	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:55:38	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:55:38	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:55:38	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:57:41	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Эта операция не может быть выполнена после передачи отклика.
+26.10.2021 22:57:41	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Эта операция не может быть выполнена после передачи отклика.
+26.10.2021 22:58:44	Message	Log	Запуск программы
+26.10.2021 22:58:44	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:58:44	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:58:44	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:58:45	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:58:45	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:58:45	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 22:59:10	Message	Log	Запуск программы
+26.10.2021 22:59:11	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 22:59:11	Message	Config	Чтение конфигурационного файла
+26.10.2021 22:59:11	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 22:59:12	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 22:59:12	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 22:59:12	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:07:20	Message	Log	Запуск программы
+26.10.2021 23:07:20	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:07:20	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:07:20	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:07:21	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:07:21	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:07:21	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:10:19	Message	Log	Запуск программы
+26.10.2021 23:10:19	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:10:19	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:10:19	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:10:20	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:10:20	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:10:20	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:12:23	Message	Log	Запуск программы
+26.10.2021 23:12:23	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:12:23	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:12:24	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:12:25	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:12:25	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:12:25	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:14:02	Message	Log	Запуск программы
+26.10.2021 23:14:02	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:14:02	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:14:02	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:14:04	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:14:04	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:14:04	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:15:03	Message	Log	Запуск программы
+26.10.2021 23:15:03	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:15:03	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:15:03	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:15:04	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:15:04	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:15:04	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:15:18	Warning	Com.Web.Listen	Упали при обработке запроса пользователя с ошибкой: Эта операция не может быть выполнена после передачи отклика.
+26.10.2021 23:15:45	Message	Log	Запуск программы
+26.10.2021 23:15:45	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:15:45	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:15:45	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:15:46	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:15:46	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:15:46	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:16:27	Message	Log	Запуск программы
+26.10.2021 23:16:28	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:16:28	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:16:28	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:16:29	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:16:29	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:16:29	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:16:57	Message	Log	Запуск программы
+26.10.2021 23:16:58	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:16:58	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:16:58	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:16:59	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:16:59	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:16:59	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:18:53	Message	Log	Запуск программы
+26.10.2021 23:18:53	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:18:53	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:18:53	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:18:55	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:18:55	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:18:55	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:25:03	Message	Log	Запуск программы
+26.10.2021 23:25:03	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:25:03	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:25:03	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:25:04	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:25:04	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:25:05	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:25:38	Message	Log	Запуск программы
+26.10.2021 23:25:38	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:25:38	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:25:38	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:25:40	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:25:40	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:25:40	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+26.10.2021 23:26:40	Message	Log	Запуск программы
+26.10.2021 23:26:40	Message	FileCheckLog	Запуск модуля логирования чеков
+26.10.2021 23:26:40	Message	Config	Чтение конфигурационного файла
+26.10.2021 23:26:40	Message	FR	Запуск драйвера для работы с фискальным регистратором
+26.10.2021 23:26:41	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+26.10.2021 23:26:41	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+26.10.2021 23:26:41	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)

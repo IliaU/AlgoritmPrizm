@@ -416,10 +416,21 @@ namespace AlgoritmPrizm.Com
                             case @"/AksRepStat":
                                 try
                                 {
-                                    // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
-                                    responceString = ReportWordDotxFarm.AksRepStat();
-                                    ContentType = "text/html; charset=utf-8";
+                                    // Выставляем параемтры отчёта
+                                    List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
 
+                                    // Если есть какой нибудь параметр
+                                    if (JsWdDotxPor!=null && JsWdDotxPor.Count > 0 && !string.IsNullOrWhiteSpace(JsWdDotxPor[0].valueString))
+                                    {
+                                        ContentType = "text/html; charset=utf-8";
+                                        HashFileResponce = true;
+                                    }
+                                    else
+                                    {
+                                        // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
+                                        responceString = ReportWordDotxFarm.AksRepStat();
+                                        ContentType = "text/html; charset=utf-8";
+                                    }
                                     //HashFileResponce = true;
                                 }
                                 catch (Exception ex)
@@ -449,25 +460,54 @@ namespace AlgoritmPrizm.Com
                         response.ContentLength64 = buffer.Length;
                         Stream output = response.OutputStream;
                         output.Write(buffer, 0, buffer.Length);
+                        
                     }
                     else
                     {
-                        responceString = @"C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx";
-                        String FileName = responceString;
-                        response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
-                        string ffftmp = Path.GetFileName(FileName).Replace(".dotx", ".doc");
-                        response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
-                        
-                        // Получаем поток для передачи пользователю
-                        Stream output = response.OutputStream;
-
-                        // Читаем поток файловый и передаём его пользователю
-                        using (FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+                        try
                         {
-                            byte[] buftmpb = new byte[read.Length];
-                            response.ContentLength64 = buftmpb.Length;
-                            read.Read(buftmpb, 0, buftmpb.Length);
-                            output.Write(buftmpb,0, buftmpb.Length);
+                            responceString = @"C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx";
+                            String FileName = responceString;
+                            response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
+                            string ffftmp = Path.GetFileName(FileName).Replace(".dotx", ".doc");
+                            response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
+
+                            if (!File.Exists(responceString)) throw new ApplicationException(string.Format("Файл не обнаружен. ({0})", responceString));
+
+                            // Получаем поток для передачи пользователю
+                            Stream output = response.OutputStream;
+
+                            // Читаем поток файловый и передаём его пользователю
+                            using (FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+                            {
+                                byte[] buftmpb = new byte[read.Length];
+                                response.ContentLength64 = buftmpb.Length;
+                                read.Read(buftmpb, 0, buftmpb.Length);
+                                output.Write(buftmpb, 0, buftmpb.Length);
+                            }
+
+                            response.Close();
+                        }
+                        catch (Exception ex)
+                        {
+                            // Объект который будем возвращать пользователю
+                            JsonWebMessageResponce resp = new JsonWebMessageResponce();
+                            resp.Message = ex.Message;
+                            // Формируем сообщение для пользователя
+                            string buferror = BLL.JsonWebMessageResponce.SerializeJson(resp);
+
+                            // Передаём ответ серверу
+                            response.ContentType = ContentType;
+                            response.Headers.Add("Access-Control-Allow-Origin", origin);
+                            response.Headers.Add("Access-Control-Allow-Headers", "Access-Control-Allow-Origin, Auth-Session, Content-Type");
+                            //response.Headers.Add("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+                            response.KeepAlive = true;
+                            response.StatusCode = (int)HttpStatusCode.NotFound;
+                            //
+                            byte[] buffer = Encoding.UTF8.GetBytes(buferror);
+                            response.ContentLength64 = buffer.Length;
+                            Stream output = response.OutputStream;
+                            output.Write(buffer, 0, buffer.Length);
                         }
                     }
                 }
