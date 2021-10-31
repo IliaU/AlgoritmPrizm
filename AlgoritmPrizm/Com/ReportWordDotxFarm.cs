@@ -111,7 +111,7 @@ namespace AlgoritmPrizm.Com
                 Color ColorSucBack = ColorTranslator.FromHtml("#e3fce7");   // Цвет фона при успехе
 
                 string rez = null;
-                rez += string.Format(@"<script>");
+                /*rez += string.Format(@"<script>");
                 rez += string.Format(@" async function pushReport (design) {{");
                 rez += string.Format(@"  let response = await fetch(");
                 rez += string.Format(@"   ""http://{0}:{1}/AksRepStat"",",Web.Host, Web.Port);
@@ -138,7 +138,7 @@ namespace AlgoritmPrizm.Com
                 rez += string.Format(@"</script>");
 
                 rez += string.Format(@"        <p onclick=""pushReport('ggg')"">Скачать файл</p>");
-
+*/
                 rez += string.Format(@"<table border=""1"" style=""width: 100%; text-align: center; color: {0}; border-collapse: collapse; border: 1px solid black; "">", ColorTranslator.ToHtml(ColorDefFond));
                 rez += string.Format(@" <caption style=""color: {0}; font-size: x-large; font-weight: bold"">Статистика модуля формирования отчётов на основе шаблонов Word</caption>", ColorTranslator.ToHtml(ColorDefFond));
                 rez += string.Format(@" <thead style=""color: {0}; background: {1}; font-size: large; border: 1px {0};"">", ColorTranslator.ToHtml(ColorDefFond), ColorTranslator.ToHtml(ColorDefBack));
@@ -257,7 +257,7 @@ namespace AlgoritmPrizm.Com
                     rez += string.Format(@"       <td rowapan=""3"">");
                     if (item.StatusTask == Wrd.EnStatusTask.Success)
                     {
-                        rez += string.Format(@"        <p onclick=""pushReport('{0}')"">Скачать файл</p>", Path.GetFileName(item.Target));
+                        rez += string.Format(@"        <a href=""http://{0}:{1}/AksRepStat?sid={2}"" target=""_blank""><p onclick=""pushReport('{0}')"">Скачать файл</p></a>", Web.Host, Web.Port, item.Sid.ToString());
                     }
                     rez += string.Format(@"       </td>");
                     rez += string.Format(@"      </tr>");
@@ -307,6 +307,38 @@ namespace AlgoritmPrizm.Com
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при запуске модуля отрисовки отчётов с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, string.Format("{0}.Join", this.GetType().Name), EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Получение пути к файлу по его сиду
+        /// </summary>
+        /// <param name="sid">Сид документа по которому хотим получить путь к готовому файлу</param>
+        /// <returns>Путь к готовому файлу</returns>
+        public static string GetPathReport(string sid)
+        {
+            try
+            {
+                string rez=null;
+
+                // Пробегаем по всем заданиям и вытаскиваем руть если нашли нужное задание
+                foreach (Wrd.TaskWord item in RezStatCach)
+                {
+                    if(item.Sid.ToString()==sid)
+                    {
+                        if (item.Target.IndexOf('\\')>0) rez = item.Target;
+                        else rez = string.Format(@"{0}\{1}\{2}", Environment.CurrentDirectory, Config.WordDotxTarget, item.Target);
+                        break;
+                    }
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при попытке получить путь к готовому отчёту с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.GetPathReport", "ReportWordDotxFarm"), EventEn.Error);
                 throw ae;
             }
         }

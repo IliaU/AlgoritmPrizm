@@ -216,9 +216,16 @@ namespace AlgoritmPrizm.Com
                             BufPostRequest = reader.ReadToEnd();
                         }
 
+                        ///AksRepStat?sid=a251c9b3-ca0c-4632-92a8-a6137dd78775
+                        string[] RawUrl = request.RawUrl.Split('?');
+                        string[] PowUrlParam = null;
+                        if (RawUrl.Length > 1)
+                        {
+                            PowUrlParam = RawUrl[1].Split('&');
+                        }
 
                         // В зависимости от того что хотят выполняем нужные опрации
-                        switch (request.RawUrl)
+                        switch (RawUrl[0])
                         {
                             case @"/marking":
 
@@ -416,14 +423,19 @@ namespace AlgoritmPrizm.Com
                             case @"/AksRepStat":
                                 try
                                 {
-                                    // Выставляем параемтры отчёта
-                                    List<BLL.JsonWordDotxParams> JsWdDotxPor = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
-
-                                    // Если есть какой нибудь параметр
-                                    if (JsWdDotxPor!=null && JsWdDotxPor.Count > 0 && !string.IsNullOrWhiteSpace(JsWdDotxPor[0].valueString))
+                                    if(PowUrlParam!=null && PowUrlParam.Length>0)
                                     {
+                                        foreach (string item in PowUrlParam)
+                                        {
+                                            string[] tmpPar = item.Split('=');
+                                            if (tmpPar.Length>1 && tmpPar[0]=="sid")
+                                            {
+                                                responceString = ReportWordDotxFarm.GetPathReport(tmpPar[1]);
+                                                HashFileResponce = true;
+                                                break;
+                                            }
+                                        }
                                         ContentType = "text/html; charset=utf-8";
-                                        HashFileResponce = true;
                                     }
                                     else
                                     {
@@ -431,7 +443,6 @@ namespace AlgoritmPrizm.Com
                                         responceString = ReportWordDotxFarm.AksRepStat();
                                         ContentType = "text/html; charset=utf-8";
                                     }
-                                    //HashFileResponce = true;
                                 }
                                 catch (Exception ex)
                                 {
@@ -466,11 +477,16 @@ namespace AlgoritmPrizm.Com
                     {
                         try
                         {
-                            responceString = @"C:\Users\User\Documents\Visual Studio 2015\Projects\AlgoritmPrizm\AlgoritmPrizm\bin\Debug\DOTX\Унифицированная форма ИНВ-3.dotx";
-                            String FileName = responceString;
+                            String PathFileName = responceString;
                             response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
-                            string ffftmp = Path.GetFileName(FileName).Replace(".dotx", ".doc");
-                            response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
+                            //string ffftmp = Path.GetFileName(PathFileName).Replace(".dotx", ".doc");
+                            //response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
+
+                            string FileName = Path.GetFileName(PathFileName.Replace(".dotx", ".doc"));
+                            //FileName = Encoding.Unicode.GetString(Encoding.Convert(Encoding.Default, Encoding.Unicode, Encoding.Default.GetBytes(FileName)));
+
+                            response.AddHeader("Content-Disposition", @"attachment; filename=AksReport("+DateTime.Now.ToString()+").Doc");
+                            //response.AddHeader("Content-Disposition", @"attachment; filename=""" + Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(FileName)))+@"""");
 
                             if (!File.Exists(responceString)) throw new ApplicationException(string.Format("Файл не обнаружен. ({0})", responceString));
 
@@ -478,7 +494,7 @@ namespace AlgoritmPrizm.Com
                             Stream output = response.OutputStream;
 
                             // Читаем поток файловый и передаём его пользователю
-                            using (FileStream read = new FileStream(FileName, FileMode.Open, FileAccess.Read))
+                            using (FileStream read = new FileStream(PathFileName, FileMode.Open, FileAccess.Read))
                             {
                                 byte[] buftmpb = new byte[read.Length];
                                 response.ContentLength64 = buftmpb.Length;
