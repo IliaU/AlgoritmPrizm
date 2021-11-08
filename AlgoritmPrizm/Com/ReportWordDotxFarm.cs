@@ -366,27 +366,68 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Прайслист
         /// </summary>
-        public static void CreateReportPl()
+        public static string CreateReportPl()
         {
             try
             {
+                
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"PriceList.dotx.doc");
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по формированию списка товаров уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet"));
+
                 // Создаём список закладок
                 Wrd.BookmarkList BkmL = new Wrd.BookmarkList();
+                if (TblBkm.Rows.Count == 1)
+                {
+                    BkmL.Add(new Wrd.Bookmark("doc_num0", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("doc_num1", TblBkm.Rows[0]["doc_num"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("create_dt", TblBkm.Rows[0]["create_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt0", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt1", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("pos_dt2", TblBkm.Rows[0]["pos_dt"].ToString()), true);
+                }
+
+                // Создаём запрос для получения таблицы
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid"));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("T1", TblVal), true);
 
                 // Создаём список итогов
                 Wrd.TotalList Ttl = new Wrd.TotalList();
-                
+
                 // Создаём задание и получаем объект которым будем смотреть результат
-                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Шаблон.dotx", @"Результат.doc", BkmL, TblL);
+                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"PriceList.dotx", TargetFile, BkmL, TblL);
 
                 // Добавляем в кешь чтобы потом следить за отчётом
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
                 Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+
             }
             catch (Exception ex)
             {

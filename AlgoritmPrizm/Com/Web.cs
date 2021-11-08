@@ -399,6 +399,7 @@ namespace AlgoritmPrizm.Com
                                                         resp.Message = ReportWordDotxFarm.CreateReportInf19(JsWdDotxPor[1].valueString);
                                                     break;
                                                 case "PL":   // Прайс лист
+                                                        resp.Message = ReportWordDotxFarm.CreateReportPl();
                                                     break;
                                                 default:
                                                     resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
