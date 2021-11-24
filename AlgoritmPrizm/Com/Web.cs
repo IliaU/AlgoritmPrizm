@@ -441,7 +441,15 @@ namespace AlgoritmPrizm.Com
                                     else
                                     {
                                         // Отрисовываем статистику по всем отчётам которые есть в пуле отчёт
-                                        responceString = ReportWordDotxFarm.AksRepStat();
+                                        try
+                                        {
+                                            responceString = ReportWordDotxFarm.AksRepStat();
+                                        }
+                                        catch (Exception ex)
+                                        {
+                                            responceString = ex.Message;
+                                        }
+                                       
                                         ContentType = "text/html; charset=utf-8";
                                     }
                                 }
