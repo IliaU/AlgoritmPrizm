@@ -100,3 +100,97 @@ CodeResult = 55(Команда не поддерживается в данной
 28.11.2021 18:52:55	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
 28.11.2021 18:52:55	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
 28.11.2021 18:52:55	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+28.11.2021 18:58:36	Message	Log	Запуск программы
+28.11.2021 18:58:36	Message	FileCheckLog	Запуск модуля логирования чеков
+28.11.2021 18:58:36	Message	Config	Чтение конфигурационного файла
+28.11.2021 18:58:36	Message	FR	Запуск драйвера для работы с фискальным регистратором
+28.11.2021 18:58:36	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+28.11.2021 18:58:36	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+28.11.2021 18:58:36	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+28.11.2021 18:58:54	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+28.11.2021 18:58:54	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+28.11.2021 18:58:57	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта PriceList.dotx
+28.11.2021 18:58:57	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта PriceList.dotx
+28.11.2021 19:05:33	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+28.11.2021 19:06:19	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  nxvid, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+28.11.2021 19:06:36	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта PriceList.dotx
+28.11.2021 19:06:36	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошло успешная отрисовка отчёта PriceList.dotx
+28.11.2021 19:36:43	Message	Log	Запуск программы
+28.11.2021 19:36:43	Message	FileCheckLog	Запуск модуля логирования чеков
+28.11.2021 19:36:43	Message	Config	Чтение конфигурационного файла
+28.11.2021 19:36:43	Message	FR	Запуск драйвера для работы с фискальным регистратором
+28.11.2021 19:36:44	Message	ReportWordDotxFarm	Загрузка модуля построителя отчётов.
+28.11.2021 19:36:44	Message	Com.SmsFarm.SmsStart	Загрузка модуля отправки сообщений в режиме: Smsc_RU
+28.11.2021 19:36:44	Message	Com.Web.AWeb	Успешно запустили Listen (http://CHUDAKOV:5000)
+28.11.2021 19:37:28	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+28.11.2021 19:37:28	Dump	ODBCprv.getDataMySql (ODBCprv)	Select name As doc_num,
+  date_format(created_datetime, '%d.%m.%Y') As create_dt,
+  date_format(post_date, '%d.%m.%Y') As pos_dt
+From rpsods.pi_sheet
+28.11.2021 19:37:29	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, P.description1 As Aip, P.description2 As Name,
+      P.attribute As Attr, P.item_size As Size,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  Aip, Name, Attr, Size, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+28.11.2021 19:37:31	Dump	ODBCprv.getDataMySql (ODBCprv)	with T As (Select J.sid, P.description1 As Aip, P.description2 As Name,
+      P.attribute As Attr, P.item_size As Size,
+      Convert(round(J.price,2),char) As price, 
+      Convert(round(J.qty,2),char) As qty,
+      Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
+      Convert(round(coalesce(Q.price, 0.0),2),char) As scan_price,
+      Convert(round(J.qty*J.price,2),char) As suminv 
+    From rpsods.pi_sheet D
+      inner join  rpsods.pi_start J On D.sid=J.sheet_sid and J.Active=1
+      left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
+      inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
+Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
+  Aip, Name, Attr, Size, price, qty, scan_qty, scan_price, suminv
+From T
+Order by sid
+28.11.2021 19:37:37	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта PriceList.dotx
+28.11.2021 19:37:40	Message	ReportWordDotxFarm.PoolWorkerList_onEvTaskWordEnd	Произошёл старт процесса формирования отчёта PriceList.dotx

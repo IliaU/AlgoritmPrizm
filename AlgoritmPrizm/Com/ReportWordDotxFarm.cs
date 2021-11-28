@@ -394,7 +394,8 @@ From rpsods.pi_sheet"));
                 }
 
                 // Создаём запрос для получения таблицы
-                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with T As (Select J.sid, CONCAT(P.description1, ' ', P.description2, ' ', P.attribute, ' ', P.item_size) As nxvid,
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with T As (Select J.sid, P.description1 As Aip, P.description2 As Name,
+      P.attribute As Attr, P.item_size As Size,
       Convert(round(J.price,2),char) As price, 
       Convert(round(J.qty,2),char) As qty,
       Convert(round(coalesce(Q.scan_qty, 0.0),2),char) As scan_qty,
@@ -405,7 +406,7 @@ From rpsods.pi_sheet"));
       left join rpsods.pi_zone_qty Q On J.sid=Q.pi_start_sid
       inner join rpsods.invn_sbs_item  P On J.invn_sbs_item_sid =P.sid and P.Active=1)
 Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
-  nxvid, price, qty, scan_qty, scan_price, suminv
+  Aip, Name, Attr, Size, price, qty, scan_qty, scan_price, suminv
 From T
 Order by sid"));
 
