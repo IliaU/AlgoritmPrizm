@@ -775,20 +775,37 @@ namespace AlgoritmPrizm.Com
                                 || string.IsNullOrEmpty(PrefG) || string.IsNullOrEmpty(PrefH))
                             {
                                 Fr.BarCode = note;
-                                Log.EventSave(string.Format("Не смогли преобразовать матрикс код к формату ФФД 2.0 ({0})", note), "Com.FR.PrintCheckItem", EventEn.Error);
+                                Log.EventSave(string.Format("Не смогли преобразовать матрикс код к формату ФФД 1.2 ({0})", note), "Com.FR.PrintCheckItem", EventEn.Error);
                             }
                             else
                             {
-                                string BarCodeTmp = string.Format("{1}{2}{3}{4}{0}{5}{6}{0}{7}{8}", "<0x1D>", PrefA, PrefBgtin, PrefC, PrefD, PrefE, PrefF, PrefG, PrefH);
+                                string BarCodeTmp = string.Format("{1}{2}{3}{4}{0}{5}{6}{0}{7}{8}", (char)29, PrefA, PrefBgtin, PrefC, PrefD, PrefE, PrefF, PrefG, PrefH);
+                                
                                 Fr.BarCode = BarCodeTmp;
+                                Fr.ItemStatus = 1;
+
                             }
-                            
+
                             break;
                         default:
                             throw new ApplicationException(string.Format("Упали с ошибкой при выборе версии ФФД Пока не описано как с этой версией работать ({0})", Config.Ffd.ToString()));
                     }
 
-                    
+                    if (Config.Ffd != FfdEn.v1_05)
+                    {
+                        if (Fr.FNCheckItemBarcode() != 0)             // Отправляем матрикс код
+                        {
+                            Verification(Fr);
+                            throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                        }
+
+                        if (Fr.FNAcceptMakringCode() != 0)             // Отправляем матрикс код
+                        {
+                            Verification(Fr);
+                            throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                        }
+                    }
+
                     if (Fr.FNSendItemBarcode() != 0)             // Отправляем матрикс код
                     {
                         Verification(Fr);
@@ -831,6 +848,8 @@ namespace AlgoritmPrizm.Com
         {
             Lib.FrStatError rez = new Lib.FrStatError();
             rez.CodeECRMode = TmpFr.ECRMode;
+            
+            
             rez.DescriptionECRMode = "";
             rez.CodeResult = TmpFr.ResultCode;
             rez.DescriptionResult = "";
@@ -944,6 +963,7 @@ namespace AlgoritmPrizm.Com
             try
             {
                 Fr.GetECRStatus();
+                
                 Lib.FrStatError Err = Verification(Fr);
 
                 // Проверяем подключение к FR
@@ -1373,23 +1393,57 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
-                // Закрываем чек
-                if (Fr.CloseCheckEx() != 0)
+
+                // Проверяем версию FFD
+                switch (Config.Ffd)
                 {
-                    // Сохраняем ошибку
-                    Verification(Fr);
-                    ApplicationException ErrCloseCheck= new ApplicationException(string.Format("Не смогли закрыть чек ошибка: {0}", Status.Description));
+                    case FfdEn.v1_05:
 
-                    // Отменяем чек
-                    if (Fr.CancelCheck() != 0)
-                    {
-                        Verification(Fr);
-                        throw new ApplicationException(string.Format("Не смогли отменить чек который упал с ошибой: ({0}) так как словили ошибку при отмене чека: {1}", ErrCloseCheck.Message, Status.Description));
-                    }
+                        // Закрываем чек
+                        if (Fr.CloseCheckEx() != 0)
+                        {
+                            // Сохраняем ошибку
+                            Verification(Fr);
+                            ApplicationException ErrCloseCheck = new ApplicationException(string.Format("Не смогли закрыть чек ошибка: {0}", Status.Description));
 
-                    // Выкидывем предыдужую ошибку если прошла отмена
-                    throw ErrCloseCheck;
+                            // Отменяем чек
+                            if (Fr.CancelCheck() != 0)
+                            {
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли отменить чек который упал с ошибой: ({0}) так как словили ошибку при отмене чека: {1}", ErrCloseCheck.Message, Status.Description));
+                            }
+
+                            // Выкидывем предыдужую ошибку если прошла отмена
+                            throw ErrCloseCheck;
+                        }
+
+                        break;
+                    case FfdEn.v1_2:
+
+                        // Закрываем чек
+                        if (Fr.FNCloseCheckEx() != 0)
+                        {
+                            // Сохраняем ошибку
+                            Verification(Fr);
+                            ApplicationException ErrCloseCheck = new ApplicationException(string.Format("Не смогли закрыть чек ошибка: {0}", Status.Description));
+
+                            // Отменяем чек
+                            if (Fr.CancelCheck() != 0)
+                            {
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли отменить чек который упал с ошибой: ({0}) так как словили ошибку при отмене чека: {1}", ErrCloseCheck.Message, Status.Description));
+                            }
+
+                            // Выкидывем предыдужую ошибку если прошла отмена
+                            throw ErrCloseCheck;
+                        }
+
+                        break;
+                    default:
+                        throw new ApplicationException(string.Format("Упали с ошибкой при выборе версии ФФД Пока не описано как с этой версией работать ({0})", Config.Ffd.ToString()));
                 }
+
+                
 
             }
             catch (Exception ex)
