@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Движение товара</title>
+	<script src="js/jquery.min.js"></script>
+	<script src="js/popper.min.js"></script>
+	<script src="js/bootstrap.min.js"></script>
+	<script src="js/bootstrap-table.min.js"></script>
+	<link rel="stylesheet" href="css/bootstrap.min.css">
+	<link rel="stylesheet" href="css/bootstrap-table.min.css">
+	<link rel="stylesheet" href="css/main.css">
+</head>
+
+<body>
+
+	<div class="container-fluid col" style="padding-top: 30px">
+		<div class="container-fluid" style="overflow-x: auto">
+			<div class="row" style="height: 100%; flex-wrap: nowrap">
+				<div class="col" style="max-width: max-content; height: 100%">
+					<div class="card bg-secondary" style="width: max-content">
+						<div class="card-header text-light">
+							UPC
+						</div>
+						<div class="card-body bg-light">
+							<input type="text" id="upc_input">
+						</div>
+					</div>
+				</div>
+				<div class="col" style="max-width: max-content; height: 100%">
+					<div class="card bg-secondary" style="width: max-content">
+						<div class="card-header text-light">
+							Диапазон дат
+						</div>
+						<div class="card-body bg-light">
+							<div class="row align-middle">
+								<div class="col">
+									<input type="date" id="date_from">
+								</div>
+								<div class="col">
+									<input type="date" id="date_to" readonly>
+								</div>
+								<div class="col">
+									<button class="btn btn-sm btn-primary" onclick="showReport(this)">Поиск</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+<!--				<div class="col" style="max-width: max-content; height: 100%">-->
+<!--					<div class="card bg-secondary" style="width: max-content">-->
+<!--						<div class="card-header text-light">-->
+<!--							Подсчет-->
+<!--						</div>-->
+<!--						<div class="card-body bg-light">-->
+<!--							<div class="form-check">-->
+<!--								<input class="form-check-input" type="checkbox" value="" checked>-->
+<!--								<label class="form-check-label">-->
+<!--									Остатки на дату-->
+<!--								</label>-->
+<!--							</div>-->
+<!--							<div class="form-check">-->
+<!--								<input class="form-check-input" type="checkbox" value="">-->
+<!--								<label class="form-check-label">-->
+<!--									Итоги по операциям-->
+<!--								</label>-->
+<!--							</div>-->
+<!--						</div>-->
+<!--					</div>-->
+<!--				</div>-->
+			</div>
+		</div>
+
+		<div class="container-fluid" style="width: 100%; padding-top: 30px;">
+			<div class="card bg-secondary" style="width: 100%">
+				<div class="card-header text-light">
+					Описание товарной карточки
+				</div>
+				<div class="card-body bg-light">
+					<table id="table_1"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid pb-5" style="width: 100%; padding-top: 30px;">
+			<div class="card bg-secondary" style="width: 100%">
+				<div class="card-header text-light">
+					Движение товара
+				</div>
+				<div class="card-body bg-light" style="overflow-y: auto; max-height: 500px;">
+					<table id="table_2"></table>
+				</div>
+			</div>
+		</div>
+
+		<div class="container-fluid" style="height: 45px">
+		</div>
+	</div>
+
+	<footer class="footer row justify-content-end align-items-center"
+		style="width: 100%; position: fixed; bottom: 0; padding: 30px">
+		<div class="btn-group" role="group">
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#chooseModal">Выбрать
+				операции</button>
+			<button type="button" class="btn btn-primary">Выбрать магазин</button>
+		</div>
+	</footer>
+
+	<div class="modal fade" id="chooseModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Выбор операций</h5>
+				</div>
+				<div class="modal-body">
+					<form id="operations">
+						<div class="row" style="overflow-x: auto;">
+							<div class="col">
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="voucher" value="" checked>
+									<label class="form-check-label">
+										Поставка
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="voucher-return" value="" checked>
+									<label class="form-check-label">
+										Поставка-возврат
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="document-sale" value="" checked>
+									<label class="form-check-label">
+										Продажи
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="document-return" value="" checked>
+									<label class="form-check-label">
+										Продажи-возврат
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="slip-to" value="" checked>
+									<label class="form-check-label">
+										Передачи входящие
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="slip-from" value="" checked>
+									<label class="form-check-label">
+										Передачи исходящие
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="checkbox" id="adjustment" value="" checked>
+									<label class="form-check-label">
+										Корректировка
+									</label>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+
+				
+				<div class="modal-footer" style="justify-content: flex-start">
+					<div class="row align-items-center" style="width: 100%">
+						<div class="col-3">
+							<button id="select-operations" class="btn left">Выбрать все</button>
+						</div>
+						<div class="col-3">
+							<button id="deselect-operations" class="btn">Очистить все</button>
+						</div>
+						<div class="col-6 justify-content-end">
+							<button type="button" class="btn btn-primary float-right" data-dismiss="modal" onclick="applyFilter()">ОК</button>
+						</div>
+					</div>
+
+					<!--					<div class="row align-items-center">-->
+<!--						<div class="col mb-0">-->
+<!--							<span>Товары</span>-->
+<!--						</div>-->
+<!--						<div class="col align-items-end">-->
+<!--							<button type="button" class="btn btn-success" onclick="verifyDocument()">ОК</button>-->
+<!--						</div>-->
+<!--					</div>-->
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script src="js/main.js"></script>
+</body>
+
+</html>

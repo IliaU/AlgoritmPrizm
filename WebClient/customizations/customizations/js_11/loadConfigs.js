@@ -1,0 +1,10 @@
+const HOSTNAME  = "http://172.16.1.102";
+const UTIL_HOSTNAME = "http://chudakov:5000";
+
+const PRISM_SESSION = JSON.parse(sessionStorage.getItem("session"));
+
+const CONFIG = {
+    autoLegal: true,
+};
+
+var session = JSON.parse(sessionStorage.getItem("session"));;

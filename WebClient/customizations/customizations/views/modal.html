@@ -1,0 +1,38 @@
+<form name="myForm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Scaning Marking</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label for="search">Scan Barcode</label>
+                            <input tabindex="1" type="text" id="search" name="search" class="form-control searchBox" ng-model="criteria.enterMarking" required>
+                        </div>
+                        <div class="form-group">
+                            <button type="button" class="btn btn-lg btn-success" ng-click="search()" ng-disabled="!myForm.$valid" ng-bind="caption || 'Enter'">{{caption}}</button>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label ng-bind="message">{{message}}</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" class="btn btn-lg btn-default" ng-disabled="Mandatory" ng-click="close()">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

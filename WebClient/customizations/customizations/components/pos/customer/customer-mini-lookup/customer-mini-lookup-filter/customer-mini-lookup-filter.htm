@@ -1,0 +1,18 @@
+<div class="row">
+  <div class="col-xs-12">
+    <div class="row">
+      <div ng-class="{'col-xs-12':$ctrl.isPortrait,'col-xs-10':!$ctrl.isPortrait}">
+        <rp-select-input repeater-data="$ctrl.filters" ng-model="$ctrl.filter" default-obj="$ctrl.defaultFilter" is-disabled="$ctrl.posDisabled" ng-change="$ctrl.addFilter()" key-string="'name'" required="true"></rp-select-input>
+      </div>
+      <div ng-if="!$ctrl.isPortrait" class="col-xs-2">
+        <customer-mini-lookup-btn pos-disabled="$ctrl.posDisabled" pos-callback="$ctrl.posCallback" is-shipping="$ctrl.isShipping"></customer-mini-lookup-btn>
+      </div>
+    </div>
+    <!-- <div ng-if="$ctrl.column" class="row top-margin"> -->
+      <!-- <div class="col-xs-12"> -->
+        <!-- <resource-lookup-filter-types submit-enter="$ctrl.keySearch" column="$ctrl.column" column-idx="0" criteria="$ctrl.criteria" criteria-idx="0" use-default="true" submit-direct="$ctrl.initSearch"></resource-lookup-filter-types> -->
+      <!-- </div> -->
+    <!-- </div> -->
+  </div>
+
+</div>
