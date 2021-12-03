@@ -160,6 +160,7 @@ namespace AlgoritmPrizm.Com.Provider
                         case "SQORA64.DLL":
                             return getDataORA(SQL);
                         case "myodbc8a.dll":
+                        case "myodbc8w.dll":
                             return getDataMySql(SQL);
                         default:
                             throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
@@ -199,6 +200,7 @@ namespace AlgoritmPrizm.Com.Provider
                             setDataORA(SQL);
                             break;
                         case "myodbc8a.dll":
+                        case "myodbc8w.dll":
                             setDataMySql(SQL);
                             break;
                         default:
@@ -240,6 +242,7 @@ namespace AlgoritmPrizm.Com.Provider
                             SetPrizmCustPorogORA(CustInn, InvcNo, PosDate, TotalCashSum);
                             break;
                         case "myodbc8a.dll":
+                        case "myodbc8w.dll":
                             SetPrizmCustPorogMySql(CustInn, InvcNo, PosDate, TotalCashSum);
                             break;
                         default:
@@ -280,6 +283,7 @@ namespace AlgoritmPrizm.Com.Provider
                         case "SQORA64.DLL":
                             return GetTotalCashSumORA(CustInn, Dt);
                         case "myodbc8a.dll":
+                        case "myodbc8w.dll":
                             return GetTotalCashSumMySql(CustInn, Dt);
                         default:
                             throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
@@ -343,6 +347,7 @@ namespace AlgoritmPrizm.Com.Provider
                         // Оракловая логика
                         break;
                     case "myodbc8a.dll":
+                    case "myodbc8w.dll":
                         // MySql логика
                         break;
                     default:

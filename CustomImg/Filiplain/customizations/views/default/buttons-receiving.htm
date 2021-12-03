@@ -1,0 +1,32 @@
+<div ng-if="contentReady">
+    <div class="row form-group">
+        <div class="col-xs-4">
+            <voucher-button-create perm="'voucherscreate'"></voucher-button-create>
+        </div>
+        <div class="col-xs-4">
+            <voucher-button-lookup perm="'accessreceivingarea'" trans-id="3641.1"></voucher-button-lookup>
+        </div>
+        <div class="col-xs-4">
+            <voucher-button-lookup perm="'voucherscreate'" lookup-type="'pending'" trans-id="3939"></voucher-button-lookup>
+        </div>
+    </div>
+    <div class="row form-group">
+        <!--div class="col-xs-4">
+            <voucher-button-create perm="'asncreatecopy'" is-asn="true"></voucher-button-create>
+        </div>-->
+        <div class="col-xs-4">
+            <voucher-button-lookup perm="'accessreceivingarea'" is-asn="true" trans-id="4732"></voucher-button-lookup>
+        </div>
+        <div class="col-xs-4">
+            <voucher-button-lookup perm="'asncreatecopy'" lookup-type="'pending'" is-asn="true" trans-id="4743"></voucher-button-lookup>
+        </div>
+    </div>
+    <!-- div class="row form-group">
+        <div class="col-xs-4">
+            <batch-receiving-button></batch-receiving-button>
+        </div>
+        <div class="col-xs-4">
+            <vendor-invoice-button layout="0"></vendor-invoice-button>
+        </div>
+    </div> -->
+</div>
