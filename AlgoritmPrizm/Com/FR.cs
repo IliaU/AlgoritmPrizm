@@ -1497,9 +1497,9 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
-        /// Внесение наличных
+        /// Изьятие наличных
         /// </summary>
-        /// <param name="Sum">Сумма которую внесли</param>
+        /// <param name="Sum">Сумма которую изъяли</param>
         /// <returns></returns>
         public static Lib.FrStatError CashOutcome(decimal Sum)
         {
