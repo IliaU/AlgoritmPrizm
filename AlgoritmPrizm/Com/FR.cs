@@ -1001,7 +1001,9 @@ namespace AlgoritmPrizm.Com
 
                     Thread.Sleep(3000);
 
-                    PrintCheck(Doc, OperatorNumber, DocName);
+                    // Если это печать чека товыполняем
+                    if (Doc!=null) PrintCheck(Doc, OperatorNumber, DocName);
+
                     return true;
                 }
 
@@ -1454,6 +1456,73 @@ namespace AlgoritmPrizm.Com
             }
         }
 
+
+        /// <summary>
+        /// Внесение наличных
+        /// </summary>
+        /// <param name="Sum">Сумма которую внесли</param>
+        /// <returns></returns>
+        public static Lib.FrStatError CashIncome(decimal Sum)
+        {
+            Lib.FrStatError rez = new FrStatError();
+            try
+            {
+                try
+                {
+                    if (!ConfigStatusFR(null, 0, null)) OpenShift();
+                }
+                catch (Exception ex)
+                {
+                    Log.EventSave(ex.Message, "Com.FR.CachIncome", EventEn.Warning);
+                }
+                finally
+                {
+                    Fr.Summ1 = Sum;
+
+                    if (Fr.CashIncome() != 0)
+                    {
+                        rez = Verification(Fr);
+                        throw new ApplicationException(string.Format("Упали с ошибкой: {0}", rez.Description));
+                    }
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.FR.CachIncome", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Внесение наличных
+        /// </summary>
+        /// <param name="Sum">Сумма которую внесли</param>
+        /// <returns></returns>
+        public static Lib.FrStatError CashOutcome(decimal Sum)
+        {
+            Lib.FrStatError rez = new FrStatError();
+            try
+            {
+                Fr.Summ1 = Sum;
+
+                if (Fr.CashOutcome() != 0)
+                {
+                    rez = Verification(Fr);
+                    throw new ApplicationException(string.Format("Упали с ошибкой: {0}", rez.Description));
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.FR.CashOutcome", EventEn.Error);
+                throw ae;
+            }
+        }
     }
 }
 

@@ -19,6 +19,7 @@ namespace AlgoritmPrizm.BLL
 
         public string valueString;
         public int? valueInt;
+        public decimal? valueDecimal;
 
         /// <summary>
         /// Пример на котором тестировали
@@ -27,7 +28,8 @@ namespace AlgoritmPrizm.BLL
         public static string SampleTest = @"[
     {
         ""valueString"": null,
-        ""valueInt"":null
+        ""valueInt"":null,
+        ""valueDecimal"":null
     }
 ]";
 

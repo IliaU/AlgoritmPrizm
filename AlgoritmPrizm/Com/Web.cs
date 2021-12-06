@@ -196,6 +196,7 @@ namespace AlgoritmPrizm.Com
                 // Переменная для ответа пользователю
                 string responceString = "";
                 bool HashFileResponce = false;      // По умолчанию мы не файл отправляем а текс
+                List<BLL.JsonWordDotxParams> JsPar = null;  // Параметры если они есть
 
                 //HttpListenerContext context = await listener.GetContextAsync();
                 HttpListenerRequest request = context.Request;
@@ -457,6 +458,54 @@ namespace AlgoritmPrizm.Com
                                 {
                                     responceString = ex.Message;
                                 }
+                                break;
+                            case @"/CashIncome":
+
+                                // Выставляем параемтры отчёта
+                                JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
+
+                                // Для тестрования
+                                JsPar = new List<JsonWordDotxParams>();
+                                JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
+
+                                try
+                                {
+                                    // Если есть какой нибудь параметр
+                                    if (JsPar!=null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
+                                    {
+                                        FR.CashIncome((decimal)JsPar[0].valueDecimal);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Если проверка выдала исключение то сообщаем об этом пользователю
+                                    responceString = ex.Message;
+                                }
+
+                                break;
+                            case @"/CashOutcome":
+
+                                // Выставляем параемтры отчёта
+                                JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
+
+                                // Для тестрования
+                                JsPar = new List<JsonWordDotxParams>();
+                                JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
+
+                                try
+                                {
+                                    // Если есть какой нибудь параметр
+                                    if (JsPar != null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
+                                    {
+                                        FR.CashOutcome((decimal)JsPar[0].valueDecimal);
+                                    }
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Если проверка выдала исключение то сообщаем об этом пользователю
+                                    responceString = ex.Message;
+                                }
+
                                 break;
                             case @"/config":
                                 responceString = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
