@@ -88,6 +88,8 @@
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.cmbBoxFieldInnTyp = new System.Windows.Forms.ComboBox();
+            this.lblFieldInnTyp = new System.Windows.Forms.Label();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl2 = new System.Windows.Forms.TabControl();
@@ -105,8 +107,6 @@
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.cmbBoxFieldInnTyp = new System.Windows.Forms.ComboBox();
-            this.lblFieldInnTyp = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -150,7 +150,7 @@
             // 
             this.txtBoxHost.Location = new System.Drawing.Point(54, 54);
             this.txtBoxHost.Name = "txtBoxHost";
-            this.txtBoxHost.Size = new System.Drawing.Size(177, 20);
+            this.txtBoxHost.Size = new System.Drawing.Size(272, 20);
             this.txtBoxHost.TabIndex = 3;
             // 
             // lblHost
@@ -165,7 +165,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(282, 53);
+            this.lblPort.Location = new System.Drawing.Point(332, 57);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(32, 13);
             this.lblPort.TabIndex = 5;
@@ -173,7 +173,7 @@
             // 
             // txtBoxPort
             // 
-            this.txtBoxPort.Location = new System.Drawing.Point(319, 50);
+            this.txtBoxPort.Location = new System.Drawing.Point(369, 54);
             this.txtBoxPort.Name = "txtBoxPort";
             this.txtBoxPort.Size = new System.Drawing.Size(100, 20);
             this.txtBoxPort.TabIndex = 6;
@@ -340,7 +340,7 @@
             // 
             this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(310, 9);
             this.txtBoxHostPrizmApi.Name = "txtBoxHostPrizmApi";
-            this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(91, 20);
+            this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(234, 20);
             this.txtBoxHostPrizmApi.TabIndex = 27;
             // 
             // lblHostPrizmApi
@@ -420,7 +420,7 @@
             // 
             // txtBoxFileCheckLog
             // 
-            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(319, 85);
+            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(369, 89);
             this.txtBoxFileCheckLog.Name = "txtBoxFileCheckLog";
             this.txtBoxFileCheckLog.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFileCheckLog.TabIndex = 37;
@@ -668,6 +668,24 @@
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // cmbBoxFieldInnTyp
+            // 
+            this.cmbBoxFieldInnTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldInnTyp.FormattingEnabled = true;
+            this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(204, 174);
+            this.cmbBoxFieldInnTyp.Name = "cmbBoxFieldInnTyp";
+            this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(121, 21);
+            this.cmbBoxFieldInnTyp.TabIndex = 37;
+            // 
+            // lblFieldInnTyp
+            // 
+            this.lblFieldInnTyp.AutoSize = true;
+            this.lblFieldInnTyp.Location = new System.Drawing.Point(10, 177);
+            this.lblFieldInnTyp.Name = "lblFieldInnTyp";
+            this.lblFieldInnTyp.Size = new System.Drawing.Size(188, 13);
+            this.lblFieldInnTyp.TabIndex = 36;
+            this.lblFieldInnTyp.Text = "Поле в котором тип клиента и ИНН";
+            // 
             // tabPage2
             // 
             this.tabPage2.Controls.Add(this.lblHostPrizmApi);
@@ -847,24 +865,6 @@
             this.pnlFill.Name = "pnlFill";
             this.pnlFill.Size = new System.Drawing.Size(709, 416);
             this.pnlFill.TabIndex = 40;
-            // 
-            // cmbBoxFieldInnTyp
-            // 
-            this.cmbBoxFieldInnTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxFieldInnTyp.FormattingEnabled = true;
-            this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(204, 174);
-            this.cmbBoxFieldInnTyp.Name = "cmbBoxFieldInnTyp";
-            this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(121, 21);
-            this.cmbBoxFieldInnTyp.TabIndex = 37;
-            // 
-            // lblFieldInnTyp
-            // 
-            this.lblFieldInnTyp.AutoSize = true;
-            this.lblFieldInnTyp.Location = new System.Drawing.Point(10, 177);
-            this.lblFieldInnTyp.Name = "lblFieldInnTyp";
-            this.lblFieldInnTyp.Size = new System.Drawing.Size(188, 13);
-            this.lblFieldInnTyp.TabIndex = 36;
-            this.lblFieldInnTyp.Text = "Поле в котором тип клиента и ИНН";
             // 
             // FConfig
             // 

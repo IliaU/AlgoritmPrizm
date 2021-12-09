@@ -465,8 +465,8 @@ namespace AlgoritmPrizm.Com
                                 JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
 
                                 // Для тестрования
-                                JsPar = new List<JsonWordDotxParams>();
-                                JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
+                                // JsPar = new List<JsonWordDotxParams>();
+                                // JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
 
                                 try
                                 {
@@ -489,8 +489,8 @@ namespace AlgoritmPrizm.Com
                                 JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
 
                                 // Для тестрования
-                                JsPar = new List<JsonWordDotxParams>();
-                                JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
+                                // JsPar = new List<JsonWordDotxParams>();
+                                // JsPar.Add(new JsonWordDotxParams() { valueDecimal = 100 });
 
                                 try
                                 {
