@@ -304,6 +304,46 @@ namespace AlgoritmPrizm.Com.Provider
             }
         }
 
+        /// <summary>
+        /// Получить сумууму бонусов клиента
+        /// </summary>
+        /// <param name="CustSid">Идентификатор клиента</param>
+        /// <returns>Бонусы доступные клиенту</returns>
+        public decimal GetCustBon(string CustSid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetCustBonORA(CustSid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetCustBonMySql(CustSid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetCustBon", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return 0;
+            }
+        }
 
         #endregion
 
@@ -596,6 +636,76 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
             }
         }
 
+        /// <summary>
+        /// Получить сумууму бонусов клиента
+        /// </summary>
+        /// <param name="CustSid">Идентификатор клиента</param>
+        /// <returns>Бонусы доступные клиенту</returns>
+        public decimal GetCustBonORA(string CustSid)
+        {
+            string CommandSql = String.Format(@"Select CALL_OFF_SC 
+From AKS.CUST_SC_PARAM
+Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
+    and CUST_SID='{0}'", CustSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonORA", EventEn.Dump);
+
+                decimal rez = 0;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CALL_OFF_SC").ToUpper()) rez=decimal.Parse(dr.GetValue(i).ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetCustBonORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetCustBonORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonORA", EventEn.Dump);
+                throw;
+            }
+        }
 
         #endregion
 
@@ -822,6 +932,77 @@ Where `dt`=STR_TO_DATE('{1},{2},{3}', '%Y,%m,%d')
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTotalCashSumMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTotalCashSumMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Получить сумууму бонусов клиента
+        /// </summary>
+        /// <param name="CustSid">Идентификатор клиента</param>
+        /// <returns>Бонусы доступные клиенту</returns>
+        public decimal GetCustBonMySql(string CustSid)
+        {
+            string CommandSql = String.Format(@"Select `CALL_OFF_SC` 
+From `aks`.`cust_sc_param`
+Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
+    and `CUST_SID`='{0}'", CustSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonMySql", EventEn.Dump);
+
+                decimal rez = 0;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CALL_OFF_SC").ToUpper()) rez = decimal.Parse(dr.GetValue(i).ToString());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetCustBonMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetCustBonMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonMySql", EventEn.Dump);
                 throw;
             }
         }

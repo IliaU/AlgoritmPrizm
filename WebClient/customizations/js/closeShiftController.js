@@ -5,7 +5,7 @@ prismApp.controller('closeShiftCntrl', ['$scope', '$q', '$http', 'NotificationSe
             var deferred = $q.defer();
             $http({
              method: 'POST',
-             url:    UTIL_HOSTNAME + '/zreport',
+             url:    'http://chudakov:5000/zreport',
              headers: {
                  "Content-Type": "application/json",
                  "Access-Control-Allow-Origin": "*"

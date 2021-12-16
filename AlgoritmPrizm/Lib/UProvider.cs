@@ -281,5 +281,15 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.GetTotalCashSum(CustInn, Dt);
         }
+
+        /// <summary>
+        /// Получить сумууму бонусов клиента
+        /// </summary>
+        /// <param name="CustSid">Идентификатор клиента</param>
+        /// <returns>Бонусы доступные клиенту</returns>
+        public decimal GetCustBon(string CustSid)
+        {
+            return this.PrvI.GetCustBon(CustSid);
+        }
     }
 }

@@ -48,5 +48,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="Dt">Дата смены</param>
         /// <returns>Сумму по клиенту за выбранную дату</returns>
         decimal GetTotalCashSum(string CustInn, DateTime Dt);
+
+        /// <summary>
+        /// Получить сумууму бонусов клиента
+        /// </summary>
+        /// <param name="CustSid">Идентификатор клиента</param>
+        /// <returns>Бонусы доступные клиенту</returns>
+        decimal GetCustBon(string CustSid);
     }
 }

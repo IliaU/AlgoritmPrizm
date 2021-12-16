@@ -1445,13 +1445,30 @@ namespace AlgoritmPrizm.Com
                         throw new ApplicationException(string.Format("Упали с ошибкой при выборе версии ФФД Пока не описано как с этой версией работать ({0})", Config.Ffd.ToString()));
                 }
 
-                
-
+                // Открытие денежного ящика
+                OpenDrawer();
             }
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при закрытии чека: {0}", ex.Message));
                 Log.EventSave(ae.Message, "Com.FR.CloseReceipt", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Открытие денежного ящика
+        /// </summary>
+        public static void OpenDrawer()
+        {
+            try
+            {
+                Fr.OpenDrawer();
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при открытии денежного ящика: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.FR.OpenDrawer", EventEn.Error);
                 throw ae;
             }
         }

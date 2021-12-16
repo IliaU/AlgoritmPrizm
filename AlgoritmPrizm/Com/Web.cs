@@ -507,6 +507,41 @@ namespace AlgoritmPrizm.Com
                                 }
 
                                 break;
+                            case @"/CustomerBonus":
+
+                                // Выставляем параемтры отчёта
+                                JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
+
+                                // Для тестрования
+                                // JsPar = new List<JsonWordDotxParams>();
+                                // JsPar.Add(new JsonWordDotxParams() { CustomerSid = 100 });
+
+                                // Объект который будем возвращать пользователю
+                                JsonWebResponceCustomerBonus respCustBon = new JsonWebResponceCustomerBonus();
+                                
+
+                                try
+                                {
+                                    // Если есть какой нибудь параметр
+                                    if (JsPar != null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
+                                    {
+                                        //FR.CashIncome((decimal)JsPar[0].valueDecimal);
+                                        respCustBon.amount= 5000;
+                                    }
+
+                                    // Формируем сообщение для пользователя
+                                    responceString = BLL.JsonWebResponceCustomerBonus.SerializeJson(respCustBon);
+                                }
+                                catch (Exception ex)
+                                {
+                                    // Если проверка выдала исключение то сообщаем об этом пользователю
+                                    responceString = ex.Message;
+                                }
+
+                                break;
+                            case @"/OpenDrawer":
+                                FR.OpenDrawer();
+                                break;
                             case @"/config":
                                 responceString = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
                                 break;
