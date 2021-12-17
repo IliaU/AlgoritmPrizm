@@ -211,6 +211,11 @@ namespace AlgoritmPrizm.Com
         private static bool _MandatoryDefault = false;
 
         /// <summary>
+        /// Признак окончания группы товаров по которой принимаем решение запроса матрикс кода
+        /// </summary>
+        private static char _ProductMatrixEndOff=' ';
+
+        /// <summary>
         /// Лимит для Юрлиц
         /// </summary>
         private static decimal _LimitCachForUrik = 100000;
@@ -774,6 +779,23 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("MandatoryDefault", value.ToString());
                 Save();
                 _MandatoryDefault = value;
+            }
+        }
+
+        /// <summary>
+        /// Признак окончания группы товаров по которой принимаем решение запроса матрикс кода
+        /// </summary>
+        public static char ProductMatrixEndOff
+        {
+            get
+            {
+                return _ProductMatrixEndOff;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("ProductMatrixEndOff", value.ToString());
+                Save();
+                _ProductMatrixEndOff = value;
             }
         }
 

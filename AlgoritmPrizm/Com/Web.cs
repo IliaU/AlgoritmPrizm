@@ -239,11 +239,23 @@ namespace AlgoritmPrizm.Com
                                     string dcs_code = FineDoc.dcs_code;
                                     foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
                                     {
-                                        if (dcs_code == item.ProductClass)
+                                        if (string.IsNullOrEmpty(Config.ProductMatrixEndOff.ToString()))
                                         {
-                                            Mandatory = item.Mandatory;
-                                            HashProductClass = true;
-                                            break;
+                                            if (dcs_code == item.ProductClass)
+                                            {
+                                                Mandatory = item.Mandatory;
+                                                HashProductClass = true;
+                                                break;
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if (dcs_code.Split(Config.ProductMatrixEndOff)[0] == item.ProductClass)
+                                            {
+                                                Mandatory = item.Mandatory;
+                                                HashProductClass = true;
+                                                break;
+                                            }
                                         }
                                     }
                                 }
@@ -512,21 +524,15 @@ namespace AlgoritmPrizm.Com
                                 // Выставляем параемтры отчёта
                                 JsPar = BLL.JsonWordDotxParams.DeserializeJson(BufPostRequest);
 
-                                // Для тестрования
-                                // JsPar = new List<JsonWordDotxParams>();
-                                // JsPar.Add(new JsonWordDotxParams() { CustomerSid = 100 });
-
                                 // Объект который будем возвращать пользователю
                                 JsonWebResponceCustomerBonus respCustBon = new JsonWebResponceCustomerBonus();
-                                
-
+       
                                 try
                                 {
                                     // Если есть какой нибудь параметр
                                     if (JsPar != null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
                                     {
-                                        //FR.CashIncome((decimal)JsPar[0].valueDecimal);
-                                        respCustBon.amount= 5000;
+                                        respCustBon.amount = Com.ProviderFarm.CurrentPrv.GetCustBon(JsPar[0].valueString);
                                     }
 
                                     // Формируем сообщение для пользователя

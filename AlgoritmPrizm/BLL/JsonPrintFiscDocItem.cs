@@ -19,7 +19,7 @@ namespace AlgoritmPrizm.BLL
         public string created_by;
         public DateTime created_datetime;
         public string modified_by;
-        public DateTime modified_datetime;
+        public DateTime? modified_datetime;
         public string controller_sid;
         public DateTime post_date;
         public Int64 row_version;
