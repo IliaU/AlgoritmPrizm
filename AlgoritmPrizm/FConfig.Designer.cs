@@ -107,6 +107,8 @@
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
+            this.lblProductMatrixEndOff = new System.Windows.Forms.Label();
+            this.txtBoxProductMatrixEndOff = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -785,9 +787,9 @@
             // 
             this.pnl_ProdictMatrixClassFill.Controls.Add(this.dgProdictMatrixClass);
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 29);
+            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 49);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 361);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 341);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -799,7 +801,7 @@
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 361);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 341);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -819,12 +821,14 @@
             // 
             // pnl_ProdictMatrixClassTop
             // 
+            this.pnl_ProdictMatrixClassTop.Controls.Add(this.txtBoxProductMatrixEndOff);
+            this.pnl_ProdictMatrixClassTop.Controls.Add(this.lblProductMatrixEndOff);
             this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBoxMandatoryDefault);
             this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBox_GetMatrixAlways);
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 29);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 49);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
             // chkBoxMandatoryDefault
@@ -865,6 +869,23 @@
             this.pnlFill.Name = "pnlFill";
             this.pnlFill.Size = new System.Drawing.Size(709, 416);
             this.pnlFill.TabIndex = 40;
+            // 
+            // lblProductMatrixEndOff
+            // 
+            this.lblProductMatrixEndOff.AutoSize = true;
+            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(5, 26);
+            this.lblProductMatrixEndOff.Name = "lblProductMatrixEndOff";
+            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(553, 13);
+            this.lblProductMatrixEndOff.TabIndex = 2;
+            this.lblProductMatrixEndOff.Text = "Признак окончания класса в поле DCS если пусто то будет сравниваться всё поле цел" +
+    "иком (один символ)";
+            // 
+            // txtBoxProductMatrixEndOff
+            // 
+            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(564, 23);
+            this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
+            this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(40, 20);
+            this.txtBoxProductMatrixEndOff.TabIndex = 3;
             // 
             // FConfig
             // 
@@ -987,5 +1008,7 @@
         private System.Windows.Forms.TextBox txtBoxNameCompany;
         private System.Windows.Forms.ComboBox cmbBoxFieldInnTyp;
         private System.Windows.Forms.Label lblFieldInnTyp;
+        private System.Windows.Forms.TextBox txtBoxProductMatrixEndOff;
+        private System.Windows.Forms.Label lblProductMatrixEndOff;
     }
 }

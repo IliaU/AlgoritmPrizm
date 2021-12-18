@@ -108,7 +108,17 @@ namespace AlgoritmPrizm
                             continue;
                         }
 
-                        NewCustumers.Add(new Custumer(strLogin, strFio, strINN));
+                        bool HashFlagCustomer = true;
+                        foreach (Custumer itemCustumerF in NewCustumers)
+                        {
+                            if (itemCustumerF.login == strLogin)
+                            {
+                                HashFlagCustomer = false;
+                                break;
+                            }
+                        }
+
+                        if (HashFlagCustomer) NewCustumers.Add(new Custumer(strLogin, strFio, strINN));
                     }               
                 }
 

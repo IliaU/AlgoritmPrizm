@@ -1067,6 +1067,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("SmsTypGatewaySmtpPassword", _SmsTypGatewaySmtpPassword);
                     xmlMain.SetAttribute("WordDotxSource", _WordDotxSource);
                     xmlMain.SetAttribute("WordDotxTarget", _WordDotxTarget);
+                    xmlMain.SetAttribute("ProductMatrixEndOff", _ProductMatrixEndOff.ToString());
                     Document.AppendChild(xmlMain);
 
                     XmlElement xmlLics = Document.CreateElement("Lics");
@@ -1159,6 +1160,7 @@ namespace AlgoritmPrizm.Com
                         catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "WordDotxSource") _WordDotxSource = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "WordDotxTarget") _WordDotxTarget = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "ProductMatrixEndOff")  try { _ProductMatrixEndOff = Char.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер
@@ -1241,7 +1243,17 @@ namespace AlgoritmPrizm.Com
 
                                             if (!string.IsNullOrWhiteSpace(ProductClass))
                                             {
-                                                _ProdictMatrixClassList.Add(new ProdictMatrixClass(ProductClass, Mandatory));
+                                                bool HashFlagProductMatrinxClass = true;
+                                                foreach (ProdictMatrixClass itemProdMatrixClF in _ProdictMatrixClassList)
+                                                {
+                                                    if(itemProdMatrixClF.ProductClass== ProductClass)
+                                                    {
+                                                        HashFlagProductMatrinxClass = false;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (HashFlagProductMatrinxClass) _ProdictMatrixClassList.Add(new ProdictMatrixClass(ProductClass, Mandatory));
                                             }
 
                                             break;
@@ -1274,7 +1286,17 @@ namespace AlgoritmPrizm.Com
 
                                             if (!string.IsNullOrWhiteSpace(login) && !string.IsNullOrWhiteSpace(fio) && !string.IsNullOrWhiteSpace(inn))
                                             {
-                                                _customers.Add(new Custumer(login, fio, inn));
+                                                bool HashFlagCustomer = true;
+                                                foreach (Custumer itemCustumerF in _customers)
+                                                {
+                                                    if (itemCustumerF.login == login)
+                                                    {
+                                                        HashFlagCustomer = false;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (HashFlagCustomer) _customers.Add(new Custumer(login, fio, inn));
                                             }
 
                                             break;

@@ -137,6 +137,7 @@ namespace AlgoritmPrizm
 
                 this.chkBoxMandatoryDefault.Checked = Config.MandatoryDefault;
                 this.chkBox_GetMatrixAlways.Checked = Config.GetMatrixAlways;
+                this.txtBoxProductMatrixEndOff.Text = Config.ProductMatrixEndOff.ToString();
                 // Наполняем таблицу данными и подключаем к гриду
                 if (this.dt != null && this.dt.Rows.Count == 0)
                 {
@@ -275,6 +276,8 @@ namespace AlgoritmPrizm
                 Config.GetMatrixAlways = this.chkBox_GetMatrixAlways.Checked;
                 if (!Config.GetMatrixAlways) Config.MandatoryDefault = this.chkBoxMandatoryDefault.Checked;
 
+                Config.ProductMatrixEndOff = Char.Parse(this.txtBoxProductMatrixEndOff.Text);
+
                 List<BLL.ProdictMatrixClass> NewProdictMatrixClass = new List<BLL.ProdictMatrixClass>();
                 for (int i = 0; i < this.dgProdictMatrixClass.Rows.Count; i++)
                 {
@@ -291,7 +294,17 @@ namespace AlgoritmPrizm
                             continue;
                         }
 
-                        NewProdictMatrixClass.Add(new BLL.ProdictMatrixClass(strProductClass, boolMandatory));
+                        bool HashFlagProductMatrinxClass = true;
+                        foreach (BLL.ProdictMatrixClass itemProdMatrixClF in NewProdictMatrixClass)
+                        {
+                            if (itemProdMatrixClF.ProductClass == strProductClass)
+                            {
+                                HashFlagProductMatrinxClass = false;
+                                break;
+                            }
+                        }
+
+                        if (HashFlagProductMatrinxClass) NewProdictMatrixClass.Add(new BLL.ProdictMatrixClass(strProductClass, boolMandatory));
                     }
                 }
 
