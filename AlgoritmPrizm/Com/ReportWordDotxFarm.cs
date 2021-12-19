@@ -424,7 +424,7 @@ Order by sid"));
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
-                Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+                Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
 
 
                 return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
@@ -500,7 +500,7 @@ Order by sid", DocSid));
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
-                Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+                Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
 
 
                 return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
@@ -575,7 +575,7 @@ Order by sid", DocSid));
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
-                Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+                Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
 
 
                 return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
@@ -650,7 +650,7 @@ Order by sid", DocSid));
                 AddTaskWordInCach(Tsk);
 
                 // передаём в очередь наше задание
-                Wrd.RezultTask RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+                Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
 
 
                 return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
