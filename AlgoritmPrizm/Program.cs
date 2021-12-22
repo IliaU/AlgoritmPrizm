@@ -162,6 +162,10 @@ namespace AlgoritmPrizm
                     // Запуск отправки сообщений
                     Com.SmsFarm.SmsStart();
 
+                    // Тест для екселя
+                    //Com.ReportWordDotxFarm.CreateReportPl();
+
+
                     // Запуск формы
                     Application.Run(new FStart());
 

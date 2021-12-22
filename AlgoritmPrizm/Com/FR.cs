@@ -1365,24 +1365,24 @@ namespace AlgoritmPrizm.Com
                         case 0:
 
                             // Если тип оплаты нал
-                            if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0)  Fr.Summ1 = (decimal)item.taken;
+                            if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0)  Fr.Summ1 += (decimal)item.taken;
 
                             // Если тип оплаты карта
-                            if (item.tender_type == Com.Config.TenderTypeCredit && item.taken != 0) Fr.Summ4 = (decimal)item.taken;
+                            if (item.tender_type == Com.Config.TenderTypeCredit && item.taken != 0) Fr.Summ4 += (decimal)item.taken;
 
                             // Если тип оплаты подарочный сертификат
-                            if (item.tender_type == Com.Config.TenderTypeGiftCert && item.taken != 0) Fr.Summ14 = (decimal)item.taken;
+                            if (item.tender_type == Com.Config.TenderTypeGiftCert && item.taken != 0) Fr.Summ14 += (decimal)item.taken;
 
                             // Если тип оплаты подарочная карта
-                            if (item.tender_type == Com.Config.TenderTypeGiftCard && item.taken != 0) Fr.Summ14 = (decimal)item.taken;
+                            if (item.tender_type == Com.Config.TenderTypeGiftCard && item.taken != 0) Fr.Summ14 += (decimal)item.taken;
 
                             break;
                         case 1:
                             // Если тип оплаты нал
-                            if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) Fr.Summ1 = (decimal)item.given;
+                            if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) Fr.Summ1 += (decimal)item.given;
 
                             // Если тип оплаты карта
-                            if (item.tender_type == Com.Config.TenderTypeCredit && item.given != 0) Fr.Summ4 = (decimal)item.given;
+                            if (item.tender_type == Com.Config.TenderTypeCredit && item.given != 0) Fr.Summ4 += (decimal)item.given;
 
                             break;
                         case 2:

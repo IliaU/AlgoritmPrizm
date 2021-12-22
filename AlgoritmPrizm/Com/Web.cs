@@ -576,15 +576,28 @@ namespace AlgoritmPrizm.Com
                     {
                         try
                         {
+                            // Указываем пользователю что это вордовый файл
                             String PathFileName = responceString;
-                            response.ContentType = "application/msword";    // Указываем пользователю что это вордовый файл
+                            switch (Path.GetExtension(PathFileName).ToUpper())
+                            {
+                                case ".DOC":
+                                    response.ContentType = "application/msword";
+                                    
+                                    response.AddHeader("Content-Disposition", @"attachment; filename=AksReport(" + DateTime.Now.ToString() + ").Doc");
+                                    break;
+                                case ".XLSX":
+                                    response.ContentType = "application/msexcel";
+                                    response.AddHeader("Content-Disposition", @"attachment; filename=AksReport(" + DateTime.Now.ToString() + ").xlsx");
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            //string FileName = Path.GetFileName(PathFileName.Replace(".dotx", ".doc"));
+
                             //string ffftmp = Path.GetFileName(PathFileName).Replace(".dotx", ".doc");
                             //response.AddHeader("Content-Disposition", "attachment; filename=" + "ggggg.doc");
-
-                            string FileName = Path.GetFileName(PathFileName.Replace(".dotx", ".doc"));
                             //FileName = Encoding.Unicode.GetString(Encoding.Convert(Encoding.Default, Encoding.Unicode, Encoding.Default.GetBytes(FileName)));
-
-                            response.AddHeader("Content-Disposition", @"attachment; filename=AksReport("+DateTime.Now.ToString()+").Doc");
                             //response.AddHeader("Content-Disposition", @"attachment; filename=""" + Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(FileName)))+@"""");
 
                             if (!File.Exists(responceString)) throw new ApplicationException(string.Format("Файл не обнаружен. ({0})", responceString));
