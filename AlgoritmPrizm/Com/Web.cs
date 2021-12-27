@@ -215,6 +215,8 @@ namespace AlgoritmPrizm.Com
                         using (var reader = new StreamReader(request.InputStream))
                         {
                             BufPostRequest = reader.ReadToEnd();
+
+                            if (Com.Config.Trace) Com.Log.EventSave(BufPostRequest, "Com.Web.Listen", EventEn.Trace);
                         }
 
                         ///AksRepStat?sid=a251c9b3-ca0c-4632-92a8-a6137dd78775

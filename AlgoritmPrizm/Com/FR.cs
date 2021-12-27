@@ -634,6 +634,9 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+                // Печать штрих кода
+                if(!string.IsNullOrWhiteSpace(item.scan_upc)) PrintLine(item.scan_upc);
+
                 //Описание товара
                 switch (Config.FieldItem)
                 {
