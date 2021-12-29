@@ -139,7 +139,7 @@ namespace AlgoritmPrizm.BLL
         public string order_discount_reason_name;
         public double? order_discount_perc;
         public double? order_discount_amount;
-        public bool so_cancel_flag;
+        public bool? so_cancel_flag;
         public string total_deposit_used;
         public double? deposit_available_amt;
         public string order_fee_amt1;

@@ -194,7 +194,7 @@ namespace AlgoritmPrizm.BLL
         public int lot_type;
         public string price_lvl_sid;
         public string price_lvl_name;
-        public string so_cancel_flag;
+        public bool? so_cancel_flag;
         public string ref_sale_doc_sid;
         public int fulfill_store_no;
         public int fulfill_store_sbs_no;
