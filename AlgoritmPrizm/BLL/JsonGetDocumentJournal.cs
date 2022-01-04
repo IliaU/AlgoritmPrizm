@@ -161,7 +161,7 @@ namespace AlgoritmPrizm.BLL
         public double? hist_discount_perc5;
         public string hist_discount_reason5;
         public int store_number;
-        public double? total_discount_reason;
+        public string total_discount_reason;
         public int? order_type;
         public int? so_number;
         public string item_lookup;
