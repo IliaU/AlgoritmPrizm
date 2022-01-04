@@ -21,7 +21,7 @@ namespace AlgoritmPrizm.BLL
         public string modified_by;
         public DateTime? modified_datetime;
         public string controller_sid;
-        public DateTime post_date;
+        public DateTime? post_date;
         public Int64 row_version;
         public string tenant_sid;
         public string document_sid;
@@ -176,9 +176,9 @@ namespace AlgoritmPrizm.BLL
         public string custom_flag;
         public string return_reason;
         public int price_lvl;
-        public int order_quantity_filled;
+        public int? order_quantity_filled;
         public double int_quantity;
-        public double so_deposit_amt;
+        public double? so_deposit_amt;
         public string invn_item_uid;
         public string ref_order_item_sid;
         public string tax_area_name;
@@ -190,8 +190,8 @@ namespace AlgoritmPrizm.BLL
         public bool? so_cancel_flag;
         public string ref_sale_doc_sid;
         public string fulfill_store_sid;
-        public int fulfill_store_no;
-        public int fulfill_store_sbs_no;
+        public int? fulfill_store_no;
+        public int? fulfill_store_sbs_no;
         public string central_document_sid;
         public string central_item_pos;
         public string ref_order_doc_sid;
@@ -215,7 +215,7 @@ namespace AlgoritmPrizm.BLL
         public string is_competing_component;
         public string package_item_uid;
         public string original_component_item_uid;
-        public bool promo_disc_modifiedmanually;
+        public bool? promo_disc_modifiedmanually;
         public string ship_method_sid;
         public string ship_method_id;
         public string order_ship_method_sid;
@@ -246,9 +246,9 @@ namespace AlgoritmPrizm.BLL
         public string lty_pgm_sid;
         public string lty_pgm_name;
         public string lty_points_earned;
-        public int lty_orig_points_earned;
+        public int? lty_orig_points_earned;
         public string lty_price_in_points;
-        public double lty_orig_price_in_points;
+        public double? lty_orig_price_in_points;
         public double? orig_sale_price;
         public string lty_type;
         public bool lty_redeem_applicable_manually;

@@ -97,8 +97,6 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-
-
         /// <summary>
         /// Отчёт отображает статистику по формированию отчётов в пуле
         /// </summary>
@@ -505,7 +503,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Прайслист
         /// </summary>
-        public static string CreateReportPl()
+        public static string CreateReportPlWrd()
         {
             try
             {
@@ -514,7 +512,7 @@ namespace AlgoritmPrizm.Com
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по формированию списка товаров уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
-                /*DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select name As doc_num,
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select name As doc_num,
   date_format(created_datetime, '%d.%m.%Y') As create_dt,
   date_format(post_date, '%d.%m.%Y') As pos_dt
 From rpsods.pi_sheet"));
@@ -546,11 +544,11 @@ From rpsods.pi_sheet"));
 Select Convert(sid - (Select Min(Sid) As Msid From T)+1,char) As np,
   Aip, Name, Attr, Size, price, qty, scan_qty, scan_price, suminv
 From T
-Order by sid"));*/
+Order by sid"));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
-                //TblL.Add(new Wrd.Table("T1", TblVal), true);
+                TblL.Add(new Wrd.Table("T1", TblVal), true);
 
                 // Создаём список итогов
                 //Wrd.TotalList Ttl = new Wrd.TotalList();
@@ -571,7 +569,42 @@ Order by sid"));*/
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, string.Format("{0}.CreateReportInf19", "ReportWordDotxFarm"), EventEn.Error);
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportPlWrd", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Прайслист
+        /// </summary>
+        public static string CreateReportPl()
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"PriceList.xlsx");
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по формированию списка товаров уже сущестаует", TargetFile));
+       
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskExcel Tsk = new Wrd.TaskExcel(@"PriceList.xlsx", TargetFile, TblL);
+
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskExcelInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskExcel RTsk = Wrd.FarmExcel.QueTaskExcelAdd(Tsk);
+
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportPl", "ReportWordDotxFarm"), EventEn.Error);
                 throw ae;
             }
         }
@@ -729,8 +762,8 @@ Order by sid", DocSid));
         /// <summary>
         /// Формирование отчёта по ИНВ-3
         /// </summary>
-        /// <param name="DocSid">Сид документа инвентаризации</param>
-        public static string CreateReportInf3(string DocSid)
+        /// <param name="DocSid">Сид документа инвентаризации (610444449000210592)</param>
+        public static string CreateReportInf3Wrd(string DocSid)
         {
             try
             {
@@ -801,6 +834,48 @@ Order by sid", DocSid));
             }
         }
 
+        /// <summary>
+        /// Формирование отчёта по ИНВ-3
+        /// </summary>
+        /// <param name="DocSid">Сид документа инвентаризации (610444449000210592)</param>
+        public static string CreateReportInf3(string DocSid)
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-3 ({0}).xlsx", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("2|B4", TblVal), true);
+
+                // Создаём список итогов
+                Wrd.TotalList Ttl = new Wrd.TotalList();
+
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskExcel Tsk = new Wrd.TaskExcel(@"Унифицированная форма ИНВ-3.xlsx", TargetFile, TblL);
+                
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskExcelInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskExcel RTsk = Wrd.FarmExcel.QueTaskExcelAdd(Tsk);
+                
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportInf3", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
 
         #region Private method
 

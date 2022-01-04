@@ -3,6 +3,8 @@
   <Lics>
     <Key MachineName="CHUDAKOV" UserName="User" ActivNumber="CHUDAKOV@User:(4HH-4J2-4J5-4IU-4IW)" LicKey="2HO-2J7-2J6-2J2-2J8-2J0-2JJ-2KQ-2KR-2KU-2KW-2KN-2L4-2KS-2JY-2KW-2KT-2L5-2KR-2IZ-2JA-2J3-2J4-2J3-2J9-2J5-2J5-2J3-2J5-2JO-2L0-2KJ-2L2-2L4-2KT-2KS-2KP-2L6-2L7" ValidToYYYYMMDD="20211231" HashUserOS="False">
     </Key>
+    <Key MachineName="CHUDAKOV" UserName="User" ActivNumber="4IV-4KG-4KJ-4KD-4KA" LicKey="1GA-1HR-1HY-1HU-1HO-1HK-1IB-1JI-1J7-1JE-1JO-1JF-1JK-1JC-1IQ-1JO-1J9-1JP-1JJ-1HR-1HQ-1HN-1HW-1HW-1HP-1HP-1HX-1HV-1HL-1I8-1JS-1JB-1JI-1JO-1JL-1JK-1J5-1JQ-1JZ" ValidToYYYYMMDD="20221231" Info="" HashUserOS="False">
+    </Key>
   </Lics>
   <Customers>
     <Customer Login="sysadmin" Fio="Куприянчук Вадим" INN="501210148104" />
