@@ -96,7 +96,7 @@ namespace AlgoritmPrizm
                 ccc.StopSend();
 */
 
-                //Com.ReportWordDotxFarm.CreateReportInf3("610444449000210592");
+                Com.ReportWordDotxFarm.CreateReportInf3("610444449000210592");
 
 
 
