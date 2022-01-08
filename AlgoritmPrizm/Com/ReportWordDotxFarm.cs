@@ -613,12 +613,12 @@ Order by sid"));
         /// Формирование отчёта по ИНВ-19
         /// </summary>
         /// <param name="DocSid">Сид документа инвентаризации</param>
-        public static string CreateReportInf19(string DocSid)
+        public static string CreateReportInf19Wrd(string DocSid)
         {
             try
             {
                 // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
-                string TargetFile = string.Format(@"Унифицированная форма ИНВ-3 ({0}).doc", DocSid);
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-19 ({0}).doc", DocSid);
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
@@ -685,15 +685,58 @@ Order by sid", DocSid));
         }
 
         /// <summary>
-        /// Формирование отчёта по ИНВ-8
+        /// Формирование отчёта по ИНВ-19
         /// </summary>
         /// <param name="DocSid">Сид документа инвентаризации</param>
-        public static string CreateReportInf8a(string DocSid)
+        public static string CreateReportInf19(string DocSid)
         {
             try
             {
                 // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
-                string TargetFile = string.Format(@"Унифицированная форма ИНВ-3 ({0}).doc", DocSid);
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-19 ({0}).xlsx", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("3|B4", TblVal), true);
+
+                // Создаём список итогов
+                Wrd.TotalList Ttl = new Wrd.TotalList();
+
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskExcel Tsk = new Wrd.TaskExcel(@"Унифицированная форма ИНВ-19.xlsx", TargetFile, TblL);
+
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskExcelInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskExcel RTsk = Wrd.FarmExcel.QueTaskExcelAdd(Tsk);
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportInf19", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Формирование отчёта по ИНВ-8
+        /// </summary>
+        /// <param name="DocSid">Сид документа инвентаризации</param>
+        public static string CreateReportInf8aWrd(string DocSid)
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-8а ({0}).doc", DocSid);
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
@@ -748,6 +791,49 @@ Order by sid", DocSid));
                 // передаём в очередь наше задание
                 Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
 
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportInf8", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Формирование отчёта по ИНВ-8
+        /// </summary>
+        /// <param name="DocSid">Сид документа инвентаризации</param>
+        public static string CreateReportInf8a(string DocSid)
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Унифицированная форма ИНВ-8а ({0}).xlsx", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("3|B4", TblVal), true);
+
+                // Создаём список итогов
+                Wrd.TotalList Ttl = new Wrd.TotalList();
+
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskExcel Tsk = new Wrd.TaskExcel(@"Унифицированная форма ИНВ-8а.xlsx", TargetFile, TblL);
+
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskExcelInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskExcel RTsk = Wrd.FarmExcel.QueTaskExcelAdd(Tsk);
 
                 return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
             }
@@ -853,7 +939,7 @@ Where sid = '{0}'", DocSid));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
-                TblL.Add(new Wrd.Table("2|B4", TblVal), true);
+                TblL.Add(new Wrd.Table("3|B4", TblVal), true);
 
                 // Создаём список итогов
                 Wrd.TotalList Ttl = new Wrd.TotalList();
