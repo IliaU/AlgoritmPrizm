@@ -131,9 +131,9 @@ namespace AlgoritmPrizm.Com
         private static int _SmsTypGatewayPort = 25;
 
         /// <summary>
-        /// Логин который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// Логин который используется для отправки сообщений например при HTTP "login" при отправки с использованием писем
         /// </summary>
-        private static string _SmsTypGatewayLogin = @"fp_rus";
+        private static string _SmsTypGatewayLogin = @"login";
 
         /// <summary>
         /// Логин который используется для отправки сообщений например при SMTP "ilia82@mail.ru" при отправки с использованием писем
@@ -141,7 +141,7 @@ namespace AlgoritmPrizm.Com
         private static string _SmsTypGatewaySmtpLogin = @"ilia82@mail.ru";
 
         /// <summary>
-        /// Пароль который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// Пароль который используется для отправки сообщений например при HTTP "login" при отправки с использованием писем
         /// </summary>
         private static string _SmsTypGatewayPassword = "";
 
@@ -513,7 +513,7 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
-        /// Логин который используется для отправки сообщений например при HTTP "fp_rus" при отправки с использованием писем
+        /// Логин который используется для отправки сообщений например при HTTP "login" при отправки с использованием писем
         /// </summary>
         public static string SmsTypGatewayLogin
         {
@@ -547,7 +547,7 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
-        /// Пароль который используется для отправки сообщений например при HTTP "fp_rus" или ilia82@mail.ru при отправки с использованием писем
+        /// Пароль который используется для отправки сообщений например при HTTP "login" или ilia82@mail.ru при отправки с использованием писем
         /// </summary>
         public static string SmsTypGatewayPassword
         {

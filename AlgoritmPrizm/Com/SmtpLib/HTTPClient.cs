@@ -133,9 +133,9 @@ namespace AlgoritmPrizm.Com.SmtpLib
                         request.Accept = @"application/json";
                         request.Method = "POST";
                         request.KeepAlive = true;  // Держать подключение для отправки многих писем
-                        string credentials = string.Format("{0}:{1}", @"fp_rus", @"g$3Tc7A7&1*");
+                        string credentials = string.Format("{0}:{1}", @"login", @"*****");
                         request.Headers["Authorization"] = string.Format("Basic {0}", Convert.ToBase64String(UTF8Encoding.UTF8.GetBytes(credentials)));
-                        //request.Credentials = new NetworkCredential(@"fp_rus", @"g$3Tc7A7&1*");
+                        //request.Credentials = new NetworkCredential(@"login", @"*****");
 
                         if (true) // post 
                         {

@@ -68,8 +68,8 @@ namespace AlgoritmPrizm
 
                 //Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "ilia82@mail.ru", "*****", true, null);
                 Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "k007k@list.ru", "*****", true, null);
-                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "alex-ily67:*****:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
-                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "fp_rus:*****:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
+                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "login:*****:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
+                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "login:*****:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
                 SmtpCli.StartSend();
                 SmtpCli.StopSend();
 
@@ -77,7 +77,7 @@ namespace AlgoritmPrizm
 
 
                 // Тестирование HTTP
-                Com.SmtpLib.HTTPClient ccc = new Com.SmtpLib.HTTPClient(@"https://api.infobip.com/sms/1/text/single", @"application/json", @"application/json", Com.SmtpLib.EnHttpMethod.POST, Com.SmtpLib.EnHttpAuthorizTyp.BasicToBase64, @"fp_rus", @"g$3Tc7A7&1*");
+                Com.SmtpLib.HTTPClient ccc = new Com.SmtpLib.HTTPClient(@"https://api.infobip.com/sms/1/text/single", @"application/json", @"application/json", Com.SmtpLib.EnHttpMethod.POST, Com.SmtpLib.EnHttpAuthorizTyp.BasicToBase64, @"login", @"*******");
                 ccc.AddEmail(new Com.SmtpLib.Mail("Plein", "+79163253757", "", @"
                 {  
                    ""from"":""Plein"",
@@ -103,8 +103,8 @@ namespace AlgoritmPrizm
                 /*
                 //Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "ilia82@mail.ru", "*****", true, null);
                 Com.SmtpLib.SMTPClient SmtpCli = new Com.SmtpLib.SMTPClient("smtp.mail.ru", 25, "k007k@list.ru", "*****", true, null);
-                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "alex-ily67:*****:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
-                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "alex-ily67:*****:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
+                //SmtpCli.AddEmail(new Com.SmtpLib.Mail("ilia82@mail.ru", "send@send.smsc.ru", "Null", "login:*****:::,0,,1:+79163253757:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));  
+                SmtpCli.AddEmail(new Com.SmtpLib.Mail("k007k@list.ru", "send@send.smsc.ru", "Null", "login:*****:::,0,,1:+79265605713:Филипп Плейн Ваш Бонусный счет составляет 596 руб Спасибо", null, Encoding.GetEncoding("koi8-r"), null));
                 SmtpCli.StartSend();
                 SmtpCli.StopSend();
                 */
