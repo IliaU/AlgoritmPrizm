@@ -417,7 +417,8 @@ namespace AlgoritmPrizm.Com
                                                         resp.Message = ReportWordDotxFarm.CreateReportPl();
                                                     break;
                                                 case "UPD":   // УПД
-                                                    resp.Message = ReportWordDotxFarm.CreateReportPl();
+                                                    if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                        resp.Message = ReportWordDotxFarm.CreateReportUdp(JsWdDotxPor[1].valueString);
                                                     break;
                                                 default:
                                                     resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);

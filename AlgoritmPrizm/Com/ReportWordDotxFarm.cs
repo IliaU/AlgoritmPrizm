@@ -977,7 +977,7 @@ Where sid = '{0}'", DocSid));
 
                 // Создаём запрос для получения списка закладок
                 DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
-From rpsods.pi_sheet
+From rpsods.document
 Where sid = '{0}'", DocSid));
 
                 // Создаём список таблиц
