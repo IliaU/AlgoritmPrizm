@@ -963,6 +963,49 @@ Where sid = '{0}'", DocSid));
             }
         }
 
+        /// <summary>
+        /// Формирование отчёта по ИНВ-3
+        /// </summary>
+        /// <param name="DocSid">Сид документа инвентаризации (610444449000210592)</param>
+        public static string CreateReportUdp(string DocSid)
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"УПД ({0}).xlsx", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
+From rpsods.pi_sheet
+Where sid = '{0}'", DocSid));
+
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("2|B4", TblVal), true);
+
+                // Создаём список итогов
+                Wrd.TotalList Ttl = new Wrd.TotalList();
+
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskExcel Tsk = new Wrd.TaskExcel(@"УПД.xlsx", TargetFile, TblL);
+
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskExcelInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskExcel RTsk = Wrd.FarmExcel.QueTaskExcelAdd(Tsk);
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportUdp", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
+
         #region Private method
 
         // Произошла ошибка при отрисовки отчёта

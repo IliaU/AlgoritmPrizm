@@ -416,6 +416,9 @@ namespace AlgoritmPrizm.Com
                                                 case "PL":   // Прайс лист
                                                         resp.Message = ReportWordDotxFarm.CreateReportPl();
                                                     break;
+                                                case "UPD":   // УПД
+                                                    resp.Message = ReportWordDotxFarm.CreateReportPl();
+                                                    break;
                                                 default:
                                                     resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
                                                     break;
