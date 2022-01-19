@@ -1140,7 +1140,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "GiftCardTax") try { _GiftCardTax = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldItem") try {_FieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem);} catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldDocNum") try {_FieldDocNum = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldDocNum); } catch (Exception) { }
-                        if (xmlRoot.Attributes[i].Name == "FieldInnTyp") try { _FieldDocNum = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldInnTyp); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldInnTyp") try {_FieldInnTyp = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldInnTyp); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "HostPrizmApi") try { _HostPrizmApi = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemLogon") try { _PrizmApiSystemLogon = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrizmApiSystemPassord") try { _PrizmApiSystemPassord = Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
