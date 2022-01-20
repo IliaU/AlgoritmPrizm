@@ -136,5 +136,30 @@ namespace AlgoritmPrizm.Lib
                 return DefaultSmsTypGateway;
             }
         }
+
+        /// <summary>
+        /// Конвертация в объект EnProductMatrixClassType
+        /// </summary>
+        /// <param name="FieldDocNumStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaulfFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static EnProductMatrixClassType Convert(string FieldDocNumStr, EnProductMatrixClassType DefaulfFieldDocNum)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(FieldDocNumStr))
+                {
+                    foreach (EnProductMatrixClassType item in FfdEn.GetValues(typeof(EnProductMatrixClassType)))
+                    {
+                        if (item.ToString().ToUpper() == FieldDocNumStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaulfFieldDocNum;
+            }
+            catch (Exception)
+            {
+                return DefaulfFieldDocNum;
+            }
+        }
     }
 }

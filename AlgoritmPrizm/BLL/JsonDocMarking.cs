@@ -183,7 +183,7 @@ namespace AlgoritmPrizm.BLL
         public string custom_flag;
         public string return_reason;
         public int price_lvl;
-        public double order_quantity_filled;
+        public double? order_quantity_filled;
         public double gift_quantity;
         public double so_deposit_amt;
         public string invn_item_uid;
@@ -196,8 +196,8 @@ namespace AlgoritmPrizm.BLL
         public string price_lvl_name;
         public bool? so_cancel_flag;
         public string ref_sale_doc_sid;
-        public int fulfill_store_no;
-        public int fulfill_store_sbs_no;
+        public int? fulfill_store_no;
+        public int? fulfill_store_sbs_no;
         public string central_document_sid;
         public string central_item_pos;
         public string ref_order_doc_sid;

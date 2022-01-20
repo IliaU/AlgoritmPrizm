@@ -684,12 +684,12 @@ namespace AlgoritmPrizm.Com
                     if (IndexItemForPredoplata + 1 == CountForPredoplata)
                     {
                         Fr.Price = (SumChekFoCustomer - SumChekForPredoplata) / (decimal)item.quantity;
-                        SumChekForPredoplata += (SumChekFoCustomer - SumChekForPredoplata) / (decimal)item.quantity;
+                        SumChekForPredoplata += (SumChekFoCustomer - SumChekForPredoplata);
                     }
                     else
                     {
                         Fr.Price = (decimal)item.price * PrcForPrice;
-                        SumChekForPredoplata += (decimal)item.price * PrcForPrice;
+                        SumChekForPredoplata += (decimal)item.price * PrcForPrice * (decimal)item.quantity;
                     }
                     //SumChekForPredoplata
                 }
@@ -1399,6 +1399,13 @@ namespace AlgoritmPrizm.Com
 
                             // Если тип оплаты подарочная карта
                             if (item.tender_type == Com.Config.TenderTypeGiftCard && item.taken != 0)
+                            {
+                                rez += (decimal)item.taken;
+                                if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
+                            }
+
+                            // Если тип оплаты подарочная карта
+                            if (item.tender_type == Com.Config.TenderTypeAvans && item.taken != 0)
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;

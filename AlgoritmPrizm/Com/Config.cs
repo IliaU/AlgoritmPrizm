@@ -96,6 +96,11 @@ namespace AlgoritmPrizm.Com
         private static int _TenderTypeGiftCard = 10;
 
         /// <summary>
+        /// Признак суммы которую вносили клиенты в предыдущих чеках
+        /// </summary>
+        private static int _TenderTypeAvans = 7;
+
+        /// <summary>
         /// Код подарочной карты
         /// </summary>
         private static string _GiftCardCode = "GFT";
@@ -199,6 +204,11 @@ namespace AlgoritmPrizm.Com
         /// Всегда требовать запрос матрикс кода
         /// </summary>
         private static bool _GetMatrixAlways = false;
+
+        /// <summary>
+        /// Типы объекта на основе которых принимаем решения как действовать запрашивать матрикс коды или нет
+        /// </summary>
+        private static EnProductMatrixClassType _ProductMatrixClassType = EnProductMatrixClassType.dcs_code;
 
         /// <summary>
         /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
@@ -376,6 +386,23 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("TenderTypeGiftCard", value.ToString());
                 Save();
                 _TenderTypeGiftCard = value;
+            }
+        }
+
+        /// <summary>
+        /// Признак суммы которую вносили клиенты в предыдущих чеках
+        /// </summary>
+        public static int TenderTypeAvans
+        {
+            get
+            {
+                return _TenderTypeAvans;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("TenderTypeAvans", value.ToString());
+                Save();
+                _TenderTypeAvans = value;
             }
         }
 
@@ -754,6 +781,23 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
+        /// Типы объекта на основе которых принимаем решения как действовать запрашивать матрикс коды или нет
+        /// </summary>
+        public static EnProductMatrixClassType ProductMatrixClassType
+        {
+            get
+            {
+                return _ProductMatrixClassType;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("ProductMatrixClassType", value.ToString());
+                Save();
+                _ProductMatrixClassType = value;
+            }
+        }
+
+        /// <summary>
         /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
         /// </summary>
         public static List<ProdictMatrixClass> ProdictMatrixClassList
@@ -1044,6 +1088,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("TenderTypeCredit", _TenderTypeCredit.ToString());
                     xmlMain.SetAttribute("TenderTypeGiftCert", _TenderTypeGiftCert.ToString());
                     xmlMain.SetAttribute("TenderTypeGiftCard", _TenderTypeGiftCard.ToString());
+                    xmlMain.SetAttribute("TenderTypeAvans", _TenderTypeAvans.ToString());
                     xmlMain.SetAttribute("GiftCardCode", _GiftCardCode);
                     xmlMain.SetAttribute("GiftCardEnable", _GiftCardEnable.ToString());
                     xmlMain.SetAttribute("GiftCardTax", _GiftCardTax.ToString());
@@ -1056,6 +1101,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrizmApiTimeLiveTockenMinute", _PrizmApiTimeLiveTockenMinute.ToString());
                     xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
                     xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
+                    xmlMain.SetAttribute("ProductMatrixClassType", _ProductMatrixClassType.ToString());
                     xmlMain.SetAttribute("MandatoryDefault", _MandatoryDefault.ToString());
                     xmlMain.SetAttribute("LimitCachForUrik", _LimitCachForUrik.ToString());
                     xmlMain.SetAttribute("SmsTypGateway", _SmsTypGateway.ToString());
@@ -1135,6 +1181,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCredit") try { _TenderTypeCredit = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeGiftCert") try { _TenderTypeGiftCert = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeGiftCard") try { _TenderTypeGiftCard = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "TenderTypeAvans") try { _TenderTypeAvans = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GiftCardCode") try { _GiftCardCode = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GiftCardEnable") try { _GiftCardEnable = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GiftCardTax") try { _GiftCardTax = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
@@ -1147,6 +1194,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrizmApiTimeLiveTockenMinute") try { _PrizmApiTimeLiveTockenMinute = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "ProductMatrixClassType") try { _ProductMatrixClassType = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), EnProductMatrixClassType.dcs_code); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "LimitCachForUrik") try { _LimitCachForUrik = decimal.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "SmsTypGateway") try { _SmsTypGateway = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _SmsTypGateway); } catch (Exception) { }

@@ -87,6 +87,7 @@ namespace AlgoritmPrizm
                 this.txtBoxTenderTypeCredit.Text = Config.TenderTypeCredit.ToString();
                 this.txtBoxTenderTypeGiftCert.Text = Config.TenderTypeGiftCert.ToString();
                 this.txtBoxTenderTypeGiftCard.Text = Config.TenderTypeGiftCard.ToString();
+                this.txtBoxTenderTypeAvans.Text = Config.TenderTypeAvans.ToString();
 
                 this.txtBoxGiftCardCode.Text = Config.GiftCardCode;
                 this.chkBoxGiftCardEnable.Checked = Config.GiftCardEnable;
@@ -138,6 +139,18 @@ namespace AlgoritmPrizm
                 this.chkBoxMandatoryDefault.Checked = Config.MandatoryDefault;
                 this.chkBox_GetMatrixAlways.Checked = Config.GetMatrixAlways;
                 this.txtBoxProductMatrixEndOff.Text = Config.ProductMatrixEndOff.ToString();
+                //
+                this.cmbBoxProductMatrixClassType.Items.Clear();
+                int PositionProductMatrixClassType = -1;
+                int SelectPositionProductMatrixClassType = -1;
+                foreach (EnProductMatrixClassType item in EnProductMatrixClassType.GetValues(typeof(EnProductMatrixClassType)))
+                {
+                    PositionProductMatrixClassType++;
+                    cmbBoxProductMatrixClassType.Items.Add(item.ToString());
+                    if (item == Config.ProductMatrixClassType) SelectPositionProductMatrixClassType = PositionProductMatrixClassType;
+                }
+                if (SelectPositionProductMatrixClassType > -1) cmbBoxProductMatrixClassType.SelectedIndex = SelectPositionProductMatrixClassType;
+                //
                 // Наполняем таблицу данными и подключаем к гриду
                 if (this.dt != null && this.dt.Rows.Count == 0)
                 {
@@ -241,6 +254,14 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxTenderTypeGiftCard.Text), GetType().Name, EventEn.Message);
                 }
+                try
+                {
+                    Com.Config.TenderTypeAvans = int.Parse(this.txtBoxTenderTypeAvans.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxTenderTypeAvans.Text), GetType().Name, EventEn.Message);
+                }
 
                 Config.GiftCardCode = this.txtBoxGiftCardCode.Text;
                 Config.GiftCardEnable = this.chkBoxGiftCardEnable.Checked;
@@ -275,9 +296,10 @@ namespace AlgoritmPrizm
 
                 Config.GetMatrixAlways = this.chkBox_GetMatrixAlways.Checked;
                 if (!Config.GetMatrixAlways) Config.MandatoryDefault = this.chkBoxMandatoryDefault.Checked;
-
+                //
                 Config.ProductMatrixEndOff = Char.Parse(this.txtBoxProductMatrixEndOff.Text);
-
+                Config.ProductMatrixClassType = EventConvertor.Convert(cmbBoxProductMatrixClassType.Items[cmbBoxProductMatrixClassType.SelectedIndex].ToString(), Config.ProductMatrixClassType);
+                //
                 List<BLL.ProdictMatrixClass> NewProdictMatrixClass = new List<BLL.ProdictMatrixClass>();
                 for (int i = 0; i < this.dgProdictMatrixClass.Rows.Count; i++)
                 {

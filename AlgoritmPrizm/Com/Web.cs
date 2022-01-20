@@ -238,7 +238,31 @@ namespace AlgoritmPrizm.Com
                                 if (!Config.GetMatrixAlways)
                                 {
                                     JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
-                                    string dcs_code = FineDoc.dcs_code;
+                                    string dcs_code = EnProductMatrixClassType.dcs_code.ToString();
+                                    switch (Config.ProductMatrixClassType)
+                                    {
+                                        case EnProductMatrixClassType.dcs_code:
+                                            dcs_code = FineDoc.dcs_code;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string01:
+                                            dcs_code = FineDoc.udf_string01;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string02:
+                                            dcs_code = FineDoc.udf_string02;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string03:
+                                            dcs_code = FineDoc.udf_string03;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string04:
+                                            dcs_code = FineDoc.udf_string04;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string05:
+                                            dcs_code = FineDoc.udf_string05;
+                                            break;
+                                        default:
+                                            throw new ApplicationException(string.Format("Не можем обработать параметр который указан в конфиге: {0}", Config.ProductMatrixClassType));
+                                    }
+                                    
                                     foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
                                     {
                                         if (string.IsNullOrEmpty(Config.ProductMatrixEndOff.ToString()))
