@@ -32,6 +32,10 @@ namespace AlgoritmPrizm
                     List<BLL.Custumer> nlist = new List<BLL.Custumer>();
                     nlist.Add(new BLL.Custumer("1111", "2222", "3333"));
                     Com.Config.SetCustomers(nlist);
+
+                    BLL.JsonPrintFiscDocReturn ffffsg = BLL.JsonPrintFiscDocReturn.DeserializeJson(BLL.JsonPrintFiscDocReturn.SampleTest);
+                    //BLL.JsonPrintFiscDocReturn ffffsg = new BLL.JsonPrintFiscDocReturn() { fieldName = Lib.FieldDocNumEn.Comment1, fiscDocNum = 365 };
+                    string dd = BLL.JsonPrintFiscDocReturn.SerializeObject(ffffsg);
                 */
 
                 // Подключаем логирование

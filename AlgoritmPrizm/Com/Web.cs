@@ -388,7 +388,11 @@ namespace AlgoritmPrizm.Com
 
 
                                 // Отправляем на печать
-                                FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                JsonPrintFiscDocReturn rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+
+                                // Формируем сообщение для пользователя
+                                responceString = BLL.JsonPrintFiscDocReturn.SerializeObject(rezPrintCheck);
+
                                 break;
                             case @"/AksRepItemHistory":
                                 try

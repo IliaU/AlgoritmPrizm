@@ -311,8 +311,11 @@ namespace AlgoritmPrizm.Com
         /// <param name="Doc">Документ который представляет из себя чек</param>
         /// <param name="OperatorNumber"> номер оператора который указан в фискальнике</param>
         /// <param name="DocName">Заголовок документа</param>
-        public static void PrintCheck(JsonPrintFiscDoc Doc, int OperatorNumber, string DocName)
+        /// <returns>Возвращаем номердокумента и поле в которое нужно его сохранять</returns>
+        public static JsonPrintFiscDocReturn PrintCheck(JsonPrintFiscDoc Doc, int OperatorNumber, string DocName)
         {
+            JsonPrintFiscDocReturn rezWeb = null;
+
             //string Matrix = @"010290000066650421Jsid2E""4oh2 > T91002a92 / 1tPzrragHUbOA + cq0FIp54OZZF6GcVCJhA9W6Mnb7W6LvZEn9r9thrj + HsBFpqyH / zl5Ri6pXxF3HTwjuWeKG == 007R";
             Lib.FrStatError rez = new FrStatError();
             try
@@ -342,7 +345,7 @@ namespace AlgoritmPrizm.Com
                 //************** ОТКРЫТИЕ ЧЕКА ********************************************
 
                 // Провеяем статус фискальника и если чего не хватает правим. например есть чек не завершонный, смена не открыта итд
-                if (ConfigStatusFR(Doc, OperatorNumber, DocName)) return;
+                if (ConfigStatusFR(Doc, OperatorNumber, DocName)) return rezWeb;
 
                 // Открываем чек
                 OpenReceipt(Doc, TekCustomer, DocCustTyp);
@@ -508,7 +511,12 @@ namespace AlgoritmPrizm.Com
 
                 // Обновляем статус и опрашиваем фискальник на предмет получения последнего номера документа
                 Fr.FNGetStatus();
-                Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
+
+                //Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
+                rezWeb.fieldName = Com.Config.FieldDocNum;
+                rezWeb.fiscDocNum = Fr.DocumentNumber;
+
+                return rezWeb;
             }
             catch (Exception ex)
             {

@@ -119,8 +119,10 @@
     <Compile Include="BLL\JsonPrintFiscDocItemHrefs.cs" />
     <Compile Include="BLL\JsonPrintFiscDocItemParam.cs" />
     <Compile Include="BLL\JsonPrintFiscDocParam.cs" />
+    <Compile Include="BLL\JsonPrintFiscDocReturn.cs" />
     <Compile Include="BLL\JsonPrintFiscDocTender.cs" />
     <Compile Include="BLL\JsonRestError.cs" />
+    <Compile Include="BLL\JsonSerializerSettingsFieldNameConverter.cs" />
     <Compile Include="BLL\JsonSms.cs" />
     <Compile Include="BLL\JsonWebMessageResponce.cs" />
     <Compile Include="BLL\JsonWebResponceCustomerBonus.cs" />
