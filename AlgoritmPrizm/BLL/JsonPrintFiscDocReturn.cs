@@ -31,8 +31,17 @@ namespace AlgoritmPrizm.BLL
         [JsonIgnore]
         public static string SampleTest = @"{
     ""fieldName"":""Comment1"",
-    ""fiscDocNum"":365
+    ""fiscDocNum"":345
 }";
+
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="fieldName">Имя поля для записи номера документа</param>
+        public JsonPrintFiscDocReturn(FieldDocNumEn fieldName)
+        {
+            this.fieldName = fieldName;
+        }
 
         /// <summary>
         /// Параметры которые надо использовать при десериализации

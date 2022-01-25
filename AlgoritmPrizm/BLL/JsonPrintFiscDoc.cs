@@ -23,8 +23,8 @@ namespace AlgoritmPrizm.BLL
         public string created_by;
         public DateTime created_datetime;
         public int row_version;
-        public int document_number;
-        public DateTime invoice_posted_date;
+        public int? document_number;
+        public DateTime? invoice_posted_date;
         public int status;
         public string tracking_number;
         public double? discount_amount;

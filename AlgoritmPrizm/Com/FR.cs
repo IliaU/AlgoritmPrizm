@@ -314,7 +314,7 @@ namespace AlgoritmPrizm.Com
         /// <returns>Возвращаем номердокумента и поле в которое нужно его сохранять</returns>
         public static JsonPrintFiscDocReturn PrintCheck(JsonPrintFiscDoc Doc, int OperatorNumber, string DocName)
         {
-            JsonPrintFiscDocReturn rezWeb = null;
+            JsonPrintFiscDocReturn rezWeb = new JsonPrintFiscDocReturn(Com.Config.FieldDocNum);
 
             //string Matrix = @"010290000066650421Jsid2E""4oh2 > T91002a92 / 1tPzrragHUbOA + cq0FIp54OZZF6GcVCJhA9W6Mnb7W6LvZEn9r9thrj + HsBFpqyH / zl5Ri6pXxF3HTwjuWeKG == 007R";
             Lib.FrStatError rez = new FrStatError();
@@ -324,7 +324,7 @@ namespace AlgoritmPrizm.Com
                 EnFrTyp DocCustTyp = EnFrTyp.Default;
 
                 // Поиск  сотрудника
-                Custumer TekCustomer = Com.Config.customers.Find(x => x.login == Doc.cashier_login_name);
+                Custumer TekCustomer = Com.Config.customers.Find(x => x.login.ToUpper() == Doc.cashier_login_name.ToUpper());
                 if (TekCustomer == null) throw new ApplicationException(string.Format("Не можем сопоставить пользователя в RPro ({0}) с логином в конфиге", Doc.cashier_login_name));
 
                 // Проверка включена опция с подаочными картами
@@ -513,8 +513,10 @@ namespace AlgoritmPrizm.Com
                 Fr.FNGetStatus();
 
                 //Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
-                rezWeb.fieldName = Com.Config.FieldDocNum;
                 rezWeb.fiscDocNum = Fr.DocumentNumber;
+
+                // Открываем денежный ящик
+                OpenDrawer();
 
                 return rezWeb;
             }
@@ -651,6 +653,7 @@ namespace AlgoritmPrizm.Com
         /// <param name="CountForPredoplata">Количество позиций в чеке</param>
         /// <param name="SumChekFoCustomer">Итоговая сколько заплачено покупателем по всему чеку нужно для выявления пропорции на сколько уменьшать этот чек чтобы сумма сошлась</param>
         /// <param name="SumChekFoPrice">Итоговая сумма по чеку по ценам магазина а не по тому что внёс покупатель</param>
+        
         private static void PrintCheckItem(JsonPrintFiscDoc Doc, JsonPrintFiscDocItem item, string note, int Department, int Tax1, int Tax2, int Tax3, int Tax4, EnFrTyp DocCustTyp, ref decimal SumChekForPredoplata, int IndexItemForPredoplata, int CountForPredoplata, decimal SumChekFoCustomer, decimal SumChekFoPrice)
         {
             try
@@ -1417,6 +1420,13 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
+                            }
+
+                            // Если тип оплаты нал
+                            if (item.tender_type == 7 && Doc.given_amt != 0)
+                            {
+                                rez += (decimal)Doc.given_amt;
+                                if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
                             }
 
                             break;
