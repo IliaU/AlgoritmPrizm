@@ -368,6 +368,16 @@ namespace AlgoritmPrizm.Com
                 int TekDocStavkiNDS3 = 0;      // Смешанный
                 int TekDocStavkiNDS4 = 0;      // Депозит
 
+                // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
+                if (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0 && Doc.items.Count==0)
+                {
+                    string referDocSid = Doc.ref_order_sid;
+                    foreach (BLL.JsonPrintFiscDocItem nitemRefer in Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(referDocSid))
+                    {
+                        Doc.items.Add(nitemRefer);
+                    }
+                }
+
                 // Сумма чека для предоплаты в момент просчёта строк
                 decimal SumChekForPredoplata = 0;
                 decimal SumChekFoCustomer = GetSummCheck(Doc, false); // Получаем сумму чека из фискальника чтобы потом этого не делать при просчёте позиций во время предоплаты
@@ -376,6 +386,7 @@ namespace AlgoritmPrizm.Com
                 {
                     SumChekFoPrice += (decimal)(item.quantity * item.price);
                 }
+
                 // Пробегаем по строкам докумнета
                 for (int itm = 0; itm < Doc.items.Count; itm++)
                 {
@@ -415,6 +426,22 @@ namespace AlgoritmPrizm.Com
                             break;
                         default:
                             throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                    }
+
+                    // Исключение для заказов 10/110  20/120
+                    if (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0)
+                    {
+                        switch (TekStavkiNDS1)
+                        {
+                            case 1:// 20%
+                                TekStavkiNDS1 = 5; // 20/120
+                                break;
+                            case 2:// 10%
+                                TekStavkiNDS1 = 6; // 10/110
+                                break;
+                            default:
+                                break;
+                        }
                     }
 
 
@@ -684,9 +711,11 @@ namespace AlgoritmPrizm.Com
                     FileCheckLog.EventPrintSave(note, Doc.sid, (decimal)item.price, DocCustTyp, Doc.receipt_type, item.sid);
                 }
 
-
                 // Есдли похоже на предоплату и общая сумма по документу не равна сумме что заплатил покупатель то будем рассчитывать пропорционально цену
-                if (Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
+                if ((Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
+                    // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
+                    || (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0)
+                    )
                 {
                     // Получаем на сколько стандартно домножаем сумму для того чтобы пропарционально позиции в чеке поменять
                     decimal PrcForPrice = SumChekFoCustomer / SumChekFoPrice;
@@ -1132,7 +1161,11 @@ namespace AlgoritmPrizm.Com
                 {
                     case 0:
                     case 2:
-                        Fr.CheckType = 0;
+                        if (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.given_amt != 0)
+                        {
+                            Fr.CheckType = 2;
+                        }
+                        else Fr.CheckType = 0;
                         break;
                     case 1:
                         Fr.CheckType = 2;
@@ -1380,6 +1413,7 @@ namespace AlgoritmPrizm.Com
                 }
 
                 // Пробегаем по типу оплаты
+                bool flagexit = false;
                 foreach (JsonPrintFiscDocTender item in Doc.tenders)
                 {
                     //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
@@ -1422,11 +1456,19 @@ namespace AlgoritmPrizm.Com
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
                             }
 
-                            // Если тип оплаты нал
+                            // Заказ клиента когда он вносит сумму
+                            if (item.tender_type == 7 && item.taken != 0)
+                            {
+                                rez += (decimal)item.taken;
+                                if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                            }
+
+                            // КОгда клиент делает возврат денег пока не выполнен заказ
                             if (item.tender_type == 7 && Doc.given_amt != 0)
                             {
                                 rez += (decimal)Doc.given_amt;
-                                if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                                if (CrocessSummToFR) Fr.Summ1 += (decimal)Doc.given_amt;
+                                flagexit = true;  // Делается по всему документу нет смысла проходить по позициям
                             }
 
                             break;
@@ -1458,6 +1500,9 @@ namespace AlgoritmPrizm.Com
                         default:
                             throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
                     }
+
+                    // выход без перепора позиций
+                    if (flagexit) break;
                 }
 
                 return rez;

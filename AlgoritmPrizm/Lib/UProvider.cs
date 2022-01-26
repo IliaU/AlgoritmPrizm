@@ -291,5 +291,15 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.GetCustBon(CustSid);
         }
+
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <returns>сами строки документа</returns>
+        public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid)
+        {
+            return this.PrvI.GetItemsForReturnOrder(referDocSid);
+        }
     }
 }

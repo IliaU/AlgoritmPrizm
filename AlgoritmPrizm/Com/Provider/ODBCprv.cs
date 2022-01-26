@@ -345,6 +345,47 @@ namespace AlgoritmPrizm.Com.Provider
             }
         }
 
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <returns>сами строки документа</returns>
+        public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetItemsForReturnOrderORA(referDocSid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetItemsForReturnOrderMySql(referDocSid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetItemsForReturnOrder", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
+            }
+        }
+
         #endregion
 
         #region Private metod
@@ -707,6 +748,101 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
             }
         }
 
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <returns>сами строки документа</returns>
+        public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrderORA(string referDocSid)
+        {
+            string CommandSql = String.Format(@"SELECT i.qty, i.price, i.tax_perc, i.scan_upc, i.description1, i.description2, i.description3, i.description4, i.sid As itemsid,
+	i.note1, i.note2, i.note3, i.note4, i.note5, i.note6, i.note7, i.note8, i.note9, i.note10, i.disc_amt
+from document d
+	inner join document_item i On d.sid=i.doc_sid
+where d.sid ={0}", referDocSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderORA", EventEn.Dump);
+
+                List<BLL.JsonPrintFiscDocItem> rez = new List<BLL.JsonPrintFiscDocItem>();
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("QTY").ToUpper()) nitem.quantity = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("PRICE").ToUpper()) nitem.price = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAX_PERC").ToUpper()) nitem.tax_percent = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAX_PERC").ToUpper()) nitem.tax_percent = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("SCAN_UPC").ToUpper()) nitem.scan_upc = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION1").ToUpper()) nitem.item_description1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION2").ToUpper()) nitem.item_description2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION3").ToUpper()) nitem.item_description3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION4").ToUpper()) nitem.item_description4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("ITEMSID").ToUpper()) nitem.sid = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE1").ToUpper()) nitem.note1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE2").ToUpper()) nitem.note2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE3").ToUpper()) nitem.note3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE4").ToUpper()) nitem.note4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE5").ToUpper()) nitem.note5 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE6").ToUpper()) nitem.note6 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE7").ToUpper()) nitem.note7 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE8").ToUpper()) nitem.note8 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE9").ToUpper()) nitem.note9 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE10").ToUpper()) nitem.note10 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DISC_AMT").ToUpper()) nitem.discount_amt = double.Parse(dr.GetValue(i).ToString());
+                                    }
+                                    rez.Add(nitem);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetItemsForReturnOrderORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetItemsForReturnOrderORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderORA", EventEn.Dump);
+                throw;
+            }
+        }
+
         #endregion
 
         #region Private method MySql
@@ -1003,6 +1139,101 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetCustBonMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetCustBonMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <returns>сами строки документа</returns>
+        public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrderMySql(string referDocSid)
+        {
+            string CommandSql = String.Format(@"SELECT i.qty, i.price, i.tax_perc, i.scan_upc, i.description1, i.description2, i.description3, i.description4, i.sid As itemsid,
+	i.note1, i.note2, i.note3, i.note4, i.note5, i.note6, i.note7, i.note8, i.note9, i.note10, i.disc_amt
+from document d
+	inner join document_item i On d.sid=i.doc_sid
+where d.sid ={0}", referDocSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderMySql", EventEn.Dump);
+
+                List<BLL.JsonPrintFiscDocItem> rez = new List<BLL.JsonPrintFiscDocItem>();
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("QTY").ToUpper()) nitem.quantity = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("PRICE").ToUpper()) nitem.price = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAX_PERC").ToUpper()) nitem.tax_percent = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAX_PERC").ToUpper()) nitem.tax_percent = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("SCAN_UPC").ToUpper()) nitem.scan_upc = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION1").ToUpper()) nitem.item_description1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION2").ToUpper()) nitem.item_description2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION3").ToUpper()) nitem.item_description3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DESCRIPTION4").ToUpper()) nitem.item_description4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("ITEMSID").ToUpper()) nitem.sid = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE1").ToUpper()) nitem.note1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE2").ToUpper()) nitem.note2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE3").ToUpper()) nitem.note3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE4").ToUpper()) nitem.note4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE5").ToUpper()) nitem.note5 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE6").ToUpper()) nitem.note6 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE7").ToUpper()) nitem.note7 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE8").ToUpper()) nitem.note8 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE9").ToUpper()) nitem.note9 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE10").ToUpper()) nitem.note10 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DISC_AMT").ToUpper()) nitem.discount_amt = double.Parse(dr.GetValue(i).ToString());
+                                    }
+                                    rez.Add(nitem);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetItemsForReturnOrderMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetItemsForReturnOrderMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetItemsForReturnOrderMySql", EventEn.Dump);
                 throw;
             }
         }

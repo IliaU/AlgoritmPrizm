@@ -55,5 +55,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="CustSid">Идентификатор клиента</param>
         /// <returns>Бонусы доступные клиенту</returns>
         decimal GetCustBon(string CustSid);
+
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <returns>сами строки документа</returns>
+        List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid);
     }
 }
