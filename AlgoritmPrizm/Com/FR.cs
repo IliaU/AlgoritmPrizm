@@ -689,18 +689,20 @@ namespace AlgoritmPrizm.Com
                 if (!string.IsNullOrWhiteSpace(item.scan_upc)) PrintLine(item.scan_upc);
 
                 //Описание товара
+                string StringForPrinting= item.item_description1;
                 switch (Config.FieldItem)
                 {
                     case FieldItemEn.Description1:
-                        Fr.StringForPrinting = item.item_description1;
+                        StringForPrinting = item.item_description1;
                         break;
                     case FieldItemEn.Description2:
-                        Fr.StringForPrinting = item.item_description2;
+                        StringForPrinting = item.item_description2;
                         break;
                     default:
-                        Fr.StringForPrinting = item.item_description1;
+                        StringForPrinting = item.item_description1;
                         break;
                 }
+                Fr.StringForPrinting = StringForPrinting;
 
 
                 // Если есть матрих код то количество не может быть более 1
@@ -752,10 +754,19 @@ namespace AlgoritmPrizm.Com
                                 Fr.PaymentItemSign = 1;     // Признак предмета расчета (Товар)
                                 break;
                             case 2:
-                                if (SumChekFoCustomer != SumChekFoPrice) Fr.PaymentTypeSign = 2;     // Типа расчета - частичная предоплата
-                                else Fr.PaymentTypeSign = 1;        // Типа расчета - предоплата 100%
+                                // Если это аванс при депозите
+                                if (StringForPrinting.ToUpper().IndexOf("АВАНС") >= 0)
+                                {
+                                    Fr.PaymentTypeSign = 3;             // Типа расчета - аванс
+                                    Fr.PaymentItemSign = 10;            // Признак предмета расчета (платёж)
+                                }
+                                else
+                                {
+                                    if (SumChekFoCustomer != SumChekFoPrice) Fr.PaymentTypeSign = 2;     // Типа расчета - частичная предоплата
+                                    else Fr.PaymentTypeSign = 1;        // Типа расчета - предоплата 100%
 
-                                Fr.PaymentItemSign = 10;            //Признак предмета расчета(Платеж)
+                                    Fr.PaymentItemSign = 10;            //Признак предмета расчета(Платеж)
+                                }
                                 break;
                             default:
                                 throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
@@ -1489,8 +1500,15 @@ namespace AlgoritmPrizm.Com
 
                             break;
                         case 2:
-                            // Депозит
+                            // Депозит наликом
                             if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0)
+                            {
+                                rez += (decimal)item.taken;
+                                if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                            }
+
+                            // Депозит оплаты карта
+                            if (item.tender_type == Com.Config.TenderTypeCredit && item.taken != 0)
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ2 += (decimal)item.taken;
