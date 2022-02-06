@@ -582,6 +582,10 @@ namespace AlgoritmPrizm.Com
                             case @"/OpenDrawer":
                                 FR.OpenDrawer();
                                 break;
+                            case @"/display":
+                                JsonDisplayParams DispPar = BLL.JsonDisplayParams.DeserializeJson(BufPostRequest);
+                                CustomerDisplayFarm.CurDisplay.ShowText(DispPar.text);
+                                break;
                             case @"/config":
                                 responceString = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
                                 break;

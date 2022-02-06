@@ -99,6 +99,7 @@
     <Compile Include="BLL\JsonConfigFfdConverter.cs" />
     <Compile Include="BLL\JsonConfigFieldDocNumConverter.cs" />
     <Compile Include="BLL\JsonConfigFieldItemConverter.cs" />
+    <Compile Include="BLL\JsonDisplayParams.cs" />
     <Compile Include="BLL\JsonDocMarking.cs" />
     <Compile Include="BLL\JsonDocMarkingHrefs.cs" />
     <Compile Include="BLL\JsonGetDocumentJournal.cs" />
@@ -130,6 +131,11 @@
     <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
+    <Compile Include="Com\CustomerDisplay.cs" />
+    <Compile Include="Com\CustomerDisplayFarm.cs" />
+    <Compile Include="Com\Display\DisplayDSP840.cs" />
+    <Compile Include="Com\Display\Lib\CustomerDisplayBase.cs" />
+    <Compile Include="Com\Display\Lib\CustomerDisplayI.cs" />
     <Compile Include="Com\FileCheckLog.cs" />
     <Compile Include="Com\FR.cs" />
     <Compile Include="Com\ProviderFarm.cs" />

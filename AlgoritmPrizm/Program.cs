@@ -125,7 +125,7 @@ namespace AlgoritmPrizm
                     string ssss = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));
                     BLL.JsonConfig conf = BLL.JsonConfig.DeserializeJson(ssss);
                 */
-
+                //Com.CustomerDisplayFarm.CurDisplay.ShowText("fffff");
 
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
