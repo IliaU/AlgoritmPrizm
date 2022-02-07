@@ -239,6 +239,26 @@ namespace AlgoritmPrizm.Com
         /// Имя папки получателя в который будут складываться отчёты
         /// </summary>
         private static string _WordDotxTarget = "Report";
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 10%
+        /// </summary>
+        private static int _TaxPercent10 = 2;
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 20%
+        /// </summary>
+        private static int _TaxPercent20 = 1;
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 10/110%
+        /// </summary>
+        private static int _TaxPercent10110 = 6;
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 20/120%
+        /// </summary>
+        private static int _TaxPercent20120 = 5;
         #endregion
 
         #region Public Param
@@ -893,6 +913,75 @@ namespace AlgoritmPrizm.Com
                 _WordDotxTarget = value.ToString();
             }
         }
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 10%
+        /// </summary>
+        public static int TaxPercent10
+        {
+            get
+            {
+                return _TaxPercent10;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("TaxPercent10", value.ToString());
+                Save();
+                _TaxPercent10 = value;
+            }
+        }
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 20%
+        /// </summary>
+        public static int TaxPercent20
+        {
+            get
+            {
+                return _TaxPercent20;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("TaxPercent20", value.ToString());
+                Save();
+                _TaxPercent20 = value;
+            }
+        }
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 10/110%
+        /// </summary>
+        public static int TaxPercent10110
+        {
+            get
+            {
+                return _TaxPercent10110;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("TaxPercent10110", value.ToString());
+                Save();
+                _TaxPercent10110 = value;
+            }
+        }
+
+        /// <summary>
+        /// Идентификатор налоговой ставки в фискальнике 20/120%
+        /// </summary>
+        public static int TaxPercent20120
+        {
+            get
+            {
+                return _TaxPercent20120;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("TaxPercent20120", value.ToString());
+                Save();
+                _TaxPercent20120 = value;
+            }
+        }
+
         #endregion
 
         #region Puplic Method
@@ -1114,8 +1203,13 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("WordDotxSource", _WordDotxSource);
                     xmlMain.SetAttribute("WordDotxTarget", _WordDotxTarget);
                     xmlMain.SetAttribute("ProductMatrixEndOff", _ProductMatrixEndOff.ToString());
+                    xmlMain.SetAttribute("TaxPercent10", _TaxPercent10.ToString());
+                    xmlMain.SetAttribute("TaxPercent20", _TaxPercent20.ToString());
+                    xmlMain.SetAttribute("TaxPercent10110", _TaxPercent10110.ToString());
+                    xmlMain.SetAttribute("TaxPercent20120", _TaxPercent20120.ToString());
                     Document.AppendChild(xmlMain);
 
+                    // Для работы с лицензиями
                     XmlElement xmlLics = Document.CreateElement("Lics");
                     xmlMain.AppendChild(xmlLics);
 
@@ -1209,6 +1303,10 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "WordDotxSource") _WordDotxSource = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "WordDotxTarget") _WordDotxTarget = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "ProductMatrixEndOff")  try { _ProductMatrixEndOff = Char.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "TaxPercent10") try { _TaxPercent10 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "TaxPercent20") try { _TaxPercent20 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "TaxPercent10110") try { _TaxPercent10110 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "TaxPercent20120") try { _TaxPercent20120 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер

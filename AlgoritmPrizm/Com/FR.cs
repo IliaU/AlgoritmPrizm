@@ -401,6 +401,19 @@ namespace AlgoritmPrizm.Com
                     {
                         case 0:
                         case 1:
+
+                            switch (Doc.items[itm].tax_percent)
+                            {
+                                case 10:
+                                    TekStavkiNDS1 = Config.TaxPercent10;
+                                    break;
+                                case 20:
+                                    TekStavkiNDS1 = Config.TaxPercent20;
+                                    break;
+                                default:
+                                    break;
+                            }
+                            /*
                             for (int i = 0; i < StavkiNDS.Count; i++)
                             {
                                 if (Doc.items[itm].tax_percent == StavkiNDS[i])
@@ -410,10 +423,22 @@ namespace AlgoritmPrizm.Com
                                     if (TekDocStavkiNDS1 == 0) TekDocStavkiNDS1 = TekStavkiNDS1;
                                 }
                                 break;
-                            }
+                            }*/
                             break;
                         case 2:
-                            for (int i = 0; i < StavkiNDS_Dep.Count; i++)
+                            switch (Doc.items[itm].tax_percent)
+                            {
+                                case 10:
+                                    TekStavkiNDS1 = Config.TaxPercent10110;
+                                    break;
+                                case 20:
+                                    TekStavkiNDS1 = Config.TaxPercent20120;
+                                    break;
+                                default:
+                                    break;
+                            }
+
+                            /*for (int i = 0; i < StavkiNDS_Dep.Count; i++)
                             {
                                 if (Doc.items[itm].tax_percent == StavkiNDS_Dep[i])
                                 {
@@ -422,7 +447,7 @@ namespace AlgoritmPrizm.Com
                                     if (TekDocStavkiNDS1 == 0) TekDocStavkiNDS1 = TekStavkiNDS1;
                                 }
                                 break;
-                            }
+                            }*/
                             break;
                         default:
                             throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
@@ -434,10 +459,12 @@ namespace AlgoritmPrizm.Com
                         switch (TekStavkiNDS1)
                         {
                             case 1:// 20%
-                                TekStavkiNDS1 = 5; // 20/120
+                                //TekStavkiNDS1 = 5; // 20/120
+                                TekStavkiNDS1 = Config.TaxPercent20120;
                                 break;
                             case 2:// 10%
-                                TekStavkiNDS1 = 6; // 10/110
+                                //TekStavkiNDS1 = 6; // 10/110
+                                TekStavkiNDS1 = Config.TaxPercent10110;
                                 break;
                             default:
                                 break;
@@ -920,6 +947,12 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+                // Печатаем сотрудника продавшего товар
+                if (!string.IsNullOrWhiteSpace(item.employee1_name)) PrintLine(item.employee1_name, true);
+                if (!string.IsNullOrWhiteSpace(item.employee2_name)) PrintLine(item.employee2_name, true);
+                if (!string.IsNullOrWhiteSpace(item.employee3_name)) PrintLine(item.employee3_name, true);
+                if (!string.IsNullOrWhiteSpace(item.employee4_name)) PrintLine(item.employee4_name, true);
+                if (!string.IsNullOrWhiteSpace(item.employee5_name)) PrintLine(item.employee5_name, true);
             }
             catch (Exception ex)
             {
