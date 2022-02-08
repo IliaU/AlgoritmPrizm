@@ -106,7 +106,7 @@ namespace AlgoritmPrizm.BLL
         public double? so_deposit_amt_paid;
         public double? transaction_subtotal;
         public double? given_amt;
-        public int price_lvl;
+        public int ? price_lvl;
         public string price_lvl_name;
         public string discount_reason_name;
         public string subsidiary_name;

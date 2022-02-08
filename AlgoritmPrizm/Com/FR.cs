@@ -361,6 +361,19 @@ namespace AlgoritmPrizm.Com
                 end;
                 */
 
+                // Печатаем сотрудника продавшего товар
+                string employee = null;
+                foreach (JsonPrintFiscDocItem item in Doc.items)
+                {
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee1_name)) employee =item.employee1_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee2_name)) employee = item.employee2_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee3_name)) employee = item.employee3_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee4_name)) employee = item.employee4_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee5_name)) employee = item.employee5_name;
+                    if (!string.IsNullOrWhiteSpace(employee)) break;
+                }
+                if (!string.IsNullOrWhiteSpace(employee)) PrintLine(employee, true);
+
                 //************** ПЕЧАТЬ ПОЗИЦИЙ ЧЕКА **************************************
 
                 int TekDocStavkiNDS1 = 0;      // Нал
@@ -402,12 +415,12 @@ namespace AlgoritmPrizm.Com
                         case 0:
                         case 1:
 
-                            switch (Doc.items[itm].tax_percent)
+                            switch (Doc.items[itm].tax_percent.ToString())
                             {
-                                case 10:
+                                case "10":
                                     TekStavkiNDS1 = Config.TaxPercent10;
                                     break;
-                                case 20:
+                                case "20":
                                     TekStavkiNDS1 = Config.TaxPercent20;
                                     break;
                                 default:
@@ -426,12 +439,12 @@ namespace AlgoritmPrizm.Com
                             }*/
                             break;
                         case 2:
-                            switch (Doc.items[itm].tax_percent)
+                            switch (Doc.items[itm].tax_percent.ToString())
                             {
-                                case 10:
+                                case "10":
                                     TekStavkiNDS1 = Config.TaxPercent10110;
                                     break;
-                                case 20:
+                                case "20":
                                     TekStavkiNDS1 = Config.TaxPercent20120;
                                     break;
                                 default:
@@ -946,13 +959,6 @@ namespace AlgoritmPrizm.Com
                         PrintLine(string.Format("Скидка {0} руб.", item.discount_amt), true);
                     }
                 }
-
-                // Печатаем сотрудника продавшего товар
-                if (!string.IsNullOrWhiteSpace(item.employee1_name)) PrintLine(item.employee1_name, true);
-                if (!string.IsNullOrWhiteSpace(item.employee2_name)) PrintLine(item.employee2_name, true);
-                if (!string.IsNullOrWhiteSpace(item.employee3_name)) PrintLine(item.employee3_name, true);
-                if (!string.IsNullOrWhiteSpace(item.employee4_name)) PrintLine(item.employee4_name, true);
-                if (!string.IsNullOrWhiteSpace(item.employee5_name)) PrintLine(item.employee5_name, true);
             }
             catch (Exception ex)
             {
