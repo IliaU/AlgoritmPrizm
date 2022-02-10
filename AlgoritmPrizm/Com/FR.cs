@@ -407,7 +407,7 @@ namespace AlgoritmPrizm.Com
                     int TekStavkiNDS2 = 0;      // Безнал
                     int TekStavkiNDS3 = 0;      // Смешанный
                     int TekStavkiNDS4 = 0;      // Депозит
-
+                    string TekStavkiNdsDescription = "";
 
                     // В зависимости от типа докумена разный вариант ставки
                     switch (Doc.receipt_type)
@@ -419,9 +419,11 @@ namespace AlgoritmPrizm.Com
                             {
                                 case "10":
                                     TekStavkiNDS1 = Config.TaxPercent10;
+                                    TekStavkiNdsDescription = "10";
                                     break;
                                 case "20":
                                     TekStavkiNDS1 = Config.TaxPercent20;
+                                    TekStavkiNdsDescription = "20";
                                     break;
                                 default:
                                     break;
@@ -443,9 +445,11 @@ namespace AlgoritmPrizm.Com
                             {
                                 case "10":
                                     TekStavkiNDS1 = Config.TaxPercent10110;
+                                    TekStavkiNdsDescription = "10";
                                     break;
                                 case "20":
                                     TekStavkiNDS1 = Config.TaxPercent20120;
+                                    TekStavkiNdsDescription = "20";
                                     break;
                                 default:
                                     break;
@@ -474,10 +478,12 @@ namespace AlgoritmPrizm.Com
                             case 1:// 20%
                                 //TekStavkiNDS1 = 5; // 20/120
                                 TekStavkiNDS1 = Config.TaxPercent20120;
+                                TekStavkiNdsDescription = "20/120";
                                 break;
                             case 2:// 10%
                                 //TekStavkiNDS1 = 6; // 10/110
                                 TekStavkiNDS1 = Config.TaxPercent10110;
+                                TekStavkiNdsDescription = "10/110";
                                 break;
                             default:
                                 break;
@@ -492,76 +498,76 @@ namespace AlgoritmPrizm.Com
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note1))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note1, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note1, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note2
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note2))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note2, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note2, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note3
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note3))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note3, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note3, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note4
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note4))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note4, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note4, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note5
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note5))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note5, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note5, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note6
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note6))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note6, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note6, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note7
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note7))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note7, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note7, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note8
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note8))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note8, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note8, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note9
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note9))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note9, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note9, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note10
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note10))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note10, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
 
                     // Если эта строка не содержала товаров с маркировкой
                     if (!flagmarkink)
                     {
-                        PrintCheckItem(Doc, Doc.items[itm], Doc.items[itm].note10, 1, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
                     }
                 }
 
@@ -570,11 +576,16 @@ namespace AlgoritmPrizm.Com
 
                 //************** ОПЛАТЫ ПО ЧЕКУ ******************************************
 
-                //Web.UpdateFiskDocNum(Doc, Fr.OpenDocumentNumber);
+                // Вставка подитога для гучи
+                PrintSeparator();
+                if (Fr.Summ1 != 0) Print2in1Line("Оплата наличными", Fr.Summ1.ToString());
+                if (Fr.Summ2 != 0) Print2in1Line("Предоплата", Fr.Summ2.ToString());
+                if (Fr.Summ4 != 0) Print2in1Line("Оплата картой", Fr.Summ4.ToString());
+                if (Fr.Summ14 != 0) Print2in1Line("Аванс", Fr.Summ14.ToString());
+                PrintSeparator();
 
                 // Печать концовки чека
                 CloseReceipt(Doc, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
-
 
                 // Обновляем статус и опрашиваем фискальник на предмет получения последнего номера документа
                 Fr.FNGetStatus();
@@ -708,8 +719,10 @@ namespace AlgoritmPrizm.Com
         /// </summary>
         /// <param name="Doc">Сам документ</param>
         /// <param name="item">строка которую берём за образец</param>
+        /// <param name="IndexPos">Индекс позиции в чеке</param>
         /// <param name="note">код маркировки который нужно отправить</param>
         /// <param name="Department">подозреваю что тут он не нужен надо проверить ??????</param>
+        /// <param name="TekStavkiNdsDescription">НДС в виде строки</param>
         /// <param name="Tax1">Группа налогов не понятно что передавать передавал 1</param>
         /// <param name="Tax2">Группа налогов не понятно что передавать передавал 2</param>
         /// <param name="Tax3">Группа налогов не понятно что передавать передавал 0</param>
@@ -720,8 +733,8 @@ namespace AlgoritmPrizm.Com
         /// <param name="CountForPredoplata">Количество позиций в чеке</param>
         /// <param name="SumChekFoCustomer">Итоговая сколько заплачено покупателем по всему чеку нужно для выявления пропорции на сколько уменьшать этот чек чтобы сумма сошлась</param>
         /// <param name="SumChekFoPrice">Итоговая сумма по чеку по ценам магазина а не по тому что внёс покупатель</param>
-        
-        private static void PrintCheckItem(JsonPrintFiscDoc Doc, JsonPrintFiscDocItem item, string note, int Department, int Tax1, int Tax2, int Tax3, int Tax4, EnFrTyp DocCustTyp, ref decimal SumChekForPredoplata, int IndexItemForPredoplata, int CountForPredoplata, decimal SumChekFoCustomer, decimal SumChekFoPrice)
+
+        private static void PrintCheckItem(JsonPrintFiscDoc Doc, JsonPrintFiscDocItem item, int IndexPos, string note, int Department, string TekStavkiNdsDescription, int Tax1, int Tax2, int Tax3, int Tax4, EnFrTyp DocCustTyp, ref decimal SumChekForPredoplata, int IndexItemForPredoplata, int CountForPredoplata, decimal SumChekFoCustomer, decimal SumChekFoPrice)
         {
             try
             {
@@ -913,7 +926,7 @@ namespace AlgoritmPrizm.Com
 
                                 Fr.BarCode = BarCodeTmp;
                                 Fr.ItemStatus = 1;
-
+                                Fr.TLVDataHex = "";     // На текущий момент стало поступать достаточно много вопросов связанных с причинами возникновения ошибки 11: "Неразрешенные реквизиты" в ответ на команду проверки кода маркировки (метод FNCheckItemBarcode, реализующий команду FF61h). Не смотря на то, что данная ошибки не декларирована в протоколе ФН под ФФД1.2, но она возникает. Причина ошибки в том, что при заполнении реквизитов, необходимых для проверки кода маркировки, пользователь (разработчик ПО) не заполняет все необходимые поля, а именно свойство TLVDataHex. Если не реализуется дробное кол-во предмета расчета, то в данное свойство нужно в явном виде передавать "пустую строку". Если этого не сделать, то в него будет внесен ответ от сервера ОИСМ от предыдущей проверки кода маркировки.
                             }
 
                             break;
@@ -942,23 +955,15 @@ namespace AlgoritmPrizm.Com
                         throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
                     }
 
-                    /*
-                    
-                    Fr.MarkingType = 17485;                     //Тип товара маркированный 17485, 5408
-                    Fr.GTIN = note.Substring(1, 14);            // парсим GTIN
-                    Fr.SerialNumber = note.Substring(15, 13);   // парсим серийный номер
-                    if (Fr.FNSendItemCodeData() != 0)           // Отправляем матрикс код
-                    {
-                        Verification(Fr);
-                        throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
-                    }*/
-
                     // Печать инфа по скидке по позиции
                     if (item.discount_amt != 0)
                     {
                         PrintLine(string.Format("Скидка {0} руб.", item.discount_amt), true);
                     }
                 }
+
+                // Что- то надо написать
+                if (!string.IsNullOrWhiteSpace(TekStavkiNdsDescription)) PrintLine(string.Format("НДС {0}",TekStavkiNdsDescription), true);
             }
             catch (Exception ex)
             {
