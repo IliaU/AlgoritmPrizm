@@ -374,7 +374,7 @@ namespace AlgoritmPrizm.Com
                 }
                 if (!string.IsNullOrWhiteSpace(employee))
                 {
-                    Employee TekEmployees = Config.employees.Find(t => t.fio_fo_check.ToUpper() == employee.ToUpper());
+                    Employee TekEmployees = Config.employees.Find(t => t.PrizmLogin.ToUpper() == employee.ToUpper());
                     if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
                     PrintLine(employee, true);
                 }
