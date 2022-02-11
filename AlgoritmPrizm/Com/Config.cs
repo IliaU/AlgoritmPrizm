@@ -50,6 +50,11 @@ namespace AlgoritmPrizm.Com
         private static List<Custumer> _customers = new List<Custumer>();
 
         /// <summary>
+        /// Сотрудники магазина
+        /// </summary>
+        private static List<Employee> _employees = new List<Employee>();
+
+        /// <summary>
         /// Объект XML файла
         /// </summary>
         private static XmlDocument Document = new XmlDocument();
@@ -68,6 +73,11 @@ namespace AlgoritmPrizm.Com
         /// Корневой элемент наших продавцов в настроечном файле
         /// </summary>
         private static XmlElement xmlCustomers;
+
+        /// <summary>
+        /// Корневой элемент наших сотрудников в настроечном файле
+        /// </summary>
+        private static XmlElement xmlEmployees;
 
         /// <summary>
         /// Корневой элемент нашего списка со списком классов
@@ -436,6 +446,18 @@ namespace AlgoritmPrizm.Com
                 return _customers;
             }
             private set {}
+        }
+
+        /// <summary>
+        /// Сотрудники магазина
+        /// </summary>
+        public static List<Employee> employees
+        {
+            get
+            {
+                return _employees;
+            }
+            private set { }
         }
 
         /// <summary>
@@ -1036,9 +1058,14 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
-                //xmlRoot.RemoveChild(xmlCustomers);
-                //xmlCustomers = Document.CreateElement("Customers");
-                //xmlRoot.AppendChild(xmlCustomers);
+                // Если корневого элемента нет создаём его
+                if (xmlCustomers == null)
+                {
+                    //xmlRoot.RemoveChild(xmlCustomers);
+                    xmlCustomers = Document.CreateElement("Customers");
+                    xmlRoot.AppendChild(xmlCustomers);
+                }
+
                 foreach (XmlElement item in xmlCustomers.ChildNodes)
                 {
                     xmlCustomers.RemoveChild(item);
@@ -1061,6 +1088,47 @@ namespace AlgoritmPrizm.Com
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка кассиров с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".SetCustomers", EventEn.Error);
+                throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Создание нового списка сотрудников
+        /// </summary>
+        /// <param name="NewEmployees">Новый список который надо сохранить</param>
+        public static void SetEmployees(List<Employee> NewEmployees)
+        {
+            try
+            {
+                // Если корневого элемента нет создаём его
+                if (xmlEmployees==null)
+                {
+                    //xmlRoot.RemoveChild(xmlCustomers);
+                    xmlEmployees = Document.CreateElement("Employees");
+                    xmlRoot.AppendChild(xmlEmployees);
+                }
+
+                foreach (XmlElement item in xmlEmployees.ChildNodes)
+                {
+                    xmlEmployees.RemoveChild(item);
+                }
+
+                foreach (Employee item in NewEmployees)
+                {
+                    XmlElement xmlEmployeeTest = Document.CreateElement("Employee");
+                    xmlEmployeeTest.SetAttribute("PrizmLogin", item.PrizmLogin);
+                    xmlEmployeeTest.SetAttribute("Fio", item.fio_fo_check);
+                    xmlEmployees.AppendChild(xmlEmployeeTest);
+                }
+
+                Save();
+
+                _employees = NewEmployees;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка сотрудников с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, ".SetEmployees", EventEn.Error);
                 throw ae;
             }
         }
@@ -1223,8 +1291,14 @@ namespace AlgoritmPrizm.Com
                     xmlCustomers.AppendChild(xmlCustomerTest);
 
 
-
-
+                    // Создаём список в который будем помещать элементы с сотрудниками
+                    XmlElement xmlEmployees = Document.CreateElement("Employees");
+                    xmlMain.AppendChild(xmlEmployees);
+                    XmlElement xmlEmployeeTest = Document.CreateElement("Employee");
+                    xmlEmployeeTest.SetAttribute("PrizmLogin", "sysadmin");
+                    xmlEmployeeTest.SetAttribute("Fio", "Иванов Иван Иванович");
+                    xmlEmployees.AppendChild(xmlEmployeeTest);
+                    
 
                     // Сохраняем документ
                     Save();
@@ -1443,6 +1517,46 @@ namespace AlgoritmPrizm.Com
                                                 }
 
                                                 if (HashFlagCustomer) _customers.Add(new Custumer(login, fio, inn));
+                                            }
+
+                                            break;
+                                        default:
+                                            break;
+                                    }
+                                }
+                                break;
+                            case "Employees":
+                                xmlEmployees = iMain;
+                                // Получаем список вложенных объектов
+                                foreach (XmlElement iEmployees in iMain.ChildNodes)
+                                {
+                                    switch (iEmployees.Name)
+                                    {
+                                        case "Employee":
+
+                                            string PrizmLogin = null;
+                                            string fio = null;
+
+                                            // Получаем значения из заголовка
+                                            for (int i = 0; i < iEmployees.Attributes.Count; i++)
+                                            {
+                                                if (iEmployees.Attributes[i].Name == "PrizmLogin") try { PrizmLogin = iEmployees.Attributes[i].Value.ToString(); } catch (Exception) { }
+                                                if (iEmployees.Attributes[i].Name == "Fio") try { fio = iEmployees.Attributes[i].Value.ToString(); } catch (Exception) { }
+                                            }
+
+                                            if (!string.IsNullOrWhiteSpace(PrizmLogin) && !string.IsNullOrWhiteSpace(fio))
+                                            {
+                                                bool HashFlagEmployee = true;
+                                                foreach (Employee itemEmployeeF in _employees)
+                                                {
+                                                    if (itemEmployeeF.PrizmLogin == PrizmLogin)
+                                                    {
+                                                        HashFlagEmployee = false;
+                                                        break;
+                                                    }
+                                                }
+
+                                                if (HashFlagEmployee) _employees.Add(new Employee(PrizmLogin, fio));
                                             }
 
                                             break;

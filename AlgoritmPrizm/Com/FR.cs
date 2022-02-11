@@ -372,7 +372,12 @@ namespace AlgoritmPrizm.Com
                     if (employee == null && !string.IsNullOrWhiteSpace(item.employee5_name)) employee = item.employee5_name;
                     if (!string.IsNullOrWhiteSpace(employee)) break;
                 }
-                if (!string.IsNullOrWhiteSpace(employee)) PrintLine(employee, true);
+                if (!string.IsNullOrWhiteSpace(employee))
+                {
+                    Employee TekEmployees = Config.employees.Find(t => t.fio_fo_check.ToUpper() == employee.ToUpper());
+                    if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
+                    PrintLine(employee, true);
+                }
 
                 //************** ПЕЧАТЬ ПОЗИЦИЙ ЧЕКА **************************************
 
@@ -428,17 +433,6 @@ namespace AlgoritmPrizm.Com
                                 default:
                                     break;
                             }
-                            /*
-                            for (int i = 0; i < StavkiNDS.Count; i++)
-                            {
-                                if (Doc.items[itm].tax_percent == StavkiNDS[i])
-                                {
-                                    // если способ расчёта нал
-                                    TekStavkiNDS1 = i + 1;
-                                    if (TekDocStavkiNDS1 == 0) TekDocStavkiNDS1 = TekStavkiNDS1;
-                                }
-                                break;
-                            }*/
                             break;
                         case 2:
                             switch (Doc.items[itm].tax_percent.ToString())
@@ -454,17 +448,6 @@ namespace AlgoritmPrizm.Com
                                 default:
                                     break;
                             }
-
-                            /*for (int i = 0; i < StavkiNDS_Dep.Count; i++)
-                            {
-                                if (Doc.items[itm].tax_percent == StavkiNDS_Dep[i])
-                                {
-                                    // если способ расчёта нал
-                                    TekStavkiNDS1 = i + 5;
-                                    if (TekDocStavkiNDS1 == 0) TekDocStavkiNDS1 = TekStavkiNDS1;
-                                }
-                                break;
-                            }*/
                             break;
                         default:
                             throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
@@ -575,14 +558,6 @@ namespace AlgoritmPrizm.Com
                 PrinCheckDiscount(false, Doc);
 
                 //************** ОПЛАТЫ ПО ЧЕКУ ******************************************
-
-                // Вставка подитога для гучи
-                PrintSeparator();
-                if (Fr.Summ1 != 0) Print2in1Line("Оплата наличными", Fr.Summ1.ToString());
-                if (Fr.Summ2 != 0) Print2in1Line("Предоплата", Fr.Summ2.ToString());
-                if (Fr.Summ4 != 0) Print2in1Line("Оплата картой", Fr.Summ4.ToString());
-                if (Fr.Summ14 != 0) Print2in1Line("Аванс", Fr.Summ14.ToString());
-                PrintSeparator();
 
                 // Печать концовки чека
                 CloseReceipt(Doc, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
@@ -766,7 +741,7 @@ namespace AlgoritmPrizm.Com
                     FileCheckLog.EventPrintSave(note, Doc.sid, (decimal)item.price, DocCustTyp, Doc.receipt_type, item.sid);
                 }
 
-                // Есдли похоже на предоплату и общая сумма по документу не равна сумме что заплатил покупатель то будем рассчитывать пропорционально цену
+                // Если похоже на предоплату и общая сумма по документу не равна сумме что заплатил покупатель то будем рассчитывать пропорционально цену
                 if ((Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
                     // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
                     || (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0)
@@ -958,12 +933,12 @@ namespace AlgoritmPrizm.Com
                     // Печать инфа по скидке по позиции
                     if (item.discount_amt != 0)
                     {
-                        PrintLine(string.Format("Скидка {0} руб.", item.discount_amt), true);
+                        PrintLine(string.Format("Включая скидку {0} руб.", item.discount_amt), true);
                     }
                 }
 
                 // Что- то надо написать
-                if (!string.IsNullOrWhiteSpace(TekStavkiNdsDescription)) PrintLine(string.Format("НДС {0}",TekStavkiNdsDescription), true);
+                if (!string.IsNullOrWhiteSpace(TekStavkiNdsDescription)) PrintLine(string.Format("НДС {0}%",TekStavkiNdsDescription), true);
             }
             catch (Exception ex)
             {
@@ -1619,6 +1594,14 @@ namespace AlgoritmPrizm.Com
 
                 // Заполняем сумму в фискальнике
                 GetSummCheck(Doc, true);
+
+                // Вставка подитога для гучи
+                PrintSeparator();
+                if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
+                if (Fr.Summ2 != 0) Print2in1Line("ПРЕДОПЛАТА", Fr.Summ2.ToString());
+                if (Fr.Summ4 != 0) Print2in1Line("БЕЗНАЛИЧНЫМИ", Fr.Summ4.ToString());
+                if (Fr.Summ14 != 0) Print2in1Line("АВАНС", Fr.Summ14.ToString());
+                PrintSeparator();
 
 
                 // Проверяем версию FFD

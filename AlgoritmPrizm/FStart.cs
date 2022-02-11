@@ -332,6 +332,20 @@ namespace AlgoritmPrizm
         }
 
 
+        // Список сотрудников
+        private void TSMItemGonfigEmployees_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                FEmployee Frm = new FEmployee();
+                Frm.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "TSMItemGonfigEmployees_Click", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
+            }
+        }
+
         // Основные настройки
         private void TSMItemGonfigOther_Click(object sender, EventArgs e)
         {
@@ -388,7 +402,6 @@ namespace AlgoritmPrizm
                 Frm.ShowDialog();
             }
         }
-
-
+        
     }
 }

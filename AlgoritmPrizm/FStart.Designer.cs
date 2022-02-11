@@ -32,6 +32,7 @@
             this.menuStrip = new System.Windows.Forms.MenuStrip();
             this.TSMItemGonfig = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemGonfigCashiries = new System.Windows.Forms.ToolStripMenuItem();
+            this.TSMItemGonfigEmployees = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemGonfigOther = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemLic = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemAboutPrv = new System.Windows.Forms.ToolStripMenuItem();
@@ -57,6 +58,7 @@
             // 
             this.TSMItemGonfig.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.TSMItemGonfigCashiries,
+            this.TSMItemGonfigEmployees,
             this.TSMItemGonfigOther,
             this.TSMItemLic,
             this.TSMItemAboutPrv,
@@ -71,6 +73,13 @@
             this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(231, 22);
             this.TSMItemGonfigCashiries.Text = "Кассиры";
             this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
+            // 
+            // TSMItemGonfigEmployees
+            // 
+            this.TSMItemGonfigEmployees.Name = "TSMItemGonfigEmployees";
+            this.TSMItemGonfigEmployees.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemGonfigEmployees.Text = "Сотрудники";
+            this.TSMItemGonfigEmployees.Click += new System.EventHandler(this.TSMItemGonfigEmployees_Click);
             // 
             // TSMItemGonfigOther
             // 
@@ -162,6 +171,7 @@
         private System.Windows.Forms.ToolStripMenuItem TSMItemLic;
         private System.Windows.Forms.ToolStripMenuItem TSMItemAboutPrv;
         private System.Windows.Forms.ToolStripMenuItem TSMItemConfigDB;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigEmployees;
     }
 }
 

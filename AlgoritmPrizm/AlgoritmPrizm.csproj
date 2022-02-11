@@ -94,6 +94,7 @@
   <ItemGroup>
     <Compile Include="BLL\ClientParam.cs" />
     <Compile Include="BLL\Custumer.cs" />
+    <Compile Include="BLL\Employee.cs" />
     <Compile Include="BLL\ItemSQL.cs" />
     <Compile Include="BLL\JsonConfig.cs" />
     <Compile Include="BLL\JsonConfigFfdConverter.cs" />
@@ -193,6 +194,12 @@
     <Compile Include="FConnetSetup.Designer.cs">
       <DependentUpon>FConnetSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="FEmployee.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FEmployee.Designer.cs">
+      <DependentUpon>FEmployee.cs</DependentUpon>
+    </Compile>
     <Compile Include="FLic.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -237,6 +244,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FConfig.resx">
       <DependentUpon>FConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FEmployee.resx">
+      <DependentUpon>FEmployee.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FLic.resx">
       <DependentUpon>FLic.cs</DependentUpon>
