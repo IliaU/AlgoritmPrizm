@@ -386,6 +386,47 @@ namespace AlgoritmPrizm.Com.Provider
             }
         }
 
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public string GetInvnSbsItemNo(string InvnSbsItemSid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetInvnSbsItemNoORA(InvnSbsItemSid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetInvnSbsItemNoMySql(InvnSbsItemSid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetInvnSbsItemNo", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
+            }
+        }
+
         #endregion
 
         #region Private metod
@@ -843,6 +884,77 @@ where d.sid ={0}", referDocSid);
             }
         }
 
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public string GetInvnSbsItemNoORA(string InvnSbsItemSid)
+        {
+            string CommandSql = String.Format(@"SELECT item_no
+from rpsods.invn_sbs_item
+where sid ={0}", InvnSbsItemSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoORA", EventEn.Dump);
+
+                string rez = null;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("item_no").ToUpper()) rez = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemNoORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemNoORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoORA", EventEn.Dump);
+                throw;
+            }
+        }
         #endregion
 
         #region Private method MySql
@@ -954,7 +1066,6 @@ where d.sid ={0}", referDocSid);
                 throw;
             }
         }
-
 
         /// <summary>
         /// Устанавливаем факт по чеку
@@ -1152,8 +1263,8 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
         {
             string CommandSql = String.Format(@"SELECT i.qty, i.price, i.tax_perc, i.scan_upc, i.description1, i.description2, i.description3, i.description4, i.sid As itemsid,
 	i.note1, i.note2, i.note3, i.note4, i.note5, i.note6, i.note7, i.note8, i.note9, i.note10, i.disc_amt
-from document d
-	inner join document_item i On d.sid=i.doc_sid
+from `rpsods`.`document` d
+	inner join `rpsods`.`document_item` i On d.sid=i.doc_sid
 where d.sid ={0}", referDocSid);
 
             try
@@ -1238,6 +1349,77 @@ where d.sid ={0}", referDocSid);
             }
         }
 
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public string GetInvnSbsItemNoMySql(string InvnSbsItemSid)
+        {
+            string CommandSql = String.Format(@"SELECT item_no
+from `rpsods`.`invn_sbs_item`
+where sid ={0}", InvnSbsItemSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Dump);
+
+                string rez = null;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("item_no").ToUpper()) rez = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Dump);
+                throw;
+            }
+        }
         #endregion
 
     }

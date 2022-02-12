@@ -624,7 +624,7 @@ namespace AlgoritmPrizm.Com
                                 break;
                             case @"/display":
                                 JsonDisplayParams DispPar = BLL.JsonDisplayParams.DeserializeJson(BufPostRequest);
-                                CustomerDisplayFarm.CurDisplay.ShowText(DispPar.text);
+                                if (DisplayFarm.CurDisplay != null) DisplayFarm.CurDisplay.ShowText(DispPar.text);
                                 break;
                             case @"/config":
                                 responceString = BLL.JsonConfig.SerializeObject(new BLL.JsonConfig(true));

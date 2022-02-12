@@ -6,13 +6,21 @@ using System.Threading.Tasks;
 
 using System.IO.Ports;
 
-namespace AlgoritmPrizm.Com.Display
+namespace AlgoritmPrizm.Com.DisplayPlg
 {
-    public sealed class  DisplayDSP840:Com.CustomerDisplay
+    public sealed class  DisplayDSP840:Display
     {
         private static SerialPort _serialPort;
         private static readonly byte[] setCursorBeginning = new byte[] { 0x04, 0x01, 0x50, 0x31, 0x17 };
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="Port">Ком порт</param>
+        /// <param name="BaudRate">Скорость</param>
+        /// <param name="Parity">Parity</param>
+        /// <param name="DataBits">DataBits</param>
+        /// <param name="StpBits">StpBits</param>
         public DisplayDSP840(int Port, int BaudRate, Parity Parity, int DataBits, StopBits StpBits) : base(Port, BaudRate, Parity, DataBits, StpBits)
         {
 

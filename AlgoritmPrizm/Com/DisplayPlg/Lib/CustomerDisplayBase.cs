@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 using System.IO.Ports;
 
-namespace AlgoritmPrizm.Com.Display.Lib
+namespace AlgoritmPrizm.Com.DisplayPlg.Lib
 {
     public abstract class CustomerDisplayBase
     {
@@ -26,6 +26,14 @@ namespace AlgoritmPrizm.Com.Display.Lib
 
         public StopBits StpBits { get; protected set; } = StopBits.One;
 
+        /// <summary>
+        /// Конструктор
+        /// </summary>
+        /// <param name="Port">Ком порт</param>
+        /// <param name="BaudRate">Скорость</param>
+        /// <param name="Parity">Parity</param>
+        /// <param name="DataBits">DataBits</param>
+        /// <param name="StpBits">StpBits</param>
         public CustomerDisplayBase(int Port, int BaudRate, Parity Parity, int DataBits, StopBits StpBits)
         {
             this.Port = Port;

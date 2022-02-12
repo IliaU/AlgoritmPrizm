@@ -7,11 +7,11 @@ using System.IO.Ports;
 
 namespace AlgoritmPrizm.Com
 {
-    public class CustomerDisplay:Display.Lib.CustomerDisplayBase, Display.Lib.CustomerDisplayI
+    public class Display:DisplayPlg.Lib.CustomerDisplayBase, DisplayPlg.Lib.CustomerDisplayI
     {
 
         
-        public CustomerDisplay(int Port, int BaudRate, Parity Parity, int DataBits, StopBits StpBits):base(Port, BaudRate, Parity, DataBits, StpBits)
+        public Display(int Port, int BaudRate, Parity Parity, int DataBits, StopBits StpBits):base(Port, BaudRate, Parity, DataBits, StpBits)
         {
           
         }

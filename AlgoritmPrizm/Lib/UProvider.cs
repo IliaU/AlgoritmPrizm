@@ -301,5 +301,15 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.GetItemsForReturnOrder(referDocSid);
         }
+
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public string GetInvnSbsItemNo(string InvnSbsItemSid)
+        {
+            return this.PrvI.GetInvnSbsItemNo(InvnSbsItemSid);
+        }
     }
 }

@@ -62,5 +62,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
         /// <returns>сами строки документа</returns>
         List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid);
+
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        string GetInvnSbsItemNo(string InvnSbsItemSid);
     }
 }

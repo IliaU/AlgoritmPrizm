@@ -68,11 +68,24 @@
             this.lblFileCheckLog = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBoxDisplay = new System.Windows.Forms.GroupBox();
+            this.cmbBoxStopBits = new System.Windows.Forms.ComboBox();
+            this.lblStopBits = new System.Windows.Forms.Label();
+            this.txtBoxDisplayDataBits = new System.Windows.Forms.TextBox();
+            this.lblDisplayDataBits = new System.Windows.Forms.Label();
+            this.cmbBoxDisplayParity = new System.Windows.Forms.ComboBox();
+            this.lblDisplayParity = new System.Windows.Forms.Label();
+            this.txtBoxDisplayBaudRate = new System.Windows.Forms.TextBox();
+            this.lblDisplayBaudRate = new System.Windows.Forms.Label();
+            this.cmbBoxDisplayDspFullName = new System.Windows.Forms.ComboBox();
+            this.lblDisplayDspFullName = new System.Windows.Forms.Label();
+            this.txtBoxDisplayPort = new System.Windows.Forms.TextBox();
+            this.lblDisplayPort = new System.Windows.Forms.Label();
             this.lblNameCompany = new System.Windows.Forms.Label();
             this.txtBoxNameCompany = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.lblSmsTypGatewayPassword = new System.Windows.Forms.Label();
-            this.label1 = new System.Windows.Forms.Label();
+            this.lblSmsTypGateway = new System.Windows.Forms.Label();
             this.txtBoxSmsTypGatewayPassword = new System.Windows.Forms.TextBox();
             this.cmbBoxSmsTypGateway = new System.Windows.Forms.ComboBox();
             this.lblSmsTypGatewayLogin = new System.Windows.Forms.Label();
@@ -86,8 +99,13 @@
             this.lblSmsTypGatewaySmtp = new System.Windows.Forms.Label();
             this.txtBoxSmsTypGatewaySmtp = new System.Windows.Forms.TextBox();
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxFfd = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.cmbBoxFieldItem5 = new System.Windows.Forms.ComboBox();
+            this.cmbBoxFieldItem4 = new System.Windows.Forms.ComboBox();
+            this.cmbBoxFieldItem3 = new System.Windows.Forms.ComboBox();
+            this.cmbBoxFieldItem2 = new System.Windows.Forms.ComboBox();
+            this.cmbBoxFieldItem1 = new System.Windows.Forms.ComboBox();
             this.txtBoxTenderTypeAvans = new System.Windows.Forms.TextBox();
             this.lblTenderTypeAvans = new System.Windows.Forms.Label();
             this.cmbBoxFieldInnTyp = new System.Windows.Forms.ComboBox();
@@ -105,22 +123,23 @@
             this.ProductClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
-            this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
-            this.lblProductMatrixClassType = new System.Windows.Forms.Label();
-            this.txtBoxProductMatrixEndOff = new System.Windows.Forms.TextBox();
+            this.pnl_ProdictMatrixClassTopTop = new System.Windows.Forms.Panel();
             this.lblProductMatrixEndOff = new System.Windows.Forms.Label();
-            this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
+            this.txtBoxProductMatrixEndOff = new System.Windows.Forms.TextBox();
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
+            this.lblMatrixParceTyp = new System.Windows.Forms.Label();
+            this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
+            this.cmbBoxMatrixParceTyp = new System.Windows.Forms.ComboBox();
+            this.lblProductMatrixClassType = new System.Windows.Forms.Label();
+            this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.cmbBoxMatrixParceTyp = new System.Windows.Forms.ComboBox();
-            this.lblMatrixParceTyp = new System.Windows.Forms.Label();
-            this.pnl_ProdictMatrixClassTopTop = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBoxDisplay.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.PnlSmsTypGateway.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxFfd.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.tabPage2.SuspendLayout();
             this.tabPage4.SuspendLayout();
@@ -131,9 +150,9 @@
             this.pnl_ProdictMatrixClassFill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).BeginInit();
             this.pnl_ProdictMatrixClassTop.SuspendLayout();
+            this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
-            this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -334,7 +353,7 @@
             this.cmbBoxFieldItem.FormattingEnabled = true;
             this.cmbBoxFieldItem.Location = new System.Drawing.Point(139, 169);
             this.cmbBoxFieldItem.Name = "cmbBoxFieldItem";
-            this.cmbBoxFieldItem.Size = new System.Drawing.Size(121, 21);
+            this.cmbBoxFieldItem.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem.TabIndex = 25;
             // 
             // lblFieldItem
@@ -455,15 +474,16 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(709, 416);
+            this.tabControl1.Size = new System.Drawing.Size(723, 416);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBoxDisplay);
             this.tabPage1.Controls.Add(this.lblNameCompany);
             this.tabPage1.Controls.Add(this.txtBoxNameCompany);
             this.tabPage1.Controls.Add(this.groupBox2);
-            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.groupBoxFfd);
             this.tabPage1.Controls.Add(this.txtBoxFileCheckLog);
             this.tabPage1.Controls.Add(this.chkTrace);
             this.tabPage1.Controls.Add(this.lblFileCheckLog);
@@ -474,10 +494,133 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(701, 390);
+            this.tabPage1.Size = new System.Drawing.Size(715, 390);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxDisplay
+            // 
+            this.groupBoxDisplay.Controls.Add(this.cmbBoxStopBits);
+            this.groupBoxDisplay.Controls.Add(this.lblStopBits);
+            this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayDataBits);
+            this.groupBoxDisplay.Controls.Add(this.lblDisplayDataBits);
+            this.groupBoxDisplay.Controls.Add(this.cmbBoxDisplayParity);
+            this.groupBoxDisplay.Controls.Add(this.lblDisplayParity);
+            this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayBaudRate);
+            this.groupBoxDisplay.Controls.Add(this.lblDisplayBaudRate);
+            this.groupBoxDisplay.Controls.Add(this.cmbBoxDisplayDspFullName);
+            this.groupBoxDisplay.Controls.Add(this.lblDisplayDspFullName);
+            this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayPort);
+            this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(313, 115);
+            this.groupBoxDisplay.Name = "groupBoxDisplay";
+            this.groupBoxDisplay.Size = new System.Drawing.Size(394, 95);
+            this.groupBoxDisplay.TabIndex = 11;
+            this.groupBoxDisplay.TabStop = false;
+            this.groupBoxDisplay.Text = "Фискальный регистратор";
+            // 
+            // cmbBoxStopBits
+            // 
+            this.cmbBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxStopBits.FormattingEnabled = true;
+            this.cmbBoxStopBits.Location = new System.Drawing.Point(228, 70);
+            this.cmbBoxStopBits.Name = "cmbBoxStopBits";
+            this.cmbBoxStopBits.Size = new System.Drawing.Size(137, 21);
+            this.cmbBoxStopBits.TabIndex = 18;
+            // 
+            // lblStopBits
+            // 
+            this.lblStopBits.AutoSize = true;
+            this.lblStopBits.Location = new System.Drawing.Point(170, 73);
+            this.lblStopBits.Name = "lblStopBits";
+            this.lblStopBits.Size = new System.Drawing.Size(46, 13);
+            this.lblStopBits.TabIndex = 17;
+            this.lblStopBits.Text = "StopBits";
+            // 
+            // txtBoxDisplayDataBits
+            // 
+            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(73, 70);
+            this.txtBoxDisplayDataBits.Name = "txtBoxDisplayDataBits";
+            this.txtBoxDisplayDataBits.Size = new System.Drawing.Size(49, 20);
+            this.txtBoxDisplayDataBits.TabIndex = 16;
+            // 
+            // lblDisplayDataBits
+            // 
+            this.lblDisplayDataBits.AutoSize = true;
+            this.lblDisplayDataBits.Location = new System.Drawing.Point(12, 73);
+            this.lblDisplayDataBits.Name = "lblDisplayDataBits";
+            this.lblDisplayDataBits.Size = new System.Drawing.Size(47, 13);
+            this.lblDisplayDataBits.TabIndex = 15;
+            this.lblDisplayDataBits.Text = "DataBits";
+            // 
+            // cmbBoxDisplayParity
+            // 
+            this.cmbBoxDisplayParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxDisplayParity.FormattingEnabled = true;
+            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(228, 45);
+            this.cmbBoxDisplayParity.Name = "cmbBoxDisplayParity";
+            this.cmbBoxDisplayParity.Size = new System.Drawing.Size(137, 21);
+            this.cmbBoxDisplayParity.TabIndex = 14;
+            // 
+            // lblDisplayParity
+            // 
+            this.lblDisplayParity.AutoSize = true;
+            this.lblDisplayParity.Location = new System.Drawing.Point(170, 48);
+            this.lblDisplayParity.Name = "lblDisplayParity";
+            this.lblDisplayParity.Size = new System.Drawing.Size(33, 13);
+            this.lblDisplayParity.TabIndex = 13;
+            this.lblDisplayParity.Text = "Parity";
+            // 
+            // txtBoxDisplayBaudRate
+            // 
+            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(73, 45);
+            this.txtBoxDisplayBaudRate.Name = "txtBoxDisplayBaudRate";
+            this.txtBoxDisplayBaudRate.Size = new System.Drawing.Size(49, 20);
+            this.txtBoxDisplayBaudRate.TabIndex = 12;
+            // 
+            // lblDisplayBaudRate
+            // 
+            this.lblDisplayBaudRate.AutoSize = true;
+            this.lblDisplayBaudRate.Location = new System.Drawing.Point(12, 48);
+            this.lblDisplayBaudRate.Name = "lblDisplayBaudRate";
+            this.lblDisplayBaudRate.Size = new System.Drawing.Size(55, 13);
+            this.lblDisplayBaudRate.TabIndex = 11;
+            this.lblDisplayBaudRate.Text = "Скорость";
+            // 
+            // cmbBoxDisplayDspFullName
+            // 
+            this.cmbBoxDisplayDspFullName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxDisplayDspFullName.FormattingEnabled = true;
+            this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(91, 18);
+            this.cmbBoxDisplayDspFullName.Name = "cmbBoxDisplayDspFullName";
+            this.cmbBoxDisplayDspFullName.Size = new System.Drawing.Size(137, 21);
+            this.cmbBoxDisplayDspFullName.TabIndex = 8;
+            // 
+            // lblDisplayDspFullName
+            // 
+            this.lblDisplayDspFullName.AutoSize = true;
+            this.lblDisplayDspFullName.Location = new System.Drawing.Point(10, 21);
+            this.lblDisplayDspFullName.Name = "lblDisplayDspFullName";
+            this.lblDisplayDspFullName.Size = new System.Drawing.Size(71, 13);
+            this.lblDisplayDspFullName.TabIndex = 7;
+            this.lblDisplayDspFullName.Text = "Тип дисплея";
+            // 
+            // txtBoxDisplayPort
+            // 
+            this.txtBoxDisplayPort.Location = new System.Drawing.Point(331, 18);
+            this.txtBoxDisplayPort.Name = "txtBoxDisplayPort";
+            this.txtBoxDisplayPort.Size = new System.Drawing.Size(49, 20);
+            this.txtBoxDisplayPort.TabIndex = 10;
+            // 
+            // lblDisplayPort
+            // 
+            this.lblDisplayPort.AutoSize = true;
+            this.lblDisplayPort.Location = new System.Drawing.Point(248, 21);
+            this.lblDisplayPort.Name = "lblDisplayPort";
+            this.lblDisplayPort.Size = new System.Drawing.Size(77, 13);
+            this.lblDisplayPort.TabIndex = 9;
+            this.lblDisplayPort.Text = "Порт дисплея";
             // 
             // lblNameCompany
             // 
@@ -498,7 +641,7 @@
             // groupBox2
             // 
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayPassword);
-            this.groupBox2.Controls.Add(this.label1);
+            this.groupBox2.Controls.Add(this.lblSmsTypGateway);
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayPassword);
             this.groupBox2.Controls.Add(this.cmbBoxSmsTypGateway);
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayLogin);
@@ -506,7 +649,7 @@
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
             this.groupBox2.Location = new System.Drawing.Point(11, 216);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(682, 115);
+            this.groupBox2.Size = new System.Drawing.Size(696, 115);
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Провайдер для отправки SMS";
@@ -520,14 +663,14 @@
             this.lblSmsTypGatewayPassword.TabIndex = 13;
             this.lblSmsTypGatewayPassword.Text = "Пароль";
             // 
-            // label1
+            // lblSmsTypGateway
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 25);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(133, 13);
-            this.label1.TabIndex = 7;
-            this.label1.Text = "Какой шлюз используем";
+            this.lblSmsTypGateway.AutoSize = true;
+            this.lblSmsTypGateway.Location = new System.Drawing.Point(10, 25);
+            this.lblSmsTypGateway.Name = "lblSmsTypGateway";
+            this.lblSmsTypGateway.Size = new System.Drawing.Size(133, 13);
+            this.lblSmsTypGateway.TabIndex = 7;
+            this.lblSmsTypGateway.Text = "Какой шлюз используем";
             // 
             // txtBoxSmsTypGatewayPassword
             // 
@@ -540,7 +683,7 @@
             // 
             this.cmbBoxSmsTypGateway.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxSmsTypGateway.FormattingEnabled = true;
-            this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(145, 22);
+            this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(149, 22);
             this.cmbBoxSmsTypGateway.Name = "cmbBoxSmsTypGateway";
             this.cmbBoxSmsTypGateway.Size = new System.Drawing.Size(149, 21);
             this.cmbBoxSmsTypGateway.TabIndex = 8;
@@ -642,21 +785,26 @@
             this.txtBoxSmsTypGatewayLogin.Size = new System.Drawing.Size(172, 20);
             this.txtBoxSmsTypGatewayLogin.TabIndex = 12;
             // 
-            // groupBox1
+            // groupBoxFfd
             // 
-            this.groupBox1.Controls.Add(this.cmbBoxFfd);
-            this.groupBox1.Controls.Add(this.lblFfd);
-            this.groupBox1.Controls.Add(this.txtBoxFrPort);
-            this.groupBox1.Controls.Add(this.lblFrPort);
-            this.groupBox1.Location = new System.Drawing.Point(11, 120);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(281, 81);
-            this.groupBox1.TabIndex = 2;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Фискальный регистратор";
+            this.groupBoxFfd.Controls.Add(this.cmbBoxFfd);
+            this.groupBoxFfd.Controls.Add(this.lblFfd);
+            this.groupBoxFfd.Controls.Add(this.txtBoxFrPort);
+            this.groupBoxFfd.Controls.Add(this.lblFrPort);
+            this.groupBoxFfd.Location = new System.Drawing.Point(11, 120);
+            this.groupBoxFfd.Name = "groupBoxFfd";
+            this.groupBoxFfd.Size = new System.Drawing.Size(281, 81);
+            this.groupBoxFfd.TabIndex = 2;
+            this.groupBoxFfd.TabStop = false;
+            this.groupBoxFfd.Text = "Фискальный регистратор";
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.cmbBoxFieldItem5);
+            this.tabPage3.Controls.Add(this.cmbBoxFieldItem4);
+            this.tabPage3.Controls.Add(this.cmbBoxFieldItem3);
+            this.tabPage3.Controls.Add(this.cmbBoxFieldItem2);
+            this.tabPage3.Controls.Add(this.cmbBoxFieldItem1);
             this.tabPage3.Controls.Add(this.txtBoxTenderTypeAvans);
             this.tabPage3.Controls.Add(this.lblTenderTypeAvans);
             this.tabPage3.Controls.Add(this.cmbBoxFieldInnTyp);
@@ -675,10 +823,55 @@
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(701, 390);
+            this.tabPage3.Size = new System.Drawing.Size(715, 390);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // cmbBoxFieldItem5
+            // 
+            this.cmbBoxFieldItem5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldItem5.FormattingEnabled = true;
+            this.cmbBoxFieldItem5.Location = new System.Drawing.Point(619, 169);
+            this.cmbBoxFieldItem5.Name = "cmbBoxFieldItem5";
+            this.cmbBoxFieldItem5.Size = new System.Drawing.Size(90, 21);
+            this.cmbBoxFieldItem5.TabIndex = 44;
+            // 
+            // cmbBoxFieldItem4
+            // 
+            this.cmbBoxFieldItem4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldItem4.FormattingEnabled = true;
+            this.cmbBoxFieldItem4.Location = new System.Drawing.Point(523, 169);
+            this.cmbBoxFieldItem4.Name = "cmbBoxFieldItem4";
+            this.cmbBoxFieldItem4.Size = new System.Drawing.Size(90, 21);
+            this.cmbBoxFieldItem4.TabIndex = 43;
+            // 
+            // cmbBoxFieldItem3
+            // 
+            this.cmbBoxFieldItem3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldItem3.FormattingEnabled = true;
+            this.cmbBoxFieldItem3.Location = new System.Drawing.Point(427, 169);
+            this.cmbBoxFieldItem3.Name = "cmbBoxFieldItem3";
+            this.cmbBoxFieldItem3.Size = new System.Drawing.Size(90, 21);
+            this.cmbBoxFieldItem3.TabIndex = 42;
+            // 
+            // cmbBoxFieldItem2
+            // 
+            this.cmbBoxFieldItem2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldItem2.FormattingEnabled = true;
+            this.cmbBoxFieldItem2.Location = new System.Drawing.Point(331, 169);
+            this.cmbBoxFieldItem2.Name = "cmbBoxFieldItem2";
+            this.cmbBoxFieldItem2.Size = new System.Drawing.Size(90, 21);
+            this.cmbBoxFieldItem2.TabIndex = 41;
+            // 
+            // cmbBoxFieldItem1
+            // 
+            this.cmbBoxFieldItem1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxFieldItem1.FormattingEnabled = true;
+            this.cmbBoxFieldItem1.Location = new System.Drawing.Point(235, 169);
+            this.cmbBoxFieldItem1.Name = "cmbBoxFieldItem1";
+            this.cmbBoxFieldItem1.Size = new System.Drawing.Size(90, 21);
+            this.cmbBoxFieldItem1.TabIndex = 40;
             // 
             // txtBoxTenderTypeAvans
             // 
@@ -727,7 +920,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(701, 390);
+            this.tabPage2.Size = new System.Drawing.Size(715, 390);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -737,7 +930,7 @@
             this.tabPage4.Controls.Add(this.tabControl2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(701, 390);
+            this.tabPage4.Size = new System.Drawing.Size(715, 390);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -752,7 +945,7 @@
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(701, 390);
+            this.tabControl2.Size = new System.Drawing.Size(715, 390);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -765,7 +958,7 @@
             this.tabPage5.Location = new System.Drawing.Point(23, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(674, 382);
+            this.tabPage5.Size = new System.Drawing.Size(688, 382);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -777,7 +970,7 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(674, 382);
+            this.tabPage6.Size = new System.Drawing.Size(688, 382);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -804,7 +997,7 @@
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(701, 390);
+            this.tabPage7.Size = new System.Drawing.Size(715, 390);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Матрикс коды";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -815,7 +1008,7 @@
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 110);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 280);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(715, 280);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -827,7 +1020,7 @@
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 280);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(715, 280);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -851,102 +1044,8 @@
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 110);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(715, 110);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
-            // 
-            // cmbBoxProductMatrixClassType
-            // 
-            this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
-            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(173, 46);
-            this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
-            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(108, 21);
-            this.cmbBoxProductMatrixClassType.TabIndex = 37;
-            // 
-            // lblProductMatrixClassType
-            // 
-            this.lblProductMatrixClassType.AutoSize = true;
-            this.lblProductMatrixClassType.Location = new System.Drawing.Point(8, 49);
-            this.lblProductMatrixClassType.Name = "lblProductMatrixClassType";
-            this.lblProductMatrixClassType.Size = new System.Drawing.Size(159, 13);
-            this.lblProductMatrixClassType.TabIndex = 36;
-            this.lblProductMatrixClassType.Text = "В каком поле искать признак";
-            // 
-            // txtBoxProductMatrixEndOff
-            // 
-            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(636, 77);
-            this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
-            this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(40, 20);
-            this.txtBoxProductMatrixEndOff.TabIndex = 3;
-            this.txtBoxProductMatrixEndOff.Visible = false;
-            // 
-            // lblProductMatrixEndOff
-            // 
-            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(399, 67);
-            this.lblProductMatrixEndOff.Name = "lblProductMatrixEndOff";
-            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(231, 30);
-            this.lblProductMatrixEndOff.TabIndex = 2;
-            this.lblProductMatrixEndOff.Text = "Признак окончания класса в поле DCS если пусто то будет сравниваться всё поле цел" +
-    "иком (один символ)";
-            this.lblProductMatrixEndOff.Visible = false;
-            // 
-            // chkBoxMandatoryDefault
-            // 
-            this.chkBoxMandatoryDefault.AutoSize = true;
-            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(8, 26);
-            this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
-            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(406, 17);
-            this.chkBoxMandatoryDefault.TabIndex = 1;
-            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию (как реагировать если не найдено в правиле)";
-            this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
-            // 
-            // chkBox_GetMatrixAlways
-            // 
-            this.chkBox_GetMatrixAlways.AutoSize = true;
-            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 3);
-            this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
-            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(383, 17);
-            this.chkBox_GetMatrixAlways.TabIndex = 0;
-            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам независимо от настроек";
-            this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
-            this.chkBox_GetMatrixAlways.CheckedChanged += new System.EventHandler(this.chkBox_GetMatrixAlways_CheckedChanged);
-            // 
-            // pnlBotton
-            // 
-            this.pnlBotton.Controls.Add(this.btnSave);
-            this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotton.Location = new System.Drawing.Point(0, 416);
-            this.pnlBotton.Name = "pnlBotton";
-            this.pnlBotton.Size = new System.Drawing.Size(709, 36);
-            this.pnlBotton.TabIndex = 39;
-            // 
-            // pnlFill
-            // 
-            this.pnlFill.Controls.Add(this.tabControl1);
-            this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFill.Location = new System.Drawing.Point(0, 0);
-            this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(709, 416);
-            this.pnlFill.TabIndex = 40;
-            // 
-            // cmbBoxMatrixParceTyp
-            // 
-            this.cmbBoxMatrixParceTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxMatrixParceTyp.FormattingEnabled = true;
-            this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(276, 76);
-            this.cmbBoxMatrixParceTyp.Name = "cmbBoxMatrixParceTyp";
-            this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(108, 21);
-            this.cmbBoxMatrixParceTyp.TabIndex = 38;
-            this.cmbBoxMatrixParceTyp.SelectedIndexChanged += new System.EventHandler(this.cmbBoxMatrixParceTyp_SelectedIndexChanged);
-            // 
-            // lblMatrixParceTyp
-            // 
-            this.lblMatrixParceTyp.AutoSize = true;
-            this.lblMatrixParceTyp.Location = new System.Drawing.Point(5, 76);
-            this.lblMatrixParceTyp.Name = "lblMatrixParceTyp";
-            this.lblMatrixParceTyp.Size = new System.Drawing.Size(265, 13);
-            this.lblMatrixParceTyp.TabIndex = 39;
-            this.lblMatrixParceTyp.Text = "Выбираем режим поиска по правилам из таблицы";
             // 
             // pnl_ProdictMatrixClassTopTop
             // 
@@ -961,14 +1060,108 @@
             this.pnl_ProdictMatrixClassTopTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTopTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTopTop.Name = "pnl_ProdictMatrixClassTopTop";
-            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(701, 101);
+            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(715, 101);
             this.pnl_ProdictMatrixClassTopTop.TabIndex = 40;
+            // 
+            // lblProductMatrixEndOff
+            // 
+            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(399, 67);
+            this.lblProductMatrixEndOff.Name = "lblProductMatrixEndOff";
+            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(231, 30);
+            this.lblProductMatrixEndOff.TabIndex = 2;
+            this.lblProductMatrixEndOff.Text = "Признак окончания класса в поле DCS если пусто то будет сравниваться всё поле цел" +
+    "иком (один символ)";
+            this.lblProductMatrixEndOff.Visible = false;
+            // 
+            // txtBoxProductMatrixEndOff
+            // 
+            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(636, 77);
+            this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
+            this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(40, 20);
+            this.txtBoxProductMatrixEndOff.TabIndex = 3;
+            this.txtBoxProductMatrixEndOff.Visible = false;
+            // 
+            // chkBox_GetMatrixAlways
+            // 
+            this.chkBox_GetMatrixAlways.AutoSize = true;
+            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 3);
+            this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
+            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(383, 17);
+            this.chkBox_GetMatrixAlways.TabIndex = 0;
+            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам независимо от настроек";
+            this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
+            this.chkBox_GetMatrixAlways.CheckedChanged += new System.EventHandler(this.chkBox_GetMatrixAlways_CheckedChanged);
+            // 
+            // lblMatrixParceTyp
+            // 
+            this.lblMatrixParceTyp.AutoSize = true;
+            this.lblMatrixParceTyp.Location = new System.Drawing.Point(5, 76);
+            this.lblMatrixParceTyp.Name = "lblMatrixParceTyp";
+            this.lblMatrixParceTyp.Size = new System.Drawing.Size(265, 13);
+            this.lblMatrixParceTyp.TabIndex = 39;
+            this.lblMatrixParceTyp.Text = "Выбираем режим поиска по правилам из таблицы";
+            // 
+            // chkBoxMandatoryDefault
+            // 
+            this.chkBoxMandatoryDefault.AutoSize = true;
+            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(8, 26);
+            this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
+            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(406, 17);
+            this.chkBoxMandatoryDefault.TabIndex = 1;
+            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию (как реагировать если не найдено в правиле)";
+            this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
+            // 
+            // cmbBoxMatrixParceTyp
+            // 
+            this.cmbBoxMatrixParceTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxMatrixParceTyp.FormattingEnabled = true;
+            this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(276, 76);
+            this.cmbBoxMatrixParceTyp.Name = "cmbBoxMatrixParceTyp";
+            this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(108, 21);
+            this.cmbBoxMatrixParceTyp.TabIndex = 38;
+            this.cmbBoxMatrixParceTyp.SelectedIndexChanged += new System.EventHandler(this.cmbBoxMatrixParceTyp_SelectedIndexChanged);
+            // 
+            // lblProductMatrixClassType
+            // 
+            this.lblProductMatrixClassType.AutoSize = true;
+            this.lblProductMatrixClassType.Location = new System.Drawing.Point(8, 49);
+            this.lblProductMatrixClassType.Name = "lblProductMatrixClassType";
+            this.lblProductMatrixClassType.Size = new System.Drawing.Size(159, 13);
+            this.lblProductMatrixClassType.TabIndex = 36;
+            this.lblProductMatrixClassType.Text = "В каком поле искать признак";
+            // 
+            // cmbBoxProductMatrixClassType
+            // 
+            this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
+            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(173, 46);
+            this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
+            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(108, 21);
+            this.cmbBoxProductMatrixClassType.TabIndex = 37;
+            // 
+            // pnlBotton
+            // 
+            this.pnlBotton.Controls.Add(this.btnSave);
+            this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.pnlBotton.Location = new System.Drawing.Point(0, 416);
+            this.pnlBotton.Name = "pnlBotton";
+            this.pnlBotton.Size = new System.Drawing.Size(723, 36);
+            this.pnlBotton.TabIndex = 39;
+            // 
+            // pnlFill
+            // 
+            this.pnlFill.Controls.Add(this.tabControl1);
+            this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFill.Location = new System.Drawing.Point(0, 0);
+            this.pnlFill.Name = "pnlFill";
+            this.pnlFill.Size = new System.Drawing.Size(723, 416);
+            this.pnlFill.TabIndex = 40;
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(709, 452);
+            this.ClientSize = new System.Drawing.Size(723, 452);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -978,12 +1171,14 @@
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBoxDisplay.ResumeLayout(false);
+            this.groupBoxDisplay.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.PnlSmsTypGateway.ResumeLayout(false);
             this.PnlSmsTypGateway.PerformLayout();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxFfd.ResumeLayout(false);
+            this.groupBoxFfd.PerformLayout();
             this.tabPage3.ResumeLayout(false);
             this.tabPage3.PerformLayout();
             this.tabPage2.ResumeLayout(false);
@@ -998,10 +1193,10 @@
             this.pnl_ProdictMatrixClassFill.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).EndInit();
             this.pnl_ProdictMatrixClassTop.ResumeLayout(false);
-            this.pnlBotton.ResumeLayout(false);
-            this.pnlFill.ResumeLayout(false);
             this.pnl_ProdictMatrixClassTopTop.ResumeLayout(false);
             this.pnl_ProdictMatrixClassTopTop.PerformLayout();
+            this.pnlBotton.ResumeLayout(false);
+            this.pnlFill.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1047,7 +1242,7 @@
         private System.Windows.Forms.Label lblFileCheckLog;
         private System.Windows.Forms.TabControl tabControl1;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxFfd;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage4;
@@ -1068,7 +1263,7 @@
         private System.Windows.Forms.Label lbl_LimitCachForUrik;
         private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.ComboBox cmbBoxSmsTypGateway;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label lblSmsTypGateway;
         private System.Windows.Forms.Panel PnlSmsTypGateway;
         private System.Windows.Forms.Label lblSmsTypGatewaySmtp;
         private System.Windows.Forms.TextBox txtBoxSmsTypGatewaySmtp;
@@ -1095,5 +1290,23 @@
         private System.Windows.Forms.ComboBox cmbBoxMatrixParceTyp;
         private System.Windows.Forms.Panel pnl_ProdictMatrixClassTopTop;
         private System.Windows.Forms.Label lblMatrixParceTyp;
+        private System.Windows.Forms.ComboBox cmbBoxFieldItem5;
+        private System.Windows.Forms.ComboBox cmbBoxFieldItem4;
+        private System.Windows.Forms.ComboBox cmbBoxFieldItem3;
+        private System.Windows.Forms.ComboBox cmbBoxFieldItem2;
+        private System.Windows.Forms.ComboBox cmbBoxFieldItem1;
+        private System.Windows.Forms.GroupBox groupBoxDisplay;
+        private System.Windows.Forms.ComboBox cmbBoxDisplayDspFullName;
+        private System.Windows.Forms.Label lblDisplayDspFullName;
+        private System.Windows.Forms.TextBox txtBoxDisplayPort;
+        private System.Windows.Forms.Label lblDisplayPort;
+        private System.Windows.Forms.TextBox txtBoxDisplayBaudRate;
+        private System.Windows.Forms.Label lblDisplayBaudRate;
+        private System.Windows.Forms.ComboBox cmbBoxDisplayParity;
+        private System.Windows.Forms.Label lblDisplayParity;
+        private System.Windows.Forms.TextBox txtBoxDisplayDataBits;
+        private System.Windows.Forms.Label lblDisplayDataBits;
+        private System.Windows.Forms.ComboBox cmbBoxStopBits;
+        private System.Windows.Forms.Label lblStopBits;
     }
 }

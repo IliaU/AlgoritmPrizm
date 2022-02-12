@@ -132,11 +132,11 @@
     <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
-    <Compile Include="Com\CustomerDisplay.cs" />
-    <Compile Include="Com\CustomerDisplayFarm.cs" />
-    <Compile Include="Com\Display\DisplayDSP840.cs" />
-    <Compile Include="Com\Display\Lib\CustomerDisplayBase.cs" />
-    <Compile Include="Com\Display\Lib\CustomerDisplayI.cs" />
+    <Compile Include="Com\Display.cs" />
+    <Compile Include="Com\DisplayFarm.cs" />
+    <Compile Include="Com\DisplayPlg\DisplayDSP840.cs" />
+    <Compile Include="Com\DisplayPlg\Lib\CustomerDisplayBase.cs" />
+    <Compile Include="Com\DisplayPlg\Lib\CustomerDisplayI.cs" />
     <Compile Include="Com\FileCheckLog.cs" />
     <Compile Include="Com\FR.cs" />
     <Compile Include="Com\ProviderFarm.cs" />

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using System.IO.Ports;
+
 namespace AlgoritmPrizm.Lib
 {
     /// <summary>
@@ -186,5 +188,56 @@ namespace AlgoritmPrizm.Lib
                 return DefaultMatrixParceTyp;
             }
         }
+
+        /// <summary>
+        /// Конвертация в объект Parity
+        /// </summary>
+        /// <param name="ParityStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaultParity">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static Parity Convert(string ParityStr, Parity DefaultParity)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(ParityStr))
+                {
+                    foreach (Parity item in Parity.GetValues(typeof(Parity)))
+                    {
+                        if (item.ToString().ToUpper() == ParityStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaultParity;
+            }
+            catch (Exception)
+            {
+                return DefaultParity;
+            }
+        }
+
+        /// <summary>
+        /// Конвертация в объект StopBits
+        /// </summary>
+        /// <param name="StopBitsStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaultStopBits">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static StopBits Convert(string StopBitsStr, StopBits DefaultStopBits)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(StopBitsStr))
+                {
+                    foreach (StopBits item in StopBits.GetValues(typeof(StopBits)))
+                    {
+                        if (item.ToString().ToUpper() == StopBitsStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaultStopBits;
+            }
+            catch (Exception)
+            {
+                return DefaultStopBits;
+            }
+        }
+        
     }
 }

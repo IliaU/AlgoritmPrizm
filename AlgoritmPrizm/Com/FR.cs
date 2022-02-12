@@ -360,25 +360,7 @@ namespace AlgoritmPrizm.Com
             Result:= CheckErr(FR.PrintBarcode);
                 end;
                 */
-
-                // Печатаем сотрудника продавшего товар
-                string employee = null;
-                foreach (JsonPrintFiscDocItem item in Doc.items)
-                {
-                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee1_name)) employee =item.employee1_name;
-                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee2_name)) employee = item.employee2_name;
-                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee3_name)) employee = item.employee3_name;
-                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee4_name)) employee = item.employee4_name;
-                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee5_name)) employee = item.employee5_name;
-                    if (!string.IsNullOrWhiteSpace(employee)) break;
-                }
-                if (!string.IsNullOrWhiteSpace(employee))
-                {
-                    Employee TekEmployees = Config.employees.Find(t => t.PrizmLogin.ToUpper() == employee.ToUpper());
-                    if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
-                    PrintLine(string.Format("Сотрудник: {0}",employee), true);
-                }
-
+                
                 //************** ПЕЧАТЬ ПОЗИЦИЙ ЧЕКА **************************************
 
                 int TekDocStavkiNDS1 = 0;      // Нал
@@ -708,7 +690,6 @@ namespace AlgoritmPrizm.Com
         /// <param name="CountForPredoplata">Количество позиций в чеке</param>
         /// <param name="SumChekFoCustomer">Итоговая сколько заплачено покупателем по всему чеку нужно для выявления пропорции на сколько уменьшать этот чек чтобы сумма сошлась</param>
         /// <param name="SumChekFoPrice">Итоговая сумма по чеку по ценам магазина а не по тому что внёс покупатель</param>
-
         private static void PrintCheckItem(JsonPrintFiscDoc Doc, JsonPrintFiscDocItem item, int IndexPos, string note, int Department, string TekStavkiNdsDescription, int Tax1, int Tax2, int Tax3, int Tax4, EnFrTyp DocCustTyp, ref decimal SumChekForPredoplata, int IndexItemForPredoplata, int CountForPredoplata, decimal SumChekFoCustomer, decimal SumChekFoPrice)
         {
             try
@@ -721,13 +702,128 @@ namespace AlgoritmPrizm.Com
                 switch (Config.FieldItem)
                 {
                     case FieldItemEn.Description1:
-                        StringForPrinting = item.item_description1;
+                        StringForPrinting = item.item_description1.Trim();
                         break;
                     case FieldItemEn.Description2:
-                        StringForPrinting = item.item_description2;
+                        StringForPrinting = item.item_description2.Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = tmp.Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        StringForPrinting = item.attribute.Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        StringForPrinting = item.item_size.Trim();
                         break;
                     default:
-                        StringForPrinting = item.item_description1;
+                        StringForPrinting = item.item_description1.Trim();
+                        break;
+                }
+                switch (Config.FieldItem1)
+                {
+                    case FieldItemEn.Description1:
+                        if(!string.IsNullOrWhiteSpace(item.item_description1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description1).Trim();
+                        break;
+                    case FieldItemEn.Description2:
+                        if (!string.IsNullOrWhiteSpace(item.item_description2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description2).Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, tmp).Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        if (!string.IsNullOrWhiteSpace(item.attribute)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.attribute).Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        if (!string.IsNullOrWhiteSpace(item.item_size)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_size).Trim();
+                        break;
+                    default:
+                        break;
+                }
+                switch (Config.FieldItem2)
+                {
+                    case FieldItemEn.Description1:
+                        if (!string.IsNullOrWhiteSpace(item.item_description1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description1).Trim();
+                        break;
+                    case FieldItemEn.Description2:
+                        if (!string.IsNullOrWhiteSpace(item.item_description2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description2).Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, tmp).Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        if (!string.IsNullOrWhiteSpace(item.attribute)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.attribute).Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        if (!string.IsNullOrWhiteSpace(item.item_size)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_size).Trim();
+                        break;
+                    default:
+                        break;
+                }
+                switch (Config.FieldItem3)
+                {
+                    case FieldItemEn.Description1:
+                        if (!string.IsNullOrWhiteSpace(item.item_description1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description1).Trim();
+                        break;
+                    case FieldItemEn.Description2:
+                        if (!string.IsNullOrWhiteSpace(item.item_description2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description2).Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, tmp).Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        if (!string.IsNullOrWhiteSpace(item.attribute)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.attribute).Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        if (!string.IsNullOrWhiteSpace(item.item_size)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_size).Trim();
+                        break;
+                    default:
+                        break;
+                }
+                switch (Config.FieldItem4)
+                {
+                    case FieldItemEn.Description1:
+                        if (!string.IsNullOrWhiteSpace(item.item_description1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description1).Trim();
+                        break;
+                    case FieldItemEn.Description2:
+                        if (!string.IsNullOrWhiteSpace(item.item_description2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description2).Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, tmp).Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        if (!string.IsNullOrWhiteSpace(item.attribute)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.attribute).Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        if (!string.IsNullOrWhiteSpace(item.item_size)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_size).Trim();
+                        break;
+                    default:
+                        break;
+                }
+                switch (Config.FieldItem5)
+                {
+                    case FieldItemEn.Description1:
+                        if (!string.IsNullOrWhiteSpace(item.item_description1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description1).Trim();
+                        break;
+                    case FieldItemEn.Description2:
+                        if (!string.IsNullOrWhiteSpace(item.item_description2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_description2).Trim();
+                        break;
+                    case FieldItemEn.InvnSbsItemNo:
+                        string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, tmp).Trim();
+                        break;
+                    case FieldItemEn.Attribute:
+                        if (!string.IsNullOrWhiteSpace(item.attribute)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.attribute).Trim();
+                        break;
+                    case FieldItemEn.ItemSize:
+                        if (!string.IsNullOrWhiteSpace(item.item_size)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.item_size).Trim();
+                        break;
+                    default:
                         break;
                 }
                 Fr.StringForPrinting = StringForPrinting;
@@ -740,6 +836,7 @@ namespace AlgoritmPrizm.Com
                     Fr.Quantity = 1;                            // Код маркировки есть значит количество 1
                     FileCheckLog.EventPrintSave(note, Doc.sid, (decimal)item.price, DocCustTyp, Doc.receipt_type, item.sid);
                 }
+                
 
                 // Если похоже на предоплату и общая сумма по документу не равна сумме что заплатил покупатель то будем рассчитывать пропорционально цену
                 if ((Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
@@ -1313,9 +1410,26 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+                // Печатаем сотрудника продавшего товар
+                string employee = null;
+                foreach (JsonPrintFiscDocItem item in Doc.items)
+                {
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee1_name)) employee = item.employee1_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee2_name)) employee = item.employee2_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee3_name)) employee = item.employee3_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee4_name)) employee = item.employee4_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee5_name)) employee = item.employee5_name;
+                    if (!string.IsNullOrWhiteSpace(employee)) break;
+                }
+                if (!string.IsNullOrWhiteSpace(employee))
+                {
+                    Employee TekEmployees = Config.employees.Find(t => t.PrizmLogin.ToUpper() == employee.ToUpper());
+                    if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
+                    Print2in1Line("Сотрудник:", employee);
+                }
+
                 // Отчеркиваем заголовок
                 PrintSeparator();
-
             }
             catch (Exception ex)
             {
@@ -1456,6 +1570,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Если тип оплаты карта
@@ -1463,6 +1578,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ4 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Если тип оплаты подарочный сертификат
@@ -1470,6 +1586,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Если тип оплаты подарочная карта
@@ -1477,6 +1594,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Если тип оплаты подарочная карта
@@ -1484,6 +1602,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Заказ клиента когда он вносит сумму
@@ -1491,6 +1610,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                                continue;
                             }
 
                             // КОгда клиент делает возврат денег пока не выполнен заказ
@@ -1508,6 +1628,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.given;
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.given;
+                                continue;
                             }
 
                             // Если тип оплаты карта
@@ -1515,6 +1636,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.given;
                                 if (CrocessSummToFR) Fr.Summ4 += (decimal)item.given;
+                                continue;
                             }
 
                             break;
@@ -1524,6 +1646,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
+                                continue;
                             }
 
                             // Депозит оплаты карта
@@ -1531,6 +1654,7 @@ namespace AlgoritmPrizm.Com
                             {
                                 rez += (decimal)item.taken;
                                 if (CrocessSummToFR) Fr.Summ2 += (decimal)item.taken;
+                                continue;
                             }
 
                             break;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Xml;
 using System.IO;
+using System.IO.Ports;
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.BLL;
 
@@ -43,6 +44,36 @@ namespace AlgoritmPrizm.Com
         /// Порт на котором будет крутится Web сервис
         /// </summary>
         private static int _Port = 5000;
+
+        /// <summary>
+        /// Тип дисплея покупателя
+        /// </summary>
+        private static string _DisplayDspFullName = "DisplayDSP840";
+
+        /// <summary>
+        /// Порт дисплея покупателя
+        /// </summary>
+        private static int _DisplayPort = 6;
+
+        /// <summary>
+        /// Скорость дисплея покупателя
+        /// </summary>
+        private static int _DisplayBaudRate = 19200;
+
+        /// <summary>
+        /// Parity  по умолчанию = 0
+        /// </summary>
+        private static Parity _DisplayParity = Parity.None;
+
+        /// <summary>
+        /// DataBits  по умолчанию = 8
+        /// </summary>
+        private static int _DisplayDataBits = 8;
+
+        /// <summary>
+        /// StopBits  по умолчанию = StopBits.One
+        /// </summary>
+        private static StopBits _DisplayStpBits = StopBits.One;
 
         /// <summary>
         /// Список продавцов
@@ -174,6 +205,31 @@ namespace AlgoritmPrizm.Com
         /// Наименование поля с именем товара
         /// </summary>
         private static FieldItemEn _FieldItem = FieldItemEn.Description1;
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        private static FieldItemEn _FieldItem1 = FieldItemEn.Empty;
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        private static FieldItemEn _FieldItem2 = FieldItemEn.Empty;
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        private static FieldItemEn _FieldItem3 = FieldItemEn.Empty;
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        private static FieldItemEn _FieldItem4 = FieldItemEn.Empty;
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        private static FieldItemEn _FieldItem5 = FieldItemEn.Empty;
 
         /// <summary>
         /// Наименование поля с номером ФД
@@ -353,6 +409,110 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("Port", value.ToString());
                 Save();
                 _Port = value;
+            }
+        }
+
+        /// <summary>
+        /// Тип дисплея покупателя
+        /// </summary>
+        public static string DisplayDspFullName
+        {
+            get
+            {
+                return _DisplayDspFullName;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DisplayDspFullName", value.ToString());
+                Save();
+                _DisplayDspFullName = value;
+            }
+        }
+
+        /// <summary>
+        /// Порт дисплея покупателя
+        /// </summary>
+        public static int DisplayPort
+        {
+            get
+            {
+                return _DisplayPort;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DisplayPort", value.ToString());
+                Save();
+                _DisplayPort = value;
+            }
+        }
+
+        /// <summary>
+        /// Скорость дисплея покупателя
+        /// </summary>
+        public static int DisplayBaudRate
+        {
+            get
+            {
+                return _DisplayBaudRate;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DisplayBaudRate", value.ToString());
+                Save();
+                _DisplayBaudRate = value;
+            }
+        }
+
+        /// <summary>
+        /// Parity  по умолчанию = 0
+        /// </summary>
+        public static Parity DisplayParity
+        {
+            get
+            {
+                return _DisplayParity;
+            }
+            set
+            {
+                Parity val = EventConvertor.Convert(value.ToString(), _DisplayParity);
+                xmlRoot.SetAttribute("DisplayParity", val.ToString());
+                Save();
+                _DisplayParity = val;
+            }
+        }
+
+        /// <summary>
+        /// DataBits  по умолчанию = 8
+        /// </summary>
+        public static int DisplayDataBits
+        {
+            get
+            {
+                return _DisplayDataBits;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DisplayDataBits", value.ToString());
+                Save();
+                _DisplayDataBits = value;
+            }
+        }
+
+        /// <summary>
+        /// StopBits  по умолчанию = StopBits.One
+        /// </summary>
+        public static StopBits DisplayStpBits
+        {
+            get
+            {
+                return _DisplayStpBits;
+            }
+            set
+            {
+                StopBits val = EventConvertor.Convert(value.ToString(), _DisplayStpBits);
+                xmlRoot.SetAttribute("DisplayStpBits", val.ToString());
+                Save();
+                _DisplayStpBits = val;
             }
         }
 
@@ -687,6 +847,91 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("FieldItem", value.ToString());
                 Save();
                 _FieldItem = value;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        public static FieldItemEn FieldItem1
+        {
+            get
+            {
+                return _FieldItem1;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldItem1", value.ToString());
+                Save();
+                _FieldItem1 = value;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        public static FieldItemEn FieldItem2
+        {
+            get
+            {
+                return _FieldItem2;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldItem2", value.ToString());
+                Save();
+                _FieldItem2 = value;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        public static FieldItemEn FieldItem3
+        {
+            get
+            {
+                return _FieldItem3;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldItem3", value.ToString());
+                Save();
+                _FieldItem3 = value;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        public static FieldItemEn FieldItem4
+        {
+            get
+            {
+                return _FieldItem4;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldItem4", value.ToString());
+                Save();
+                _FieldItem4 = value;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара
+        /// </summary>
+        public static FieldItemEn FieldItem5
+        {
+            get
+            {
+                return _FieldItem5;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FieldItem5", value.ToString());
+                Save();
+                _FieldItem5 = value;
             }
         }
 
@@ -1261,6 +1506,12 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("ConnectionString", "");
                     xmlMain.SetAttribute("Host", _Host);
                     xmlMain.SetAttribute("Port", _Port.ToString());
+                    xmlMain.SetAttribute("DisplayDspFullName", _DisplayDspFullName);
+                    xmlMain.SetAttribute("DisplayPort", _DisplayPort.ToString());
+                    xmlMain.SetAttribute("DisplayBaudRate", _DisplayBaudRate.ToString());
+                    xmlMain.SetAttribute("DisplayParity", _DisplayParity.ToString());
+                    xmlMain.SetAttribute("DisplayDataBits", _DisplayDataBits.ToString());
+                    xmlMain.SetAttribute("DisplayStpBits", _DisplayStpBits.ToString());
                     xmlMain.SetAttribute("Ffd", _Ffd.ToString());
                     xmlMain.SetAttribute("FrPort", _FrPort.ToString());
                     xmlMain.SetAttribute("TenderTypeCash", _TenderTypeCash.ToString());
@@ -1272,6 +1523,11 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("GiftCardEnable", _GiftCardEnable.ToString());
                     xmlMain.SetAttribute("GiftCardTax", _GiftCardTax.ToString());
                     xmlMain.SetAttribute("FieldItem", _FieldItem.ToString());
+                    xmlMain.SetAttribute("FieldItem1", _FieldItem1.ToString());
+                    xmlMain.SetAttribute("FieldItem2", _FieldItem2.ToString());
+                    xmlMain.SetAttribute("FieldItem3", _FieldItem3.ToString());
+                    xmlMain.SetAttribute("FieldItem4", _FieldItem4.ToString());
+                    xmlMain.SetAttribute("FieldItem5", _FieldItem5.ToString());
                     xmlMain.SetAttribute("FieldDocNum", _FieldDocNum.ToString());
                     xmlMain.SetAttribute("FieldInnTyp", _FieldInnTyp.ToString());
                     xmlMain.SetAttribute("HostPrizmApi", _HostPrizmApi);
@@ -1366,6 +1622,12 @@ namespace AlgoritmPrizm.Com
                         catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Host") try { _Host = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Port") try { _Port = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayDspFullName") try { _DisplayDspFullName = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayPort") try { _DisplayPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayBaudRate") try { _DisplayBaudRate = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayParity") try { _DisplayParity = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayParity); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayDataBits") try { _DisplayDataBits = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayStpBits") try { _DisplayStpBits = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayStpBits); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Ffd") try { _Ffd = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _Ffd); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FrPort") try { _FrPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCash") try { _TenderTypeCash = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
@@ -1377,6 +1639,11 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "GiftCardEnable") try { _GiftCardEnable = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GiftCardTax") try { _GiftCardTax = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldItem") try {_FieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem);} catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldItem1") try { _FieldItem1 = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem1); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldItem2") try { _FieldItem2 = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem2); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldItem3") try { _FieldItem3 = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem3); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldItem4") try { _FieldItem4 = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem4); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FieldItem5") try { _FieldItem5 = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldItem5); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldDocNum") try {_FieldDocNum = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldDocNum); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FieldInnTyp") try {_FieldInnTyp = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _FieldInnTyp); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "HostPrizmApi") try { _HostPrizmApi = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }

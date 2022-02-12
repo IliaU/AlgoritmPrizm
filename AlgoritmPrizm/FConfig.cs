@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using System.IO.Ports;
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.Com;
 
@@ -62,6 +63,48 @@ namespace AlgoritmPrizm
 
                 this.txtBoxFrPort.Text = Config.FrPort.ToString();
 
+
+                this.cmbBoxDisplayDspFullName.Items.Clear();
+                cmbBoxDisplayDspFullName.Items.Add("Без дисплея"); 
+                int PositionDisplayDspFullName = 0;
+                int SelectDisplayDspFullName = -1;
+                foreach (string item in Com.DisplayFarm.ListDisplayName)
+                {
+                    PositionDisplayDspFullName++;
+                    cmbBoxDisplayDspFullName.Items.Add(item.ToString());
+                    if (item == Config.DisplayDspFullName) SelectDisplayDspFullName = PositionDisplayDspFullName;
+                }
+                if (SelectDisplayDspFullName > -1) cmbBoxDisplayDspFullName.SelectedIndex = SelectDisplayDspFullName;
+                else cmbBoxDisplayDspFullName.SelectedIndex = 0;
+                //
+                this.txtBoxDisplayPort.Text = Config.DisplayPort.ToString();
+                this.txtBoxDisplayBaudRate.Text = Config.DisplayBaudRate.ToString();
+                //
+                this.cmbBoxDisplayParity.Items.Clear();
+                int PositionDisplayParity = -1;
+                int SelectDisplayParity = -1;
+                foreach (Parity item in Parity.GetValues(typeof(Parity)))
+                {
+                    PositionDisplayParity++;
+                    cmbBoxDisplayParity.Items.Add(item.ToString());
+                    if (item == Config.DisplayParity) SelectDisplayParity = PositionDisplayParity;
+                }
+                if (SelectDisplayParity > -1) cmbBoxDisplayParity.SelectedIndex = SelectDisplayParity;
+                //
+                this.txtBoxDisplayDataBits.Text = Config.DisplayDataBits.ToString();
+                //
+                this.cmbBoxStopBits.Items.Clear();
+                int PositionStopBits = -1;
+                int SelectStopBits = -1;
+                foreach (StopBits item in StopBits.GetValues(typeof(StopBits)))
+                {
+                    PositionStopBits++;
+                    cmbBoxStopBits.Items.Add(item.ToString());
+                    if (item == Config.DisplayStpBits) SelectStopBits = PositionStopBits;
+                }
+                if (SelectStopBits > -1) cmbBoxStopBits.SelectedIndex = SelectStopBits;
+
+
                 cmbBoxSmsTypGateway.SelectedIndexChanged -= cmbBoxSmsTypGateway_SelectedIndexChanged;
                 cmbBoxSmsTypGateway.Items.Clear();
                 Position = -1;
@@ -104,7 +147,61 @@ namespace AlgoritmPrizm
                     if (item == Config.FieldItem) SelectPositionFieldItem = PositionFieldItem;
                 }
                 if (SelectPositionFieldItem > -1) cmbBoxFieldItem.SelectedIndex = SelectPositionFieldItem;
-
+                //
+                this.cmbBoxFieldItem1.Items.Clear();
+                int PositionFieldItem1 = -1;
+                int SelectPositionFieldItem1 = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionFieldItem1++;
+                    cmbBoxFieldItem1.Items.Add(item.ToString());
+                    if (item == Config.FieldItem1) SelectPositionFieldItem1 = PositionFieldItem1;
+                }
+                if (SelectPositionFieldItem1 > -1) cmbBoxFieldItem1.SelectedIndex = SelectPositionFieldItem1;
+                //
+                this.cmbBoxFieldItem2.Items.Clear();
+                int PositionFieldItem2 = -1;
+                int SelectPositionFieldItem2 = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionFieldItem2++;
+                    cmbBoxFieldItem2.Items.Add(item.ToString());
+                    if (item == Config.FieldItem2) SelectPositionFieldItem2 = PositionFieldItem2;
+                }
+                if (SelectPositionFieldItem2 > -1) cmbBoxFieldItem2.SelectedIndex = SelectPositionFieldItem2;
+                //
+                this.cmbBoxFieldItem3.Items.Clear();
+                int PositionFieldItem3 = -1;
+                int SelectPositionFieldItem3 = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionFieldItem3++;
+                    cmbBoxFieldItem3.Items.Add(item.ToString());
+                    if (item == Config.FieldItem3) SelectPositionFieldItem3 = PositionFieldItem3;
+                }
+                if (SelectPositionFieldItem3 > -1) cmbBoxFieldItem3.SelectedIndex = SelectPositionFieldItem3;
+                //
+                this.cmbBoxFieldItem4.Items.Clear();
+                int PositionFieldItem4 = -1;
+                int SelectPositionFieldItem4 = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionFieldItem4++;
+                    cmbBoxFieldItem4.Items.Add(item.ToString());
+                    if (item == Config.FieldItem4) SelectPositionFieldItem4 = PositionFieldItem4;
+                }
+                if (SelectPositionFieldItem4 > -1) cmbBoxFieldItem4.SelectedIndex = SelectPositionFieldItem4;
+                //
+                this.cmbBoxFieldItem5.Items.Clear();
+                int PositionFieldItem5 = -1;
+                int SelectPositionFieldItem5 = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionFieldItem5++;
+                    cmbBoxFieldItem5.Items.Add(item.ToString());
+                    if (item == Config.FieldItem5) SelectPositionFieldItem5 = PositionFieldItem5;
+                }
+                if (SelectPositionFieldItem5 > -1) cmbBoxFieldItem5.SelectedIndex = SelectPositionFieldItem5;
 
                 this.cmbBoxFieldDocNum.Items.Clear();
                 int PositionFieldDocNum = -1;
@@ -207,6 +304,58 @@ namespace AlgoritmPrizm
 
                 Config.Ffd = EventConvertor.Convert(cmbBoxFfd.Items[cmbBoxFfd.SelectedIndex].ToString(),Config.Ffd);
 
+
+
+                string DefaultDisplayDspFullName = null;
+                foreach (string item in Com.DisplayFarm.ListDisplayName)
+                {
+                    if (cmbBoxDisplayDspFullName.SelectedIndex>-1)
+                    {
+                        if (item == this.cmbBoxDisplayDspFullName.Items[cmbBoxDisplayDspFullName.SelectedIndex].ToString())
+                        {
+                            DefaultDisplayDspFullName = item;
+                        }
+                    }
+                }
+                if (DefaultDisplayDspFullName != null) Config.DisplayDspFullName = DefaultDisplayDspFullName;
+                else Config.DisplayDspFullName = "";
+                //
+                try
+                {
+                    Config.DisplayPort = int.Parse(this.txtBoxDisplayPort.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxDisplayPort.Text), GetType().Name, EventEn.Message);
+                }
+                //
+                try
+                {
+                    Config.DisplayBaudRate = int.Parse(this.txtBoxDisplayBaudRate.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxDisplayBaudRate.Text), GetType().Name, EventEn.Message);
+                }
+                //
+                Config.DisplayParity = EventConvertor.Convert(cmbBoxDisplayParity.Items[cmbBoxDisplayParity.SelectedIndex].ToString(), Config.DisplayParity);
+                //
+                try
+                {
+                    Config.DisplayDataBits = int.Parse(this.txtBoxDisplayDataBits.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxDisplayDataBits.Text), GetType().Name, EventEn.Message);
+                }
+                //
+                Config.DisplayStpBits = EventConvertor.Convert(cmbBoxStopBits.Items[cmbBoxStopBits.SelectedIndex].ToString(), Config.DisplayStpBits);
+                //
+                if (DefaultDisplayDspFullName != null) Com.DisplayFarm.SetCurrentDisplay(Com.DisplayFarm.CreateNewDisplay("DisplayDSP840"));
+                else Com.DisplayFarm.SetCurrentDisplay(null);
+
+                
+
                 Config.SmsTypGateway = EventConvertor.Convert(cmbBoxSmsTypGateway.Items[cmbBoxSmsTypGateway.SelectedIndex].ToString(), Config.SmsTypGateway);
 
                 Config.SmsTypGatewaySmtp = this.txtBoxSmsTypGatewaySmtp.Text;
@@ -286,6 +435,11 @@ namespace AlgoritmPrizm
                 }
 
                 Config.FieldItem = EventConvertor.Convert(cmbBoxFieldItem.Items[cmbBoxFieldItem.SelectedIndex].ToString(), Config.FieldItem);
+                Config.FieldItem1 = EventConvertor.Convert(cmbBoxFieldItem1.Items[cmbBoxFieldItem1.SelectedIndex].ToString(), Config.FieldItem1);
+                Config.FieldItem2 = EventConvertor.Convert(cmbBoxFieldItem2.Items[cmbBoxFieldItem2.SelectedIndex].ToString(), Config.FieldItem2);
+                Config.FieldItem3 = EventConvertor.Convert(cmbBoxFieldItem3.Items[cmbBoxFieldItem3.SelectedIndex].ToString(), Config.FieldItem3);
+                Config.FieldItem4 = EventConvertor.Convert(cmbBoxFieldItem4.Items[cmbBoxFieldItem4.SelectedIndex].ToString(), Config.FieldItem4);
+                Config.FieldItem5 = EventConvertor.Convert(cmbBoxFieldItem5.Items[cmbBoxFieldItem5.SelectedIndex].ToString(), Config.FieldItem5);
 
                 Config.FieldDocNum = EventConvertor.Convert(cmbBoxFieldDocNum.Items[cmbBoxFieldDocNum.SelectedIndex].ToString(), Config.FieldDocNum);
 
