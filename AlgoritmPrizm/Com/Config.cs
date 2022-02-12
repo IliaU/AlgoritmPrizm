@@ -129,7 +129,7 @@ namespace AlgoritmPrizm.Com
         /// Версия фискальной памяти
         /// </summary>
         private static FfdEn _Ffd = FfdEn.v1_05;
-        
+
         /// <summary>
         /// Какой используется провайдер для отправки SMS
         /// </summary>
@@ -188,7 +188,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Хост с приложением Prizm на котором развёрнут API
         /// </summary>
-        private static string _HostPrizmApi= "http://172.16.1.102";
+        private static string _HostPrizmApi = "http://172.16.1.102";
 
         /// <summary>
         /// Login системного пользовательеля для доступа к api
@@ -221,6 +221,11 @@ namespace AlgoritmPrizm.Com
         private static EnProductMatrixClassType _ProductMatrixClassType = EnProductMatrixClassType.dcs_code;
 
         /// <summary>
+        /// Какой механизм поиска будем использовать при принятии решения о запросе матрикс кода
+        /// </summary>
+        private static EnMatrixParceTyp _MatrixParceTyp = EnMatrixParceTyp.Normal;
+
+        /// <summary>
         /// Класс продукта принимаем решение нужно ли выдовать запрос матрикс кода и обязательный параметр матрикс код или нет
         /// </summary>
         private static List<ProdictMatrixClass> _ProdictMatrixClassList = new List<ProdictMatrixClass>();
@@ -233,7 +238,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Признак окончания группы товаров по которой принимаем решение запроса матрикс кода
         /// </summary>
-        private static char _ProductMatrixEndOff=' ';
+        private static char _ProductMatrixEndOff = ' ';
 
         /// <summary>
         /// Лимит для Юрлиц
@@ -445,7 +450,7 @@ namespace AlgoritmPrizm.Com
             {
                 return _customers;
             }
-            private set {}
+            private set { }
         }
 
         /// <summary>
@@ -836,6 +841,23 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("ProductMatrixClassType", value.ToString());
                 Save();
                 _ProductMatrixClassType = value;
+            }
+        }
+
+        /// <summary>
+        /// Какой механизм поиска будем использовать при принятии решения о запросе матрикс кода
+        /// </summary>
+        public static EnMatrixParceTyp MatrixParceTyp
+        {
+            get
+            {
+                return _MatrixParceTyp;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("MatrixParceTyp", value.ToString());
+                Save();
+                _MatrixParceTyp = value;
             }
         }
 
@@ -1259,6 +1281,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("FileCheckLog", _FileCheckLog);
                     xmlMain.SetAttribute("GetMatrixAlways", _GetMatrixAlways.ToString());
                     xmlMain.SetAttribute("ProductMatrixClassType", _ProductMatrixClassType.ToString());
+                    xmlMain.SetAttribute("MatrixParceTyp", _MatrixParceTyp.ToString());
                     xmlMain.SetAttribute("MandatoryDefault", _MandatoryDefault.ToString());
                     xmlMain.SetAttribute("LimitCachForUrik", _LimitCachForUrik.ToString());
                     xmlMain.SetAttribute("SmsTypGateway", _SmsTypGateway.ToString());
@@ -1363,6 +1386,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "FileCheckLog") try { _FileCheckLog = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "GetMatrixAlways") try { _GetMatrixAlways = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "ProductMatrixClassType") try { _ProductMatrixClassType = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), EnProductMatrixClassType.dcs_code); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "MatrixParceTyp") try { _MatrixParceTyp = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), EnMatrixParceTyp.Normal); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MandatoryDefault") try { _MandatoryDefault = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "LimitCachForUrik") try { _LimitCachForUrik = decimal.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "SmsTypGateway") try { _SmsTypGateway = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _SmsTypGateway); } catch (Exception) { }

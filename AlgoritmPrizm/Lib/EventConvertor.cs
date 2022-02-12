@@ -15,9 +15,9 @@ namespace AlgoritmPrizm.Lib
         /// Конвертация в объект eventEn
         /// </summary>
         /// <param name="EventStr">Строка которую надо конвертнуть</param>
-        /// <param name="DefaulfEvent">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <param name="DefaultEvent">Если не можем конвертнуть что в этом случае вернуть</param>
         /// <returns></returns>
-        public static EventEn Convert(string EventStr, EventEn DefaulfEvent)
+        public static EventEn Convert(string EventStr, EventEn DefaultEvent)
         {
             try
             {
@@ -28,11 +28,11 @@ namespace AlgoritmPrizm.Lib
                         if (item.ToString().ToUpper() == EventStr.Trim().ToUpper()) return item;
                     }
                 }
-                return DefaulfEvent;
+                return DefaultEvent;
             }
             catch (Exception)
             {
-                return DefaulfEvent;
+                return DefaultEvent;
             }
         }
 
@@ -40,9 +40,9 @@ namespace AlgoritmPrizm.Lib
         /// Конвертация в объект FfdEn
         /// </summary>
         /// <param name="FfdStr">Строка которую надо конвертнуть</param>
-        /// <param name="DefaulfFfd">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <param name="DefaultFfd">Если не можем конвертнуть что в этом случае вернуть</param>
         /// <returns></returns>
-        public static FfdEn Convert(string FfdStr, FfdEn DefaulfFfd)
+        public static FfdEn Convert(string FfdStr, FfdEn DefaultFfd)
         {
             try
             {
@@ -53,11 +53,11 @@ namespace AlgoritmPrizm.Lib
                         if (item.ToString().ToUpper() == FfdStr.Trim().ToUpper()) return item;
                     }
                 }
-                return DefaulfFfd;
+                return DefaultFfd;
             }
             catch (Exception)
             {
-                return DefaulfFfd;
+                return DefaultFfd;
             }
         }
 
@@ -65,9 +65,9 @@ namespace AlgoritmPrizm.Lib
         /// Конвертация в объект FieldItemEn
         /// </summary>
         /// <param name="FieldItemStr">Строка которую надо конвертнуть</param>
-        /// <param name="DefaulfFieldItem">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <param name="DefaultFieldItem">Если не можем конвертнуть что в этом случае вернуть</param>
         /// <returns></returns>
-        public static FieldItemEn Convert(string FieldItemStr, FieldItemEn DefaulfFieldItem)
+        public static FieldItemEn Convert(string FieldItemStr, FieldItemEn DefaultFieldItem)
         {
             try
             {
@@ -78,11 +78,11 @@ namespace AlgoritmPrizm.Lib
                         if (item.ToString().ToUpper() == FieldItemStr.Trim().ToUpper()) return item;
                     }
                 }
-                return DefaulfFieldItem;
+                return DefaultFieldItem;
             }
             catch (Exception)
             {
-                return DefaulfFieldItem;
+                return DefaultFieldItem;
             }
         }
 
@@ -90,9 +90,9 @@ namespace AlgoritmPrizm.Lib
         /// Конвертация в объект FieldDocNumEn
         /// </summary>
         /// <param name="FieldDocNumStr">Строка которую надо конвертнуть</param>
-        /// <param name="DefaulfFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <param name="DefaultFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
         /// <returns></returns>
-        public static FieldDocNumEn Convert(string FieldDocNumStr, FieldDocNumEn DefaulfFieldDocNum)
+        public static FieldDocNumEn Convert(string FieldDocNumStr, FieldDocNumEn DefaultFieldDocNum)
         {
             try
             {
@@ -103,11 +103,11 @@ namespace AlgoritmPrizm.Lib
                         if (item.ToString().ToUpper() == FieldDocNumStr.Trim().ToUpper()) return item;
                     }
                 }
-                return DefaulfFieldDocNum;
+                return DefaultFieldDocNum;
             }
             catch (Exception)
             {
-                return DefaulfFieldDocNum;
+                return DefaultFieldDocNum;
             }
         }
 
@@ -141,24 +141,49 @@ namespace AlgoritmPrizm.Lib
         /// Конвертация в объект EnProductMatrixClassType
         /// </summary>
         /// <param name="FieldDocNumStr">Строка которую надо конвертнуть</param>
-        /// <param name="DefaulfFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <param name="DefaultFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
         /// <returns></returns>
-        public static EnProductMatrixClassType Convert(string FieldDocNumStr, EnProductMatrixClassType DefaulfFieldDocNum)
+        public static EnProductMatrixClassType Convert(string FieldDocNumStr, EnProductMatrixClassType DefaultFieldDocNum)
         {
             try
             {
                 if (!string.IsNullOrWhiteSpace(FieldDocNumStr))
                 {
-                    foreach (EnProductMatrixClassType item in FfdEn.GetValues(typeof(EnProductMatrixClassType)))
+                    foreach (EnProductMatrixClassType item in EnProductMatrixClassType.GetValues(typeof(EnProductMatrixClassType)))
                     {
                         if (item.ToString().ToUpper() == FieldDocNumStr.Trim().ToUpper()) return item;
                     }
                 }
-                return DefaulfFieldDocNum;
+                return DefaultFieldDocNum;
             }
             catch (Exception)
             {
-                return DefaulfFieldDocNum;
+                return DefaultFieldDocNum;
+            }
+        }
+
+        // <summary>
+        /// Конвертация в объект EnProductMatrixClassType
+        /// </summary>
+        /// <param name="MatrixParceTypStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaultFieldDocNum">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static EnMatrixParceTyp Convert(string MatrixParceTypStr, EnMatrixParceTyp DefaultMatrixParceTyp)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(MatrixParceTypStr))
+                {
+                    foreach (EnMatrixParceTyp item in EnMatrixParceTyp.GetValues(typeof(EnMatrixParceTyp)))
+                    {
+                        if (item.ToString().ToUpper() == MatrixParceTypStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaultMatrixParceTyp;
+            }
+            catch (Exception)
+            {
+                return DefaultMatrixParceTyp;
             }
         }
     }

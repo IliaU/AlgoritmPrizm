@@ -151,6 +151,17 @@ namespace AlgoritmPrizm
                 }
                 if (SelectPositionProductMatrixClassType > -1) cmbBoxProductMatrixClassType.SelectedIndex = SelectPositionProductMatrixClassType;
                 //
+                this.cmbBoxMatrixParceTyp.Items.Clear();
+                int PositionMatrixParceTyp = -1;
+                int SelectPositionMatrixParceTyp = -1;
+                foreach (EnMatrixParceTyp item in EnMatrixParceTyp.GetValues(typeof(EnMatrixParceTyp)))
+                {
+                    PositionMatrixParceTyp++;
+                    cmbBoxMatrixParceTyp.Items.Add(item.ToString());
+                    if (item == Config.MatrixParceTyp) SelectPositionMatrixParceTyp = PositionMatrixParceTyp;
+                }
+                if (SelectPositionMatrixParceTyp > -1) cmbBoxMatrixParceTyp.SelectedIndex = SelectPositionMatrixParceTyp;
+                //
                 // Наполняем таблицу данными и подключаем к гриду
                 if (this.dt != null && this.dt.Rows.Count == 0)
                 {
@@ -299,6 +310,7 @@ namespace AlgoritmPrizm
                 //
                 Config.ProductMatrixEndOff = Char.Parse(this.txtBoxProductMatrixEndOff.Text);
                 Config.ProductMatrixClassType = EventConvertor.Convert(cmbBoxProductMatrixClassType.Items[cmbBoxProductMatrixClassType.SelectedIndex].ToString(), Config.ProductMatrixClassType);
+                Config.MatrixParceTyp = EventConvertor.Convert(cmbBoxMatrixParceTyp.Items[cmbBoxMatrixParceTyp.SelectedIndex].ToString(), Config.MatrixParceTyp);
                 //
                 List<BLL.ProdictMatrixClass> NewProdictMatrixClass = new List<BLL.ProdictMatrixClass>();
                 for (int i = 0; i < this.dgProdictMatrixClass.Rows.Count; i++)
@@ -393,6 +405,38 @@ namespace AlgoritmPrizm
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при попытке изменить видимость элемента cmbBoxSmsTypGateway_SelectedIndexChanged: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                throw ae;
+            }
+        }
+
+        // Пользователь изменил режим парсинга строки
+        private void cmbBoxMatrixParceTyp_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                this.lblProductMatrixEndOff.Visible = false;
+                this.txtBoxProductMatrixEndOff.Visible = false;
+
+                // Если произошёл какой-то выбор
+                if (cmbBoxMatrixParceTyp.SelectedIndex>-1)
+                {
+                    EnMatrixParceTyp CurMatrixParceTyp = EventConvertor.Convert(cmbBoxMatrixParceTyp.Items[cmbBoxMatrixParceTyp.SelectedIndex].ToString(), Config.MatrixParceTyp);
+
+                    switch (CurMatrixParceTyp)
+                    {
+                        case EnMatrixParceTyp.Seporate:
+                            this.lblProductMatrixEndOff.Visible = true;
+                            this.txtBoxProductMatrixEndOff.Visible = true;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при событии cmbBoxMatrixParceTyp_SelectedIndexChanged: ({0})", ex.Message));
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }

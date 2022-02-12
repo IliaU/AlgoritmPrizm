@@ -105,14 +105,17 @@
             this.ProductClass = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
+            this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
+            this.lblProductMatrixClassType = new System.Windows.Forms.Label();
             this.txtBoxProductMatrixEndOff = new System.Windows.Forms.TextBox();
             this.lblProductMatrixEndOff = new System.Windows.Forms.Label();
             this.chkBoxMandatoryDefault = new System.Windows.Forms.CheckBox();
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
-            this.lblProductMatrixClassType = new System.Windows.Forms.Label();
+            this.cmbBoxMatrixParceTyp = new System.Windows.Forms.ComboBox();
+            this.lblMatrixParceTyp = new System.Windows.Forms.Label();
+            this.pnl_ProdictMatrixClassTopTop = new System.Windows.Forms.Panel();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBox2.SuspendLayout();
@@ -130,6 +133,7 @@
             this.pnl_ProdictMatrixClassTop.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
+            this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -809,9 +813,9 @@
             // 
             this.pnl_ProdictMatrixClassFill.Controls.Add(this.dgProdictMatrixClass);
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 71);
+            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 110);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 319);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(701, 280);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -823,7 +827,7 @@
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 319);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(701, 280);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -843,53 +847,67 @@
             // 
             // pnl_ProdictMatrixClassTop
             // 
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.cmbBoxProductMatrixClassType);
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.lblProductMatrixClassType);
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.txtBoxProductMatrixEndOff);
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.lblProductMatrixEndOff);
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBoxMandatoryDefault);
-            this.pnl_ProdictMatrixClassTop.Controls.Add(this.chkBox_GetMatrixAlways);
+            this.pnl_ProdictMatrixClassTop.Controls.Add(this.pnl_ProdictMatrixClassTopTop);
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 71);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(701, 110);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
+            // 
+            // cmbBoxProductMatrixClassType
+            // 
+            this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
+            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(173, 46);
+            this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
+            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(108, 21);
+            this.cmbBoxProductMatrixClassType.TabIndex = 37;
+            // 
+            // lblProductMatrixClassType
+            // 
+            this.lblProductMatrixClassType.AutoSize = true;
+            this.lblProductMatrixClassType.Location = new System.Drawing.Point(8, 49);
+            this.lblProductMatrixClassType.Name = "lblProductMatrixClassType";
+            this.lblProductMatrixClassType.Size = new System.Drawing.Size(159, 13);
+            this.lblProductMatrixClassType.TabIndex = 36;
+            this.lblProductMatrixClassType.Text = "В каком поле искать признак";
             // 
             // txtBoxProductMatrixEndOff
             // 
-            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(564, 23);
+            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(636, 77);
             this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
             this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(40, 20);
             this.txtBoxProductMatrixEndOff.TabIndex = 3;
+            this.txtBoxProductMatrixEndOff.Visible = false;
             // 
             // lblProductMatrixEndOff
             // 
-            this.lblProductMatrixEndOff.AutoSize = true;
-            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(5, 26);
+            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(399, 67);
             this.lblProductMatrixEndOff.Name = "lblProductMatrixEndOff";
-            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(553, 13);
+            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(231, 30);
             this.lblProductMatrixEndOff.TabIndex = 2;
             this.lblProductMatrixEndOff.Text = "Признак окончания класса в поле DCS если пусто то будет сравниваться всё поле цел" +
     "иком (один символ)";
+            this.lblProductMatrixEndOff.Visible = false;
             // 
             // chkBoxMandatoryDefault
             // 
             this.chkBoxMandatoryDefault.AutoSize = true;
-            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(268, 6);
+            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(8, 26);
             this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
-            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(171, 17);
+            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(406, 17);
             this.chkBoxMandatoryDefault.TabIndex = 1;
-            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию";
+            this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию (как реагировать если не найдено в правиле)";
             this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
             // 
             // chkBox_GetMatrixAlways
             // 
             this.chkBox_GetMatrixAlways.AutoSize = true;
-            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 6);
+            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 3);
             this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
-            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(254, 17);
+            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(383, 17);
             this.chkBox_GetMatrixAlways.TabIndex = 0;
-            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам";
+            this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам независимо от настроек";
             this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
             this.chkBox_GetMatrixAlways.CheckedChanged += new System.EventHandler(this.chkBox_GetMatrixAlways_CheckedChanged);
             // 
@@ -911,23 +929,40 @@
             this.pnlFill.Size = new System.Drawing.Size(709, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // cmbBoxProductMatrixClassType
+            // cmbBoxMatrixParceTyp
             // 
-            this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
-            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(173, 45);
-            this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
-            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(108, 21);
-            this.cmbBoxProductMatrixClassType.TabIndex = 37;
+            this.cmbBoxMatrixParceTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxMatrixParceTyp.FormattingEnabled = true;
+            this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(276, 76);
+            this.cmbBoxMatrixParceTyp.Name = "cmbBoxMatrixParceTyp";
+            this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(108, 21);
+            this.cmbBoxMatrixParceTyp.TabIndex = 38;
+            this.cmbBoxMatrixParceTyp.SelectedIndexChanged += new System.EventHandler(this.cmbBoxMatrixParceTyp_SelectedIndexChanged);
             // 
-            // lblProductMatrixClassType
+            // lblMatrixParceTyp
             // 
-            this.lblProductMatrixClassType.AutoSize = true;
-            this.lblProductMatrixClassType.Location = new System.Drawing.Point(8, 48);
-            this.lblProductMatrixClassType.Name = "lblProductMatrixClassType";
-            this.lblProductMatrixClassType.Size = new System.Drawing.Size(159, 13);
-            this.lblProductMatrixClassType.TabIndex = 36;
-            this.lblProductMatrixClassType.Text = "В каком поле искать признак";
+            this.lblMatrixParceTyp.AutoSize = true;
+            this.lblMatrixParceTyp.Location = new System.Drawing.Point(5, 76);
+            this.lblMatrixParceTyp.Name = "lblMatrixParceTyp";
+            this.lblMatrixParceTyp.Size = new System.Drawing.Size(265, 13);
+            this.lblMatrixParceTyp.TabIndex = 39;
+            this.lblMatrixParceTyp.Text = "Выбираем режим поиска по правилам из таблицы";
+            // 
+            // pnl_ProdictMatrixClassTopTop
+            // 
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.lblProductMatrixEndOff);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.txtBoxProductMatrixEndOff);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.chkBox_GetMatrixAlways);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.lblMatrixParceTyp);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.chkBoxMandatoryDefault);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.cmbBoxMatrixParceTyp);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.lblProductMatrixClassType);
+            this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.cmbBoxProductMatrixClassType);
+            this.pnl_ProdictMatrixClassTopTop.Dock = System.Windows.Forms.DockStyle.Top;
+            this.pnl_ProdictMatrixClassTopTop.Location = new System.Drawing.Point(0, 0);
+            this.pnl_ProdictMatrixClassTopTop.Name = "pnl_ProdictMatrixClassTopTop";
+            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(701, 101);
+            this.pnl_ProdictMatrixClassTopTop.TabIndex = 40;
             // 
             // FConfig
             // 
@@ -963,9 +998,10 @@
             this.pnl_ProdictMatrixClassFill.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).EndInit();
             this.pnl_ProdictMatrixClassTop.ResumeLayout(false);
-            this.pnl_ProdictMatrixClassTop.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
+            this.pnl_ProdictMatrixClassTopTop.ResumeLayout(false);
+            this.pnl_ProdictMatrixClassTopTop.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1056,5 +1092,8 @@
         private System.Windows.Forms.Label lblTenderTypeAvans;
         private System.Windows.Forms.ComboBox cmbBoxProductMatrixClassType;
         private System.Windows.Forms.Label lblProductMatrixClassType;
+        private System.Windows.Forms.ComboBox cmbBoxMatrixParceTyp;
+        private System.Windows.Forms.Panel pnl_ProdictMatrixClassTopTop;
+        private System.Windows.Forms.Label lblMatrixParceTyp;
     }
 }

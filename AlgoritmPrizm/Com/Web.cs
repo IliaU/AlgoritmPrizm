@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-
 using System.Threading;
 using System.Threading.Tasks;
 using System.Net;
@@ -15,6 +14,7 @@ using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.BLL;
 using AlgoritmPrizm.Com.Report;
 using System.Net.Http;
+using System.Text.RegularExpressions;
 
 //https://habr.com/ru/post/120157/
 //https://metanit.com/sharp/net/7.1.php
@@ -265,7 +265,47 @@ namespace AlgoritmPrizm.Com
                                     
                                     foreach (ProdictMatrixClass item in Config.ProdictMatrixClassList)
                                     {
-                                        if (string.IsNullOrEmpty(Config.ProductMatrixEndOff.ToString()))
+                                        // смотрим какой тип парсинга выбран пользователем
+                                        switch (Config.MatrixParceTyp)
+                                        {
+                                            // Выбрано полное сравнение с значением в базе
+                                            case EnMatrixParceTyp.Normal:
+                                                if (dcs_code == item.ProductClass)
+                                                {
+                                                    Mandatory = item.Mandatory;
+                                                    HashProductClass = true;
+                                                    break;
+                                                }
+                                                break;
+                                            // Выбрано сравнение на основе сепоратора
+                                            case EnMatrixParceTyp.Seporate:
+                                                if (dcs_code.Split(Config.ProductMatrixEndOff)[0] == item.ProductClass)
+                                                {
+                                                    Mandatory = item.Mandatory;
+                                                    HashProductClass = true;
+                                                    break;
+                                                }
+                                                break;
+                                            // выбран парсинг на основе регулярного выражения например @"Туз(\w*)" для поиска всего что начинается с Туз
+                                            // \w  означает любой алфавитно цыфровой символ
+                                            // *   означает любое колисество
+                                            case EnMatrixParceTyp.Regular:
+                                                // Создаём регулярное выражение
+                                                Regex regex = new Regex(item.ProductClass);
+                                                // Применяем регулярное выражение ктексту
+                                                MatchCollection mathes = regex.Matches(dcs_code);
+                                                // Если найдено хоть одно значение то применяем правило
+                                                if (mathes.Count>0)
+                                                {
+                                                    Mandatory = item.Mandatory;
+                                                    HashProductClass = true;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+
+                                        /*if (string.IsNullOrEmpty(Config.ProductMatrixEndOff.ToString()))
                                         {
                                             if (dcs_code == item.ProductClass)
                                             {
@@ -282,7 +322,7 @@ namespace AlgoritmPrizm.Com
                                                 HashProductClass = true;
                                                 break;
                                             }
-                                        }
+                                        }*/
                                     }
                                 }
 

@@ -207,6 +207,7 @@
       <DependentUpon>FLic.cs</DependentUpon>
     </Compile>
     <Compile Include="Lib\EnFrTyp.cs" />
+    <Compile Include="Lib\EnMatrixParceTyp.cs" />
     <Compile Include="Lib\EnProductMatrixClassType.cs" />
     <Compile Include="Lib\EnSmsTypGateway.cs" />
     <Compile Include="Lib\EnSmtpTyp.cs" />

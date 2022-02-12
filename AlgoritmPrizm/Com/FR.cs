@@ -376,7 +376,7 @@ namespace AlgoritmPrizm.Com
                 {
                     Employee TekEmployees = Config.employees.Find(t => t.PrizmLogin.ToUpper() == employee.ToUpper());
                     if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
-                    PrintLine(employee, true);
+                    PrintLine(string.Format("Сотрудник: {0}",employee), true);
                 }
 
                 //************** ПЕЧАТЬ ПОЗИЦИЙ ЧЕКА **************************************
