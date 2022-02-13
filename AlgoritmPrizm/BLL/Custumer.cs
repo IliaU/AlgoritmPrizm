@@ -25,6 +25,11 @@ namespace AlgoritmPrizm.BLL
         public string fio_fo_check;
 
         /// <summary>
+        /// Должность
+        /// </summary>
+        public string Job;
+
+        /// <summary>
         /// Какой ИНН у кассира для подстановки в FR
         /// </summary>
         public string inn;
@@ -34,8 +39,9 @@ namespace AlgoritmPrizm.BLL
         /// </summary>
         /// <param name="login">Логин в программе RPro</param>
         /// <param name="fio_fo_check">Как писать в чеке fio</param>
+        /// <param name="Job">Должность</param>
         /// <param name="inn">Какой ИНН у кассира для подстановки в FR</param>
-        public Custumer(string login, string fio_fo_check, string inn)
+        public Custumer(string login, string fio_fo_check, string Job, string inn)
         {
             try
             {
@@ -43,6 +49,7 @@ namespace AlgoritmPrizm.BLL
                 {
                     this.login = login;
                     this.fio_fo_check = fio_fo_check;
+                    this.Job = Job;
                     this.inn = inn;
                     return;
                 }

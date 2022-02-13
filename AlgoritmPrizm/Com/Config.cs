@@ -1333,9 +1333,11 @@ namespace AlgoritmPrizm.Com
                     xmlRoot.AppendChild(xmlCustomers);
                 }
 
-                foreach (XmlElement item in xmlCustomers.ChildNodes)
+                XmlNodeList itemList = xmlCustomers.ChildNodes;
+                int itemListCount = itemList.Count-1;
+                for (int i = itemListCount; i >=0 ; i--)
                 {
-                    xmlCustomers.RemoveChild(item);
+                    xmlCustomers.RemoveChild(itemList[i]);
                 }
 
                 foreach (Custumer item in NewCustumers)
@@ -1343,6 +1345,7 @@ namespace AlgoritmPrizm.Com
                     XmlElement xmlCustomerTest = Document.CreateElement("Customer");
                     xmlCustomerTest.SetAttribute("Login", item.login);
                     xmlCustomerTest.SetAttribute("Fio", item.fio_fo_check);
+                    xmlCustomerTest.SetAttribute("Job", item.Job);
                     xmlCustomerTest.SetAttribute("INN", item.inn);
                     xmlCustomers.AppendChild(xmlCustomerTest);
                 }
@@ -1375,9 +1378,11 @@ namespace AlgoritmPrizm.Com
                     xmlRoot.AppendChild(xmlEmployees);
                 }
 
-                foreach (XmlElement item in xmlEmployees.ChildNodes)
+                XmlNodeList itemList = xmlEmployees.ChildNodes;
+                int itemListCount = itemList.Count - 1;
+                for (int i = itemListCount; i >= 0; i--)
                 {
-                    xmlEmployees.RemoveChild(item);
+                    xmlEmployees.RemoveChild(itemList[i]);
                 }
 
                 foreach (Employee item in NewEmployees)
@@ -1414,10 +1419,12 @@ namespace AlgoritmPrizm.Com
                     xmlProdictMatrixClassList = Document.CreateElement("ProdictMatrixClassList");
                     xmlRoot.AppendChild(xmlProdictMatrixClassList);
                 }
-                
-                foreach (XmlElement item in xmlProdictMatrixClassList.ChildNodes)
+
+                XmlNodeList itemList = xmlProdictMatrixClassList.ChildNodes;
+                int itemListCount = itemList.Count - 1;
+                for (int i = itemListCount; i >= 0; i--)
                 {
-                    xmlProdictMatrixClassList.RemoveChild(item);
+                    xmlProdictMatrixClassList.RemoveChild(itemList[i]);
                 }
 
                 foreach (ProdictMatrixClass item in NewProdictMatrixClass)
@@ -1784,6 +1791,7 @@ namespace AlgoritmPrizm.Com
 
                                             string login = null;
                                             string fio = null;
+                                            string Job = null;
                                             string inn = null;
 
                                             // Получаем значения из заголовка
@@ -1791,6 +1799,7 @@ namespace AlgoritmPrizm.Com
                                             {
                                                 if (iCustomers.Attributes[i].Name == "Login") try { login = iCustomers.Attributes[i].Value.ToString(); } catch (Exception) { }
                                                 if (iCustomers.Attributes[i].Name == "Fio") try { fio = iCustomers.Attributes[i].Value.ToString(); } catch (Exception) { }
+                                                if (iCustomers.Attributes[i].Name == "Job") try { Job = iCustomers.Attributes[i].Value.ToString(); } catch (Exception) { }
                                                 if (iCustomers.Attributes[i].Name == "INN") try { inn = iCustomers.Attributes[i].Value.ToString(); } catch (Exception) { }
 
                                             }
@@ -1807,7 +1816,7 @@ namespace AlgoritmPrizm.Com
                                                     }
                                                 }
 
-                                                if (HashFlagCustomer) _customers.Add(new Custumer(login, fio, inn));
+                                                if (HashFlagCustomer) _customers.Add(new Custumer(login, fio, Job, inn));
                                             }
 
                                             break;

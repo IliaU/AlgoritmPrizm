@@ -31,11 +31,12 @@
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FCashiries));
             this.pnlTop = new System.Windows.Forms.Panel();
             this.pnlButtom = new System.Windows.Forms.Panel();
-            this.pnlFill = new System.Windows.Forms.Panel();
             this.btnSave = new System.Windows.Forms.Button();
+            this.pnlFill = new System.Windows.Forms.Panel();
             this.dGView = new System.Windows.Forms.DataGridView();
             this.Login = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Fio = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Job = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.INN = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.pnlButtom.SuspendLayout();
             this.pnlFill.SuspendLayout();
@@ -47,7 +48,7 @@
             this.pnlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnlTop.Location = new System.Drawing.Point(0, 0);
             this.pnlTop.Name = "pnlTop";
-            this.pnlTop.Size = new System.Drawing.Size(825, 50);
+            this.pnlTop.Size = new System.Drawing.Size(1231, 50);
             this.pnlTop.TabIndex = 0;
             this.pnlTop.Visible = false;
             // 
@@ -57,21 +58,12 @@
             this.pnlButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlButtom.Location = new System.Drawing.Point(0, 388);
             this.pnlButtom.Name = "pnlButtom";
-            this.pnlButtom.Size = new System.Drawing.Size(825, 33);
+            this.pnlButtom.Size = new System.Drawing.Size(1231, 33);
             this.pnlButtom.TabIndex = 1;
-            // 
-            // pnlFill
-            // 
-            this.pnlFill.Controls.Add(this.dGView);
-            this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFill.Location = new System.Drawing.Point(0, 50);
-            this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(825, 338);
-            this.pnlFill.TabIndex = 2;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(747, 6);
+            this.btnSave.Location = new System.Drawing.Point(1103, 6);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 0;
@@ -79,17 +71,27 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // pnlFill
+            // 
+            this.pnlFill.Controls.Add(this.dGView);
+            this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pnlFill.Location = new System.Drawing.Point(0, 50);
+            this.pnlFill.Name = "pnlFill";
+            this.pnlFill.Size = new System.Drawing.Size(1231, 338);
+            this.pnlFill.TabIndex = 2;
+            // 
             // dGView
             // 
             this.dGView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dGView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Login,
             this.Fio,
+            this.Job,
             this.INN});
             this.dGView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dGView.Location = new System.Drawing.Point(0, 0);
             this.dGView.Name = "dGView";
-            this.dGView.Size = new System.Drawing.Size(825, 338);
+            this.dGView.Size = new System.Drawing.Size(1231, 338);
             this.dGView.TabIndex = 0;
             // 
             // Login
@@ -106,6 +108,13 @@
             this.Fio.Name = "Fio";
             this.Fio.Width = 400;
             // 
+            // Job
+            // 
+            this.Job.DataPropertyName = "Job";
+            this.Job.HeaderText = "Должность";
+            this.Job.Name = "Job";
+            this.Job.Width = 400;
+            // 
             // INN
             // 
             this.INN.DataPropertyName = "INN";
@@ -117,7 +126,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(825, 421);
+            this.ClientSize = new System.Drawing.Size(1231, 421);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlButtom);
             this.Controls.Add(this.pnlTop);
@@ -141,6 +150,7 @@
         private System.Windows.Forms.DataGridView dGView;
         private System.Windows.Forms.DataGridViewTextBoxColumn Login;
         private System.Windows.Forms.DataGridViewTextBoxColumn Fio;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Job;
         private System.Windows.Forms.DataGridViewTextBoxColumn INN;
     }
 }

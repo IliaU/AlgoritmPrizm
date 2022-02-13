@@ -32,6 +32,7 @@ namespace AlgoritmPrizm
                     this.dt = new DataTable();
                     this.dt.Columns.Add(new DataColumn("Login", typeof(string)));
                     this.dt.Columns.Add(new DataColumn("Fio", typeof(string)));
+                    this.dt.Columns.Add(new DataColumn("Job", typeof(string)));
                     this.dt.Columns.Add(new DataColumn("INN", typeof(string)));
                 }
             }
@@ -57,6 +58,7 @@ namespace AlgoritmPrizm
                         DataRow nrow = this.dt.NewRow();
                         nrow["Login"] = item.login;
                         nrow["Fio"] = item.fio_fo_check;
+                        nrow["Job"] = item.Job;
                         nrow["Inn"] = item.inn;
                         this.dt.Rows.Add(nrow);
                     }
@@ -85,10 +87,12 @@ namespace AlgoritmPrizm
                     if (this.dGView.Rows[i].Cells["Login"].Value!=null) strLogin = this.dGView.Rows[i].Cells["Login"].Value.ToString();
                     string strFio = null;
                     if (this.dGView.Rows[i].Cells["Fio"].Value != null) strFio = this.dGView.Rows[i].Cells["Fio"].Value.ToString();
+                    string strJob = null;
+                    if (this.dGView.Rows[i].Cells["Job"].Value != null) strJob = this.dGView.Rows[i].Cells["Job"].Value.ToString();
                     string strINN = null;
                     if (this.dGView.Rows[i].Cells["INN"].Value !=null) strINN = this.dGView.Rows[i].Cells["INN"].Value.ToString();
 
-                    if (strLogin != null && strFio != null && strINN != null)
+                    if (strLogin != null && strFio != null && strJob != null && strINN != null)
                     {
                         if (string.IsNullOrWhiteSpace(strLogin))
                         {
@@ -99,6 +103,12 @@ namespace AlgoritmPrizm
                         if (string.IsNullOrWhiteSpace(strFio))
                         {
                             Log.EventSave("Не указано обязательное поле ФИО строчка будет пропущена", GetType().Name, EventEn.Warning);
+                            continue;
+                        }
+
+                        if (string.IsNullOrWhiteSpace(strJob))
+                        {
+                            Log.EventSave("Не указано обязательное поле Должность строчка будет пропущена", GetType().Name, EventEn.Warning);
                             continue;
                         }
 
@@ -118,7 +128,7 @@ namespace AlgoritmPrizm
                             }
                         }
 
-                        if (HashFlagCustomer) NewCustumers.Add(new Custumer(strLogin, strFio, strINN));
+                        if (HashFlagCustomer) NewCustumers.Add(new Custumer(strLogin, strFio, strJob, strINN));
                     }               
                 }
 

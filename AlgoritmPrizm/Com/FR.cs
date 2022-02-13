@@ -1026,16 +1026,13 @@ namespace AlgoritmPrizm.Com
                         Verification(Fr);
                         throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
                     }
-
-                    // Печать инфа по скидке по позиции
-                    if (item.discount_amt != 0)
-                    {
-                        PrintLine(string.Format("Включая скидку {0} руб.", item.discount_amt), true);
-                    }
                 }
 
-                // Что- то надо написать
-                if (!string.IsNullOrWhiteSpace(TekStavkiNdsDescription)) PrintLine(string.Format("НДС {0}%",TekStavkiNdsDescription), true);
+                // Печать инфа по скидке по позиции
+                if (item.discount_amt != 0)
+                {
+                    PrintLine(string.Format("Включая скидку {0} руб.", item.discount_amt), true);
+                }
             }
             catch (Exception ex)
             {
@@ -1268,7 +1265,9 @@ namespace AlgoritmPrizm.Com
                 Fr.TableNumber = 2;
                 Fr.RowNumber = 30;
                 Fr.FieldNumber = 2;
-                Fr.ValueOfFieldString = TekCustomer.fio_fo_check;  // "Жирникова Анастасия";     // Имя кассира
+                string TekCustomerTmp = TekCustomer.fio_fo_check.Trim();
+                if (!string.IsNullOrWhiteSpace(TekCustomer.Job)) TekCustomerTmp = string.Format("{0} {1}", TekCustomerTmp, TekCustomer.Job).Trim();
+                Fr.ValueOfFieldString = TekCustomerTmp;  // "Жирникова Анастасия";     // Имя кассира
                 if (Fr.WriteTable() != 0)
                 {
                     Verification(Fr);
