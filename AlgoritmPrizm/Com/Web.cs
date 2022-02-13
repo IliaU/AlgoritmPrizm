@@ -434,6 +434,13 @@ namespace AlgoritmPrizm.Com
                                 responceString = BLL.JsonPrintFiscDocReturn.SerializeObject(rezPrintCheck);
 
                                 break;
+                            case @"/printdoccopy":
+                                // Десериализуем наш объект
+                                JsonPrintFiscDoc DocCopy = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
+
+                                // Отправляем на печать
+                                FR.PrintCheck(DocCopy, 1, "Рога и копыта", true);
+                                break;
                             case @"/AksRepItemHistory":
                                 try
                                 {
@@ -988,6 +995,84 @@ namespace AlgoritmPrizm.Com
                 Log.EventSave(ae.Message, "Com.Web.GetDocumentsJournalRestSharp", EventEn.Error);
                 throw ae;
             }
+        }
+
+        /// <summary>
+        /// Получаем списко строк которые относятся к документу
+        /// </summary>
+        /// <param name="doc">Документ к которому мы хотим получить строки</param>
+        /// <returns>Список строк в документе</returns>
+        public static List<JsonPrintFiscDocItem> GetCopyDocumentsJournalRestSharp(string Link)
+        {
+            List<JsonPrintFiscDocItem> rez = new List<JsonPrintFiscDocItem>();
+            string ResContent = null;
+
+            try
+            {
+                // Проверяем наличие токена и если он протух то продлеваем его
+                GetAuthenticationToken();
+
+                string url = string.Format("{0}{1}?cols=*", Config.HostPrizmApi, Link);
+                RestClient _httpClient = new RestClient(url);
+                RestRequest request = new RestRequest { Method = Method.GET };
+                request.AddHeader("Accept", "application/json,version=2");
+                request.AddHeader("Auth-Session", AuthSession);
+
+                // Получаем ответ
+                IRestResponse response = _httpClient.Execute(request);
+                ResContent = response.Content;
+
+
+                // Получаем предварительный список документов и парсим
+                rez = JsonPrintFiscDocItem.DeserializeJson(ResContent);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0} при парсинге следующего текста /r/n{1}", ex.Message, ResContent));
+                Log.EventSave(ae.Message, "Com.Web.GetDocumentsJournalRestSharp", EventEn.Error);
+                //throw ae;
+            }
+
+            return rez;
+        }
+
+        /// <summary>
+        /// Получаем списко строк которые относятся к документу
+        /// </summary>
+        /// <param name="doc">Документ к которому мы хотим получить строки</param>
+        /// <returns>Список строк в документе</returns>
+        public static List<JsonPrintFiscDocTender> GetCopyDocumentsTenderRestSharp(string Link)
+        {
+            List<JsonPrintFiscDocTender> rez = new List<JsonPrintFiscDocTender>();
+            string ResContent = null;
+
+            try
+            {
+                // Проверяем наличие токена и если он протух то продлеваем его
+                GetAuthenticationToken();
+
+                string url = string.Format("{0}{1}?cols=*", Config.HostPrizmApi, Link);
+                RestClient _httpClient = new RestClient(url);
+                RestRequest request = new RestRequest { Method = Method.GET };
+                request.AddHeader("Accept", "application/json,version=2");
+                request.AddHeader("Auth-Session", AuthSession);
+
+                // Получаем ответ
+                IRestResponse response = _httpClient.Execute(request);
+                ResContent = response.Content;
+
+
+                // Получаем предварительный список документов и парсим
+                rez = JsonPrintFiscDocTender.DeserializeJson(ResContent);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0} при парсинге следующего текста /r/n{1}", ex.Message, ResContent));
+                Log.EventSave(ae.Message, "Com.Web.GetDocumentsJournalRestSharp", EventEn.Error);
+                //throw ae;
+            }
+
+            return rez;
         }
 
         /// <summary>
