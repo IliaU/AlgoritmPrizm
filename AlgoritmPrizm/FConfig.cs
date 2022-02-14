@@ -275,8 +275,8 @@ namespace AlgoritmPrizm
                 }
 
                 this.txtBoxLimitCachForUrik.Text = Config.LimitCachForUrik.ToString();
-                
 
+                this.chkBoxEmployeePrintingForEveryLine.Checked = Config.EmployeePrintingForEveryLine;
             }
             catch (Exception ex)
             {
@@ -506,6 +506,8 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в формат decimal.", this.txtBoxLimitCachForUrik.Text), GetType().Name, EventEn.Message);
                 }
+
+                Config.EmployeePrintingForEveryLine = this.chkBoxEmployeePrintingForEveryLine.Checked;
 
                 this.Close();
             }

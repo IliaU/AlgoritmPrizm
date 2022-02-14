@@ -763,6 +763,25 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+                // Печать сотрудника если такая настройка включена
+                if (Config.EmployeePrintingForEveryLine)
+                {
+                    // Печатаем сотрудника продавшего товар
+                    string employee = null;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee1_name)) employee = item.employee1_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee2_name)) employee = item.employee2_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee3_name)) employee = item.employee3_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee4_name)) employee = item.employee4_name;
+                    if (employee == null && !string.IsNullOrWhiteSpace(item.employee5_name)) employee = item.employee5_name;
+                    //
+                    if (!string.IsNullOrWhiteSpace(employee))
+                    {
+                        Employee TekEmployees = Config.employees.Find(t => t.PrizmLogin.ToUpper() == employee.ToUpper());
+                        if (TekEmployees != null && !string.IsNullOrWhiteSpace(TekEmployees.fio_fo_check)) employee = TekEmployees.fio_fo_check.Trim();
+                        Print2in1Line("Сотрудник:", employee);
+                    }
+                }
+
                 // Печать штрих кода
                 //if (!string.IsNullOrWhiteSpace(item.scan_upc)) PrintLine(item.scan_upc);
 
@@ -1126,7 +1145,7 @@ namespace AlgoritmPrizm.Com
                 // Печать инфа по скидке по позиции
                 if (item.discount_amt != 0)
                 {
-                    PrintLine(string.Format("Включая скидку {0} руб.", item.discount_amt), true);
+                    Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString()), string.Format("{0} руб.", item.discount_amt));
                 }
             }
             catch (Exception ex)

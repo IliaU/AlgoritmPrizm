@@ -134,6 +134,7 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
+            this.chkBoxEmployeePrintingForEveryLine = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxDisplay.SuspendLayout();
@@ -800,6 +801,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.chkBoxEmployeePrintingForEveryLine);
             this.tabPage3.Controls.Add(this.cmbBoxFieldItem5);
             this.tabPage3.Controls.Add(this.cmbBoxFieldItem4);
             this.tabPage3.Controls.Add(this.cmbBoxFieldItem3);
@@ -1157,6 +1159,16 @@
             this.pnlFill.Size = new System.Drawing.Size(723, 416);
             this.pnlFill.TabIndex = 40;
             // 
+            // chkBoxEmployeePrintingForEveryLine
+            // 
+            this.chkBoxEmployeePrintingForEveryLine.AutoSize = true;
+            this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(422, 16);
+            this.chkBoxEmployeePrintingForEveryLine.Name = "chkBoxEmployeePrintingForEveryLine";
+            this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(285, 17);
+            this.chkBoxEmployeePrintingForEveryLine.TabIndex = 45;
+            this.chkBoxEmployeePrintingForEveryLine.Text = "Печать сотрудника на каждой строке если он есть";
+            this.chkBoxEmployeePrintingForEveryLine.UseVisualStyleBackColor = true;
+            // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -1308,5 +1320,6 @@
         private System.Windows.Forms.Label lblDisplayDataBits;
         private System.Windows.Forms.ComboBox cmbBoxStopBits;
         private System.Windows.Forms.Label lblStopBits;
+        private System.Windows.Forms.CheckBox chkBoxEmployeePrintingForEveryLine;
     }
 }

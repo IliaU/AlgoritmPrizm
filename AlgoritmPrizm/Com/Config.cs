@@ -330,6 +330,11 @@ namespace AlgoritmPrizm.Com
         /// Идентификатор налоговой ставки в фискальнике 20/120%
         /// </summary>
         private static int _TaxPercent20120 = 5;
+
+        /// <summary>
+        /// Печать сотрудника на каждой строке чека
+        /// </summary>
+        private static bool _EmployeePrintingForEveryLine = false;
         #endregion
 
         #region Public Param
@@ -1271,6 +1276,23 @@ namespace AlgoritmPrizm.Com
             }
         }
 
+
+        /// <summary>
+        /// Печать сотрудника на каждой строке чека
+        /// </summary>
+        public static bool EmployeePrintingForEveryLine
+        {
+            get
+            {
+                return _EmployeePrintingForEveryLine;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("EmployeePrintingForEveryLine", value.ToString());
+                Save();
+                _EmployeePrintingForEveryLine = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1561,6 +1583,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("TaxPercent20", _TaxPercent20.ToString());
                     xmlMain.SetAttribute("TaxPercent10110", _TaxPercent10110.ToString());
                     xmlMain.SetAttribute("TaxPercent20120", _TaxPercent20120.ToString());
+                    xmlMain.SetAttribute("EmployeePrintingForEveryLine", _EmployeePrintingForEveryLine.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1679,6 +1702,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "TaxPercent20") try { _TaxPercent20 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TaxPercent10110") try { _TaxPercent10110 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TaxPercent20120") try { _TaxPercent20120 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "EmployeePrintingForEveryLine") try { _EmployeePrintingForEveryLine = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер
