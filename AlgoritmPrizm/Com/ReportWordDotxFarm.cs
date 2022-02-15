@@ -976,9 +976,24 @@ Where sid = '{0}'", DocSid));
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
-                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"Select sid
-From rpsods.document
-Where sid = '{0}'", DocSid));
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"With T AS (Select D.sid, D.doc_no, 
+        Date_Format(D.created_datetime,'%d.%m.%Y') As dt, 
+        A.address_3 As inn,
+        '54ff8a8584631c0f68cef121eff8777217128bc1' As token
+    From rpsods.document D
+      inner join rpsods.customer C On D.bt_cuid = C.sid
+      inner join rpsods.customer_address A On C.sid = A.cust_sid
+    Where D.sid = '{0}'
+    )
+Select sid From T
+union 
+Select doc_no From T
+union 
+Select dt From T
+union 
+Select inn From T
+union 
+Select token From T", DocSid));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();

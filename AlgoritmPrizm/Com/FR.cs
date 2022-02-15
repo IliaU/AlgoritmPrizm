@@ -1145,7 +1145,14 @@ namespace AlgoritmPrizm.Com
                 // Печать инфа по скидке по позиции
                 if (item.discount_amt != 0)
                 {
-                    Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString()), string.Format("{0} руб.", item.discount_amt));
+                    if (item.discount_amt > 0)
+                    {
+                        Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString()), string.Format("{0} руб.", item.discount_amt));
+                    } 
+                    else
+                    {
+                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc*-1, 2).ToString()), string.Format("{0} руб.", item.discount_amt*-1));
+                    }
                 }
             }
             catch (Exception ex)

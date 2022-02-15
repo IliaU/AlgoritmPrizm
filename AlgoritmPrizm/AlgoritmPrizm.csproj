@@ -226,7 +226,6 @@
     <Compile Include="FStart.Designer.cs">
       <DependentUpon>FStart.cs</DependentUpon>
     </Compile>
-    <Compile Include="FR.cs" />
     <Compile Include="Lib\EventConvertor.cs" />
     <Compile Include="Lib\EventEn.cs" />
     <Compile Include="Lib\EventLog.cs" />
@@ -236,7 +235,6 @@
     <Compile Include="Lib\UProvider.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Server.cs" />
     <EmbeddedResource Include="Com\Provider\ODBC\FInfo.resx">
       <DependentUpon>FInfo.cs</DependentUpon>
     </EmbeddedResource>
