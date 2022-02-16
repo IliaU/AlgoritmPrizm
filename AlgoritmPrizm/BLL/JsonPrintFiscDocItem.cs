@@ -177,7 +177,7 @@ namespace AlgoritmPrizm.BLL
         public string invn_sbs_item_sid;
         public string custom_flag;
         public string return_reason;
-        public int price_lvl;
+        public int? price_lvl;
         public int? order_quantity_filled;
         public double int_quantity;
         public double? so_deposit_amt;

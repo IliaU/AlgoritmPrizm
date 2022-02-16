@@ -217,6 +217,10 @@
     <Compile Include="Lib\FfdEn.cs" />
     <Compile Include="Lib\FieldDocNumEn.cs" />
     <Compile Include="Lib\FieldItemEn.cs" />
+    <Compile Include="Lib\FrGetSummCheckRezType.cs" />
+    <Compile Include="Lib\FrGetSummCheckRezTypeEn.cs" />
+    <Compile Include="Lib\FrGetSummCheckRezTypeTenderName.cs" />
+    <Compile Include="Lib\FrGetSummCheckRez.cs" />
     <Compile Include="Lib\FrStatError.cs" />
     <Compile Include="Com\Log.cs" />
     <Compile Include="Com\Web.cs" />

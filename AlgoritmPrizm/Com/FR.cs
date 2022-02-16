@@ -386,7 +386,7 @@ namespace AlgoritmPrizm.Com
 
                 // Сумма чека для предоплаты в момент просчёта строк
                 decimal SumChekForPredoplata = 0;
-                decimal SumChekFoCustomer = GetSummCheck(Doc, false); // Получаем сумму чека из фискальника чтобы потом этого не делать при просчёте позиций во время предоплаты
+                FrGetSummCheckRez SumChekFoCustomer = GetSummCheck(Doc, false); // Получаем сумму чека из фискальника чтобы потом этого не делать при просчёте позиций во время предоплаты
                 decimal SumChekFoPrice = 0;
                 foreach (JsonPrintFiscDocItem item in Doc.items)
                 {
@@ -469,76 +469,76 @@ namespace AlgoritmPrizm.Com
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note1))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note1, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note1, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note2
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note2))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note2, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note2, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note3
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note3))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note3, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note3, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note4
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note4))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note4, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note4, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note5
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note5))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note5, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note5, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note6
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note6))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note6, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note6, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note7
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note7))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note7, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note7, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note8
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note8))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note8, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note8, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note9
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note9))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note9, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note9, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Проверяем есть кодмаркировки или нет по полю note10
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note10))
                     {
                         flagmarkink = true;
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
 
                     // Если эта строка не содержала товаров с маркировкой
                     if (!flagmarkink)
                     {
-                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer, SumChekFoPrice);
+                        PrintCheckItem(IsCopy, Doc, Doc.items[itm], itm, Doc.items[itm].note10, 1, TekStavkiNdsDescription, TekStavkiNDS1, TekStavkiNDS2, TekStavkiNDS3, TekStavkiNDS4, DocCustTyp, ref SumChekForPredoplata, itm, Doc.items.Count, SumChekFoCustomer.itog, SumChekFoPrice);
                     }
                 }
 
@@ -1147,11 +1147,11 @@ namespace AlgoritmPrizm.Com
                 {
                     if (item.discount_amt > 0)
                     {
-                        Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString()), string.Format("{0} руб.", item.discount_amt));
+                        Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt));
                     } 
                     else
                     {
-                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc*-1, 2).ToString()), string.Format("{0} руб.", item.discount_amt*-1));
+                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc*-1, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt*-1));
                     }
                 }
             }
@@ -1614,7 +1614,7 @@ namespace AlgoritmPrizm.Com
                     {
                         PrintSeparator();       // Отчёркиваем линию
 
-                        Print2in1Line(string.Format("Скидка на чек   {0}", Doc.discount_perc),
+                        Print2in1Line(string.Format("Скидка на чек   {0}", ((double)Doc.discount_perc).ToString("0.00")),
                                 string.Format("={0}", Doc.discount_amount));
                     }
                     else
@@ -1658,8 +1658,8 @@ namespace AlgoritmPrizm.Com
 
                 if (Doc.total_discount_amt != null || Doc.total_discount_amt != 0)
                 {
-                    Print2in1Line(string.Format("Скидка на чек   {0}", Doc.total_discount_amt),
-                                string.Format("={0}", Doc.total_discount_amt));
+                    Print2in1Line(string.Format("Скидка на чек   {0}", ((double)Doc.total_discount_amt).ToString("0.00")),
+                                string.Format("={0}", ((double)Doc.total_discount_amt).ToString("0.00")));
                 }
             }
             catch (Exception ex)
@@ -1676,11 +1676,11 @@ namespace AlgoritmPrizm.Com
         /// <param name="Doc">Сам документ</param>
         /// <param name="CrocessSummToFR">Заполнить поля в фискальнике по нашим правилам или нет Fr.Summ1-Fr.Summ16 по умолчанию нет</param>
         /// <returns>Итоговая сумма по всем типам оплат</returns>
-        public static decimal GetSummCheck(JsonPrintFiscDoc Doc, bool CrocessSummToFR)
+        public static FrGetSummCheckRez GetSummCheck(JsonPrintFiscDoc Doc, bool CrocessSummToFR)
         {
             try
             {
-                decimal rez = 0;
+                FrGetSummCheckRez rez = new FrGetSummCheckRez();
 
                 if (CrocessSummToFR)
                 {
@@ -1715,7 +1715,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты нал
                             if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez.itog += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
                                 continue;
                             }
@@ -1723,7 +1724,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты карта
                             if (item.tender_type == Com.Config.TenderTypeCredit && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.BezNal, item.tender_name, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ4 += (decimal)item.taken;
                                 continue;
                             }
@@ -1731,7 +1733,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты подарочный сертификат
                             if (item.tender_type == Com.Config.TenderTypeGiftCert && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Predoplata, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
                                 continue;
                             }
@@ -1739,7 +1742,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты подарочная карта
                             if (item.tender_type == Com.Config.TenderTypeGiftCard && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Predoplata, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
                                 continue;
                             }
@@ -1747,7 +1751,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты подарочная карта
                             if (item.tender_type == Com.Config.TenderTypeAvans && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Predoplata, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ14 += (decimal)item.taken;
                                 continue;
                             }
@@ -1755,7 +1760,8 @@ namespace AlgoritmPrizm.Com
                             // Заказ клиента когда он вносит сумму
                             if (item.tender_type == 7 && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
                                 continue;
                             }
@@ -1763,7 +1769,8 @@ namespace AlgoritmPrizm.Com
                             // КОгда клиент делает возврат денег пока не выполнен заказ
                             if (item.tender_type == 7 && Doc.given_amt != 0)
                             {
-                                rez += (decimal)Doc.given_amt;
+                                //rez += (decimal)Doc.given_amt;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)Doc.given_amt);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)Doc.given_amt;
                                 flagexit = true;  // Делается по всему документу нет смысла проходить по позициям
                             }
@@ -1773,7 +1780,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты нал
                             if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0)
                             {
-                                rez += (decimal)item.given;
+                                //rez += (decimal)item.given;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)item.given);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.given;
                                 continue;
                             }
@@ -1781,7 +1789,8 @@ namespace AlgoritmPrizm.Com
                             // Если тип оплаты карта
                             if (item.tender_type == Com.Config.TenderTypeCredit && item.given != 0)
                             {
-                                rez += (decimal)item.given;
+                                //rez += (decimal)item.given;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.BezNal, item.tender_name, (decimal)item.given);
                                 if (CrocessSummToFR) Fr.Summ4 += (decimal)item.given;
                                 continue;
                             }
@@ -1791,7 +1800,8 @@ namespace AlgoritmPrizm.Com
                             // Депозит наликом
                             if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)item.taken;
                                 continue;
                             }
@@ -1799,7 +1809,8 @@ namespace AlgoritmPrizm.Com
                             // Депозит оплаты карта
                             if (item.tender_type == Com.Config.TenderTypeCredit && item.taken != 0)
                             {
-                                rez += (decimal)item.taken;
+                                //rez += (decimal)item.taken;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.BezNal, item.tender_name, (decimal)item.taken);
                                 if (CrocessSummToFR) Fr.Summ4 += (decimal)item.taken; //Fr.Summ2
                                 continue;
                             }
@@ -1863,25 +1874,65 @@ namespace AlgoritmPrizm.Com
                 }
 
                 // Заполняем сумму в фискальнике
-                GetSummCheck(Doc, true);
+                FrGetSummCheckRez Itog = GetSummCheck(Doc, true);
 
-                // Вставка подитога для гучи
-                PrintSeparator();
-                if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
-                if (Fr.Summ2 != 0) Print2in1Line("КРЕДИТОМ", Fr.Summ2.ToString());  //
-                if (Fr.Summ4 != 0) Print2in1Line("БЕЗНАЛИЧНЫМИ", Fr.Summ4.ToString());
-                if (Fr.Summ14 != 0) Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Fr.Summ14.ToString());  //
-                PrintSeparator();
-
+                // Печатеам концовку для копии чека
                 if (IsCopy)
                 {  
                     PrintSeparator();
                     PrintLineCenter(string.Format("КОПИЯ ЧЕКА ЗА {0}", ((DateTime)Doc.invoice_posted_date).ToShortDateString()));
+                    Print2in1Line(string.Format("ИТОГО К ОПЛАТЕ"), string.Format("={0}", Math.Round(Itog.itog,2).ToString("0.00")));
+
+                    foreach (FrGetSummCheckRezType itemTyp in Itog.TenderTyp)
+                    {
+                        switch (itemTyp.TenderTyp)
+                        {
+                            case FrGetSummCheckRezTypeEn.Nal:
+                                Print2in1Line("НАЛИЧНЫМИ", string.Format("={0}", Math.Round((decimal)itemTyp.PromItog, 2).ToString("0.00")));
+                                break;
+                            case FrGetSummCheckRezTypeEn.BezNal:
+                                foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
+                                {
+                                    Print2in1Line(itemName.Name.ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
+                                }
+                                break;
+                            case FrGetSummCheckRezTypeEn.Credit:
+                                Print2in1Line("КРЕДИТОМ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
+                                break;
+                            case FrGetSummCheckRezTypeEn.Predoplata:
+                                Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    
+
+                    PrintLineCenter("Сумма чека содержит НДС");
+                    PrintLine("ВСЕ СУММЫ УКАЗАНЫ В РУБЛЯХ", true);
+
+                    // Сумма чека и подсчёит итога
+                    decimal SumChekFoPrice = 0;
+                    foreach (JsonPrintFiscDocItem item in Doc.items)
+                    {
+                        SumChekFoPrice += (decimal)(item.quantity * item.price);
+                    }
+                    if (Itog.itog>SumChekFoPrice) Print2in1Line("Сдача", string.Format("={0}", Math.Round(Itog.itog - SumChekFoPrice, 2).ToString("0.00")));
+
                     PrintSeparator();
 
                     Fr.FeedDocument();
                 }
                 else {
+                    // Вставка подитога для гучи
+                    PrintSeparator();
+                    if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
+                    if (Fr.Summ2 != 0) Print2in1Line("КРЕДИТОМ", Fr.Summ2.ToString());  //
+                    if (Fr.Summ4 != 0) Print2in1Line("БЕЗНАЛИЧНЫМИ", Fr.Summ4.ToString());
+                    if (Fr.Summ14 != 0) Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Fr.Summ14.ToString());  //
+                    PrintSeparator();
+
+
                     // Проверяем версию FFD
                     switch (Config.Ffd)
                     {
