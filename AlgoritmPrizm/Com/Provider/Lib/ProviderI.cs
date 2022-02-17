@@ -69,5 +69,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="InvnSbsItemSid">Сид карточки товара</param>
         /// <returns>Возвращаем номер карточки товара</returns>
         string GetInvnSbsItemNo(string InvnSbsItemSid);
+
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns>Получаем номер документа</returns>
+        Int64 GetDocNoFromDocument(string sid);
     }
 }

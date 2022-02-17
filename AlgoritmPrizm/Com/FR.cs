@@ -1402,8 +1402,6 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Упали с ошибкой выполнении команды ReadTable после установки кассира: {0}", Status.Description));
                 }
 
-
-
                 //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
                 switch (Doc.receipt_type)
                 {
@@ -1430,16 +1428,6 @@ namespace AlgoritmPrizm.Com
                         Verification(Fr);
                         throw new ApplicationException(string.Format("Не смогли напечатать заголовок: {0}", Status.Description));
                     }
-                    /*
-                     
-
-                    FDevice.CutType:= false;
-                    if FDevice.CutCheck <> 0 then
-                     
-                     
-                     */
-
-
                 }
                 else
                 {
@@ -1450,7 +1438,6 @@ namespace AlgoritmPrizm.Com
                         throw new ApplicationException(string.Format("Не смогли открыть чек: {0}", Status.Description));
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -1492,17 +1479,19 @@ namespace AlgoritmPrizm.Com
                 }
 
                 // Номер магазина и чека
+                string DocNum = (Doc.document_number != null ? Doc.document_number.ToString() : null);
+                if(string.IsNullOrWhiteSpace(DocNum)) DocNum=Com.ProviderFarm.CurrentPrv.GetDocNoFromDocument(Doc.sid).ToString();
+                //
                 if (string.IsNullOrWhiteSpace(Doc.store_name))
                 {
                     Print2in1Line(string.Format("КОД МАГАЗИНА: {0}", Doc.store_number),
-                                string.Format("ЧЕК {0}", Doc.document_number));
+                                string.Format("ЧЕК {0}", DocNum));
                 }
                 else
                 {
                     Print2in1Line(string.Format("КОД МАГАЗИНА: {0}", Doc.store_name),
-                                string.Format("ЧЕК {0}", Doc.document_number));
+                                string.Format("ЧЕК {0}", DocNum));
                 }
-
 
                 // ПЕЧАТЬ ШТРИХ-КОДА
                 Fr.BarCode = Doc.document_number.ToString();
@@ -1518,10 +1507,6 @@ namespace AlgoritmPrizm.Com
 
 
                 // КАССИР - СОТРУДНИК
-                //if Associater <> '' then
-                //  S := Format('СОТРУДНИК: %s',[Associater]) //пока не знаю как взять это поле в депозитах.. ClerkName
-                //else
-                //S:= '';
                 Print2in1Line(@"КАССИР:", TekCustomer.fio_fo_check);
                 if (!IsCopy)
                 {
@@ -1542,6 +1527,70 @@ namespace AlgoritmPrizm.Com
                         }
                     }
                 }
+
+
+                // Печать информации про юрлицо
+                if (!string.IsNullOrWhiteSpace(Doc.bt_last_name)
+                    && !string.IsNullOrWhiteSpace(Doc.bt_address_line3)
+                    && Doc.bt_address_line3.Trim().Length == 10)      // У юриков ИНН 10 символов а у физиков 12
+                {
+                    if (IsCopy)
+                    {
+                        PrintLine(string.Format("ПОКУПАТЕЛЬ:{0}", Doc.bt_last_name.Trim()));
+                        PrintLine(string.Format("ИНН ПОКУПАТЕЛЯ:{0}", Doc.bt_address_line3.Trim()));
+                    }
+                    else
+                    {
+                        Fr.TagNumber = 1256;
+                        switch (Fr.FNBeginSTLVTag())
+                        {
+                            case 0:
+                                break;
+                            default:
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли сделать составной тег для  покупателя: {0}", Status.Description));
+                        }
+
+                        // Заполняем наименование Юр лица
+                        Fr.TagID = 0;
+                        Fr.TagNumber = 1227;
+                        Fr.TagType = 7;
+                        Fr.TagValueStr = Doc.bt_last_name.Trim();
+                        switch (Fr.FNAddTag())
+                        {
+                            case 0:
+                                break;
+                            default:
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли добавить наименование юр лица: {0}", Status.Description));
+                        }
+
+                        // Заполняем ИНН Юр лица
+                        Fr.TagID = 0;
+                        Fr.TagNumber = 1228;
+                        Fr.TagType = 7;
+                        Fr.TagValueStr = Doc.bt_address_line3.Trim();
+                        switch (Fr.FNAddTag())
+                        {
+                            case 0:
+                                break;
+                            default:
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
+                        }
+                        
+                        // отправка составного тега
+                        switch (Fr.FNSendSTLVTag())
+                        {
+                            case 0:
+                                break;
+                            default:
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Не смогли отправить составной тег по юр лицу: {0}", Status.Description));
+                        }
+                    }
+                }
+
 
                 // Информация по заказу, если нужно
                 int ItemCount = 0;
@@ -1877,37 +1926,40 @@ namespace AlgoritmPrizm.Com
                 FrGetSummCheckRez Itog = GetSummCheck(Doc, true);
 
                 // Печатеам концовку для копии чека
+                PrintSeparator();
                 if (IsCopy)
-                {  
-                    PrintSeparator();
+                {
                     PrintLineCenter(string.Format("КОПИЯ ЧЕКА ЗА {0}", ((DateTime)Doc.invoice_posted_date).ToShortDateString()));
-                    Print2in1Line(string.Format("ИТОГО К ОПЛАТЕ"), string.Format("={0}", Math.Round(Itog.itog,2).ToString("0.00")));
+                    Print2in1Line(string.Format("ИТОГО К ОПЛАТЕ"), string.Format("={0}", Math.Round(Itog.itog, 2).ToString("0.00")));
+                }
 
-                    foreach (FrGetSummCheckRezType itemTyp in Itog.TenderTyp)
+                // Печатем под итог
+                foreach (FrGetSummCheckRezType itemTyp in Itog.TenderTyp)
+                {
+                    switch (itemTyp.TenderTyp)
                     {
-                        switch (itemTyp.TenderTyp)
-                        {
-                            case FrGetSummCheckRezTypeEn.Nal:
-                                Print2in1Line("НАЛИЧНЫМИ", string.Format("={0}", Math.Round((decimal)itemTyp.PromItog, 2).ToString("0.00")));
-                                break;
-                            case FrGetSummCheckRezTypeEn.BezNal:
-                                foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
-                                {
-                                    Print2in1Line(itemName.Name.ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
-                                }
-                                break;
-                            case FrGetSummCheckRezTypeEn.Credit:
-                                Print2in1Line("КРЕДИТОМ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
-                                break;
-                            case FrGetSummCheckRezTypeEn.Predoplata:
-                                Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
-                                break;
-                            default:
-                                break;
-                        }
+                        case FrGetSummCheckRezTypeEn.Nal:
+                            Print2in1Line("НАЛИЧНЫМИ", string.Format("={0}", Math.Round((decimal)itemTyp.PromItog, 2).ToString("0.00")));
+                            break;
+                        case FrGetSummCheckRezTypeEn.BezNal:
+                            foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
+                            {
+                                Print2in1Line(itemName.Name.ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
+                            }
+                            break;
+                        case FrGetSummCheckRezTypeEn.Credit:
+                            Print2in1Line("КРЕДИТОМ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
+                            break;
+                        case FrGetSummCheckRezTypeEn.Predoplata:
+                            Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Math.Round(itemTyp.PromItog, 2).ToString("0.00"));
+                            break;
+                        default:
+                            break;
                     }
-                    
+                }
 
+                if (IsCopy)
+                {
                     PrintLineCenter("Сумма чека содержит НДС");
                     PrintLine("ВСЕ СУММЫ УКАЗАНЫ В РУБЛЯХ", true);
 
@@ -1919,17 +1971,15 @@ namespace AlgoritmPrizm.Com
                     }
                     if (Itog.itog>SumChekFoPrice) Print2in1Line("Сдача", string.Format("={0}", Math.Round(Itog.itog - SumChekFoPrice, 2).ToString("0.00")));
 
-                    PrintSeparator();
-
                     Fr.FeedDocument();
                 }
                 else {
                     // Вставка подитога для гучи
-                    PrintSeparator();
-                    if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
+                    /*if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
                     if (Fr.Summ2 != 0) Print2in1Line("КРЕДИТОМ", Fr.Summ2.ToString());  //
                     if (Fr.Summ4 != 0) Print2in1Line("БЕЗНАЛИЧНЫМИ", Fr.Summ4.ToString());
                     if (Fr.Summ14 != 0) Print2in1Line("ВКЛЮЧАЯ ПРЕДОПЛАТУ", Fr.Summ14.ToString());  //
+                    */
                     PrintSeparator();
 
 

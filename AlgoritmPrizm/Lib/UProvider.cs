@@ -311,5 +311,15 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.GetInvnSbsItemNo(InvnSbsItemSid);
         }
+
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns>Получаем номер документа</returns>
+        public Int64 GetDocNoFromDocument(string sid)
+        {
+            return this.PrvI.GetDocNoFromDocument(sid);
+        }
     }
 }

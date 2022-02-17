@@ -427,6 +427,46 @@ namespace AlgoritmPrizm.Com.Provider
             }
         }
 
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns>Получаем номер документа</returns>
+        public Int64 GetDocNoFromDocument(string sid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetDocNoFromDocumentORA(sid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetDocNoFromDocumentMySql(sid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetDocNoFromDocument", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return 0;
+            }
+        }
         #endregion
 
         #region Private metod
@@ -955,6 +995,78 @@ where sid ={0}", InvnSbsItemSid);
                 throw;
             }
         }
+
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns>Получаем номер документа</returns>
+        public Int64 GetDocNoFromDocumentORA(string sid)
+        {
+            string CommandSql = String.Format(@"select doc_no 
+from rpsods.document 
+where sid = {0}", sid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentORA", EventEn.Dump);
+
+                Int64 rez = 0;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("doc_no").ToUpper()) try {rez = Int64.Parse(dr.GetValue(i).ToString());} catch (Exception) {}
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetDocNoFromDocumentORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetDocNoFromDocumentORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentORA", EventEn.Dump);
+                throw;
+            }
+        }
         #endregion
 
         #region Private method MySql
@@ -1419,6 +1531,78 @@ where sid ={0}", InvnSbsItemSid);
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemNoMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <returns>Получаем номер документа</returns>
+        public Int64 GetDocNoFromDocumentMySql(string sid)
+        {
+            string CommandSql = String.Format(@"select doc_no 
+from `rpsods`.`document`
+where sid = {0}", sid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Dump);
+
+                Int64 rez = 0;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocItem nitem = new BLL.JsonPrintFiscDocItem();
+
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("doc_no").ToUpper()) try { rez = Int64.Parse(dr.GetValue(i).ToString()); } catch (Exception) { }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Dump);
                 throw;
             }
         }

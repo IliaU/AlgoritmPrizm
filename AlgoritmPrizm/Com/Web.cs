@@ -216,7 +216,7 @@ namespace AlgoritmPrizm.Com
                         {
                             BufPostRequest = reader.ReadToEnd();
 
-                            if (Com.Config.Trace) Com.Log.EventSave(string.Format("{0}\r\n\t{2}", request.RawUrl, BufPostRequest), "Com.Web.Listen", EventEn.Trace);
+                            if (Com.Config.Trace) Com.Log.EventSave(string.Format("{0}\r\n\t{1}", request.RawUrl, BufPostRequest), "Com.Web.Listen", EventEn.Trace);
                         }
 
                         ///AksRepStat?sid=a251c9b3-ca0c-4632-92a8-a6137dd78775
