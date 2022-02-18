@@ -60,9 +60,11 @@ namespace AlgoritmPrizm
                     if (item == Config.Ffd) SelectPosition = Position;
                 }
                 if (SelectPosition > -1) cmbBoxFfd.SelectedIndex = SelectPosition;
-
+                //
                 this.txtBoxFrPort.Text = Config.FrPort.ToString();
-
+                //
+                this.chkBoxProcessingUrikForFr.Checked = Config.ProcessingUrikForFr;
+                this.chkBoxPrintingUrikForFr.Checked = Config.PrintingUrikForFr;
 
                 this.cmbBoxDisplayDspFullName.Items.Clear();
                 cmbBoxDisplayDspFullName.Items.Add("Без дисплея"); 
@@ -380,7 +382,8 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxFrPort.Text), GetType().Name, EventEn.Message);
                 }
-
+                Config.ProcessingUrikForFr = this.chkBoxProcessingUrikForFr.Checked;
+                Config.PrintingUrikForFr = this.chkBoxPrintingUrikForFr.Checked;
 
                 try
                 {
@@ -532,7 +535,6 @@ namespace AlgoritmPrizm
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }
-
         }
 
         // Пользователь меняет тип СМС провайдера
@@ -593,6 +595,22 @@ namespace AlgoritmPrizm
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при событии cmbBoxMatrixParceTyp_SelectedIndexChanged: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                throw ae;
+            }
+        }
+
+        // Пользователь решает обрабатывать чеки с тегами юрлиц в фискальнике
+        private void chkBoxProcessingUrikForFr_CheckedChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.chkBoxProcessingUrikForFr.Checked) this.chkBoxPrintingUrikForFr.Visible = true;
+                else this.chkBoxPrintingUrikForFr.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при попытке изменить видимость элемента chkBoxPrintingUrikForFr: ({0})", ex.Message));
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }

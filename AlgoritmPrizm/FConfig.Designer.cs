@@ -101,6 +101,7 @@
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBoxFfd = new System.Windows.Forms.GroupBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.chkBoxEmployeePrintingForEveryLine = new System.Windows.Forms.CheckBox();
             this.cmbBoxFieldItem5 = new System.Windows.Forms.ComboBox();
             this.cmbBoxFieldItem4 = new System.Windows.Forms.ComboBox();
             this.cmbBoxFieldItem3 = new System.Windows.Forms.ComboBox();
@@ -134,7 +135,8 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkBoxEmployeePrintingForEveryLine = new System.Windows.Forms.CheckBox();
+            this.chkBoxProcessingUrikForFr = new System.Windows.Forms.CheckBox();
+            this.chkBoxPrintingUrikForFr = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxDisplay.SuspendLayout();
@@ -178,7 +180,7 @@
             // 
             // txtBoxHost
             // 
-            this.txtBoxHost.Location = new System.Drawing.Point(54, 54);
+            this.txtBoxHost.Location = new System.Drawing.Point(46, 59);
             this.txtBoxHost.Name = "txtBoxHost";
             this.txtBoxHost.Size = new System.Drawing.Size(272, 20);
             this.txtBoxHost.TabIndex = 3;
@@ -186,7 +188,7 @@
             // lblHost
             // 
             this.lblHost.AutoSize = true;
-            this.lblHost.Location = new System.Drawing.Point(17, 57);
+            this.lblHost.Location = new System.Drawing.Point(9, 62);
             this.lblHost.Name = "lblHost";
             this.lblHost.Size = new System.Drawing.Size(31, 13);
             this.lblHost.TabIndex = 4;
@@ -195,7 +197,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(332, 57);
+            this.lblPort.Location = new System.Drawing.Point(9, 88);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(32, 13);
             this.lblPort.TabIndex = 5;
@@ -203,7 +205,7 @@
             // 
             // txtBoxPort
             // 
-            this.txtBoxPort.Location = new System.Drawing.Point(369, 54);
+            this.txtBoxPort.Location = new System.Drawing.Point(46, 85);
             this.txtBoxPort.Name = "txtBoxPort";
             this.txtBoxPort.Size = new System.Drawing.Size(100, 20);
             this.txtBoxPort.TabIndex = 6;
@@ -229,7 +231,7 @@
             // lblFrPort
             // 
             this.lblFrPort.AutoSize = true;
-            this.lblFrPort.Location = new System.Drawing.Point(12, 52);
+            this.lblFrPort.Location = new System.Drawing.Point(275, 21);
             this.lblFrPort.Name = "lblFrPort";
             this.lblFrPort.Size = new System.Drawing.Size(103, 13);
             this.lblFrPort.TabIndex = 9;
@@ -237,7 +239,7 @@
             // 
             // txtBoxFrPort
             // 
-            this.txtBoxFrPort.Location = new System.Drawing.Point(121, 49);
+            this.txtBoxFrPort.Location = new System.Drawing.Point(384, 18);
             this.txtBoxFrPort.Name = "txtBoxFrPort";
             this.txtBoxFrPort.Size = new System.Drawing.Size(49, 20);
             this.txtBoxFrPort.TabIndex = 10;
@@ -450,7 +452,7 @@
             // 
             // txtBoxFileCheckLog
             // 
-            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(369, 89);
+            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(218, 33);
             this.txtBoxFileCheckLog.Name = "txtBoxFileCheckLog";
             this.txtBoxFileCheckLog.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFileCheckLog.TabIndex = 37;
@@ -458,11 +460,11 @@
             // lblFileCheckLog
             // 
             this.lblFileCheckLog.AutoSize = true;
-            this.lblFileCheckLog.Location = new System.Drawing.Point(15, 88);
+            this.lblFileCheckLog.Location = new System.Drawing.Point(6, 36);
             this.lblFileCheckLog.Name = "lblFileCheckLog";
-            this.lblFileCheckLog.Size = new System.Drawing.Size(271, 13);
+            this.lblFileCheckLog.Size = new System.Drawing.Size(192, 13);
             this.lblFileCheckLog.TabIndex = 36;
-            this.lblFileCheckLog.Text = "Имя файла в которое писать лог по матрикс кодам";
+            this.lblFileCheckLog.Text = "Имя файла логов по матрикс кодам";
             // 
             // tabControl1
             // 
@@ -475,7 +477,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(723, 416);
+            this.tabControl1.Size = new System.Drawing.Size(749, 416);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
@@ -495,7 +497,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(715, 390);
+            this.tabPage1.Size = new System.Drawing.Size(741, 390);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -514,12 +516,12 @@
             this.groupBoxDisplay.Controls.Add(this.lblDisplayDspFullName);
             this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayPort);
             this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
-            this.groupBoxDisplay.Location = new System.Drawing.Point(313, 115);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(348, 33);
             this.groupBoxDisplay.Name = "groupBoxDisplay";
-            this.groupBoxDisplay.Size = new System.Drawing.Size(394, 95);
+            this.groupBoxDisplay.Size = new System.Drawing.Size(385, 95);
             this.groupBoxDisplay.TabIndex = 11;
             this.groupBoxDisplay.TabStop = false;
-            this.groupBoxDisplay.Text = "Фискальный регистратор";
+            this.groupBoxDisplay.Text = "Дисплей покупателя";
             // 
             // cmbBoxStopBits
             // 
@@ -648,9 +650,9 @@
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayLogin);
             this.groupBox2.Controls.Add(this.PnlSmsTypGateway);
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
-            this.groupBox2.Location = new System.Drawing.Point(11, 216);
+            this.groupBox2.Location = new System.Drawing.Point(11, 254);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(696, 115);
+            this.groupBox2.Size = new System.Drawing.Size(722, 115);
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Провайдер для отправки SMS";
@@ -788,13 +790,15 @@
             // 
             // groupBoxFfd
             // 
+            this.groupBoxFfd.Controls.Add(this.chkBoxPrintingUrikForFr);
+            this.groupBoxFfd.Controls.Add(this.chkBoxProcessingUrikForFr);
             this.groupBoxFfd.Controls.Add(this.cmbBoxFfd);
             this.groupBoxFfd.Controls.Add(this.lblFfd);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrPort);
             this.groupBoxFfd.Controls.Add(this.lblFrPort);
-            this.groupBoxFfd.Location = new System.Drawing.Point(11, 120);
+            this.groupBoxFfd.Location = new System.Drawing.Point(11, 133);
             this.groupBoxFfd.Name = "groupBoxFfd";
-            this.groupBoxFfd.Size = new System.Drawing.Size(281, 81);
+            this.groupBoxFfd.Size = new System.Drawing.Size(722, 115);
             this.groupBoxFfd.TabIndex = 2;
             this.groupBoxFfd.TabStop = false;
             this.groupBoxFfd.Text = "Фискальный регистратор";
@@ -829,6 +833,16 @@
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxEmployeePrintingForEveryLine
+            // 
+            this.chkBoxEmployeePrintingForEveryLine.AutoSize = true;
+            this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(422, 16);
+            this.chkBoxEmployeePrintingForEveryLine.Name = "chkBoxEmployeePrintingForEveryLine";
+            this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(285, 17);
+            this.chkBoxEmployeePrintingForEveryLine.TabIndex = 45;
+            this.chkBoxEmployeePrintingForEveryLine.Text = "Печать сотрудника на каждой строке если он есть";
+            this.chkBoxEmployeePrintingForEveryLine.UseVisualStyleBackColor = true;
             // 
             // cmbBoxFieldItem5
             // 
@@ -1147,7 +1161,7 @@
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.pnlBotton.Location = new System.Drawing.Point(0, 416);
             this.pnlBotton.Name = "pnlBotton";
-            this.pnlBotton.Size = new System.Drawing.Size(723, 36);
+            this.pnlBotton.Size = new System.Drawing.Size(749, 36);
             this.pnlBotton.TabIndex = 39;
             // 
             // pnlFill
@@ -1156,24 +1170,36 @@
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(723, 416);
+            this.pnlFill.Size = new System.Drawing.Size(749, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkBoxEmployeePrintingForEveryLine
+            // chkBoxProcessingUrikForFr
             // 
-            this.chkBoxEmployeePrintingForEveryLine.AutoSize = true;
-            this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(422, 16);
-            this.chkBoxEmployeePrintingForEveryLine.Name = "chkBoxEmployeePrintingForEveryLine";
-            this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(285, 17);
-            this.chkBoxEmployeePrintingForEveryLine.TabIndex = 45;
-            this.chkBoxEmployeePrintingForEveryLine.Text = "Печать сотрудника на каждой строке если он есть";
-            this.chkBoxEmployeePrintingForEveryLine.UseVisualStyleBackColor = true;
+            this.chkBoxProcessingUrikForFr.AutoSize = true;
+            this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(14, 49);
+            this.chkBoxProcessingUrikForFr.Name = "chkBoxProcessingUrikForFr";
+            this.chkBoxProcessingUrikForFr.Size = new System.Drawing.Size(353, 17);
+            this.chkBoxProcessingUrikForFr.TabIndex = 11;
+            this.chkBoxProcessingUrikForFr.Text = "Разрешить обрабатывать в FR в качестве покупателей Юр лица";
+            this.chkBoxProcessingUrikForFr.UseVisualStyleBackColor = true;
+            this.chkBoxProcessingUrikForFr.CheckedChanged += new System.EventHandler(this.chkBoxProcessingUrikForFr_CheckedChanged);
+            // 
+            // chkBoxPrintingUrikForFr
+            // 
+            this.chkBoxPrintingUrikForFr.AutoSize = true;
+            this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(373, 49);
+            this.chkBoxPrintingUrikForFr.Name = "chkBoxPrintingUrikForFr";
+            this.chkBoxPrintingUrikForFr.Size = new System.Drawing.Size(347, 17);
+            this.chkBoxPrintingUrikForFr.TabIndex = 12;
+            this.chkBoxPrintingUrikForFr.Text = "Выводить на печать в чек информацию о покупателе (Юр лице)";
+            this.chkBoxPrintingUrikForFr.UseVisualStyleBackColor = true;
+            this.chkBoxPrintingUrikForFr.Visible = false;
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(723, 452);
+            this.ClientSize = new System.Drawing.Size(749, 452);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1321,5 +1347,7 @@
         private System.Windows.Forms.ComboBox cmbBoxStopBits;
         private System.Windows.Forms.Label lblStopBits;
         private System.Windows.Forms.CheckBox chkBoxEmployeePrintingForEveryLine;
+        private System.Windows.Forms.CheckBox chkBoxPrintingUrikForFr;
+        private System.Windows.Forms.CheckBox chkBoxProcessingUrikForFr;
     }
 }

@@ -1530,16 +1530,12 @@ namespace AlgoritmPrizm.Com
 
 
                 // Печать информации про юрлицо
-                if (!string.IsNullOrWhiteSpace(Doc.bt_last_name)
+                if (Config.ProcessingUrikForFr
+                    && !string.IsNullOrWhiteSpace(Doc.bt_last_name)
                     && !string.IsNullOrWhiteSpace(Doc.bt_address_line3)
                     && Doc.bt_address_line3.Trim().Length == 10)      // У юриков ИНН 10 символов а у физиков 12
                 {
-                    if (IsCopy)
-                    {
-                        PrintLine(string.Format("ПОКУПАТЕЛЬ:{0}", Doc.bt_last_name.Trim()));
-                        PrintLine(string.Format("ИНН ПОКУПАТЕЛЯ:{0}", Doc.bt_address_line3.Trim()));
-                    }
-                    else
+                    if (!IsCopy)
                     {
                         Fr.TagNumber = 1256;
                         switch (Fr.FNBeginSTLVTag())
@@ -1588,6 +1584,11 @@ namespace AlgoritmPrizm.Com
                                 Verification(Fr);
                                 throw new ApplicationException(string.Format("Не смогли отправить составной тег по юр лицу: {0}", Status.Description));
                         }
+                    }
+                    if (Config.PrintingUrikForFr)
+                    {
+                        PrintLine(string.Format("ПОКУПАТЕЛЬ:{0}", Doc.bt_last_name.Trim()));
+                        PrintLine(string.Format("ИНН ПОКУПАТЕЛЯ:{0}", Doc.bt_address_line3.Trim()));
                     }
                 }
 

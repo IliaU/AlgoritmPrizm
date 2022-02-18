@@ -61,7 +61,7 @@ namespace AlgoritmPrizm.Lib
                         if (flagAddBezNal == -1)
                         {
                             TenderTyp.Add(new FrGetSummCheckRezType(FrGetSummCheckRezTypeEn.BezNal, TenderValue));
-                            TenderTyp[flagAddBezNal].TenderName.Add(new FrGetSummCheckRezTypeTenderName(TenderName, TenderValue));
+                            TenderTyp[TenderTyp.Count-1].TenderName.Add(new FrGetSummCheckRezTypeTenderName(TenderName, TenderValue));
                         }
                         else
                         {

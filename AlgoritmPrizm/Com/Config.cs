@@ -335,6 +335,16 @@ namespace AlgoritmPrizm.Com
         /// Печать сотрудника на каждой строке чека
         /// </summary>
         private static bool _EmployeePrintingForEveryLine = false;
+
+        /// <summary>
+        /// Обрабатывать тип покупателей юр лицо в фискальном регистраторе
+        /// </summary>
+        private static bool _ProcessingUrikForFr = false;
+
+        /// <summary>
+        /// Выводить на печать в чек юр лицо
+        /// </summary>
+        private static bool _PrintingUrikForFr = false;
         #endregion
 
         #region Public Param
@@ -1293,6 +1303,40 @@ namespace AlgoritmPrizm.Com
                 _EmployeePrintingForEveryLine = value;
             }
         }
+
+        /// <summary>
+        /// Обрабатывать тип покупателей юр лицо в фискальном регистраторе
+        /// </summary>
+        public static bool ProcessingUrikForFr
+        {
+            get
+            {
+                return _ProcessingUrikForFr;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("ProcessingUrikForFr", value.ToString());
+                Save();
+                _ProcessingUrikForFr = value;
+            }
+        }
+
+        /// <summary>
+        /// Выводить на печать в чек юр лицо
+        /// </summary>
+        public static bool PrintingUrikForFr
+        {
+            get
+            {
+                return _PrintingUrikForFr;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("PrintingUrikForFr", value.ToString());
+                Save();
+                _PrintingUrikForFr = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1584,6 +1628,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("TaxPercent10110", _TaxPercent10110.ToString());
                     xmlMain.SetAttribute("TaxPercent20120", _TaxPercent20120.ToString());
                     xmlMain.SetAttribute("EmployeePrintingForEveryLine", _EmployeePrintingForEveryLine.ToString());
+                    xmlMain.SetAttribute("ProcessingUrikForFr", _ProcessingUrikForFr.ToString());
+                    xmlMain.SetAttribute("PrintingUrikForFr", _PrintingUrikForFr.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1703,6 +1749,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "TaxPercent10110") try { _TaxPercent10110 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TaxPercent20120") try { _TaxPercent20120 = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "EmployeePrintingForEveryLine") try { _EmployeePrintingForEveryLine = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "ProcessingUrikForFr") try { _ProcessingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "PrintingUrikForFr") try { _PrintingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер
