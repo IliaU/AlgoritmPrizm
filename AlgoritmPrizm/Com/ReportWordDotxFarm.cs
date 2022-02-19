@@ -1035,13 +1035,33 @@ Select token From T", DocSid));
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
-                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select '01' as fd,
-    'февраля' as fm, '202' as fy, '2' as y,
-    convert(doc_no, char) as fr_no, date_format(sysdate(),'%d.%m.%Y') fr_data, 
-    '6534,56' As fr_summa, '43.22' As fr_nal, '12.44' fr_bnal,
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select date_format(d.post_date, '%d') as fd,
+    case when date_format(d.post_date, '%m') = '01' then 'января'
+		when date_format(d.post_date, '%m') = '02' then 'февраля'
+        when date_format(d.post_date, '%m') = '03' then 'марта'
+        when date_format(d.post_date, '%m') = '04' then 'апреля'
+        when date_format(d.post_date, '%m') = '05' then 'мая'
+        when date_format(d.post_date, '%m') = '06' then 'июня'
+        when date_format(d.post_date, '%m') = '07' then 'июля'
+        when date_format(d.post_date, '%m') = '08' then 'августа'
+        when date_format(d.post_date, '%m') = '09' then 'сентября'
+        when date_format(d.post_date, '%m') = '10' then 'октября'
+        when date_format(d.post_date, '%m') = '11' then 'ноября'
+        else 'декабря' end as fm, 
+	substr(date_format(d.post_date, '%Y'),1,3) as fy, 
+    substr(date_format(d.post_date, '%Y'),4,1)  as y,
+    coalesce(convert(d.{1}, char),'--') as fr_no, 
+    date_format(d.post_date,'%d.%m.%Y') fr_data, 
+    convert(round(Sum(t.given+t.taken),2), char) As fr_summa, 
+    convert(round(Sum(case when t.tender_type={2} then t.given+t.taken else 0 end),2), char) As fr_nal, 
+    convert(round(Sum(case when t.tender_type<>{2} then t.given+t.taken else 0 end),2), char) fr_bnal,
     date_format(sysdate(),'%d.%m.%Y') As curdata
-From `rpsods`.`document`
-where `sid` = {0}",  DocSid));
+From `rpsods`.`document` d
+	inner join `rpsods`.`tender` t on d.sid = t.doc_sid
+where d.`sid` = {0}
+group by d.`sid`, d.post_date",  DocSid, Config.FieldDocNum.ToString(), Config.TenderTypeCash));
+
+                if (TblBkm == null) throw new ApplicationException(string.Format("Документ  с сидом {0} не найден.", DocSid));
 
                 // Создаём список закладок
                 Wrd.BookmarkList BkmL = new Wrd.BookmarkList();
@@ -1060,10 +1080,13 @@ where `sid` = {0}",  DocSid));
                 }
 
                 // Создаём запрос для получения таблицы
-                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"
-select 'товар' as C0, 'артикул' as C1, 'размер' as C2, ',' As C3
-union
-select 'товар1' as C0, 'артикул2' as C1, 'размер1' as C2, '' As C3", DocSid));
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select p.description2 as C0, p.attribute as C1, p.item_size as C2,
+	case when row_number() over() = count(*) over() Then'' else ',' end As C3
+From `rpsods`.`document` d
+	inner join `rpsods`.`document_item` i on d.sid=i.doc_sid
+    inner join `rpsods`.invn_sbs_item p on i.invn_sbs_item_sid=p.sid
+where d.`sid` = {0}
+order by i.item_pos", DocSid));
 
                 // Создаём список таблиц
                 Wrd.TableList TblL = new Wrd.TableList();
