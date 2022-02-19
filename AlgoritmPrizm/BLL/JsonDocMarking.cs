@@ -182,7 +182,7 @@ namespace AlgoritmPrizm.BLL
         public string delete_discount;
         public string custom_flag;
         public string return_reason;
-        public int price_lvl;
+        public int? price_lvl;
         public double? order_quantity_filled;
         public double gift_quantity;
         public double so_deposit_amt;
@@ -254,7 +254,7 @@ namespace AlgoritmPrizm.BLL
         public int? lty_points_earned;
         public int? lty_orig_points_earned;
         public double? lty_price_in_points;
-        public int lty_orig_price_in_points;
+        public int? lty_orig_price_in_points;
         public double? orig_sale_price;
         public string lty_type;
         public bool lty_redeem_applicable_manually;
