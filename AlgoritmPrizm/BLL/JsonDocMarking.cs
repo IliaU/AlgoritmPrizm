@@ -176,7 +176,7 @@ namespace AlgoritmPrizm.BLL
         public int subsidiary_number;
         public double? discount_amt;
         public double? discount_perc;
-        public double? discount_reason;
+        public string discount_reason;
         public double? returned_item_qty;
         public string returned_item_invoice_sid;
         public string delete_discount;

@@ -495,6 +495,10 @@ namespace AlgoritmPrizm.Com
                                                     if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
                                                         resp.Message = ReportWordDotxFarm.CreateReportUdp(JsWdDotxPor[1].valueString);
                                                     break;
+                                                case "Returnblank":
+                                                    if (JsWdDotxPor.Count > 1 && !string.IsNullOrWhiteSpace(JsWdDotxPor[1].valueString))
+                                                        resp.Message = ReportWordDotxFarm.CreateReportReturnBlankWrd(JsWdDotxPor[1].valueString);
+                                                    break;
                                                 default:
                                                     resp.Message = string.Format("Нет в списке известных нам отчётов шаблона с именем: {0}", JsWdDotxPor[0].valueString);
                                                     break;

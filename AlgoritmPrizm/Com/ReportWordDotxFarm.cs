@@ -1021,6 +1021,77 @@ Select token From T", DocSid));
             }
         }
 
+
+        /// <summary>
+        /// Формирование отчёта по ИНВ-3
+        /// </summary>
+        /// <param name="DocSid">Сид документа инвентаризации (610444449000210592)</param>
+        public static string CreateReportReturnBlankWrd(string DocSid)
+        {
+            try
+            {
+                // Строим имя файла в которое заливать будем отчёт и проверяем есть такое задание уже в работе или нет
+                string TargetFile = string.Format(@"Заявления на возврат ({0}).doc", DocSid);
+                if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
+
+                // Создаём запрос для получения списка закладок
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select '01' as fd,
+    'февраля' as fm, '202' as fy, '2' as y,
+    convert(doc_no, char) as fr_no, date_format(sysdate(),'%d.%m.%Y') fr_data, 
+    '6534,56' As fr_summa, '43.22' As fr_nal, '12.44' fr_bnal,
+    date_format(sysdate(),'%d.%m.%Y') As curdata
+From `rpsods`.`document`
+where `sid` = {0}",  DocSid));
+
+                // Создаём список закладок
+                Wrd.BookmarkList BkmL = new Wrd.BookmarkList();
+                if (TblBkm.Rows.Count == 1)
+                {
+                    BkmL.Add(new Wrd.Bookmark("fd", TblBkm.Rows[0]["fd"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fm", TblBkm.Rows[0]["fm"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fy", TblBkm.Rows[0]["fy"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("y", TblBkm.Rows[0]["y"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fr_no", TblBkm.Rows[0]["fr_no"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fr_data", TblBkm.Rows[0]["fr_data"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fr_summa", TblBkm.Rows[0]["fr_summa"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fr_nal", TblBkm.Rows[0]["fr_nal"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("fr_bnal", TblBkm.Rows[0]["fr_bnal"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("curdata", TblBkm.Rows[0]["curdata"].ToString()), true);
+                }
+
+                // Создаём запрос для получения таблицы
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"
+select 'товар' as C0, 'артикул' as C1, 'размер' as C2, ',' As C3
+union
+select 'товар1' as C0, 'артикул2' as C1, 'размер1' as C2, '' As C3", DocSid));
+
+                // Создаём список таблиц
+                Wrd.TableList TblL = new Wrd.TableList();
+                TblL.Add(new Wrd.Table("T1", TblVal), true);
+
+                // Создаём список итогов
+                Wrd.TotalList Ttl = new Wrd.TotalList();
+
+                // Создаём задание и получаем объект которым будем смотреть результат
+                Wrd.TaskWord Tsk = new Wrd.TaskWord(@"Заявления на возврат.docx", TargetFile, BkmL, TblL);
+
+                // Добавляем в кешь чтобы потом следить за отчётом
+                AddTaskWordInCach(Tsk);
+
+                // передаём в очередь наше задание
+                Wrd.RezultTaskWord RTsk = Wrd.FarmWordDotx.QueTaskWordAdd(Tsk);
+
+
+                return string.Format("Создание отчёта запущено. Отчёт будет создан с именем {0}", TargetFile);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при формировании отчёта с ошибкой: {0}", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.CreateReportInf3", "ReportWordDotxFarm"), EventEn.Error);
+                throw ae;
+            }
+        }
+
         #region Private method
 
         // Произошла ошибка при отрисовки отчёта
