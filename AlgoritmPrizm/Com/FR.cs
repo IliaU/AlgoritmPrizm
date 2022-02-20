@@ -464,6 +464,7 @@ namespace AlgoritmPrizm.Com
 
                     // По умолчанию считам что строки с маркиовкой нет
                     bool flagmarkink = false;
+                    
 
                     // Проверяем есть кодмаркировки или нет по полю note1
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note1))
@@ -555,6 +556,8 @@ namespace AlgoritmPrizm.Com
 
                 //Web.UpdateFiskDocNum(Doc, Fr.DocumentNumber);
                 if (!IsCopy) rezWeb.fiscDocNum = Fr.DocumentNumber;
+
+                Cut();
 
                 // Открываем денежный ящик
                 //if (!IsCopy) OpenDrawer();
@@ -664,6 +667,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Упали с ошибкой при печати строки ({0}) в чеке: {1}", S, rez.Description));
                 }
                 Fr.StringForPrinting = "";
+//                Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -692,6 +696,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Упали с ошибкой при печати строки ({0}) в чеке: {1}", S, rez.Description));
                 }
                 Fr.StringForPrinting = "";
+//                Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -932,7 +937,7 @@ namespace AlgoritmPrizm.Com
                 decimal PriceForPrinting;
                 if ((Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
                     // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
-                    || (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0)
+                    || (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0 && SumChekFoCustomer < SumChekFoPrice)
                     )
                 {
                     // Получаем на сколько стандартно домножаем сумму для того чтобы пропарционально позиции в чеке поменять
@@ -1457,7 +1462,7 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
-                Thread.Sleep(100);  // Иногда тупит говорит что чтото уже печатает
+                if (IsCopy) Thread.Sleep(500);  // Иногда тупит говорит что чтото уже печатает
                 if (IsCopy)
                 {
                     // Печать информациипо чеку
@@ -1493,6 +1498,8 @@ namespace AlgoritmPrizm.Com
                                 string.Format("ЧЕК {0}", DocNum));
                 }
 
+//                if (IsCopy) Thread.Sleep(300);
+
                 // ПЕЧАТЬ ШТРИХ-КОДА
                 Fr.BarCode = Doc.document_number.ToString();
                 Fr.BarWidth = 2;
@@ -1505,6 +1512,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Не смогли напечатать ПЕЧАТЬ ШТРИХ-КОДА: {0}", Status.Description));
                 }
 
+//                if (IsCopy) Thread.Sleep(300);
 
                 // КАССИР - СОТРУДНИК
                 Print2in1Line(@"КАССИР:", TekCustomer.fio_fo_check);
@@ -1528,6 +1536,7 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+//                if (IsCopy) Thread.Sleep(300);
 
                 // Печать информации про юрлицо
                 if (Config.ProcessingUrikForFr
@@ -1585,6 +1594,9 @@ namespace AlgoritmPrizm.Com
                                 throw new ApplicationException(string.Format("Не смогли отправить составной тег по юр лицу: {0}", Status.Description));
                         }
                     }
+
+//                    if (IsCopy) Thread.Sleep(300);
+
                     if (Config.PrintingUrikForFr)
                     {
                         PrintLine(string.Format("ПОКУПАТЕЛЬ:{0}", Doc.bt_last_name.Trim()));
@@ -1607,6 +1619,8 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+//                if (IsCopy) Thread.Sleep(300);
+
                 // Печатаем сотрудника продавшего товар
                 string employee = null;
                 foreach (JsonPrintFiscDocItem item in Doc.items)
@@ -1627,6 +1641,8 @@ namespace AlgoritmPrizm.Com
 
                 // Отчеркиваем заголовок
                 PrintSeparator();
+
+//                if (IsCopy) Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -1920,18 +1936,21 @@ namespace AlgoritmPrizm.Com
                         Verification(Fr);
                         throw new ApplicationException(string.Format("Не смогли отправить подитог ошибка: {0}", Status.Description));
                     }
-                    Thread.Sleep(500);
+//500                    Thread.Sleep(300);
                 }
 
                 // Заполняем сумму в фискальнике
                 FrGetSummCheckRez Itog = GetSummCheck(Doc, true);
 
                 // Печатеам концовку для копии чека
+//                if (IsCopy) Thread.Sleep(300);
                 PrintSeparator();
                 if (IsCopy)
                 {
+//                    if (IsCopy) Thread.Sleep(300);
                     PrintLineCenter(string.Format("КОПИЯ ЧЕКА ЗА {0}", ((DateTime)Doc.invoice_posted_date).ToShortDateString()));
                     Print2in1Line(string.Format("ИТОГО К ОПЛАТЕ"), string.Format("={0}", Math.Round(Itog.itog, 2).ToString("0.00")));
+//                    if (IsCopy) Thread.Sleep(300);
                 }
 
                 // Печатем под итог
@@ -1959,10 +1978,24 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+
                 if (IsCopy)
                 {
+                    // Сумма чека и подсчёит итога
+                    decimal SumChekFoPrice = 0;
+                    foreach (JsonPrintFiscDocItem item in Doc.items)
+                    {
+                        SumChekFoPrice += (decimal)(item.quantity * item.price);
+                    }
+                    if (Itog.itog > SumChekFoPrice) Print2in1Line("Сдача", string.Format("={0}", Math.Round(Itog.itog - SumChekFoPrice, 2).ToString("0.00")));
+
                     PrintLineCenter("Сумма чека содержит НДС");
                     PrintLine("ВСЕ СУММЫ УКАЗАНЫ В РУБЛЯХ", true);
+
+                    Fr.FeedDocument();
+                }
+                else 
+                {
 
                     // Сумма чека и подсчёит итога
                     decimal SumChekFoPrice = 0;
@@ -1970,11 +2003,9 @@ namespace AlgoritmPrizm.Com
                     {
                         SumChekFoPrice += (decimal)(item.quantity * item.price);
                     }
-                    if (Itog.itog>SumChekFoPrice) Print2in1Line("Сдача", string.Format("={0}", Math.Round(Itog.itog - SumChekFoPrice, 2).ToString("0.00")));
+                    if (Itog.itog > SumChekFoPrice) Print2in1Line("Сдача", string.Format("={0}", Math.Round(Itog.itog - SumChekFoPrice, 2).ToString("0.00")));
 
-                    Fr.FeedDocument();
-                }
-                else {
+
                     // Вставка подитога для гучи
                     /*if (Fr.Summ1 != 0) Print2in1Line("НАЛИЧНЫМИ", Fr.Summ1.ToString());
                     if (Fr.Summ2 != 0) Print2in1Line("КРЕДИТОМ", Fr.Summ2.ToString());  //
