@@ -1034,7 +1034,7 @@ namespace AlgoritmPrizm.Com
                 if (IsCopy)
                 {
                     PrintLine(StringForPrinting);
-                    PrintLine(string.Format("{0} X {1}", QtyForPrinting.ToString(), PriceForPrinting.ToString()));
+                    PrintLine(string.Format("{0} X {1}", QtyForPrinting.ToString(), PriceForPrinting.ToString()), true);
                     Print2in1Line(QtyForPrinting.ToString(), string.Format("={0}", (QtyForPrinting * (double)PriceForPrinting).ToString()));
                 }
                 else
@@ -1501,7 +1501,7 @@ namespace AlgoritmPrizm.Com
 //                if (IsCopy) Thread.Sleep(300);
 
                 // ПЕЧАТЬ ШТРИХ-КОДА
-                Fr.BarCode = Doc.document_number.ToString();
+                Fr.BarCode = DocNum.ToString();
                 Fr.BarWidth = 2;
                 Fr.LineNumber = 50;
                 Fr.BarcodeType = 0;
