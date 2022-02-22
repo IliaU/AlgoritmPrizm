@@ -1599,8 +1599,24 @@ namespace AlgoritmPrizm.Com
 
                     if (Config.PrintingUrikForFr)
                     {
+                        string FieldInnTyp;
+                        switch (Config.FieldInnTyp)
+                        {
+                            case FieldDocNumEn.Comment1:
+                                FieldInnTyp = Doc.comment1;
+                                break;
+                            case FieldDocNumEn.Comment2:
+                                FieldInnTyp = Doc.comment2;
+                                break;
+                            case FieldDocNumEn.bt_address_line3:
+                                FieldInnTyp = Doc.bt_address_line3;
+                                break;
+                            default:
+                                FieldInnTyp = null;
+                                break;
+                        }
                         PrintLine(string.Format("ПОКУПАТЕЛЬ:{0}", Doc.bt_last_name.Trim()));
-                        PrintLine(string.Format("ИНН ПОКУПАТЕЛЯ:{0}", Doc.bt_address_line3.Trim()));
+                        PrintLine(string.Format("ИНН ПОКУПАТЕЛЯ:{0}", FieldInnTyp.Trim()));
                     }
                 }
 
@@ -1964,7 +1980,7 @@ namespace AlgoritmPrizm.Com
                         case FrGetSummCheckRezTypeEn.BezNal:
                             foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
                             {
-                                Print2in1Line(itemName.Name.ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
+                                Print2in1Line(itemName.Name.Replace("UDF1","MIR").ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
                             }
                             break;
                         case FrGetSummCheckRezTypeEn.Credit:

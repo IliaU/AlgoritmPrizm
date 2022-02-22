@@ -11,6 +11,6 @@ namespace AlgoritmPrizm.Lib
     /// </summary>
     public enum FieldDocNumEn
     {
-        Comment1, Comment2
+        Comment1, Comment2, bt_address_line3
     }
 }

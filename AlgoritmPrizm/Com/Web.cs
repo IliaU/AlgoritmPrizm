@@ -369,6 +369,9 @@ namespace AlgoritmPrizm.Com
                                             case FieldDocNumEn.Comment2:
                                                 FieldInnTyp = Doc.comment2;
                                                 break;
+                                            case FieldDocNumEn.bt_address_line3:
+                                                FieldInnTyp = Doc.bt_address_line3;
+                                                break;
                                             default:
                                                 FieldInnTyp = null;
                                                 break;
@@ -380,7 +383,10 @@ namespace AlgoritmPrizm.Com
                                             coment = FieldInnTyp.Split(';');
 
                                             //Если это юрик
-                                            if (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
+                                            if (
+                                                    (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
+                                                    ||(coment.Length == 1 && coment[0].Trim().Length == 10)
+                                               )
                                             {
                                                 if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
                                                 else
@@ -411,14 +417,16 @@ namespace AlgoritmPrizm.Com
                                                         }
                                                     }
 
+                                                    if (coment.Length == 2) FieldInnTyp = coment[1];
+
                                                     // Сумма за текущий день по юрлицу
-                                                    Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(coment[1].Trim().ToLower(), Doc.created_datetime);
+                                                    Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(FieldInnTyp.Trim().ToLower(), Doc.created_datetime);
 
                                                     // Если есть привышение то ругаемся
                                                     if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
 
                                                     // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
-                                                    Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(coment[1].Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
+                                                    Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(FieldInnTyp.Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
                                                 }
                                             }
                                         }
