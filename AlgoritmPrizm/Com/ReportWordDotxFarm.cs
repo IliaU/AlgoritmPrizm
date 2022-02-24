@@ -1035,7 +1035,10 @@ Select token From T", DocSid));
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
-                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select date_format(d.post_date, '%d') as fd,
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with r as (Select coalesce(ref_sale_sid, sid) As sid
+    From `rpsods`.`document` d
+    where d.`sid` = {0})
+select date_format(d.post_date, '%d') as fd,
     case when date_format(d.post_date, '%m') = '01' then 'января'
 		when date_format(d.post_date, '%m') = '02' then 'февраля'
         when date_format(d.post_date, '%m') = '03' then 'марта'
@@ -1055,10 +1058,10 @@ Select token From T", DocSid));
     convert(round(Sum(t.given+t.taken),2), char) As fr_summa, 
     convert(round(Sum(case when t.tender_type={2} then t.given+t.taken else 0 end),2), char) As fr_nal, 
     convert(round(Sum(case when t.tender_type<>{2} then t.given+t.taken else 0 end),2), char) fr_bnal,
-    date_format(sysdate(),'%d.%m.%Y') As curdata
+    date_format(sysdate(),'%d.%m.%Y') As curdate
 From `rpsods`.`document` d
 	inner join `rpsods`.`tender` t on d.sid = t.doc_sid
-where d.`sid` = {0}
+where d.`sid` = (Select sid From r)
 group by d.`sid`, d.post_date",  DocSid, Config.FieldDocNum.ToString(), Config.TenderTypeCash));
 
                 if (TblBkm == null) throw new ApplicationException(string.Format("Документ  с сидом {0} не найден.", DocSid));
@@ -1076,11 +1079,13 @@ group by d.`sid`, d.post_date",  DocSid, Config.FieldDocNum.ToString(), Config.T
                     BkmL.Add(new Wrd.Bookmark("fr_summa", TblBkm.Rows[0]["fr_summa"].ToString()), true);
                     BkmL.Add(new Wrd.Bookmark("fr_nal", TblBkm.Rows[0]["fr_nal"].ToString()), true);
                     BkmL.Add(new Wrd.Bookmark("fr_bnal", TblBkm.Rows[0]["fr_bnal"].ToString()), true);
-                    BkmL.Add(new Wrd.Bookmark("curdata", TblBkm.Rows[0]["curdata"].ToString()), true);
+                    BkmL.Add(new Wrd.Bookmark("curdate", TblBkm.Rows[0]["curdate"].ToString()), true);
                 }
 
                 // Создаём запрос для получения таблицы
-                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select p.description2 as C0, p.attribute as C1, p.item_size as C2,
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select p.description2 as C0, 
+	Concat(coalesce(p.description1,''), ' ' , coalesce(p.attribute,'')) as C1, 
+	p.item_size as C2,
 	case when row_number() over() = count(*) over() Then'' else ',' end As C3
 From `rpsods`.`document` d
 	inner join `rpsods`.`document_item` i on d.sid=i.doc_sid

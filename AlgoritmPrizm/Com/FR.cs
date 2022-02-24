@@ -1539,10 +1539,14 @@ namespace AlgoritmPrizm.Com
 //                if (IsCopy) Thread.Sleep(300);
 
                 // Печать информации про юрлицо
-                if (Config.ProcessingUrikForFr
+                if ((Config.ProcessingUrikForFr
                     && !string.IsNullOrWhiteSpace(Doc.bt_last_name)
-                    && !string.IsNullOrWhiteSpace(Doc.bt_address_line3)
-                    && Doc.bt_address_line3.Trim().Length == 10)      // У юриков ИНН 10 символов а у физиков 12
+                    && !string.IsNullOrWhiteSpace(Doc.bt_address_line3))
+                    && (
+                        (Config.PrintingUrikForFr && Doc.bt_address_line3.Trim().Length == 10)   // У юриков ИНН 10 символов а у физиков 12
+                        || (Config.PrintingIpForFr && Doc.bt_address_line3.Trim().Length == 12)   // У юриков ИНН 10 символов а у физиков 12
+                       )
+                    )
                 {
                     if (!IsCopy)
                     {
@@ -1597,7 +1601,7 @@ namespace AlgoritmPrizm.Com
 
 //                    if (IsCopy) Thread.Sleep(300);
 
-                    if (Config.PrintingUrikForFr)
+                    if (Config.PrintingUrikForFr || Config.PrintingIpForFr)
                     {
                         string FieldInnTyp;
                         switch (Config.FieldInnTyp)

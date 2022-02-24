@@ -345,6 +345,16 @@ namespace AlgoritmPrizm.Com
         /// Выводить на печать в чек юр лицо
         /// </summary>
         private static bool _PrintingUrikForFr = false;
+
+        /// <summary>
+        /// Выводить на печать в чек ИП
+        /// </summary>
+        private static bool _PrintingIpForFr = false;
+
+        /// <summary>
+        /// Считать по дням сумму за день по юрлицам, если fasle то будет ограничение работать на чек а не на день
+        /// </summary>
+        private static bool _CalculatedDaySumForUrik = true;
         #endregion
 
         #region Public Param
@@ -1337,6 +1347,40 @@ namespace AlgoritmPrizm.Com
                 _PrintingUrikForFr = value;
             }
         }
+
+        /// <summary>
+        /// Выводить на печать в чек ИП
+        /// </summary>
+        public static bool PrintingIpForFr
+        {
+            get
+            {
+                return _PrintingIpForFr;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("PrintingIpForFr", value.ToString());
+                Save();
+                _PrintingIpForFr = value;
+            }
+        }
+
+        /// <summary>
+        /// Считать по дням сумму за день по юрлицам, если fasle то будет ограничение работать на чек а не на день
+        /// </summary>
+        public static bool CalculatedDaySumForUrik
+        {
+            get
+            {
+                return _CalculatedDaySumForUrik;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("CalculatedDaySumForUrik", value.ToString());
+                Save();
+                _CalculatedDaySumForUrik = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1630,6 +1674,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("EmployeePrintingForEveryLine", _EmployeePrintingForEveryLine.ToString());
                     xmlMain.SetAttribute("ProcessingUrikForFr", _ProcessingUrikForFr.ToString());
                     xmlMain.SetAttribute("PrintingUrikForFr", _PrintingUrikForFr.ToString());
+                    xmlMain.SetAttribute("PrintingIpForFr", _PrintingIpForFr.ToString());
+                    xmlMain.SetAttribute("CalculatedDaySumForUrik", _CalculatedDaySumForUrik.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1751,6 +1797,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "EmployeePrintingForEveryLine") try { _EmployeePrintingForEveryLine = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "ProcessingUrikForFr") try { _ProcessingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrintingUrikForFr") try { _PrintingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "PrintingIpForFr") try { _PrintingIpForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "CalculatedDaySumForUrik") try { _CalculatedDaySumForUrik = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер

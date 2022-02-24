@@ -420,7 +420,8 @@ namespace AlgoritmPrizm.Com
                                                     if (coment.Length == 2) FieldInnTyp = coment[1];
 
                                                     // Сумма за текущий день по юрлицу
-                                                    Decimal SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(FieldInnTyp.Trim().ToLower(), Doc.created_datetime);
+                                                    Decimal SumDocOld = 0;
+                                                    if (Config.CalculatedDaySumForUrik) SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(FieldInnTyp.Trim().ToLower(), Doc.created_datetime);
 
                                                     // Если есть привышение то ругаемся
                                                     if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");

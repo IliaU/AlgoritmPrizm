@@ -65,6 +65,7 @@ namespace AlgoritmPrizm
                 //
                 this.chkBoxProcessingUrikForFr.Checked = Config.ProcessingUrikForFr;
                 this.chkBoxPrintingUrikForFr.Checked = Config.PrintingUrikForFr;
+                this.chkBoxPrintingIpForFr.Checked = Config.PrintingIpForFr;
 
                 this.cmbBoxDisplayDspFullName.Items.Clear();
                 cmbBoxDisplayDspFullName.Items.Add("Без дисплея"); 
@@ -276,6 +277,8 @@ namespace AlgoritmPrizm
                     this.dgProdictMatrixClass.DataSource = this.dv;
                 }
 
+                this.chkBoxCalculatedDaySumForUrik.Checked = Config.CalculatedDaySumForUrik;
+
                 this.txtBoxLimitCachForUrik.Text = Config.LimitCachForUrik.ToString();
 
                 this.chkBoxEmployeePrintingForEveryLine.Checked = Config.EmployeePrintingForEveryLine;
@@ -384,6 +387,7 @@ namespace AlgoritmPrizm
                 }
                 Config.ProcessingUrikForFr = this.chkBoxProcessingUrikForFr.Checked;
                 Config.PrintingUrikForFr = this.chkBoxPrintingUrikForFr.Checked;
+                Config.PrintingIpForFr = this.chkBoxPrintingIpForFr.Checked;
 
                 try
                 {
@@ -512,6 +516,9 @@ namespace AlgoritmPrizm
 
                 Config.EmployeePrintingForEveryLine = this.chkBoxEmployeePrintingForEveryLine.Checked;
 
+
+                Config.CalculatedDaySumForUrik = this.chkBoxCalculatedDaySumForUrik.Checked;
+
                 this.Close();
             }
             catch (Exception ex)
@@ -605,8 +612,16 @@ namespace AlgoritmPrizm
         {
             try
             {
-                if (this.chkBoxProcessingUrikForFr.Checked) this.chkBoxPrintingUrikForFr.Visible = true;
-                else this.chkBoxPrintingUrikForFr.Visible = false;
+                if (this.chkBoxProcessingUrikForFr.Checked)
+                {
+                    this.chkBoxPrintingUrikForFr.Visible = true;
+                    this.chkBoxPrintingIpForFr.Visible = true;
+                }
+                else
+                {
+                    this.chkBoxPrintingUrikForFr.Visible = false;
+                    this.chkBoxPrintingIpForFr.Visible = false;
+                }
             }
             catch (Exception ex)
             {
