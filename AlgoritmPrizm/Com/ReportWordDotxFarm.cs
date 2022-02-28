@@ -1055,9 +1055,9 @@ select date_format(d.post_date, '%d') as fd,
     substr(date_format(d.post_date, '%Y'),4,1)  as y,
     coalesce(convert(d.{1}, char),'--') as fr_no, 
     date_format(d.post_date,'%d.%m.%Y') fr_data, 
-    convert(round(Sum(t.given+t.taken),2), char) As fr_summa, 
-    convert(round(Sum(case when t.tender_type={2} then t.given+t.taken else 0 end),2), char) As fr_nal, 
-    convert(round(Sum(case when t.tender_type<>{2} then t.given+t.taken else 0 end),2), char) fr_bnal,
+    convert(round(Sum(t.taken)-Sum(t.given),2), char) As fr_summa, 
+    convert(round(Sum(case when t.tender_type={2} then t.taken else 0 end)-Sum(case when t.tender_type={2} then t.given else 0 end),2), char) As fr_nal, 
+    convert(round(Sum(case when t.tender_type<>{2} then t.taken else 0 end)-Sum(case when t.tender_type<>{2} then t.given else 0 end),2), char) fr_bnal,
     date_format(sysdate(),'%d.%m.%Y') As curdate
 From `rpsods`.`document` d
 	inner join `rpsods`.`tender` t on d.sid = t.doc_sid

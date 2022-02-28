@@ -64,7 +64,7 @@ namespace AlgoritmPrizm.BLL
         public string package_number;
         public string ship_id;
         public string ship_method;
-        public double shipping_amt;
+        public double? shipping_amt;
         public string tracking_number;
         public double original_cost;
         public bool promotion_flag;

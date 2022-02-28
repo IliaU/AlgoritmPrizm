@@ -307,7 +307,7 @@ namespace AlgoritmPrizm.BLL
         public double? override_max_disc_perc;
         public string image_path;
         public int promo_gift_item;
-        public int employee1_orig_sbs_no;
+        public int? employee1_orig_sbs_no;
         public int? employee2_orig_sbs_no;
         public int? employee3_orig_sbs_no;
         public int? employee4_orig_sbs_no;
