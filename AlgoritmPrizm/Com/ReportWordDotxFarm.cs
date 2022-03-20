@@ -1021,9 +1021,8 @@ Select token From T", DocSid));
             }
         }
 
-
         /// <summary>
-        /// Формирование отчёта по ИНВ-3
+        /// Заявление на возврат
         /// </summary>
         /// <param name="DocSid">Сид документа инвентаризации (610444449000210592)</param>
         public static string CreateReportReturnBlankWrd(string DocSid)
@@ -1035,7 +1034,7 @@ Select token From T", DocSid));
                 if (HashFileProcessing(TargetFile)) throw new ApplicationException(string.Format("Такое задание по этому документу {0} уже сущестаует", TargetFile));
 
                 // Создаём запрос для получения списка закладок
-                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with r as (Select coalesce(ref_sale_sid, sid) As sid
+                DataTable TblBkm = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with r as (Select coalesce(ref_sale_sid, sid) As sid, d.return_subtotal_with_tax
     From `rpsods`.`document` d
     where d.`sid` = {0})
 select date_format(d.post_date, '%d') as fd,
@@ -1053,16 +1052,20 @@ select date_format(d.post_date, '%d') as fd,
         else 'декабря' end as fm, 
 	substr(date_format(d.post_date, '%Y'),1,3) as fy, 
     substr(date_format(d.post_date, '%Y'),4,1)  as y,
-    coalesce(convert(d.{1}, char),'--') as fr_no, 
+    #coalesce(convert(d.{1}, char),'--') as fr_no, 
+    coalesce(convert(d.doc_no, char),'--') as fr_no, 
     date_format(d.post_date,'%d.%m.%Y') fr_data, 
-    convert(round(Sum(t.taken)-Sum(t.given),2), char) As fr_summa, 
-    convert(round(Sum(case when t.tender_type={2} then t.taken else 0 end)-Sum(case when t.tender_type={2} then t.given else 0 end),2), char) As fr_nal, 
-    convert(round(Sum(case when t.tender_type<>{2} then t.taken else 0 end)-Sum(case when t.tender_type<>{2} then t.given else 0 end),2), char) fr_bnal,
+    convert(round((Select return_subtotal_with_tax From r),2), char) As fr_summa,
+    #convert(round(Sum(t.given+t.taken),2), char) As fr_summa, 
+    convert(round((Select return_subtotal_with_tax From r),2), char) As fr_nal,
+    #convert(round(Sum(case when t.tender_type={2} then t.given+t.taken else 0 end),2), char) As fr_nal, 
+    convert(round(0,2), char) fr_bnal,
+    #convert(round(Sum(case when t.tender_type<>{2} then t.given+t.taken else 0 end),2), char) fr_bnal,
     date_format(sysdate(),'%d.%m.%Y') As curdate
 From `rpsods`.`document` d
 	inner join `rpsods`.`tender` t on d.sid = t.doc_sid
 where d.`sid` = (Select sid From r)
-group by d.`sid`, d.post_date",  DocSid, Config.FieldDocNum.ToString(), Config.TenderTypeCash));
+group by d.`sid`, d.post_date", DocSid, Config.FieldDocNum.ToString(), Config.TenderTypeCash));
 
                 if (TblBkm == null) throw new ApplicationException(string.Format("Документ  с сидом {0} не найден.", DocSid));
 
@@ -1083,14 +1086,17 @@ group by d.`sid`, d.post_date",  DocSid, Config.FieldDocNum.ToString(), Config.T
                 }
 
                 // Создаём запрос для получения таблицы
-                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"select p.description2 as C0, 
+                DataTable TblVal = Com.ProviderFarm.CurrentPrv.getData(string.Format(@"with r as (Select coalesce(ref_sale_sid, sid) As sid
+    From `rpsods`.`document` d
+    where d.`sid` = {0})
+select p.description2 as C0, 
 	Concat(coalesce(p.description1,''), ' ' , coalesce(p.attribute,'')) as C1, 
 	p.item_size as C2,
 	case when row_number() over() = count(*) over() Then'' else ',' end As C3
 From `rpsods`.`document` d
-	inner join `rpsods`.`document_item` i on d.sid=i.doc_sid
+	inner join `rpsods`.`document_item` i on d.sid=i.doc_sid and i.returned_item_qty>0
     inner join `rpsods`.invn_sbs_item p on i.invn_sbs_item_sid=p.sid
-where d.`sid` = {0}
+where d.`sid` = (Select sid From r)
 order by i.item_pos", DocSid));
 
                 // Создаём список таблиц
