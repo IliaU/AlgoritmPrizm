@@ -106,11 +106,12 @@ namespace AlgoritmPrizm
                             continue;
                         }
 
+                        /*
                         if (string.IsNullOrWhiteSpace(strJob))
                         {
                             Log.EventSave("Не указано обязательное поле Должность строчка будет пропущена", GetType().Name, EventEn.Warning);
                             continue;
-                        }
+                        }*/
 
                         if (string.IsNullOrWhiteSpace(strINN))
                         {

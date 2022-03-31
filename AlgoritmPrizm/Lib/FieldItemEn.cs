@@ -34,6 +34,20 @@ namespace AlgoritmPrizm.Lib
         /// <summary>
         /// Размер
         /// </summary>
-        ItemSize
+        ItemSize,
+        /// <summary>
+        /// UPC
+        /// </summary>
+        ScanUpc,
+        Text1,
+        Text2,
+        Text3,
+        Text4,
+        Text5,
+        Text6,
+        Text7,
+        Text8,
+        Text9,
+        Text10
     }
 }

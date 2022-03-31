@@ -11,6 +11,8 @@ using AlgoritmPrizm.Com.Provider.Lib;
 using AlgoritmPrizm.Lib;
 using System.Threading;
 
+using AlgoritmPrizm.BLL;
+
 namespace AlgoritmPrizm.Com.Provider
 {
     /// <summary>
@@ -465,6 +467,47 @@ namespace AlgoritmPrizm.Com.Provider
                 MessageBox.Show(ex.Message);
 
                 return 0;
+            }
+        }
+
+        /// <summary>
+        /// Для получения содержимого полей text1-10 из карточки товаров
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public InvnSbsItemText GetInvnSbsItemText(string InvnSbsItemSid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetInvnSbsItemTextORA(InvnSbsItemSid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetInvnSbsItemTextMySql(InvnSbsItemSid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetInvnSbsItemText", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
             }
         }
         #endregion
@@ -1067,6 +1110,85 @@ where sid = {0}", sid);
                 throw;
             }
         }
+
+        /// <summary>
+        /// Для получения содержимого полей text1-10 из карточки товаров
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public InvnSbsItemText GetInvnSbsItemTextORA(string InvnSbsItemSid)
+        {
+            string CommandSql = String.Format(@"SELECT text1, text2, text3, text4, text5, text6, text7, text8, text9, text10
+from rpsods.invn_sbs_item
+where sid ={0}", InvnSbsItemSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextORA", EventEn.Dump);
+
+                InvnSbsItemText rez = null;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text1").ToUpper()) rez.Text1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text2").ToUpper()) rez.Text2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text3").ToUpper()) rez.Text3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text4").ToUpper()) rez.Text4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text5").ToUpper()) rez.Text5 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text6").ToUpper()) rez.Text6 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text7").ToUpper()) rez.Text7 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text8").ToUpper()) rez.Text8 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text9").ToUpper()) rez.Text9 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text10").ToUpper()) rez.Text10 = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemTextORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemTextORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextORA", EventEn.Dump);
+                throw;
+            }
+        }
         #endregion
 
         #region Private method MySql
@@ -1603,6 +1725,85 @@ where sid = {0}", sid);
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetDocNoFromDocumentMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Для получения содержимого полей text1-10 из карточки товаров
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public InvnSbsItemText GetInvnSbsItemTextMySql(string InvnSbsItemSid)
+        {
+            string CommandSql = String.Format(@"SELECT `text1`, `text2`, `text3`, `text4`, `text5`, `text6`, `text7`, `text8`, `text9`, `text10`
+from `rpsods`.`invn_sbs_item`
+where sid ={0}", InvnSbsItemSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Dump);
+
+                InvnSbsItemText rez = null;
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text1").ToUpper()) rez.Text1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text2").ToUpper()) rez.Text2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text3").ToUpper()) rez.Text3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text4").ToUpper()) rez.Text4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text5").ToUpper()) rez.Text5 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text6").ToUpper()) rez.Text6 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text7").ToUpper()) rez.Text7 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text8").ToUpper()) rez.Text8 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text9").ToUpper()) rez.Text9 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text10").ToUpper()) rez.Text10 = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Dump);
                 throw;
             }
         }

@@ -84,73 +84,74 @@ namespace AlgoritmPrizm.Com
                 {
                     ListDisplayName = new List<string>();
 
-                    Type[] typelist = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == "AlgoritmPrizm.Com.DisplayPlg").ToArray();
+                   // if (!string.IsNullOrWhiteSpace(Config.DisplayDspFullName))
+                   // {
+                        Type[] typelist = Assembly.GetExecutingAssembly().GetTypes().Where(t => t.Namespace == "AlgoritmPrizm.Com.DisplayPlg").ToArray();
 
-                    foreach (Type item in typelist)
-                    {
-                        // Проверяем реализовывает ли класс наш интерфейс если да то это провайдер который можно подкрузить
-                        bool flagI = false;
-                        foreach (Type i in item.GetInterfaces())
+                        foreach (Type item in typelist)
                         {
-                            if (i.FullName == "AlgoritmPrizm.Com.DisplayPlg.Lib.CustomerDisplayI")
+                            // Проверяем реализовывает ли класс наш интерфейс если да то это провайдер который можно подкрузить
+                            bool flagI = false;
+                            foreach (Type i in item.GetInterfaces())
                             {
-                                flagI = true;
-                                break;
+                                if (i.FullName == "AlgoritmPrizm.Com.DisplayPlg.Lib.CustomerDisplayI")
+                                {
+                                    flagI = true;
+                                    break;
+                                }
                             }
-                        }
-                        if (!flagI) continue;
+                            if (!flagI) continue;
 
-                        // Проверяем что наш клас наследует PlugInBase 
-                        bool flagB = false;
-                        foreach (MemberInfo mi in item.GetMembers())
-                        {
-                            if (mi.DeclaringType.FullName == "AlgoritmPrizm.Com.Display")
+                            // Проверяем что наш клас наследует PlugInBase 
+                            bool flagB = false;
+                            foreach (MemberInfo mi in item.GetMembers())
                             {
-                                flagB = true;
-                                break;
+                                if (mi.DeclaringType.FullName == "AlgoritmPrizm.Com.Display")
+                                {
+                                    flagB = true;
+                                    break;
+                                }
                             }
-                        }
-                        if (!flagB) continue;
+                            if (!flagB) continue;
 
-                        // Проверяем конструктор нашего класса  
-                        bool flag = false;
-                        //bool flag0 = false;
-                        string nameConstructor;
-                        foreach (ConstructorInfo ctor in item.GetConstructors())
-                        {
-                            nameConstructor = item.Name;
-
-                            // получаем параметры конструктора  
-                            ParameterInfo[] parameters = ctor.GetParameters();
-
-                            // если в этом конструктаре 11 параметров то проверяем тип и имя параметра 
-                            if (parameters.Length == 5)
+                            // Проверяем конструктор нашего класса  
+                            bool flag = false;
+                            //bool flag0 = false;
+                            string nameConstructor;
+                            foreach (ConstructorInfo ctor in item.GetConstructors())
                             {
-                                bool flag2 = true;
-                                if (parameters[0].ParameterType.Name != "Int32" || parameters[0].Name != "Port") flag = false;
-                                if (parameters[1].ParameterType.Name != "Int32" || parameters[1].Name != "BaudRate") flag = false;
-                                if (parameters[2].ParameterType.Name != "Parity" || parameters[2].Name != "Parity") flag = false;
-                                if (parameters[3].ParameterType.Name != "Int32" || parameters[3].Name != "DataBits") flag = false;
-                                if (parameters[4].ParameterType.Name != "StopBits" || parameters[4].Name != "StpBits") flag = false;
-                                flag = flag2;
+                                nameConstructor = item.Name;
+
+                                // получаем параметры конструктора  
+                                ParameterInfo[] parameters = ctor.GetParameters();
+
+                                // если в этом конструктаре 11 параметров то проверяем тип и имя параметра 
+                                if (parameters.Length == 5)
+                                {
+                                    bool flag2 = true;
+                                    if (parameters[0].ParameterType.Name != "Int32" || parameters[0].Name != "Port") flag = false;
+                                    if (parameters[1].ParameterType.Name != "Int32" || parameters[1].Name != "BaudRate") flag = false;
+                                    if (parameters[2].ParameterType.Name != "Parity" || parameters[2].Name != "Parity") flag = false;
+                                    if (parameters[3].ParameterType.Name != "Int32" || parameters[3].Name != "DataBits") flag = false;
+                                    if (parameters[4].ParameterType.Name != "StopBits" || parameters[4].Name != "StpBits") flag = false;
+                                    flag = flag2;
+                                }
+
+                                // Проверяем конструктор для создания документа пустого по умолчанию
+                                //if (parameters.Length == 0) flag0 = true;
                             }
+                            if (!flag) continue;
+                            //if (!flag0) continue;
 
-                            // Проверяем конструктор для создания документа пустого по умолчанию
-                            //if (parameters.Length == 0) flag0 = true;
+                            ListDisplayName.Add(item.Name);
                         }
-                        if (!flag) continue;
-                        //if (!flag0) continue;
-
-                        ListDisplayName.Add(item.Name);
                     }
-                }
+                //}
             }
             catch (Exception ex )
             {
                 Com.Log.EventSave(ex.Message, "DisplayFarm.ListCustomerDisplayName", EventEn.Error);
             }
-
-            
 
             return ListDisplayName;
         }

@@ -95,6 +95,7 @@
     <Compile Include="BLL\ClientParam.cs" />
     <Compile Include="BLL\Custumer.cs" />
     <Compile Include="BLL\Employee.cs" />
+    <Compile Include="BLL\InvnSbsItemText.cs" />
     <Compile Include="BLL\ItemSQL.cs" />
     <Compile Include="BLL\JsonConfig.cs" />
     <Compile Include="BLL\JsonConfigFfdConverter.cs" />

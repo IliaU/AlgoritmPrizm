@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 using System.Windows.Forms;
 using AlgoritmPrizm.Lib;
+using AlgoritmPrizm.BLL;
 
 namespace AlgoritmPrizm.Com.Provider.Lib
 {
@@ -76,5 +77,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="sid"></param>
         /// <returns>Получаем номер документа</returns>
         Int64 GetDocNoFromDocument(string sid);
+
+        /// <summary>
+        /// Для получения содержимого полей text1-10 из карточки товаров
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        InvnSbsItemText GetInvnSbsItemText(string InvnSbsItemSid);
     }
 }
