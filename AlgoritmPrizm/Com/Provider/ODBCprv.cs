@@ -1773,19 +1773,32 @@ where sid ={0}", InvnSbsItemSid);
                                 // пробегаем по строкам
                                 while (dr.Read())
                                 {
+                                    string Text1 = null;
+                                    string Text2 = null;
+                                    string Text3 = null;
+                                    string Text4 = null;
+                                    string Text5 = null;
+                                    string Text6 = null;
+                                    string Text7 = null;
+                                    string Text8 = null;
+                                    string Text9 = null;
+                                    string Text10 = null;
+
                                     for (int i = 0; i < dr.FieldCount; i++)
                                     {
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text1").ToUpper()) rez.Text1 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text2").ToUpper()) rez.Text2 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text3").ToUpper()) rez.Text3 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text4").ToUpper()) rez.Text4 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text5").ToUpper()) rez.Text5 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text6").ToUpper()) rez.Text6 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text7").ToUpper()) rez.Text7 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text8").ToUpper()) rez.Text8 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text9").ToUpper()) rez.Text9 = dr.GetValue(i).ToString();
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text10").ToUpper()) rez.Text10 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text1").ToUpper()) Text1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text2").ToUpper()) Text2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text3").ToUpper()) Text3 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text4").ToUpper()) Text4 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text5").ToUpper()) Text5 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text6").ToUpper()) Text6 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text7").ToUpper()) Text7 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text8").ToUpper()) Text8 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text9").ToUpper()) Text9 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text10").ToUpper()) Text10 = dr.GetValue(i).ToString();
                                     }
+
+                                    rez = new InvnSbsItemText(Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10);
                                 }
                             }
                         }
