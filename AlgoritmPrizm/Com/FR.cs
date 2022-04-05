@@ -815,31 +815,34 @@ namespace AlgoritmPrizm.Com
                         StringForPrinting = item.scan_upc.Trim();
                         break;
                     case FieldItemEn.Text1:
-                        StringForPrinting = TmpTextInfo.Text1.Trim();
+                        if(TmpTextInfo!=null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = TmpTextInfo.Text1.Trim();
                         break;
                     case FieldItemEn.Text2:
-                        StringForPrinting = TmpTextInfo.Text2.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = TmpTextInfo.Text2.Trim();
                         break;
                     case FieldItemEn.Text3:
-                        StringForPrinting = TmpTextInfo.Text3.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = TmpTextInfo.Text3.Trim();
                         break;
                     case FieldItemEn.Text4:
-                        StringForPrinting = TmpTextInfo.Text4.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = TmpTextInfo.Text4.Trim();
                         break;
                     case FieldItemEn.Text5:
-                        StringForPrinting = TmpTextInfo.Text5.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = TmpTextInfo.Text5.Trim();
                         break;
                     case FieldItemEn.Text6:
-                        StringForPrinting = TmpTextInfo.Text6.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = TmpTextInfo.Text6.Trim();
                         break;
                     case FieldItemEn.Text7:
-                        StringForPrinting = TmpTextInfo.Text7.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = TmpTextInfo.Text7.Trim();
                         break;
                     case FieldItemEn.Text8:
-                        StringForPrinting = TmpTextInfo.Text8.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = TmpTextInfo.Text8.Trim();
                         break;
                     case FieldItemEn.Text9:
-                        StringForPrinting = TmpTextInfo.Text9.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = TmpTextInfo.Text9.Trim();
+                        break;
+                    case FieldItemEn.Text10:
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = TmpTextInfo.Text10.Trim();
                         break;
                     default:
                         StringForPrinting = item.item_description1.Trim();
@@ -867,34 +870,34 @@ namespace AlgoritmPrizm.Com
                         if (!string.IsNullOrWhiteSpace(item.scan_upc)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
                         break;
                     default:
                         break;
@@ -921,34 +924,34 @@ namespace AlgoritmPrizm.Com
                         if (!string.IsNullOrWhiteSpace(item.scan_upc)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
                         break;
                     default:
                         break;
@@ -975,34 +978,34 @@ namespace AlgoritmPrizm.Com
                         if (!string.IsNullOrWhiteSpace(item.scan_upc)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
                         break;
                     default:
                         break;
@@ -1029,34 +1032,34 @@ namespace AlgoritmPrizm.Com
                         if (!string.IsNullOrWhiteSpace(item.scan_upc)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
                         break;
                     default:
                         break;
@@ -1083,34 +1086,34 @@ namespace AlgoritmPrizm.Com
                         if (!string.IsNullOrWhiteSpace(item.scan_upc)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (!string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0} {1}", StringForPrinting, TmpTextInfo.Text10).Trim();
                         break;
                     default:
                         break;
