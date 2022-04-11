@@ -1746,6 +1746,8 @@ where sid ={0}", InvnSbsItemSid);
 
                 InvnSbsItemText rez = null;
 
+                if (string.IsNullOrWhiteSpace(InvnSbsItemSid)) return rez;
+
                 // Закрывать конект не нужно он будет закрыт деструктором
                 using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
                 {
