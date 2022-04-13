@@ -510,6 +510,47 @@ namespace AlgoritmPrizm.Com.Provider
                 return null;
             }
         }
+
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <returns>сама строка тендера</returns>
+        public BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetTenderForReturnOrderORA(itemTender);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetTenderForReturnOrderMySql(itemTender);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetTenderForReturnOrder", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
+            }
+        }
         #endregion
 
         #region Private metod
@@ -1189,6 +1230,84 @@ where sid ={0}", InvnSbsItemSid);
                 throw;
             }
         }
+
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <returns>сама строка тендера</returns>
+        public BLL.JsonPrintFiscDocTender GetTenderForReturnOrderORA(BLL.JsonPrintFiscDocTender itemTender)
+        {
+            {
+                string referLink = itemTender.link.Substring(itemTender.link.IndexOf(@"/tender/") + 8);
+
+                string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
+FROM rpsods.tender t 
+Where t.sid ='{0}'", referLink);
+
+                try
+                {
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+
+                    // Закрывать конект не нужно он будет закрыт деструктором
+                    using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                    {
+                        con.Open();
+
+                        using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                        {
+                            com.CommandTimeout = 900;  // 15 минут
+                            using (OdbcDataReader dr = com.ExecuteReader())
+                            {
+
+                                if (dr.HasRows)
+                                {
+                                    // Получаем схему таблицы
+                                    //DataTable tt = dr.GetSchemaTable();
+
+                                    //foreach (DataRow item in tt.Rows)
+                                    //{
+                                    //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                    //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                    //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                    //rez.Columns.Add(ncol);
+                                    //}
+
+                                    // пробегаем по строкам
+                                    while (dr.Read())
+                                    {
+                                        for (int i = 0; i < dr.FieldCount; i++)
+                                        {
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) itemTender.tender_name = dr.GetValue(i).ToString();
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) itemTender.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) itemTender.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) itemTender.tender_pos = int.Parse(dr.GetValue(i).ToString());
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) itemTender.currency_name = dr.GetValue(i).ToString();
+                                        }
+                                        return itemTender;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return itemTender;
+                }
+                catch (OdbcException ex)
+                {
+                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+                    throw;
+                }
+            }
+        }
         #endregion
 
         #region Private method MySql
@@ -1820,6 +1939,84 @@ where sid ={0}", InvnSbsItemSid);
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetInvnSbsItemTextMySql", EventEn.Dump);
                 throw;
+            }
+        }
+
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <returns>сама строка тендера</returns>
+        public BLL.JsonPrintFiscDocTender GetTenderForReturnOrderMySql(BLL.JsonPrintFiscDocTender itemTender)
+        {
+            {
+                string referLink = itemTender.link.Substring(itemTender.link.IndexOf(@"/tender/") + 8);
+
+                string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
+FROM rpsods.tender t 
+Where t.sid ='{0}'", referLink);
+
+                try
+                {
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Dump);
+
+                    // Закрывать конект не нужно он будет закрыт деструктором
+                    using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                    {
+                        con.Open();
+
+                        using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                        {
+                            com.CommandTimeout = 900;  // 15 минут
+                            using (OdbcDataReader dr = com.ExecuteReader())
+                            {
+
+                                if (dr.HasRows)
+                                {
+                                    // Получаем схему таблицы
+                                    //DataTable tt = dr.GetSchemaTable();
+
+                                    //foreach (DataRow item in tt.Rows)
+                                    //{
+                                    //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                    //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                    //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                    //rez.Columns.Add(ncol);
+                                    //}
+
+                                    // пробегаем по строкам
+                                    while (dr.Read())
+                                    {
+                                        for (int i = 0; i < dr.FieldCount; i++)
+                                        {
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".",","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) itemTender.tender_name = dr.GetValue(i).ToString();
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) itemTender.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) itemTender.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) itemTender.tender_pos = int.Parse(dr.GetValue(i).ToString());
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) itemTender.currency_name = dr.GetValue(i).ToString();
+                                        }
+                                        return itemTender;
+                                    }
+                                }
+                            }
+                        }
+                    }
+
+                    return itemTender;
+                }
+                catch (OdbcException ex)
+                {
+                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Error);
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Dump);
+                    throw;
+                }
+                catch (Exception ex)
+                {
+                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Error);
+                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Dump);
+                    throw;
+                }
             }
         }
         #endregion

@@ -384,9 +384,22 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+                // Возврат депозита воркраунд для подтягивания строк из tenders
+                if (Doc.receipt_type == 0 && Doc.tenders.Count > 0
+                    && Doc.tenders.Count(t => t.taken == 0) == Doc.tenders.Count)
+                {
+                    DocCustTyp = EnFrTyp.ReturnDeposit;
+
+                    // Проходим по позициям тендера и тажим инфук в чек
+                    for (int i = 0; i < Doc.tenders.Count; i++)
+                    {
+                        Doc.tenders[i]=Com.ProviderFarm.CurrentPrv.GetTenderForReturnOrder(Doc.tenders[i]);
+                    }
+                }
+
                 // Сумма чека для предоплаты в момент просчёта строк
                 decimal SumChekForPredoplata = 0;
-                FrGetSummCheckRez SumChekFoCustomer = GetSummCheck(Doc, false); // Получаем сумму чека из фискальника чтобы потом этого не делать при просчёте позиций во время предоплаты
+                FrGetSummCheckRez SumChekFoCustomer = GetSummCheck(Doc, DocCustTyp, false); // Получаем сумму чека из фискальника чтобы потом этого не делать при просчёте позиций во время предоплаты
                 decimal SumChekFoPrice = 0;
                 foreach (JsonPrintFiscDocItem item in Doc.items)
                 {
@@ -549,7 +562,7 @@ namespace AlgoritmPrizm.Com
                 //************** ОПЛАТЫ ПО ЧЕКУ ******************************************
 
                 // Печать концовки чека
-                CloseReceipt(IsCopy, Doc, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
+                CloseReceipt(IsCopy, Doc, DocCustTyp, TekDocStavkiNDS1, TekDocStavkiNDS2, TekDocStavkiNDS3, TekDocStavkiNDS4);
 
                 // Обновляем статус и опрашиваем фискальник на предмет получения последнего номера документа
                 if (!IsCopy) Fr.FNGetStatus();
@@ -1959,9 +1972,10 @@ namespace AlgoritmPrizm.Com
         /// Получение итоговой суммы по всем типам оплат по документу
         /// </summary>
         /// <param name="Doc">Сам документ</param>
+        /// <param name="DocTyp">Тип документа</param>
         /// <param name="CrocessSummToFR">Заполнить поля в фискальнике по нашим правилам или нет Fr.Summ1-Fr.Summ16 по умолчанию нет</param>
         /// <returns>Итоговая сумма по всем типам оплат</returns>
-        public static FrGetSummCheckRez GetSummCheck(JsonPrintFiscDoc Doc, bool CrocessSummToFR)
+        public static FrGetSummCheckRez GetSummCheck(JsonPrintFiscDoc Doc, EnFrTyp DocTyp, bool CrocessSummToFR)
         {
             try
             {
@@ -2034,7 +2048,7 @@ namespace AlgoritmPrizm.Com
                             }
 
                             // Если тип оплаты подарочная карта
-                            if (item.tender_type == Com.Config.TenderTypeAvans && item.taken != 0)
+                            if (DocTyp != EnFrTyp.ReturnDeposit && item.tender_type == Com.Config.TenderTypeAvans && item.taken != 0)
                             {
                                 //rez += (decimal)item.taken;
                                 rez.SetSumm(FrGetSummCheckRezTypeEn.Predoplata, null, (decimal)item.taken);
@@ -2058,6 +2072,24 @@ namespace AlgoritmPrizm.Com
                                 rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)Doc.given_amt);
                                 if (CrocessSummToFR) Fr.Summ1 += (decimal)Doc.given_amt;
                                 flagexit = true;  // Делается по всему документу нет смысла проходить по позициям
+                            }
+
+                            // Если это возврат депозита и тип оплаты нал
+                            if (DocTyp == EnFrTyp.ReturnDeposit && item.tender_type == Com.Config.TenderTypeCash && item.given != 0)
+                            {
+                                //rez.itog += (decimal)item.given;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.Nal, null, (decimal)item.given);
+                                if (CrocessSummToFR) Fr.Summ1 += (decimal)item.given;
+                                continue;
+                            }
+
+                            // Если тип оплаты карта
+                            if (DocTyp == EnFrTyp.ReturnDeposit && item.tender_type == Com.Config.TenderTypeCredit && item.given != 0)
+                            {
+                                //rez += (decimal)item.given;
+                                rez.SetSumm(FrGetSummCheckRezTypeEn.BezNal, item.tender_name, (decimal)item.given);
+                                if (CrocessSummToFR) Fr.Summ4 += (decimal)item.given;
+                                continue;
                             }
 
                             break;
@@ -2123,7 +2155,7 @@ namespace AlgoritmPrizm.Com
         /// Закрытие чека
         /// </summary>
         /// <param name="Doc">Сам документ</param>
-        private static void CloseReceipt(bool IsCopy, JsonPrintFiscDoc Doc, int Tax1, int Tax2, int Tax3, int Tax4)
+        private static void CloseReceipt(bool IsCopy, JsonPrintFiscDoc Doc, EnFrTyp DocTyp, int Tax1, int Tax2, int Tax3, int Tax4)
         {
             try
             {
@@ -2159,7 +2191,7 @@ namespace AlgoritmPrizm.Com
                 }
 
                 // Заполняем сумму в фискальнике
-                FrGetSummCheckRez Itog = GetSummCheck(Doc, true);
+                FrGetSummCheckRez Itog = GetSummCheck(Doc, DocTyp, true);
 
                 // Печатеам концовку для копии чека
 //                if (IsCopy) Thread.Sleep(300);
@@ -2183,7 +2215,7 @@ namespace AlgoritmPrizm.Com
                         case FrGetSummCheckRezTypeEn.BezNal:
                             foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
                             {
-                                Print2in1Line(itemName.Name.Replace("UDF1","MIR").ToUpper(), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
+                                Print2in1Line((string.IsNullOrWhiteSpace(itemName.Name)?"vvvv":itemName.Name.Replace("UDF1","MIR").ToUpper()), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
                             }
                             break;
                         case FrGetSummCheckRezTypeEn.Credit:

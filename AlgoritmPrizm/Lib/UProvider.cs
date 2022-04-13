@@ -332,5 +332,15 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.GetInvnSbsItemText(InvnSbsItemSid);
         }
+
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <returns>сама строка тендера</returns>
+        public BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender)
+        {
+            return this.PrvI.GetTenderForReturnOrder(itemTender);
+        }
     }
 }

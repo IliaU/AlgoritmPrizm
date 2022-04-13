@@ -18,6 +18,10 @@ namespace AlgoritmPrizm.Lib
         /// <summary>
         /// Порарочная карта
         /// </summary>
-        GiftCard
+        GiftCard,
+        /// <summary>
+        /// Возврат Депозита
+        /// </summary>
+        ReturnDeposit
     }
 }

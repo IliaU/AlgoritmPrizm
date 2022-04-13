@@ -84,5 +84,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="InvnSbsItemSid">Сид карточки товара</param>
         /// <returns>Возвращаем номер карточки товара</returns>
         InvnSbsItemText GetInvnSbsItemText(string InvnSbsItemSid);
+
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <returns>сама строка тендера</returns>
+        BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender);
     }
 }
