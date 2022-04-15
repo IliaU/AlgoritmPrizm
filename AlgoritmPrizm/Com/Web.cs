@@ -259,6 +259,12 @@ namespace AlgoritmPrizm.Com
                                         case EnProductMatrixClassType.udf_string05:
                                             dcs_code = FineDoc.udf_string05;
                                             break;
+                                        case EnProductMatrixClassType.udf_string06:
+                                            dcs_code = FineDoc.udf_string06;
+                                            break;
+                                        case EnProductMatrixClassType.udf_string07:
+                                            dcs_code = FineDoc.udf_string07;
+                                            break;
                                         default:
                                             throw new ApplicationException(string.Format("Не можем обработать параметр который указан в конфиге: {0}", Config.ProductMatrixClassType));
                                     }

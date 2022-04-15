@@ -11,6 +11,6 @@ namespace AlgoritmPrizm.Lib
     /// </summary>
     public enum EnProductMatrixClassType
     {
-        dcs_code, udf_string01, udf_string02, udf_string03, udf_string04, udf_string05
+        dcs_code, udf_string01, udf_string02, udf_string03, udf_string04, udf_string05, udf_string06, udf_string07
     }
 }
