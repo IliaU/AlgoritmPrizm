@@ -1615,7 +1615,8 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
         public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrderMySql(string referDocSid)
         {
             string CommandSql = String.Format(@"SELECT i.qty, i.price, i.tax_perc, i.scan_upc, i.description1, i.description2, i.description3, i.description4, i.sid As itemsid,
-	i.note1, i.note2, i.note3, i.note4, i.note5, i.note6, i.note7, i.note8, i.note9, i.note10, i.disc_amt
+	i.note1, i.note2, i.note3, i.note4, i.note5, i.note6, i.note7, i.note8, i.note9, i.note10, i.disc_amt,
+    i.invn_sbs_item_sid
 from `rpsods`.`document` d
 	inner join `rpsods`.`document_item` i On d.sid=i.doc_sid
 where d.sid ={0}", referDocSid);
@@ -1678,6 +1679,7 @@ where d.sid ={0}", referDocSid);
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE9").ToUpper()) nitem.note9 = dr.GetValue(i).ToString();
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("NOTE10").ToUpper()) nitem.note10 = dr.GetValue(i).ToString();
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("DISC_AMT").ToUpper()) nitem.discount_amt = double.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("INVN_SBS_ITEM_SID").ToUpper()) nitem.invn_sbs_item_sid = dr.GetValue(i).ToString();
                                     }
                                     rez.Add(nitem);
                                 }

@@ -374,6 +374,18 @@ namespace AlgoritmPrizm.Com
                 int TekDocStavkiNDS3 = 0;      // Смешанный
                 int TekDocStavkiNDS4 = 0;      // Депозит
 
+                // Проверка строк документа если они пустые то получаем их из базы давнных и обогощаем тем что имеем
+                if (Doc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
+                    !string.IsNullOrWhiteSpace(t.link)) > 0)
+                {
+                    List<JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(Doc.sid);
+                    for (int i = 0; i < Doc.items.Count(); i++)
+                    {
+                        DocTmp[i].link = Doc.items[i].link;
+                        Doc.items[i] = DocTmp[i];
+                    }
+                }
+
                 // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
                 if (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0 && Doc.items.Count == 0)
                 {
