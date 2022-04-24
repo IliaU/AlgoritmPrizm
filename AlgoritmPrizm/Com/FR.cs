@@ -226,7 +226,6 @@ namespace AlgoritmPrizm.Com
             }
         }
 
-
         /// <summary>
         /// Снятие  Z отчёта
         /// </summary>
