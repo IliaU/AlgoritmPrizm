@@ -91,5 +91,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="itemTender">линк на строку из массива tenders</param>
         /// <returns>сама строка тендера</returns>
         BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender);
+
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <returns>строки тендера из документа</returns>
+        List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid);
     }
 }

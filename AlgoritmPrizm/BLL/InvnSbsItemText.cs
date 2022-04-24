@@ -14,6 +14,13 @@ namespace AlgoritmPrizm.BLL
     /// </summary>
     public class InvnSbsItemText
     {
+        public string item_sid;
+        public string description1;
+        public string description2;
+        public string attribute;
+        public string upc;
+        public string item_size;
+        public string item_no;
         public string Text1;
         public string Text2;
         public string Text3;
@@ -38,10 +45,17 @@ namespace AlgoritmPrizm.BLL
         /// <param name="Text8"></param>
         /// <param name="Text9"></param>
         /// <param name="Text10"></param>
-        public InvnSbsItemText(string Text1, string Text2, string Text3, string Text4, string Text5, string Text6, string Text7, string Text8, string Text9, string Text10)
+        public InvnSbsItemText(string item_sid, string description1, string description2, string attribute, string upc, string item_size, string item_no, string Text1, string Text2, string Text3, string Text4, string Text5, string Text6, string Text7, string Text8, string Text9, string Text10)
         {
             try
             {
+                this.item_sid = item_sid;
+                this.description1 = description1;
+                this.description2 = description2;
+                this.attribute = attribute;
+                this.upc = upc;
+                this.item_size = item_size;
+                this.item_no = item_no;
                 this.Text1 = Text1;
                 this.Text2 = Text2;
                 this.Text3 = Text3;

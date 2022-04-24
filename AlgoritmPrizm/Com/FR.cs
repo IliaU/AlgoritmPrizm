@@ -345,6 +345,41 @@ namespace AlgoritmPrizm.Com
                 // Провеяем статус фискальника и если чего не хватает правим. например есть чек не завершонный, смена не открыта итд
                 if (ConfigStatusFR(Doc, OperatorNumber, DocName)) return rezWeb;
 
+                // Проверка строк документа если они пустые то получаем их из базы давнных и обогощаем тем что имеем
+                if (Doc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
+                    !string.IsNullOrWhiteSpace(t.link)) > 0)
+                {
+                    List<JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(Doc.sid);
+                    for (int i = 0; i < Doc.items.Count(); i++)
+                    {
+                        DocTmp[i].link = Doc.items[i].link;
+                        Doc.items[i] = DocTmp[i];
+                    }
+                }
+
+                // Если нет строк то надо получить инфу от ссылки на докумен для специального документа (возврат депозита)
+                if (Doc.items.Count == 0)
+                {
+                    List<JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(Doc.ref_order_sid);
+                    foreach (JsonPrintFiscDocItem itemDocFtmp in DocTmp)
+                    {
+                        Doc.items.Add(itemDocFtmp);
+                    }
+
+                    List<BLL.JsonPrintFiscDocTender> TenTmp = Com.ProviderFarm.CurrentPrv.GetTendersForDocument(Doc.ref_order_sid);
+                    foreach (BLL.JsonPrintFiscDocTender itemTenTmp in TenTmp)
+                    {
+                        if (itemTenTmp.given == 0 && itemTenTmp.taken != 0)
+                        {
+                            itemTenTmp.given = itemTenTmp.taken;
+                            itemTenTmp.taken = 0;
+                            Doc.tenders.Add(itemTenTmp);
+                        }
+                    }
+
+                    DocCustTyp = EnFrTyp.ReturnDeposit;
+                }
+
                 // Если это копия то нужно инфу подтянуть по API  та как падла не передаёт в доке :-(
                 if (IsCopy)
                 {
@@ -374,18 +409,6 @@ namespace AlgoritmPrizm.Com
                 int TekDocStavkiNDS3 = 0;      // Смешанный
                 int TekDocStavkiNDS4 = 0;      // Депозит
 
-                // Проверка строк документа если они пустые то получаем их из базы давнных и обогощаем тем что имеем
-                if (Doc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
-                    !string.IsNullOrWhiteSpace(t.link)) > 0)
-                {
-                    List<JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(Doc.sid);
-                    for (int i = 0; i < Doc.items.Count(); i++)
-                    {
-                        DocTmp[i].link = Doc.items[i].link;
-                        Doc.items[i] = DocTmp[i];
-                    }
-                }
-
                 // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
                 if (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0 && Doc.items.Count == 0)
                 {
@@ -405,7 +428,7 @@ namespace AlgoritmPrizm.Com
                     // Проходим по позициям тендера и тажим инфук в чек
                     for (int i = 0; i < Doc.tenders.Count; i++)
                     {
-                        Doc.tenders[i]=Com.ProviderFarm.CurrentPrv.GetTenderForReturnOrder(Doc.tenders[i]);
+                        Doc.tenders[i] = Com.ProviderFarm.CurrentPrv.GetTenderForReturnOrder(Doc.tenders[i]);
                     }
                 }
 
@@ -489,7 +512,7 @@ namespace AlgoritmPrizm.Com
 
                     // По умолчанию считам что строки с маркиовкой нет
                     bool flagmarkink = false;
-                    
+
 
                     // Проверяем есть кодмаркировки или нет по полю note1
                     if (!string.IsNullOrWhiteSpace(Doc.items[itm].note1))
@@ -684,7 +707,7 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
-                Fr.StringForPrinting = string.Format("{0}{1}", new string(' ', (nLenLine - S.Length)/2), S);
+                Fr.StringForPrinting = string.Format("{0}{1}", new string(' ', (nLenLine - S.Length) / 2), S);
 
                 if (Fr.PrintString() != 0)
                 {
@@ -692,7 +715,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Упали с ошибкой при печати строки ({0}) в чеке: {1}", S, rez.Description));
                 }
                 Fr.StringForPrinting = "";
-//                Thread.Sleep(300);
+                //                Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -721,7 +744,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Упали с ошибкой при печати строки ({0}) в чеке: {1}", S, rez.Description));
                 }
                 Fr.StringForPrinting = "";
-//                Thread.Sleep(300);
+                //                Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -817,60 +840,67 @@ namespace AlgoritmPrizm.Com
 
                 //Описание товара
                 InvnSbsItemText TmpTextInfo = ProviderFarm.CurrentPrv.GetInvnSbsItemText(item.invn_sbs_item_sid);
+                if (string.IsNullOrWhiteSpace(item.invn_sbs_item_sid)) item.invn_sbs_item_sid = TmpTextInfo.item_sid;
+                if (string.IsNullOrWhiteSpace(item.item_description1)) item.item_description1 = TmpTextInfo.description1;
+                if (string.IsNullOrWhiteSpace(item.item_description2)) item.item_description2 = TmpTextInfo.description2;
+                if (string.IsNullOrWhiteSpace(item.attribute)) item.attribute = TmpTextInfo.attribute;
+                if (string.IsNullOrWhiteSpace(item.scan_upc)) item.scan_upc = TmpTextInfo.upc;
+                if (string.IsNullOrWhiteSpace(item.item_size)) item.item_size = TmpTextInfo.item_size;
+                //
                 string StringForPrinting = item.item_description1;
                 switch (Config.FieldItem)
                 {
                     case FieldItemEn.Description1:
-                        StringForPrinting = item.item_description1.Trim();
+                        StringForPrinting = string.Format("{0}", item.item_description1).Trim();
                         break;
                     case FieldItemEn.Description2:
-                        StringForPrinting = item.item_description2.Trim();
+                        StringForPrinting = string.Format("{0}", item.item_description2).Trim();
                         break;
                     case FieldItemEn.InvnSbsItemNo:
                         string tmp = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemNo(item.invn_sbs_item_sid);
-                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = tmp.Trim();
+                        if (!string.IsNullOrWhiteSpace(tmp)) StringForPrinting = string.Format("{0}", tmp).Trim();
                         break;
                     case FieldItemEn.Attribute:
-                        StringForPrinting = item.attribute.Trim();
+                        StringForPrinting = string.Format("{0}", item.attribute).Trim();
                         break;
                     case FieldItemEn.ItemSize:
-                        StringForPrinting = item.item_size.Trim();
+                        StringForPrinting = string.Format("{0}", item.item_size).Trim();
                         break;
                     case FieldItemEn.ScanUpc:
-                        StringForPrinting = item.scan_upc.Trim();
+                        StringForPrinting = string.Format("{0}", item.scan_upc).Trim();
                         break;
                     case FieldItemEn.Text1:
-                        if(TmpTextInfo!=null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = TmpTextInfo.Text1.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text1)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text1).Trim();
                         break;
                     case FieldItemEn.Text2:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = TmpTextInfo.Text2.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text2)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text2).Trim();
                         break;
                     case FieldItemEn.Text3:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = TmpTextInfo.Text3.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text3)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text3).Trim();
                         break;
                     case FieldItemEn.Text4:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = TmpTextInfo.Text4.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text4)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text4).Trim();
                         break;
                     case FieldItemEn.Text5:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = TmpTextInfo.Text5.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text5)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text5).Trim();
                         break;
                     case FieldItemEn.Text6:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = TmpTextInfo.Text6.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text6)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text6).Trim();
                         break;
                     case FieldItemEn.Text7:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = TmpTextInfo.Text7.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text7)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text7).Trim();
                         break;
                     case FieldItemEn.Text8:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = TmpTextInfo.Text8.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text8)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text8).Trim();
                         break;
                     case FieldItemEn.Text9:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = TmpTextInfo.Text9.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text9)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text9).Trim();
                         break;
                     case FieldItemEn.Text10:
-                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = TmpTextInfo.Text10.Trim();
+                        if (TmpTextInfo != null && !string.IsNullOrWhiteSpace(TmpTextInfo.Text10)) StringForPrinting = string.Format("{0}", TmpTextInfo.Text10).Trim();
                         break;
                     default:
-                        StringForPrinting = item.item_description1.Trim();
+                        StringForPrinting = string.Format("{0}", item.item_description1).Trim();
                         break;
                 }
                 switch (Config.FieldItem1)
@@ -1162,6 +1192,7 @@ namespace AlgoritmPrizm.Com
                 if ((Doc.receipt_type == 2 && SumChekFoCustomer != SumChekFoPrice)
                     // Если это возврат денег с заказа клиента то лезем в ссылку на документ источник и получаем от туда нужные строки из базы данных
                     || (Doc.tenders.Count(t => t.tender_type == 7) > 0 && Doc.receipt_type == 0 && Doc.given_amt != 0 && SumChekFoCustomer < SumChekFoPrice)
+                    || DocCustTyp == EnFrTyp.ReturnDeposit
                     )
                 {
                     // Получаем на сколько стандартно домножаем сумму для того чтобы пропарционально позиции в чеке поменять
@@ -1377,10 +1408,10 @@ namespace AlgoritmPrizm.Com
                     if (item.discount_amt > 0)
                     {
                         Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt));
-                    } 
+                    }
                     else
                     {
-                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc*-1, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt*-1));
+                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc * -1, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt * -1));
                     }
                 }
             }
@@ -1709,7 +1740,7 @@ namespace AlgoritmPrizm.Com
 
                 // Номер магазина и чека
                 string DocNum = (Doc.document_number != null ? Doc.document_number.ToString() : null);
-                if(string.IsNullOrWhiteSpace(DocNum)) DocNum=Com.ProviderFarm.CurrentPrv.GetDocNoFromDocument(Doc.sid).ToString();
+                if (string.IsNullOrWhiteSpace(DocNum)) DocNum = Com.ProviderFarm.CurrentPrv.GetDocNoFromDocument(Doc.sid).ToString();
                 //
                 if (string.IsNullOrWhiteSpace(Doc.store_name))
                 {
@@ -1722,7 +1753,7 @@ namespace AlgoritmPrizm.Com
                                 string.Format("ЧЕК {0}", DocNum));
                 }
 
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
 
                 // ПЕЧАТЬ ШТРИХ-КОДА
                 Fr.BarCode = DocNum.ToString();
@@ -1736,7 +1767,7 @@ namespace AlgoritmPrizm.Com
                     throw new ApplicationException(string.Format("Не смогли напечатать ПЕЧАТЬ ШТРИХ-КОДА: {0}", Status.Description));
                 }
 
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
 
                 // КАССИР - СОТРУДНИК
                 Print2in1Line(@"КАССИР:", TekCustomer.fio_fo_check);
@@ -1760,7 +1791,7 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
 
                 // Печать информации про юрлицо
                 if ((Config.ProcessingUrikForFr
@@ -1811,7 +1842,7 @@ namespace AlgoritmPrizm.Com
                                 Verification(Fr);
                                 throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
                         }
-                        
+
                         // отправка составного тега
                         switch (Fr.FNSendSTLVTag())
                         {
@@ -1823,7 +1854,7 @@ namespace AlgoritmPrizm.Com
                         }
                     }
 
-//                    if (IsCopy) Thread.Sleep(300);
+                    //                    if (IsCopy) Thread.Sleep(300);
 
                     if (Config.PrintingUrikForFr || Config.PrintingIpForFr)
                     {
@@ -1863,7 +1894,7 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
 
                 // Печатаем сотрудника продавшего товар
                 string employee = null;
@@ -1886,7 +1917,7 @@ namespace AlgoritmPrizm.Com
                 // Отчеркиваем заголовок
                 PrintSeparator();
 
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
             }
             catch (Exception ex)
             {
@@ -2199,21 +2230,21 @@ namespace AlgoritmPrizm.Com
                         Verification(Fr);
                         throw new ApplicationException(string.Format("Не смогли отправить подитог ошибка: {0}", Status.Description));
                     }
-//500                    Thread.Sleep(300);
+                    //500                    Thread.Sleep(300);
                 }
 
                 // Заполняем сумму в фискальнике
                 FrGetSummCheckRez Itog = GetSummCheck(Doc, DocTyp, true);
 
                 // Печатеам концовку для копии чека
-//                if (IsCopy) Thread.Sleep(300);
+                //                if (IsCopy) Thread.Sleep(300);
                 PrintSeparator();
                 if (IsCopy)
                 {
-//                    if (IsCopy) Thread.Sleep(300);
+                    //                    if (IsCopy) Thread.Sleep(300);
                     PrintLineCenter(string.Format("КОПИЯ ЧЕКА ЗА {0}", ((DateTime)Doc.invoice_posted_date).ToShortDateString()));
                     Print2in1Line(string.Format("ИТОГО К ОПЛАТЕ"), string.Format("={0}", Math.Round(Itog.itog, 2).ToString("0.00")));
-//                    if (IsCopy) Thread.Sleep(300);
+                    //                    if (IsCopy) Thread.Sleep(300);
                 }
 
                 // Печатем под итог
@@ -2227,7 +2258,7 @@ namespace AlgoritmPrizm.Com
                         case FrGetSummCheckRezTypeEn.BezNal:
                             foreach (FrGetSummCheckRezTypeTenderName itemName in itemTyp.TenderName)
                             {
-                                Print2in1Line((string.IsNullOrWhiteSpace(itemName.Name)?"vvvv":itemName.Name.Replace("UDF1","MIR").ToUpper()), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
+                                Print2in1Line((string.IsNullOrWhiteSpace(itemName.Name) ? "vvvv" : itemName.Name.Replace("UDF1", "MIR").ToUpper()), string.Format("={0}", Math.Round(itemName.Value, 2).ToString("0.00")));
                             }
                             break;
                         case FrGetSummCheckRezTypeEn.Credit:
@@ -2257,7 +2288,7 @@ namespace AlgoritmPrizm.Com
 
                     Fr.FeedDocument();
                 }
-                else 
+                else
                 {
 
                     // Сумма чека и подсчёит итога

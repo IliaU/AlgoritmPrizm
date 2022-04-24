@@ -121,7 +121,7 @@ namespace AlgoritmPrizm.Lib
                 if (i.FullName == "AlgoritmPrizm.Com.Provider.Lib.ProviderI") flagI = true;
             }
             if (!flagI) throw new ApplicationException("Класс который вы грузите не реализовывает интерфейс (ProviderI)");
-            
+
             // Проверяем что наш клас наследует PlugInBase 
             bool flagB = false;
             foreach (MemberInfo mi in myType.GetMembers())
@@ -240,7 +240,7 @@ namespace AlgoritmPrizm.Lib
         {
             return this.PrvI.SetupConnectDB();
         }
-        
+
         /// <summary>
         /// Получение любых данных из источника например чтобы плагины могли что-то дополнительно читать
         /// </summary>
@@ -341,6 +341,16 @@ namespace AlgoritmPrizm.Lib
         public BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender)
         {
             return this.PrvI.GetTenderForReturnOrder(itemTender);
+        }
+
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <returns>строки тендера из документа</returns>
+        public List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid)
+        {
+            return this.PrvI.GetTendersForDocument(docsid);
         }
     }
 }

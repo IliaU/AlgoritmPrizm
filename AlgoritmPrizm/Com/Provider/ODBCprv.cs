@@ -551,6 +551,47 @@ namespace AlgoritmPrizm.Com.Provider
                 return null;
             }
         }
+
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <returns>строки тендера из документа</returns>
+        public List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetTendersForDocumentORA(docsid);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetTendersForDocumentMySql(docsid);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetTendersForDocument", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
+            }
+        }
         #endregion
 
         #region Private metod
@@ -740,7 +781,7 @@ namespace AlgoritmPrizm.Com.Provider
             try
             {
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetPrizmCustPorogORA", EventEn.Dump);
-                
+
                 // Закрывать конект не нужно он будет закрыт деструктором
                 using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
                 {
@@ -810,7 +851,7 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
                                 //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
                                 //rez.Columns.Add(ncol);
                                 //}
-                                
+
                                 // пробегаем по строкам
                                 while (dr.Read())
                                 {
@@ -889,7 +930,7 @@ Where dt=To_Date('{1}.{2}.{3}', 'YYYY.MM.DD')
                                 {
                                     for (int i = 0; i < dr.FieldCount; i++)
                                     {
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CALL_OFF_SC").ToUpper()) rez=decimal.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CALL_OFF_SC").ToUpper()) rez = decimal.Parse(dr.GetValue(i).ToString());
                                     }
                                 }
                             }
@@ -1128,7 +1169,7 @@ where sid = {0}", sid);
 
                                     for (int i = 0; i < dr.FieldCount; i++)
                                     {
-                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("doc_no").ToUpper()) try {rez = Int64.Parse(dr.GetValue(i).ToString());} catch (Exception) {}
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("doc_no").ToUpper()) try { rez = Int64.Parse(dr.GetValue(i).ToString()); } catch (Exception) { }
                                     }
                                 }
                             }
@@ -1238,74 +1279,149 @@ where sid ={0}", InvnSbsItemSid);
         /// <returns>сама строка тендера</returns>
         public BLL.JsonPrintFiscDocTender GetTenderForReturnOrderORA(BLL.JsonPrintFiscDocTender itemTender)
         {
-            {
-                string referLink = itemTender.link.Substring(itemTender.link.IndexOf(@"/tender/") + 8);
+            string referLink = itemTender.link.Substring(itemTender.link.IndexOf(@"/tender/") + 8);
 
-                string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
+            string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
 FROM rpsods.tender t 
 Where t.sid ='{0}'", referLink);
 
-                try
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
                 {
-                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+                    con.Open();
 
-                    // Закрывать конект не нужно он будет закрыт деструктором
-                    using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
                     {
-                        con.Open();
-
-                        using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
                         {
-                            com.CommandTimeout = 900;  // 15 минут
-                            using (OdbcDataReader dr = com.ExecuteReader())
+
+                            if (dr.HasRows)
                             {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
 
-                                if (dr.HasRows)
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
                                 {
-                                    // Получаем схему таблицы
-                                    //DataTable tt = dr.GetSchemaTable();
-
-                                    //foreach (DataRow item in tt.Rows)
-                                    //{
-                                    //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
-                                    //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
-                                    //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
-                                    //rez.Columns.Add(ncol);
-                                    //}
-
-                                    // пробегаем по строкам
-                                    while (dr.Read())
+                                    for (int i = 0; i < dr.FieldCount; i++)
                                     {
-                                        for (int i = 0; i < dr.FieldCount; i++)
-                                        {
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) itemTender.tender_name = dr.GetValue(i).ToString();
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) itemTender.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) itemTender.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) itemTender.tender_pos = int.Parse(dr.GetValue(i).ToString());
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) itemTender.currency_name = dr.GetValue(i).ToString();
-                                        }
-                                        return itemTender;
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) itemTender.tender_name = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) itemTender.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) itemTender.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) itemTender.tender_pos = int.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) itemTender.currency_name = dr.GetValue(i).ToString();
                                     }
+                                    return itemTender;
                                 }
                             }
                         }
                     }
+                }
 
-                    return itemTender;
-                }
-                catch (OdbcException ex)
+                return itemTender;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <returns>строки тендера из документа</returns>
+        public List<BLL.JsonPrintFiscDocTender> GetTendersForDocumentORA(string docsid)
+        {
+            List<BLL.JsonPrintFiscDocTender> rez = new List<JsonPrintFiscDocTender>();
+
+            string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
+FROM rpsods.tender t 
+Where t.doc_sid ='{0}'", docsid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
                 {
-                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
-                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
-                    throw;
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocTender nitem = new JsonPrintFiscDocTender();
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) nitem.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) nitem.tender_name = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) nitem.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) nitem.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) nitem.tender_pos = int.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) nitem.currency_name = dr.GetValue(i).ToString();
+                                    }
+                                    rez.Add(nitem);
+                                }
+                            }
+                        }
+                    }
                 }
-                catch (Exception ex)
-                {
-                    base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Error);
-                    if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderORA", EventEn.Dump);
-                    throw;
-                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTendersForDocumentORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTendersForDocument", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentORA", EventEn.Dump);
+                throw;
             }
         }
         #endregion
@@ -1429,12 +1545,12 @@ Where t.sid ='{0}'", referLink);
         /// <param name="TotalCashSum">Сумма по документу уплаченная налом</param>
         public void SetPrizmCustPorogMySql(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum)
         {
-            string CommandSql = String.Format(@"insert into `aks`.`prizm_cust_porog`(`cust_inn`,`invc_no`,`dt`,`pos_date`, `total_cash_sum`) Values('{0}', {1}, STR_TO_DATE('{2},{3},{4}', '%Y,%m,%d'), STR_TO_DATE('{2},{3},{4} {5},{6},{7}', '%Y,%m,%d %H,%i,%s'), {8})", CustInn, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',','.'));
+            string CommandSql = String.Format(@"insert into `aks`.`prizm_cust_porog`(`cust_inn`,`invc_no`,`dt`,`pos_date`, `total_cash_sum`) Values('{0}', {1}, STR_TO_DATE('{2},{3},{4}', '%Y,%m,%d'), STR_TO_DATE('{2},{3},{4} {5},{6},{7}', '%Y,%m,%d %H,%i,%s'), {8})", CustInn, InvcNo, PosDate.Year, PosDate.Month, PosDate.Day, PosDate.Hour, PosDate.Minute, PosDate.Second, TotalCashSum.ToString().Replace(',', '.'));
 
             try
             {
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetPrizmCustPorogMySql", EventEn.Dump);
-                
+
                 // Закрывать конект не нужно он будет закрыт деструктором
                 using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
                 {
@@ -1460,7 +1576,6 @@ Where t.sid ='{0}'", referLink);
                 throw;
             }
         }
-
 
         /// <summary>
         /// Получить сумму по клиенту за дату
@@ -1857,7 +1972,7 @@ where sid = {0}", sid);
         /// <returns>Возвращаем номер карточки товара</returns>
         public InvnSbsItemText GetInvnSbsItemTextMySql(string InvnSbsItemSid)
         {
-            string CommandSql = String.Format(@"SELECT `text1`, `text2`, `text3`, `text4`, `text5`, `text6`, `text7`, `text8`, `text9`, `text10`
+            string CommandSql = String.Format(@"SELECT `sid`, `description1`,`description2`, `attribute`, `upc`, `item_size`, `item_no`, `text1`, `text2`, `text3`, `text4`, `text5`, `text6`, `text7`, `text8`, `text9`, `text10`
 from `rpsods`.`invn_sbs_item`
 where sid ={0}", InvnSbsItemSid);
 
@@ -1896,6 +2011,13 @@ where sid ={0}", InvnSbsItemSid);
                                 // пробегаем по строкам
                                 while (dr.Read())
                                 {
+                                    string sid = null;
+                                    string description1 = null;
+                                    string description2 = null;
+                                    string attribute = null;
+                                    string upc = null;
+                                    string item_size = null;
+                                    string item_no = null;
                                     string Text1 = null;
                                     string Text2 = null;
                                     string Text3 = null;
@@ -1909,6 +2031,13 @@ where sid ={0}", InvnSbsItemSid);
 
                                     for (int i = 0; i < dr.FieldCount; i++)
                                     {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("sid").ToUpper()) sid = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("description1").ToUpper()) description1 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("description2").ToUpper()) description2 = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("attribute").ToUpper()) attribute = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("upc").ToUpper()) upc = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("item_size").ToUpper()) item_size = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("item_no").ToUpper()) item_no = dr.GetValue(i).ToString();
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text1").ToUpper()) Text1 = dr.GetValue(i).ToString();
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text2").ToUpper()) Text2 = dr.GetValue(i).ToString();
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text3").ToUpper()) Text3 = dr.GetValue(i).ToString();
@@ -1921,7 +2050,7 @@ where sid ={0}", InvnSbsItemSid);
                                         if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("text10").ToUpper()) Text10 = dr.GetValue(i).ToString();
                                     }
 
-                                    rez = new InvnSbsItemText(Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10);
+                                    rez = new InvnSbsItemText(sid, description1, description2, attribute, upc, item_size, item_no, Text1, Text2, Text3, Text4, Text5, Text6, Text7, Text8, Text9, Text10);
                                 }
                             }
                         }
@@ -1991,7 +2120,7 @@ Where t.sid ='{0}'", referLink);
                                     {
                                         for (int i = 0; i < dr.FieldCount; i++)
                                         {
-                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".",","));
+                                            if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) itemTender.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
                                             if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) itemTender.tender_name = dr.GetValue(i).ToString();
                                             if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) itemTender.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
                                             if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) itemTender.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
@@ -2019,6 +2148,83 @@ Where t.sid ='{0}'", referLink);
                     if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTenderForReturnOrderMySql", EventEn.Dump);
                     throw;
                 }
+            }
+        }
+
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <returns>строки тендера из документа</returns>
+        public List<BLL.JsonPrintFiscDocTender> GetTendersForDocumentMySql(string docsid)
+        {
+            List<BLL.JsonPrintFiscDocTender> rez = new List<JsonPrintFiscDocTender>();
+
+            string CommandSql = String.Format(@"SELECT t.taken, t.tender_name, t.given, t.amount, t.tender_pos, t.currency_name
+FROM rpsods.tender t 
+Where t.doc_sid ='{0}'", docsid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentMySql", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    BLL.JsonPrintFiscDocTender nitem = new JsonPrintFiscDocTender();
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TAKEN").ToUpper()) nitem.taken = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_NAME").ToUpper()) nitem.tender_name = dr.GetValue(i).ToString();
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("GIVEN").ToUpper()) nitem.given = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("AMOUNT").ToUpper()) nitem.amount = double.Parse(dr.GetValue(i).ToString().Replace(".", ","));
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("TENDER_POS").ToUpper()) nitem.tender_pos = int.Parse(dr.GetValue(i).ToString());
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("CURRENCY_NAME").ToUpper()) nitem.currency_name = dr.GetValue(i).ToString();
+                                    }
+                                    rez.Add(nitem);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTendersForDocumentMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTendersForDocumentMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentMySql", EventEn.Dump);
+                throw;
             }
         }
         #endregion
