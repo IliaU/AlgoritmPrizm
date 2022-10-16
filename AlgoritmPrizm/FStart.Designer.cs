@@ -40,6 +40,7 @@
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.tSSLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.Pnl = new System.Windows.Forms.Panel();
+            this.TSMItemConfigTerminalSD = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip.SuspendLayout();
             this.statusStrip.SuspendLayout();
             this.SuspendLayout();
@@ -62,7 +63,8 @@
             this.TSMItemGonfigOther,
             this.TSMItemLic,
             this.TSMItemAboutPrv,
-            this.TSMItemConfigDB});
+            this.TSMItemConfigDB,
+            this.TSMItemConfigTerminalSD});
             this.TSMItemGonfig.Name = "TSMItemGonfig";
             this.TSMItemGonfig.Size = new System.Drawing.Size(78, 20);
             this.TSMItemGonfig.Text = "Настройка";
@@ -70,41 +72,41 @@
             // TSMItemGonfigCashiries
             // 
             this.TSMItemGonfigCashiries.Name = "TSMItemGonfigCashiries";
-            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(299, 22);
             this.TSMItemGonfigCashiries.Text = "Кассиры";
             this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
             // 
             // TSMItemGonfigEmployees
             // 
             this.TSMItemGonfigEmployees.Name = "TSMItemGonfigEmployees";
-            this.TSMItemGonfigEmployees.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemGonfigEmployees.Size = new System.Drawing.Size(299, 22);
             this.TSMItemGonfigEmployees.Text = "Сотрудники";
             this.TSMItemGonfigEmployees.Click += new System.EventHandler(this.TSMItemGonfigEmployees_Click);
             // 
             // TSMItemGonfigOther
             // 
             this.TSMItemGonfigOther.Name = "TSMItemGonfigOther";
-            this.TSMItemGonfigOther.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemGonfigOther.Size = new System.Drawing.Size(299, 22);
             this.TSMItemGonfigOther.Text = "Основные";
             this.TSMItemGonfigOther.Click += new System.EventHandler(this.TSMItemGonfigOther_Click);
             // 
             // TSMItemLic
             // 
             this.TSMItemLic.Name = "TSMItemLic";
-            this.TSMItemLic.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemLic.Size = new System.Drawing.Size(299, 22);
             this.TSMItemLic.Text = "Лицензия";
             this.TSMItemLic.Click += new System.EventHandler(this.TSMItemLic_Click);
             // 
             // TSMItemAboutPrv
             // 
             this.TSMItemAboutPrv.Name = "TSMItemAboutPrv";
-            this.TSMItemAboutPrv.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemAboutPrv.Size = new System.Drawing.Size(299, 22);
             this.TSMItemAboutPrv.Text = "Доступные провайдеры";
             // 
             // TSMItemConfigDB
             // 
             this.TSMItemConfigDB.Name = "TSMItemConfigDB";
-            this.TSMItemConfigDB.Size = new System.Drawing.Size(231, 22);
+            this.TSMItemConfigDB.Size = new System.Drawing.Size(299, 22);
             this.TSMItemConfigDB.Text = "Подключение к базе данных";
             this.TSMItemConfigDB.Click += new System.EventHandler(this.TSMItemConfigDB_Click);
             // 
@@ -131,6 +133,13 @@
             this.Pnl.Name = "Pnl";
             this.Pnl.Size = new System.Drawing.Size(521, 323);
             this.Pnl.TabIndex = 2;
+            // 
+            // TSMItemConfigTerminalSD
+            // 
+            this.TSMItemConfigTerminalSD.Name = "TSMItemConfigTerminalSD";
+            this.TSMItemConfigTerminalSD.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemConfigTerminalSD.Text = "Управление терминалами сбора данных";
+            this.TSMItemConfigTerminalSD.Click += new System.EventHandler(this.TSMItemConfigTerminalSD_Click);
             // 
             // FStart
             // 
@@ -172,6 +181,7 @@
         private System.Windows.Forms.ToolStripMenuItem TSMItemAboutPrv;
         private System.Windows.Forms.ToolStripMenuItem TSMItemConfigDB;
         private System.Windows.Forms.ToolStripMenuItem TSMItemGonfigEmployees;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemConfigTerminalSD;
     }
 }
 

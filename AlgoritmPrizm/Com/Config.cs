@@ -1409,6 +1409,7 @@ namespace AlgoritmPrizm.Com
                 // Подписываемся на события
                 Com.Lic.onCreatedLicKey += new EventHandler<LicLib.onLicEventKey>(Lic_onCreatedLicKey);
                 Com.Lic.onRegNewKey += new EventHandler<LicLib.onLicItem>(Lic_onRegNewKey);
+                Com.Lic.onCreatedTerminalImeiKey += new EventHandler<LicLib.onLicEventKey>(Lic_onCreatedTerminalImeiKey);
                 Com.ProviderFarm.onEventSetup += new EventHandler<EventProviderFarm>(ProviderFarm_onEventSetup);
             }
             catch (Exception ex)
@@ -1418,6 +1419,7 @@ namespace AlgoritmPrizm.Com
                 throw ae;
             } 
         }
+
         /// <summary>
         /// Конструктор
         /// </summary>
@@ -1817,47 +1819,68 @@ namespace AlgoritmPrizm.Com
                                 xmlLics = iMain;
                                 foreach (XmlElement xkey in iMain.ChildNodes)
                                 {
-                                    try
+                                    string MachineName = null;
+                                    string UserName = null;
+                                    string ActivNumber = null;
+                                    string LicKey = null;
+                                    int ValidToYYYYMMDD = 0;
+                                    string Info = null;
+                                    bool HashUserOS = false;
+                                    List<string> ScnFullNameList = new List<string>();
+
+                                    //Получаем данные по параметру из файла
+                                    for (int i = 0; i < xkey.Attributes.Count; i++)
                                     {
-                                        string MachineName = null;
-                                        string UserName = null;
-                                        string ActivNumber = null;
-                                        string LicKey = null;
-                                        int ValidToYYYYMMDD = 0;
-                                        string Info = null;
-                                        bool HashUserOS = false;
-                                        List<string> ScnFullNameList = new List<string>();
-
-                                        //Получаем данные по параметру из файла
-                                        for (int i = 0; i < xkey.Attributes.Count; i++)
+                                        if (xkey.Attributes[i].Name == "MachineName") { MachineName = xkey.Attributes[i].Value; }
+                                        if (xkey.Attributes[i].Name == "UserName") { UserName = xkey.Attributes[i].Value; }
+                                        if (xkey.Attributes[i].Name == "ActivNumber") { ActivNumber = xkey.Attributes[i].Value; }
+                                        if (xkey.Attributes[i].Name == "LicKey") { LicKey = xkey.Attributes[i].Value; }
+                                        if (xkey.Attributes[i].Name == "ValidToYYYYMMDD") { try { ValidToYYYYMMDD = int.Parse(xkey.Attributes[i].Value); } catch { } }
+                                        if (xkey.Attributes[i].Name == "Info") { Info = xkey.Attributes[i].Value; }
+                                        try { if (xkey.Attributes[i].Name == "HashUserOS") { HashUserOS = bool.Parse(xkey.Attributes[i].Value); } }
+                                        catch (Exception) { }
+                                    }
+                                    if (!string.IsNullOrWhiteSpace(xkey.InnerText))
+                                    {
+                                        foreach (string sitem in xkey.InnerText.Split(','))
                                         {
-                                            if (xkey.Attributes[i].Name == "MachineName") { MachineName = xkey.Attributes[i].Value; }
-                                            if (xkey.Attributes[i].Name == "UserName") { UserName = xkey.Attributes[i].Value; }
-                                            if (xkey.Attributes[i].Name == "ActivNumber") { ActivNumber = xkey.Attributes[i].Value; }
-                                            if (xkey.Attributes[i].Name == "LicKey") { LicKey = xkey.Attributes[i].Value; }
-                                            if (xkey.Attributes[i].Name == "ValidToYYYYMMDD") { try { ValidToYYYYMMDD = int.Parse(xkey.Attributes[i].Value); } catch { } }
-                                            if (xkey.Attributes[i].Name == "Info") { Info = xkey.Attributes[i].Value; }
-                                            try { if (xkey.Attributes[i].Name == "HashUserOS") { HashUserOS = bool.Parse(xkey.Attributes[i].Value); } }
-                                            catch (Exception) { }
-                                        }
-                                        if (!string.IsNullOrWhiteSpace(xkey.InnerText))
-                                        {
-                                            foreach (string sitem in xkey.InnerText.Split(','))
-                                            {
-                                                ScnFullNameList.Add(sitem);
-                                            }
-                                        }
-
-                                        // Проверяем валидность подгруженного ключа
-                                        if (!string.IsNullOrWhiteSpace(LicKey)) //&& Com.Lic.IsValidLicKey(LicKey)
-                                        {
-                                            Com.Lic.IsValidLicKey(LicKey);
-                                            // Если ключь валидный то сохраняем его в списке ключей
-                                            //Com.LicLib.onLicEventKey newKey = new Com.LicLib.onLicEventKey(MachineName, UserName, ActivNumber, LicKey, ValidToYYYYMMDD, Info, HashUserOS, ScnFullNameList);
-                                            //Com.Lic.IsValidLicKey( .Add(newKey);
+                                            ScnFullNameList.Add(sitem);
                                         }
                                     }
-                                    catch { } // Если ключь прочитать не удалось или он не подходит, то исключения выдавать не нужно
+
+                                    switch (xkey.Name)
+                                    {
+                                        case "Key":
+                                            try
+                                            {
+                                                // Проверяем валидность подгруженного ключа
+                                                if (!string.IsNullOrWhiteSpace(LicKey)) //&& Com.Lic.IsValidLicKey(LicKey)
+                                                {
+                                                    Com.Lic.IsValidLicKey(LicKey);
+                                                    // Если ключь валидный то сохраняем его в списке ключей
+                                                    //Com.LicLib.onLicEventKey newKey = new Com.LicLib.onLicEventKey(MachineName, UserName, ActivNumber, LicKey, ValidToYYYYMMDD, Info, HashUserOS, ScnFullNameList);
+                                                    //Com.Lic.IsValidLicKey( .Add(newKey);
+                                                }
+                                            }
+                                            catch { } // Если ключь прочитать не удалось или он не подходит, то исключения выдавать не нужно
+
+                                            break;
+                                        case "KeyImei":
+
+                                            try
+                                            {
+                                                // Проверяем валидность подгруженного ключа
+                                                if (!string.IsNullOrWhiteSpace(LicKey) && Com.Lic.IsValidLicImeiKey(MachineName, UserName, ActivNumber, LicKey, ValidToYYYYMMDD, Info, HashUserOS, ScnFullNameList))
+                                                {
+                                                    // Если ключь валидный то сохраняем его в списке ключей
+                                                    //Com.LicLib.onLicEventKey newKey = new Com.LicLib.onLicEventKey( ValidToYYYYMMDD, Info, HashUserOS, ScnFullNameList);
+                                                    //Com.Lic.IsValidLicKey( .Add(newKey);
+                                                }
+                                            }
+                                            catch { } // Если ключь прочитать не удалось или он не подходит, то исключения выдавать не нужно
+
+                                            break;
+                                    }
                                 }
                                 break;
                             case "ProdictMatrixClassList":
@@ -2068,6 +2091,38 @@ namespace AlgoritmPrizm.Com
                 }
 
                 XmlElement k = Document.CreateElement("Key");
+                if (e.MachineName != null) k.SetAttribute("MachineName", e.MachineName);
+                if (e.UserName != null) k.SetAttribute("UserName", e.UserName);
+                if (e.ActivNumber != null) k.SetAttribute("ActivNumber", e.ActivNumber);
+                if (e.LicKey != null) k.SetAttribute("LicKey", e.LicKey);
+                if (e.ValidToYYYYMMDD != 0) k.SetAttribute("ValidToYYYYMMDD", e.ValidToYYYYMMDD.ToString());
+                if (e.Info != null) k.SetAttribute("Info", e.Info);
+                k.SetAttribute("HashUserOS", e.HashUserOS.ToString());
+                k.InnerText = string.Join(",", e.ScnFullNameList.ToArray());
+                xmlLics.AppendChild(k);
+
+                Save();
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении во время создания нового ключа в файл xml: {0}", ex.Message));
+                Log.EventSave(ae.Message, obj.GetType().Name + ".Lic_onCreatedLicKey()", EventEn.Error);
+                throw ae;
+            }
+        }
+        //
+        // Событие создания ключа для устройства IMEI
+        private void Lic_onCreatedTerminalImeiKey(object sender, LicLib.onLicEventKey e)
+        {
+            try
+            {
+                if (xmlLics == null)
+                {
+                    xmlLics = Document.CreateElement("Lics");
+                    xmlRoot.AppendChild(xmlLics);
+                }
+
+                XmlElement k = Document.CreateElement("KeyImei");
                 if (e.MachineName != null) k.SetAttribute("MachineName", e.MachineName);
                 if (e.UserName != null) k.SetAttribute("UserName", e.UserName);
                 if (e.ActivNumber != null) k.SetAttribute("ActivNumber", e.ActivNumber);

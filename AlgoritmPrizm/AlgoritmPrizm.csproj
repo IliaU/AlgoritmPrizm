@@ -115,6 +115,7 @@
     <Compile Include="BLL\JsonGetInventorySbsinventoryprices.cs" />
     <Compile Include="BLL\JsonGetInventorySbsinventoryqtys.cs" />
     <Compile Include="BLL\JsonGetInventorySbsinventorystoreqtys.cs" />
+    <Compile Include="BLL\JsonImei.cs" />
     <Compile Include="BLL\JsonPrintFiscDoc.cs" />
     <Compile Include="BLL\JsonPrintFiscDocHeader.cs" />
     <Compile Include="BLL\JsonPrintFiscDocItem.cs" />
@@ -207,6 +208,12 @@
     <Compile Include="FLic.Designer.cs">
       <DependentUpon>FLic.cs</DependentUpon>
     </Compile>
+    <Compile Include="FTerminalSD.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FTerminalSD.Designer.cs">
+      <DependentUpon>FTerminalSD.cs</DependentUpon>
+    </Compile>
     <Compile Include="Lib\EnFrTyp.cs" />
     <Compile Include="Lib\EnMatrixParceTyp.cs" />
     <Compile Include="Lib\EnProductMatrixClassType.cs" />
@@ -257,6 +264,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FStart.resx">
       <DependentUpon>FStart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FTerminalSD.resx">
+      <DependentUpon>FTerminalSD.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

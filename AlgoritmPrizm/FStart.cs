@@ -402,6 +402,14 @@ namespace AlgoritmPrizm
                 Frm.ShowDialog();
             }
         }
-        
+
+        // Пользователь решил править инфорамцию про терминал сбора данных
+        private void TSMItemConfigTerminalSD_Click(object sender, EventArgs e)
+        {
+            using (FTerminalSD Frm = new FTerminalSD())
+            {
+                Frm.ShowDialog();
+            }
+        }
     }
 }
