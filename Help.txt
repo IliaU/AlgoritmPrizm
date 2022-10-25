@@ -13,3 +13,7 @@ net start http /y
 C:\ProgramData\RetailPro\Server\WebClient
 Для скидок ))
 update invn_sbs_item set max_disc_perc1 = '100' , max_disc_perc2 = '100'
+
+
+netsh http add urlacl url=http://ISV:5000/ user="ISV\Admin"
+

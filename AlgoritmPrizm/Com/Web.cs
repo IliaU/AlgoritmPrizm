@@ -662,7 +662,7 @@ namespace AlgoritmPrizm.Com
                                 foreach (Com.LicLib.onLicEventKey item in Com.Lic._LicImeiKey)
                                 {
                                     // Если текущая дата больше чем та до которой валидна лицензия
-                                    if (item.ValidToYYYYMMDD < int.Parse(((DateTime.Now.Year * 10000) + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()))
+                                    if (item.ValidToYYYYMMDD > int.Parse(((DateTime.Now.Year * 10000) + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()))
                                     {
                                         // Пробегаем по списку IMEI и добавляем в результат
                                         foreach (string IMEI in item.ScnFullNameList)
