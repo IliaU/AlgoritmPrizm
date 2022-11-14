@@ -10,6 +10,7 @@ using System.Reflection;
 using System.Threading;
 using AlgoritmPrizm.Com.Provider.Lib;
 using AlgoritmPrizm.BLL;
+using AlgoritmPrizm.Com;
 
 namespace AlgoritmPrizm.Lib
 {
@@ -27,6 +28,16 @@ namespace AlgoritmPrizm.Lib
         /// Интерфейс провайдера
         /// </summary>
         private ProviderI PrvI;
+
+        /// <summary>
+        /// Количество секунд между попытками
+        /// </summary>
+        private int ReturnTimeSqlSec = 3;
+
+        /// <summary>
+        /// Сколько попыток есть для повтора
+        /// </summary>
+        private int CountSql = 3;
 
         /// <summary>
         /// Тип провайдера
@@ -74,6 +85,15 @@ namespace AlgoritmPrizm.Lib
         {
             get { return this.PrvB.HashConnect(); }
             private set { }
+        }
+
+        /// <summary>
+        /// Проверка валидности подключения
+        /// </summary>
+        /// <returns>Возврощает результат проверки</returns>
+        public bool testConnection()
+        {
+            return this.PrvI.testConnection();
         }
 
         /// <summary>
@@ -300,7 +320,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>сами строки документа</returns>
         public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid)
         {
-            return this.PrvI.GetItemsForReturnOrder(referDocSid);
+            return this.GetItemsForReturnOrder(referDocSid, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Возврат строк от документа сид которого мы указали
+        /// </summary>
+        /// <param name="referDocSid">Сид документа у которого надо получить данные из базы</param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>сами строки документа</returns>
+        public List<BLL.JsonPrintFiscDocItem> GetItemsForReturnOrder(string referDocSid, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetItemsForReturnOrder(referDocSid);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetItemsForReturnOrder(referDocSid, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения строк от сида документа который узнали: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetItemsForReturnOrder", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
 
         /// <summary>
@@ -310,7 +359,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>Возвращаем номер карточки товара</returns>
         public string GetInvnSbsItemNo(string InvnSbsItemSid)
         {
-            return this.PrvI.GetInvnSbsItemNo(InvnSbsItemSid);
+            return this.GetInvnSbsItemNo(InvnSbsItemSid, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Для получения номера карточки товара по её сиду
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public string GetInvnSbsItemNo(string InvnSbsItemSid, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetInvnSbsItemNo(InvnSbsItemSid);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetInvnSbsItemNo(InvnSbsItemSid, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения номера карточки товара по её сиду: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetInvnSbsItemNo", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
 
         /// <summary>
@@ -320,7 +398,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>Получаем номер документа</returns>
         public Int64 GetDocNoFromDocument(string sid)
         {
-            return this.PrvI.GetDocNoFromDocument(sid);
+            return this.GetDocNoFromDocument(sid, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Получаем номер документа из базы данных
+        /// </summary>
+        /// <param name="sid"></param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>Получаем номер документа</returns>
+        public Int64 GetDocNoFromDocument(string sid, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetDocNoFromDocument(sid);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetDocNoFromDocument(sid, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения номера документа из базы данных: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetDocNoFromDocument", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
 
         /// <summary>
@@ -330,7 +437,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>Возвращаем номер карточки товара</returns>
         public InvnSbsItemText GetInvnSbsItemText(string InvnSbsItemSid)
         {
-            return this.PrvI.GetInvnSbsItemText(InvnSbsItemSid);
+            return this.GetInvnSbsItemText(InvnSbsItemSid, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Для получения содержимого полей text1-10 из карточки товаров
+        /// </summary>
+        /// <param name="InvnSbsItemSid">Сид карточки товара</param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>Возвращаем номер карточки товара</returns>
+        public InvnSbsItemText GetInvnSbsItemText(string InvnSbsItemSid, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetInvnSbsItemText(InvnSbsItemSid);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetInvnSbsItemText(InvnSbsItemSid, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения содержимого полей text1-10 из карточки товаров: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetInvnSbsItemText", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
 
         /// <summary>
@@ -340,7 +476,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>сама строка тендера</returns>
         public BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender)
         {
-            return this.PrvI.GetTenderForReturnOrder(itemTender);
+            return this.GetTenderForReturnOrder(itemTender, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Возврат тендера из ссылки на документ указанного в линке массива tenders
+        /// </summary>
+        /// <param name="itemTender">линк на строку из массива tenders</param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>сама строка тендера</returns>
+        public BLL.JsonPrintFiscDocTender GetTenderForReturnOrder(BLL.JsonPrintFiscDocTender itemTender, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetTenderForReturnOrder(itemTender);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetTenderForReturnOrder(itemTender, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения возврата тендера из ссылки на документ указанного в линке массива tenders: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetTenderForReturnOrder", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
 
         /// <summary>
@@ -350,7 +515,36 @@ namespace AlgoritmPrizm.Lib
         /// <returns>строки тендера из документа</returns>
         public List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid)
         {
-            return this.PrvI.GetTendersForDocument(docsid);
+            return this.GetTendersForDocument(docsid, this.CountSql);
+        }
+        //
+        /// <summary>
+        /// Возврат строки тендера по номеру документа
+        /// </summary>
+        /// <param name="docsid">Номер документа</param>
+        /// <param name="TmpCountSql">Количество оставшихся попыток</param>
+        /// <returns>строки тендера из документа</returns>
+        public List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid, int TmpCountSql)
+        {
+            try
+            {
+                return this.PrvI.GetTendersForDocument(docsid);
+            }
+            catch (Exception ex)
+            {
+                if (TmpCountSql > 0)
+                {
+                    Thread.Sleep(this.ReturnTimeSqlSec * 1000);
+                    this.PrvI.testConnection();
+                    return this.GetTendersForDocument(docsid, TmpCountSql - 1);
+                }
+                else
+                {
+                    ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при повторной попытке получения возврата строки тендера по номеру документа: {0}", ex.Message));
+                    Log.EventSave(ae.Message, "Com.UProvider.GetTendersForDocument", EventEn.Error);
+                    throw ae;
+                }
+            }
         }
     }
 }

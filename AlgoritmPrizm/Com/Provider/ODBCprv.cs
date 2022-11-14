@@ -65,6 +65,24 @@ namespace AlgoritmPrizm.Com.Provider
         }
 
         /// <summary>
+        /// Проверка валидности подключения
+        /// </summary>
+        /// <returns>Возврощает результат проверки</returns>
+        public bool testConnection()
+        {
+            try
+            {
+                testConnection(base.ConnectionString, false);
+
+                return true;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
         /// Печать строки подключения с маскировкой секретных данных
         /// </summary>
         /// <returns>Строка подклюения с замасированной секретной информацией</returns>

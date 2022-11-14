@@ -22,6 +22,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         //string VersionDB();
 
         /// <summary>
+        /// Провекрка конекта
+        /// </summary>
+        /// <returns></returns>
+        bool testConnection();
+
+        /// <summary>
         /// Процедура вызывающая настройку подключения
         /// </summary>
         /// <returns>Возвращает значение требуется ли сохранить подключение как основное или нет</returns>
