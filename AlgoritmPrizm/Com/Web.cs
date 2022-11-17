@@ -30,6 +30,10 @@ namespace AlgoritmPrizm.Com
         private static string AuthSession;
         private static DateTime GetLastAuthSession;
 
+        /// <summary>
+        /// Для блокировки запросов к принтеру чтобы шли в один поток
+        /// </summary>
+        private static object LockFG = null;
 
         public static bool IsRunAsin;
         public static string Host { get; private set; }
@@ -340,16 +344,28 @@ namespace AlgoritmPrizm.Com
 
                                 break;
                             case @"/xreport":
-                                FR.XREport();
+                                lock (LockFG)
+                                {
+                                    FR.XREport();
+                                }
                                 break;
                             case @"/zreport":
-                                FR.ZREport();
+                                lock (LockFG)
+                                {
+                                    FR.ZREport();
+                                }
                                 break;
                             case @"/openshift":
-                                FR.OpenShift();
+                                lock (LockFG)
+                                {
+                                    FR.OpenShift();
+                                }
                                 break;
                             case @"/sale":
-                                // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
+                                lock (LockFG)
+                                {
+                                    // FR.PrintCheck(BLL.JsonPrintFiscDoc.DeserializeJson(BufPostRequest), 1, "Рога и копыта");
+                                }
                                 break;
                             case @"/smsgateway":
                                 JsonSms Sms = JsonSms.DeserializeJson(BufPostRequest);
@@ -443,7 +459,11 @@ namespace AlgoritmPrizm.Com
 
 
                                 // Отправляем на печать
-                                JsonPrintFiscDocReturn rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                JsonPrintFiscDocReturn rezPrintCheck = null;
+                                lock (LockFG)
+                                {
+                                    rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                }
 
                                 // Формируем сообщение для пользователя
                                 responceString = BLL.JsonPrintFiscDocReturn.SerializeObject(rezPrintCheck);
@@ -454,7 +474,10 @@ namespace AlgoritmPrizm.Com
                                 JsonPrintFiscDoc DocCopy = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
 
                                 // Отправляем на печать
-                                FR.PrintCheck(DocCopy, 1, "Рога и копыта", true);
+                                lock (LockFG)
+                                {
+                                    FR.PrintCheck(DocCopy, 1, "Рога и копыта", true);
+                                }
                                 break;
                             case @"/AksRepItemHistory":
                                 try
@@ -585,7 +608,10 @@ namespace AlgoritmPrizm.Com
                                     // Если есть какой нибудь параметр
                                     if (JsPar!=null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
                                     {
-                                        FR.CashIncome((decimal)JsPar[0].valueDecimal);
+                                        lock (LockFG)
+                                        {
+                                            FR.CashIncome((decimal)JsPar[0].valueDecimal);
+                                        }
                                     }
                                 }
                                 catch (Exception ex)
@@ -609,7 +635,10 @@ namespace AlgoritmPrizm.Com
                                     // Если есть какой нибудь параметр
                                     if (JsPar != null && JsPar.Count > 0 && JsPar[0].valueDecimal != null)
                                     {
-                                        FR.CashOutcome((decimal)JsPar[0].valueDecimal);
+                                        lock (LockFG)
+                                        {
+                                            FR.CashOutcome((decimal)JsPar[0].valueDecimal);
+                                        }
                                     }
                                 }
                                 catch (Exception ex)
@@ -646,7 +675,10 @@ namespace AlgoritmPrizm.Com
 
                                 break;
                             case @"/OpenDrawer":
-                                FR.OpenDrawer();
+                                lock (LockFG)
+                                {
+                                    FR.OpenDrawer();
+                                }
                                 break;
                             case @"/display":
                                 JsonDisplayParams DispPar = BLL.JsonDisplayParams.DeserializeJson(BufPostRequest);
