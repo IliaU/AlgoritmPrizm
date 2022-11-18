@@ -33,7 +33,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Для блокировки запросов к принтеру чтобы шли в один поток
         /// </summary>
-        private static object LockFG = null;
+        private static object LockFG = new object();
 
         public static bool IsRunAsin;
         public static string Host { get; private set; }
