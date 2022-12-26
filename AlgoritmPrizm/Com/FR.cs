@@ -238,7 +238,13 @@ namespace AlgoritmPrizm.Com
                 if (Fr.FNCloseSession() != 0)
                 {
                     rez = Verification(Fr);
-                    throw new ApplicationException(string.Format("Упали с ошибкой: {0}", rez.Description));
+
+                    //При ошибке с бумагой печать продолжается после верификации но маса верификация выдаёт код ошибки 2 которую мы игнорируем так как печать продолжилась сам если вдруг печать не продолжится воткнём Fr.ContinuePrint() чтобы продолжить печать
+                    if (rez.CodeECRMode != 2)
+                    {
+                        rez = Verification(Fr);
+                        throw new ApplicationException(string.Format("Упали с ошибкой: {0}", rez.Description));
+                    }
                 }
 
                 return rez;

@@ -293,6 +293,17 @@ namespace AlgoritmPrizm.Lib
         }
 
         /// <summary>
+        /// Необходимо изменить количество в товаре так как произошла ошибка при печати
+        /// </summary>
+        /// <param name="ProductSid">Идентификатор товара</param>
+        /// <param name="qty">Количетсов товара которое необходимо добавить к текущему количеству</param>
+        /// <param name="AddQty"></param>
+        public void SetQtyRollbackItem(string ProductSid, double qty)
+        {
+            this.PrvI.SetQtyRollbackItem(ProductSid, qty);
+        }
+
+        /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
         /// <param name="CustInn">Инн покупателя</param>

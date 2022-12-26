@@ -49,6 +49,14 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         void SetPrizmCustPorog(string CustInn, string InvcNo, DateTime PosDate, decimal TotalCashSum);
 
         /// <summary>
+        /// Необходимо изменить количество в товаре так как произошла ошибка при печати
+        /// </summary>
+        /// <param name="ProductSid">Идентификатор товара</param>
+        /// <param name="qty">Количетсов товара которое необходимо добавить к текущему количеству</param>
+        /// <param name="AddQty"></param>
+        void SetQtyRollbackItem(string ProductSid, double qty);
+
+        /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
         /// <param name="CustInn">Инн покупателя</param>

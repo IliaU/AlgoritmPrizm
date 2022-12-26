@@ -283,6 +283,48 @@ namespace AlgoritmPrizm.Com.Provider
         }
 
         /// <summary>
+        /// Необходимо изменить количество в товаре так как произошла ошибка при печати
+        /// </summary>
+        /// <param name="ProductSid">Идентификатор товара</param>
+        /// <param name="qty">Количетсов товара которое необходимо добавить к текущему количеству</param>
+        /// <param name="AddQty"></param>
+        public void SetQtyRollbackItem(string ProductSid, double qty)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            SetQtyRollbackItemORA(ProductSid, qty);
+                            break;
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            SetQtyRollbackItemMySql(ProductSid, qty);
+                            break;
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "SetQtyRollbackItem", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
         /// <param name="CustInn">Инн покупателя</param>
@@ -822,6 +864,46 @@ namespace AlgoritmPrizm.Com.Provider
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetPrizmCustPorogORA", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetPrizmCustPorogORA", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Необходимо изменить количество в товаре так как произошла ошибка при печати
+        /// </summary>
+        /// <param name="ProductSid">Идентификатор товара</param>
+        /// <param name="qty">Количетсов товара которое необходимо добавить к текущему количеству</param>
+        /// <param name="AddQty"></param>
+        public void SetQtyRollbackItemORA(string ProductSid, double qty)
+        {
+            string CommandSql = String.Format(@"update rpsods.invn_sbs_item_qty Set qty=qty+{1} Where Sid='{0}'", ProductSid, qty);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetQtyRollbackItemORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetQtyRollbackItemORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemORA", EventEn.Dump);
                 throw;
             }
         }
@@ -1591,6 +1673,46 @@ Where t.doc_sid ='{0}'", docsid);
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetPrizmCustPorogMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetPrizmCustPorogMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Необходимо изменить количество в товаре так как произошла ошибка при печати
+        /// </summary>
+        /// <param name="ProductSid">Идентификатор товара</param>
+        /// <param name="qty">Количетсов товара которое необходимо добавить к текущему количеству</param>
+        /// <param name="AddQty"></param>
+        public void SetQtyRollbackItemMySql(string ProductSid, double qty)
+        {
+            string CommandSql = String.Format(@"update `rpsods`.`invn_sbs_item_qty` Set qty=qty+{1} Where Sid='{0}'", ProductSid, qty);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Dump);
                 throw;
             }
         }

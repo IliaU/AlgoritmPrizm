@@ -209,6 +209,10 @@ namespace AlgoritmPrizm.Com
                 string SecFetchMode = request.Headers["Sec-Fetch-Mode"];
                 string ContentType = "application/json";
 
+                // Флаг о необходимости отката изменений сделанных при печати чека
+                bool Rollbackprintfiscdoc = false;
+                JsonPrintFiscDoc RollbackDoc = null;
+
                 try
                 {
                     // усли равен cors значит это предварительный запрос
@@ -375,94 +379,102 @@ namespace AlgoritmPrizm.Com
 
                                 // Десериализуем наш объект
                                 JsonPrintFiscDoc Doc = JsonPrintFiscDoc.DeserializeJson(BufPostRequest);
+                                RollbackDoc = Doc;
 
-                                // Проверка подключения к базе
-                                if (!string.IsNullOrWhiteSpace(Doc.bt_cuid))
-                                {
-                                    if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
-                                    {
-                                        // проверяем что в настройках стоит в качестве поля в котором хранится инфа
-                                        string FieldInnTyp;
-                                        switch (Config.FieldInnTyp)
-                                        {
-                                            case FieldDocNumEn.Comment1:
-                                                FieldInnTyp = Doc.comment1;
-                                                break;
-                                            case FieldDocNumEn.Comment2:
-                                                FieldInnTyp = Doc.comment2;
-                                                break;
-                                            case FieldDocNumEn.bt_address_line3:
-                                                FieldInnTyp = Doc.bt_address_line3;
-                                                break;
-                                            default:
-                                                FieldInnTyp = null;
-                                                break;
-                                        }
-
-                                        string[] coment;
-                                        if (!string.IsNullOrWhiteSpace(FieldInnTyp))
-                                        {
-                                            coment = FieldInnTyp.Split(';');
-
-                                            //Если это юрик
-                                            if (
-                                                    (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
-                                                    ||(coment.Length == 1 && coment[0].Trim().Length == 10)
-                                               )
-                                            {
-                                                if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
-                                                else
-                                                {
-                                                    // Пробегаем по типу оплаты
-                                                    decimal SumDoc = 0;
-                                                    foreach (JsonPrintFiscDocTender item in Doc.tenders)
-                                                    {
-                                                        //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
-                                                        switch (Doc.receipt_type)
-                                                        {
-                                                            case 0:
-                                                                // Если тип оплаты нал
-                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
-
-                                                                break;
-                                                            case 1:
-                                                                // Если тип оплаты нал
-                                                                if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
-
-                                                                break;
-                                                            case 2:
-                                                                // Депозит
-
-                                                                break;
-                                                            default:
-                                                                throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
-                                                        }
-                                                    }
-
-                                                    if (coment.Length == 2) FieldInnTyp = coment[1];
-
-                                                    // Сумма за текущий день по юрлицу
-                                                    Decimal SumDocOld = 0;
-                                                    if (Config.CalculatedDaySumForUrik) SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(FieldInnTyp.Trim().ToLower(), Doc.created_datetime);
-
-                                                    // Если есть привышение то ругаемся
-                                                    if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
-
-                                                    // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
-                                                    Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(FieldInnTyp.Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
-                                                }
-                                            }
-                                        }
-                                    }
-                                    else throw new ApplicationException("Нет подключения к базе данных");
-                                }
-
-
-                                // Отправляем на печать
                                 JsonPrintFiscDocReturn rezPrintCheck = null;
                                 lock (LockFG)
                                 {
-                                    rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                    try
+                                    {
+                                        // Проверка подключения к базе
+                                        if (!string.IsNullOrWhiteSpace(Doc.bt_cuid))
+                                        {
+                                            if (Com.ProviderFarm.CurrentPrv != null && Com.ProviderFarm.CurrentPrv.HashConnect)
+                                            {
+                                                // проверяем что в настройках стоит в качестве поля в котором хранится инфа
+                                                string FieldInnTyp;
+                                                switch (Config.FieldInnTyp)
+                                                {
+                                                    case FieldDocNumEn.Comment1:
+                                                        FieldInnTyp = Doc.comment1;
+                                                        break;
+                                                    case FieldDocNumEn.Comment2:
+                                                        FieldInnTyp = Doc.comment2;
+                                                        break;
+                                                    case FieldDocNumEn.bt_address_line3:
+                                                        FieldInnTyp = Doc.bt_address_line3;
+                                                        break;
+                                                    default:
+                                                        FieldInnTyp = null;
+                                                        break;
+                                                }
+
+                                                string[] coment;
+                                                if (!string.IsNullOrWhiteSpace(FieldInnTyp))
+                                                {
+                                                    coment = FieldInnTyp.Split(';');
+
+                                                    //Если это юрик
+                                                    if (
+                                                            (coment.Length == 2 && coment[0].Trim().ToLower() == "legal")
+                                                            ||(coment.Length == 1 && coment[0].Trim().Length == 10)
+                                                       )
+                                                    {
+                                                        if (string.IsNullOrWhiteSpace(Doc.bt_last_name)) throw new ApplicationException("Не указано наименование у юрлица");
+                                                        else
+                                                        {
+                                                            // Пробегаем по типу оплаты
+                                                            decimal SumDoc = 0;
+                                                            foreach (JsonPrintFiscDocTender item in Doc.tenders)
+                                                            {
+                                                                //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                                                                switch (Doc.receipt_type)
+                                                                {
+                                                                    case 0:
+                                                                        // Если тип оплаты нал
+                                                                        if (item.tender_type == Com.Config.TenderTypeCash && item.taken != 0) SumDoc = +(decimal)item.taken;
+
+                                                                        break;
+                                                                    case 1:
+                                                                        // Если тип оплаты нал
+                                                                        if (item.tender_type == Com.Config.TenderTypeCash && item.given != 0) SumDoc = +(decimal)item.given * -1;
+
+                                                                        break;
+                                                                    case 2:
+                                                                        // Депозит
+
+                                                                        break;
+                                                                    default:
+                                                                        throw new ApplicationException(string.Format("В токументе появился тип поля receipt_typ={0}, который мы не знаем как обрабатывать", Doc.receipt_type));
+                                                                }
+                                                            }
+
+                                                            if (coment.Length == 2) FieldInnTyp = coment[1];
+
+                                                            // Сумма за текущий день по юрлицу
+                                                            Decimal SumDocOld = 0;
+                                                            if (Config.CalculatedDaySumForUrik) SumDocOld = Com.ProviderFarm.CurrentPrv.GetTotalCashSum(FieldInnTyp.Trim().ToLower(), Doc.created_datetime);
+
+                                                            // Если есть привышение то ругаемся
+                                                            if (SumDoc + SumDocOld >= Config.LimitCachForUrik) throw new ApplicationException("Ежедневный лимит по юрлицу исчерпан");
+
+                                                            // Если всё ок то ругаться не нужно просто сохраняем ещё  сумму из текущего чека
+                                                            Com.ProviderFarm.CurrentPrv.SetPrizmCustPorog(FieldInnTyp.Trim().ToLower(), Doc.sid, Doc.created_datetime, SumDoc);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                            else throw new ApplicationException("Нет подключения к базе данных");
+                                        }
+                                
+                                        // Отправляем на печать
+                                        rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+                                    }
+                                    catch (Exception ex)
+                                    {
+                                        Rollbackprintfiscdoc = true;
+                                        throw ex;
+                                    }
                                 }
 
                                 // Формируем сообщение для пользователя
@@ -819,6 +831,26 @@ namespace AlgoritmPrizm.Com
                     catch (Exception exxe) { }
                 }
                 response.Close();
+
+                // Если есть ошибка при печати чека нужно спустя время откатить количество назад
+                if (Rollbackprintfiscdoc && RollbackDoc!=null)
+                {
+                    try
+                    {
+                        Thread.Sleep(2000);
+
+                        // Пробегаем по позициям в чеке
+                        foreach (JsonPrintFiscDocItem RollbackItem in RollbackDoc.items)
+                        {
+                            Com.ProviderFarm.CurrentPrv.SetQtyRollbackItem(RollbackItem.invn_sbs_item_sid, RollbackItem.quantity*-1);
+                        }
+                    }
+                    catch (Exception RollbackEx)
+                    {
+                        ApplicationException Rollbackae = new ApplicationException(string.Format("Упали с ошибкой: {0}", RollbackEx.Message));
+                        Log.EventSave(Rollbackae.Message, "Com.Web.AListen (Rollback)", EventEn.Error);
+                    }
+                }
             }
             catch (Exception ex)
             {
