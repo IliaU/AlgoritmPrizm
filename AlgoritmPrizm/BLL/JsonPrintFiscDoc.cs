@@ -248,7 +248,7 @@ namespace AlgoritmPrizm.BLL
         public JsonPrintFiscDocParam Params = new JsonPrintFiscDocParam();
         public JsonPrintFiscDocHeader headers = new JsonPrintFiscDocHeader();
         public List<JsonPrintFiscDocItem> items = new List<JsonPrintFiscDocItem>();
-        public int doc_tender_type;
+        public int? doc_tender_type;
 
         /// <summary>
         /// Пример на котором тестировали
