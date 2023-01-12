@@ -876,7 +876,7 @@ namespace AlgoritmPrizm.Com.Provider
         /// <param name="AddQty"></param>
         public void SetQtyRollbackItemORA(string ProductSid, double qty)
         {
-            string CommandSql = String.Format(@"update rpsods.invn_sbs_item_qty Set qty=qty+{1} Where Sid='{0}'", ProductSid, qty);
+            string CommandSql = String.Format(@"update rpsods.invn_sbs_item_qty Set qty=qty+{1} Where invn_sbs_item_sid='{0}'", ProductSid, qty);
 
             try
             {
@@ -1685,7 +1685,7 @@ Where t.doc_sid ='{0}'", docsid);
         /// <param name="AddQty"></param>
         public void SetQtyRollbackItemMySql(string ProductSid, double qty)
         {
-            string CommandSql = String.Format(@"update `rpsods`.`invn_sbs_item_qty` Set qty=qty+{1} Where Sid='{0}'", ProductSid, qty);
+            string CommandSql = String.Format(@"update `rpsods`.`invn_sbs_item_qty` Set `qty`=`qty`+{1} Where `invn_sbs_item_sid`='{0}'", ProductSid, qty);
 
             try
             {

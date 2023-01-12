@@ -466,7 +466,22 @@ namespace AlgoritmPrizm.Com
                                             }
                                             else throw new ApplicationException("Нет подключения к базе данных");
                                         }
-                                
+
+
+                                        // Обогощаем документ строками при ошибке они исчезают !!!!!!!
+                                        if (RollbackDoc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
+                                                !string.IsNullOrWhiteSpace(t.link)) > 0)
+                                        {
+                                            List<BLL.JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(RollbackDoc.sid);
+                                            for (int i = 0; i < RollbackDoc.items.Count(); i++)
+                                            {
+                                                DocTmp[i].link = RollbackDoc.items[i].link;
+                                                RollbackDoc.items[i] = DocTmp[i];
+                                            }
+                                        }
+
+                                        //throw new ApplicationException("Наша тестовая ошибка");
+
                                         // Отправляем на печать
                                         rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
                                     }
@@ -837,12 +852,27 @@ namespace AlgoritmPrizm.Com
                 {
                     try
                     {
+
+
                         Thread.Sleep(2000);
 
                         // Пробегаем по позициям в чеке
                         foreach (JsonPrintFiscDocItem RollbackItem in RollbackDoc.items)
                         {
-                            Com.ProviderFarm.CurrentPrv.SetQtyRollbackItem(RollbackItem.invn_sbs_item_sid, RollbackItem.quantity*-1);
+                            //«0» - продажа, «1» - покупка, «2» - возврат продажи, «3» - возврат покупки.
+                            switch (RollbackDoc.receipt_type)
+                            {
+                                case 0:
+                                case 1:
+                                    Com.ProviderFarm.CurrentPrv.SetQtyRollbackItem(RollbackItem.invn_sbs_item_sid, RollbackItem.quantity);
+                                    break;
+                                case 2:
+                                case 3:
+                                    Com.ProviderFarm.CurrentPrv.SetQtyRollbackItem(RollbackItem.invn_sbs_item_sid, RollbackItem.quantity * -1);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
                     }
                     catch (Exception RollbackEx)
