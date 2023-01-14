@@ -264,8 +264,8 @@ namespace AlgoritmPrizm.BLL
         public int kit_type;
         public string activation_sid;
         public DateTime? gift_expire_date;
-        public double maxdiscpercent;
-        public double maxaccumdiscpercent;
+        public double? maxdiscpercent;
+        public double? maxaccumdiscpercent;
         public string override_max_disc_perc;
         public int promo_gift_item;
         public JsonPrintFiscDocItemHrefs hrefs = new JsonPrintFiscDocItemHrefs();
