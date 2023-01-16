@@ -303,6 +303,17 @@ namespace AlgoritmPrizm.Lib
             this.PrvI.SetQtyRollbackItem(ProductSid, qty);
         }
 
+
+        /// <summary>
+        /// Установка признака отложенного чека в документе
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
+        public void SetIsHelperForDocements(string DocumentSid, int IsHeld)
+        {
+            this.PrvI.SetIsHelperForDocements(DocumentSid, IsHeld);
+        }
+
         /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>

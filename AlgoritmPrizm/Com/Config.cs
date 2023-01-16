@@ -355,6 +355,16 @@ namespace AlgoritmPrizm.Com
         /// Считать по дням сумму за день по юрлицам, если fasle то будет ограничение работать на чек а не на день
         /// </summary>
         private static bool _CalculatedDaySumForUrik = true;
+
+        /// <summary>
+        /// Включить откат чеков при ошибках в фискальном регистраторе
+        /// </summary>
+        private static bool _IsHelperForDocements = true;
+
+        /// <summary>
+        /// Таймаут отката после регистрации ошибки (сек)
+        /// </summary>
+        private static int _HelperForDocementsTimeout = 2;
         #endregion
 
         #region Public Param
@@ -1381,6 +1391,40 @@ namespace AlgoritmPrizm.Com
                 _CalculatedDaySumForUrik = value;
             }
         }
+
+        /// <summary>
+        /// Включить откат чеков при ошибках в фискальном регистраторе
+        /// </summary>
+        public static bool IsHelperForDocements
+        {
+            get
+            {
+                return _IsHelperForDocements;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("IsHelperForDocements", value.ToString());
+                Save();
+                _IsHelperForDocements = value;
+            }
+        }
+
+        /// <summary>
+        /// Таймаут отката после регистрации ошибки (сек)
+        /// </summary>
+        public static int HelperForDocementsTimeout
+        {
+            get
+            {
+                return _HelperForDocementsTimeout;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("HelperForDocementsTimeout", value.ToString());
+                Save();
+                _HelperForDocementsTimeout = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1678,6 +1722,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrintingUrikForFr", _PrintingUrikForFr.ToString());
                     xmlMain.SetAttribute("PrintingIpForFr", _PrintingIpForFr.ToString());
                     xmlMain.SetAttribute("CalculatedDaySumForUrik", _CalculatedDaySumForUrik.ToString());
+                    xmlMain.SetAttribute("IsHelperForDocements", _IsHelperForDocements.ToString());
+                    xmlMain.SetAttribute("HelperForDocementsTimeout", _HelperForDocementsTimeout.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1801,6 +1847,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrintingUrikForFr") try { _PrintingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrintingIpForFr") try { _PrintingIpForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "CalculatedDaySumForUrik") try { _CalculatedDaySumForUrik = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "HeldForDocements") try { _IsHelperForDocements = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HelperForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер

@@ -100,6 +100,7 @@
             this.txtBoxSmsTypGatewaySmtp = new System.Windows.Forms.TextBox();
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBoxFfd = new System.Windows.Forms.GroupBox();
+            this.chkBoxPrintingIpForFr = new System.Windows.Forms.CheckBox();
             this.chkBoxPrintingUrikForFr = new System.Windows.Forms.CheckBox();
             this.chkBoxProcessingUrikForFr = new System.Windows.Forms.CheckBox();
             this.tabPage3 = new System.Windows.Forms.TabPage();
@@ -138,7 +139,11 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkBoxPrintingIpForFr = new System.Windows.Forms.CheckBox();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.chkBoxHelperForDocements = new System.Windows.Forms.CheckBox();
+            this.lblHelperForDocements = new System.Windows.Forms.Label();
+            this.txtBoxHelperForDocementsTimeout = new System.Windows.Forms.TextBox();
+            this.grpBoxHelperForDocements = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxDisplay.SuspendLayout();
@@ -158,6 +163,8 @@
             this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.grpBoxHelperForDocements.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -806,6 +813,17 @@
             this.groupBoxFfd.TabStop = false;
             this.groupBoxFfd.Text = "Фискальный регистратор";
             // 
+            // chkBoxPrintingIpForFr
+            // 
+            this.chkBoxPrintingIpForFr.AutoSize = true;
+            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(393, 72);
+            this.chkBoxPrintingIpForFr.Name = "chkBoxPrintingIpForFr";
+            this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(321, 17);
+            this.chkBoxPrintingIpForFr.TabIndex = 13;
+            this.chkBoxPrintingIpForFr.Text = "Выводить на печать в чек информацию о покупателе (ИП)";
+            this.chkBoxPrintingIpForFr.UseVisualStyleBackColor = true;
+            this.chkBoxPrintingIpForFr.Visible = false;
+            // 
             // chkBoxPrintingUrikForFr
             // 
             this.chkBoxPrintingUrikForFr.AutoSize = true;
@@ -854,7 +872,7 @@
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(741, 390);
+            this.tabPage3.Size = new System.Drawing.Size(766, 390);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -961,7 +979,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(741, 390);
+            this.tabPage2.Size = new System.Drawing.Size(766, 390);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -971,7 +989,7 @@
             this.tabPage4.Controls.Add(this.tabControl2);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(741, 390);
+            this.tabPage4.Size = new System.Drawing.Size(766, 390);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -981,12 +999,13 @@
             this.tabControl2.Alignment = System.Windows.Forms.TabAlignment.Left;
             this.tabControl2.Controls.Add(this.tabPage5);
             this.tabControl2.Controls.Add(this.tabPage6);
+            this.tabControl2.Controls.Add(this.tabPage8);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(741, 390);
+            this.tabControl2.Size = new System.Drawing.Size(766, 390);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -999,7 +1018,7 @@
             this.tabPage5.Location = new System.Drawing.Point(23, 4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(714, 382);
+            this.tabPage5.Size = new System.Drawing.Size(739, 382);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1012,7 +1031,7 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(714, 382);
+            this.tabPage6.Size = new System.Drawing.Size(739, 382);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1049,7 +1068,7 @@
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
             this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(741, 390);
+            this.tabPage7.Size = new System.Drawing.Size(766, 390);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Матрикс коды";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1060,7 +1079,7 @@
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 110);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(741, 280);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(766, 280);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -1072,7 +1091,7 @@
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(741, 280);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(766, 280);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -1096,7 +1115,7 @@
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(741, 110);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(766, 110);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
             // pnl_ProdictMatrixClassTopTop
@@ -1112,7 +1131,7 @@
             this.pnl_ProdictMatrixClassTopTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTopTop.Location = new System.Drawing.Point(0, 0);
             this.pnl_ProdictMatrixClassTopTop.Name = "pnl_ProdictMatrixClassTopTop";
-            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(741, 101);
+            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(766, 101);
             this.pnl_ProdictMatrixClassTopTop.TabIndex = 40;
             // 
             // lblProductMatrixEndOff
@@ -1209,16 +1228,53 @@
             this.pnlFill.Size = new System.Drawing.Size(774, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkBoxPrintingIpForFr
+            // tabPage8
             // 
-            this.chkBoxPrintingIpForFr.AutoSize = true;
-            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(393, 72);
-            this.chkBoxPrintingIpForFr.Name = "chkBoxPrintingIpForFr";
-            this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(321, 17);
-            this.chkBoxPrintingIpForFr.TabIndex = 13;
-            this.chkBoxPrintingIpForFr.Text = "Выводить на печать в чек информацию о покупателе (ИП)";
-            this.chkBoxPrintingIpForFr.UseVisualStyleBackColor = true;
-            this.chkBoxPrintingIpForFr.Visible = false;
+            this.tabPage8.Controls.Add(this.grpBoxHelperForDocements);
+            this.tabPage8.Location = new System.Drawing.Point(23, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(739, 382);
+            this.tabPage8.TabIndex = 2;
+            this.tabPage8.Text = "Операции с чеками";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // chkBoxHelperForDocements
+            // 
+            this.chkBoxHelperForDocements.AutoSize = true;
+            this.chkBoxHelperForDocements.Location = new System.Drawing.Point(18, 27);
+            this.chkBoxHelperForDocements.Name = "chkBoxHelperForDocements";
+            this.chkBoxHelperForDocements.Size = new System.Drawing.Size(353, 17);
+            this.chkBoxHelperForDocements.TabIndex = 24;
+            this.chkBoxHelperForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
+            this.chkBoxHelperForDocements.UseVisualStyleBackColor = true;
+            // 
+            // lblHelperForDocements
+            // 
+            this.lblHelperForDocements.AutoSize = true;
+            this.lblHelperForDocements.Location = new System.Drawing.Point(15, 49);
+            this.lblHelperForDocements.Name = "lblHelperForDocements";
+            this.lblHelperForDocements.Size = new System.Drawing.Size(255, 13);
+            this.lblHelperForDocements.TabIndex = 22;
+            this.lblHelperForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
+            // 
+            // txtBoxHelperForDocementsTimeout
+            // 
+            this.txtBoxHelperForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
+            this.txtBoxHelperForDocementsTimeout.Name = "txtBoxHelperForDocementsTimeout";
+            this.txtBoxHelperForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
+            this.txtBoxHelperForDocementsTimeout.TabIndex = 23;
+            // 
+            // grpBoxHelperForDocements
+            // 
+            this.grpBoxHelperForDocements.Controls.Add(this.chkBoxHelperForDocements);
+            this.grpBoxHelperForDocements.Controls.Add(this.txtBoxHelperForDocementsTimeout);
+            this.grpBoxHelperForDocements.Controls.Add(this.lblHelperForDocements);
+            this.grpBoxHelperForDocements.Location = new System.Drawing.Point(17, 14);
+            this.grpBoxHelperForDocements.Name = "grpBoxHelperForDocements";
+            this.grpBoxHelperForDocements.Size = new System.Drawing.Size(599, 124);
+            this.grpBoxHelperForDocements.TabIndex = 25;
+            this.grpBoxHelperForDocements.TabStop = false;
+            this.grpBoxHelperForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
             // 
             // FConfig
             // 
@@ -1260,6 +1316,9 @@
             this.pnl_ProdictMatrixClassTopTop.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
+            this.tabPage8.ResumeLayout(false);
+            this.grpBoxHelperForDocements.ResumeLayout(false);
+            this.grpBoxHelperForDocements.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1376,5 +1435,10 @@
         private System.Windows.Forms.CheckBox chkBoxProcessingUrikForFr;
         private System.Windows.Forms.CheckBox chkBoxCalculatedDaySumForUrik;
         private System.Windows.Forms.CheckBox chkBoxPrintingIpForFr;
+        private System.Windows.Forms.TabPage tabPage8;
+        private System.Windows.Forms.GroupBox grpBoxHelperForDocements;
+        private System.Windows.Forms.CheckBox chkBoxHelperForDocements;
+        private System.Windows.Forms.TextBox txtBoxHelperForDocementsTimeout;
+        private System.Windows.Forms.Label lblHelperForDocements;
     }
 }

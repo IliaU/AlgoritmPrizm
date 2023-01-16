@@ -325,6 +325,48 @@ namespace AlgoritmPrizm.Com.Provider
         }
 
         /// <summary>
+        /// Установка признака отложенного чека в документе
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
+        public void SetIsHelperForDocements(string DocumentSid, int IsHeld)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            SetIsHelperForDocementsORA(DocumentSid, IsHeld);
+                            break;
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            SetIsHelperForDocementsMySql(DocumentSid, IsHeld);
+                            break;
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "SetIsHelperForDocements", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+
+        /// <summary>
         /// Получить сумму по клиенту за дату
         /// </summary>
         /// <param name="CustInn">Инн покупателя</param>
@@ -908,6 +950,44 @@ namespace AlgoritmPrizm.Com.Provider
             }
         }
 
+        /// <summary>
+        /// Установка признака отложенного чека в документе
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
+        public void SetIsHelperForDocementsORA(string DocumentSid, int IsHeld)
+        {
+            string CommandSql = String.Format(@"update rpsods.document Set is_held={1} Where sid='{0}'", DocumentSid, IsHeld);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelperForDocementsORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelperForDocementsORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsORA", EventEn.Dump);
+                throw;
+            }
+        }
 
         /// <summary>
         /// Получить сумму по клиенту за дату
@@ -1713,6 +1793,46 @@ Where t.doc_sid ='{0}'", docsid);
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetQtyRollbackItemMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+
+        /// <summary>
+        /// Установка признака отложенного чека в документе
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
+        public void SetIsHelperForDocementsMySql(string DocumentSid, int IsHeld)
+        {
+            string CommandSql = String.Format(@"update `rpsods`.`document` Set `is_held`={1} Where `sid`='{0}'", DocumentSid, IsHeld);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsMySql", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelperForDocementsMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelperForDocementsMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelperForDocementsMySql", EventEn.Dump);
                 throw;
             }
         }

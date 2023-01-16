@@ -282,6 +282,10 @@ namespace AlgoritmPrizm
                 this.txtBoxLimitCachForUrik.Text = Config.LimitCachForUrik.ToString();
 
                 this.chkBoxEmployeePrintingForEveryLine.Checked = Config.EmployeePrintingForEveryLine;
+
+                // Параметры обработки ошибок при печати чека (откат чека)
+                this.chkBoxHelperForDocements.Checked = Config.IsHelperForDocements;
+                this.txtBoxHelperForDocementsTimeout.Text = Config.HelperForDocementsTimeout.ToString();
             }
             catch (Exception ex)
             {
@@ -518,6 +522,19 @@ namespace AlgoritmPrizm
 
 
                 Config.CalculatedDaySumForUrik = this.chkBoxCalculatedDaySumForUrik.Checked;
+
+
+                // Параметры обработки ошибок при печати чека (откат чека)
+                Config.IsHelperForDocements = this.chkBoxHelperForDocements.Checked;
+                try
+                {
+                    Config.HelperForDocementsTimeout = int.Parse(this.txtBoxHelperForDocementsTimeout.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxHelperForDocementsTimeout.Text), GetType().Name, EventEn.Message);
+                }
+
 
                 this.Close();
             }

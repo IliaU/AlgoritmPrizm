@@ -848,13 +848,11 @@ namespace AlgoritmPrizm.Com
                 response.Close();
 
                 // Если есть ошибка при печати чека нужно спустя время откатить количество назад
-                if (Rollbackprintfiscdoc && RollbackDoc!=null)
+                if (Config.IsHelperForDocements && Rollbackprintfiscdoc && RollbackDoc!=null)
                 {
                     try
                     {
-
-
-                        Thread.Sleep(2000);
+                        Thread.Sleep(Config.HelperForDocementsTimeout*1000);
 
                         // Пробегаем по позициям в чеке
                         foreach (JsonPrintFiscDocItem RollbackItem in RollbackDoc.items)
@@ -874,6 +872,9 @@ namespace AlgoritmPrizm.Com
                                     break;
                             }
                         }
+
+                        // Устанавливаем признак отложенного документа
+                        Com.ProviderFarm.CurrentPrv.SetIsHelperForDocements(RollbackDoc.sid, 1);
                     }
                     catch (Exception RollbackEx)
                     {
