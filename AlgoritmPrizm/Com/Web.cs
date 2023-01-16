@@ -823,6 +823,13 @@ namespace AlgoritmPrizm.Com
                 }
                 catch (Exception exw)
                 {
+                    // Проверяем наличие ошибки на принтере и если она есть то делаем откат заголовка до того как передать ошибку в браузер
+                    if (Config.IsHeldForDocements && Rollbackprintfiscdoc && RollbackDoc != null)
+                    {
+                        // Устанавливаем признак отложенного документа
+                        Com.ProviderFarm.CurrentPrv.SetIsHeldForDocements(RollbackDoc.sid, 1);
+                    }
+
                     string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
                     ApplicationException ae = new ApplicationException(ErrorMessage);
                     Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Warning);
@@ -848,11 +855,12 @@ namespace AlgoritmPrizm.Com
                 response.Close();
 
                 // Если есть ошибка при печати чека нужно спустя время откатить количество назад
-                if (Config.IsHelperForDocements && Rollbackprintfiscdoc && RollbackDoc!=null)
+                if (Config.IsHeldForDocements && Rollbackprintfiscdoc && RollbackDoc!=null)
                 {
                     try
                     {
-                        Thread.Sleep(Config.HelperForDocementsTimeout*1000);
+                        // Пауза во времени
+                        Thread.Sleep(Config.HeldForDocementsTimeout*1000);
 
                         // Пробегаем по позициям в чеке
                         foreach (JsonPrintFiscDocItem RollbackItem in RollbackDoc.items)
@@ -872,9 +880,6 @@ namespace AlgoritmPrizm.Com
                                     break;
                             }
                         }
-
-                        // Устанавливаем признак отложенного документа
-                        Com.ProviderFarm.CurrentPrv.SetIsHelperForDocements(RollbackDoc.sid, 1);
                     }
                     catch (Exception RollbackEx)
                     {

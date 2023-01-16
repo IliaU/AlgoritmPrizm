@@ -61,7 +61,7 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// </summary>
         /// <param name="DocumentSid">Идентификатор товара</param>
         /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
-        void SetIsHelperForDocements(string DocumentSid, int IsHeld);
+        void SetIsHeldForDocements(string DocumentSid, int IsHeld);
 
         /// <summary>
         /// Получить сумму по клиенту за дату

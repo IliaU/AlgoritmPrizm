@@ -359,12 +359,12 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Включить откат чеков при ошибках в фискальном регистраторе
         /// </summary>
-        private static bool _IsHelperForDocements = true;
+        private static bool _IsHeldForDocements = true;
 
         /// <summary>
         /// Таймаут отката после регистрации ошибки (сек)
         /// </summary>
-        private static int _HelperForDocementsTimeout = 2;
+        private static int _HeldForDocementsTimeout = 2;
         #endregion
 
         #region Public Param
@@ -1395,34 +1395,34 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Включить откат чеков при ошибках в фискальном регистраторе
         /// </summary>
-        public static bool IsHelperForDocements
+        public static bool IsHeldForDocements
         {
             get
             {
-                return _IsHelperForDocements;
+                return _IsHeldForDocements;
             }
             set
             {
-                xmlRoot.SetAttribute("IsHelperForDocements", value.ToString());
+                xmlRoot.SetAttribute("IsHeldForDocements", value.ToString());
                 Save();
-                _IsHelperForDocements = value;
+                _IsHeldForDocements = value;
             }
         }
 
         /// <summary>
         /// Таймаут отката после регистрации ошибки (сек)
         /// </summary>
-        public static int HelperForDocementsTimeout
+        public static int HeldForDocementsTimeout
         {
             get
             {
-                return _HelperForDocementsTimeout;
+                return _HeldForDocementsTimeout;
             }
             set
             {
-                xmlRoot.SetAttribute("HelperForDocementsTimeout", value.ToString());
+                xmlRoot.SetAttribute("HeldForDocementsTimeout", value.ToString());
                 Save();
-                _HelperForDocementsTimeout = value;
+                _HeldForDocementsTimeout = value;
             }
         }
         #endregion
@@ -1722,8 +1722,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("PrintingUrikForFr", _PrintingUrikForFr.ToString());
                     xmlMain.SetAttribute("PrintingIpForFr", _PrintingIpForFr.ToString());
                     xmlMain.SetAttribute("CalculatedDaySumForUrik", _CalculatedDaySumForUrik.ToString());
-                    xmlMain.SetAttribute("IsHelperForDocements", _IsHelperForDocements.ToString());
-                    xmlMain.SetAttribute("HelperForDocementsTimeout", _HelperForDocementsTimeout.ToString());
+                    xmlMain.SetAttribute("IsHeldForDocements", _IsHeldForDocements.ToString());
+                    xmlMain.SetAttribute("HeldForDocementsTimeout", _HeldForDocementsTimeout.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1847,8 +1847,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "PrintingUrikForFr") try { _PrintingUrikForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "PrintingIpForFr") try { _PrintingIpForFr = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "CalculatedDaySumForUrik") try { _CalculatedDaySumForUrik = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
-                        if (xmlRoot.Attributes[i].Name == "HeldForDocements") try { _IsHelperForDocements = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
-                        if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HelperForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "IsHeldForDocements") try { _IsHeldForDocements = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HeldForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер

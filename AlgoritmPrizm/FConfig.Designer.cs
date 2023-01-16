@@ -140,10 +140,10 @@
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.chkBoxHelperForDocements = new System.Windows.Forms.CheckBox();
-            this.lblHelperForDocements = new System.Windows.Forms.Label();
-            this.txtBoxHelperForDocementsTimeout = new System.Windows.Forms.TextBox();
-            this.grpBoxHelperForDocements = new System.Windows.Forms.GroupBox();
+            this.chkBoxHeldForDocements = new System.Windows.Forms.CheckBox();
+            this.lblHeldForDocements = new System.Windows.Forms.Label();
+            this.txtBoxHeldForDocementsTimeout = new System.Windows.Forms.TextBox();
+            this.grpBoxHeldForDocements = new System.Windows.Forms.GroupBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxDisplay.SuspendLayout();
@@ -164,7 +164,7 @@
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
             this.tabPage8.SuspendLayout();
-            this.grpBoxHelperForDocements.SuspendLayout();
+            this.grpBoxHeldForDocements.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -1230,7 +1230,7 @@
             // 
             // tabPage8
             // 
-            this.tabPage8.Controls.Add(this.grpBoxHelperForDocements);
+            this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
             this.tabPage8.Location = new System.Drawing.Point(23, 4);
             this.tabPage8.Name = "tabPage8";
             this.tabPage8.Size = new System.Drawing.Size(739, 382);
@@ -1238,43 +1238,43 @@
             this.tabPage8.Text = "Операции с чеками";
             this.tabPage8.UseVisualStyleBackColor = true;
             // 
-            // chkBoxHelperForDocements
+            // chkBoxHeldForDocements
             // 
-            this.chkBoxHelperForDocements.AutoSize = true;
-            this.chkBoxHelperForDocements.Location = new System.Drawing.Point(18, 27);
-            this.chkBoxHelperForDocements.Name = "chkBoxHelperForDocements";
-            this.chkBoxHelperForDocements.Size = new System.Drawing.Size(353, 17);
-            this.chkBoxHelperForDocements.TabIndex = 24;
-            this.chkBoxHelperForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
-            this.chkBoxHelperForDocements.UseVisualStyleBackColor = true;
+            this.chkBoxHeldForDocements.AutoSize = true;
+            this.chkBoxHeldForDocements.Location = new System.Drawing.Point(18, 27);
+            this.chkBoxHeldForDocements.Name = "chkBoxHeldForDocements";
+            this.chkBoxHeldForDocements.Size = new System.Drawing.Size(353, 17);
+            this.chkBoxHeldForDocements.TabIndex = 24;
+            this.chkBoxHeldForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
+            this.chkBoxHeldForDocements.UseVisualStyleBackColor = true;
             // 
-            // lblHelperForDocements
+            // lblHeldForDocements
             // 
-            this.lblHelperForDocements.AutoSize = true;
-            this.lblHelperForDocements.Location = new System.Drawing.Point(15, 49);
-            this.lblHelperForDocements.Name = "lblHelperForDocements";
-            this.lblHelperForDocements.Size = new System.Drawing.Size(255, 13);
-            this.lblHelperForDocements.TabIndex = 22;
-            this.lblHelperForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
+            this.lblHeldForDocements.AutoSize = true;
+            this.lblHeldForDocements.Location = new System.Drawing.Point(15, 49);
+            this.lblHeldForDocements.Name = "lblHeldForDocements";
+            this.lblHeldForDocements.Size = new System.Drawing.Size(255, 13);
+            this.lblHeldForDocements.TabIndex = 22;
+            this.lblHeldForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
             // 
-            // txtBoxHelperForDocementsTimeout
+            // txtBoxHeldForDocementsTimeout
             // 
-            this.txtBoxHelperForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
-            this.txtBoxHelperForDocementsTimeout.Name = "txtBoxHelperForDocementsTimeout";
-            this.txtBoxHelperForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
-            this.txtBoxHelperForDocementsTimeout.TabIndex = 23;
+            this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
+            this.txtBoxHeldForDocementsTimeout.Name = "txtBoxHeldForDocementsTimeout";
+            this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
+            this.txtBoxHeldForDocementsTimeout.TabIndex = 23;
             // 
-            // grpBoxHelperForDocements
+            // grpBoxHeldForDocements
             // 
-            this.grpBoxHelperForDocements.Controls.Add(this.chkBoxHelperForDocements);
-            this.grpBoxHelperForDocements.Controls.Add(this.txtBoxHelperForDocementsTimeout);
-            this.grpBoxHelperForDocements.Controls.Add(this.lblHelperForDocements);
-            this.grpBoxHelperForDocements.Location = new System.Drawing.Point(17, 14);
-            this.grpBoxHelperForDocements.Name = "grpBoxHelperForDocements";
-            this.grpBoxHelperForDocements.Size = new System.Drawing.Size(599, 124);
-            this.grpBoxHelperForDocements.TabIndex = 25;
-            this.grpBoxHelperForDocements.TabStop = false;
-            this.grpBoxHelperForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
+            this.grpBoxHeldForDocements.Controls.Add(this.chkBoxHeldForDocements);
+            this.grpBoxHeldForDocements.Controls.Add(this.txtBoxHeldForDocementsTimeout);
+            this.grpBoxHeldForDocements.Controls.Add(this.lblHeldForDocements);
+            this.grpBoxHeldForDocements.Location = new System.Drawing.Point(17, 14);
+            this.grpBoxHeldForDocements.Name = "grpBoxHeldForDocements";
+            this.grpBoxHeldForDocements.Size = new System.Drawing.Size(599, 124);
+            this.grpBoxHeldForDocements.TabIndex = 25;
+            this.grpBoxHeldForDocements.TabStop = false;
+            this.grpBoxHeldForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
             // 
             // FConfig
             // 
@@ -1317,8 +1317,8 @@
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
             this.tabPage8.ResumeLayout(false);
-            this.grpBoxHelperForDocements.ResumeLayout(false);
-            this.grpBoxHelperForDocements.PerformLayout();
+            this.grpBoxHeldForDocements.ResumeLayout(false);
+            this.grpBoxHeldForDocements.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1436,9 +1436,9 @@
         private System.Windows.Forms.CheckBox chkBoxCalculatedDaySumForUrik;
         private System.Windows.Forms.CheckBox chkBoxPrintingIpForFr;
         private System.Windows.Forms.TabPage tabPage8;
-        private System.Windows.Forms.GroupBox grpBoxHelperForDocements;
-        private System.Windows.Forms.CheckBox chkBoxHelperForDocements;
-        private System.Windows.Forms.TextBox txtBoxHelperForDocementsTimeout;
-        private System.Windows.Forms.Label lblHelperForDocements;
+        private System.Windows.Forms.GroupBox grpBoxHeldForDocements;
+        private System.Windows.Forms.CheckBox chkBoxHeldForDocements;
+        private System.Windows.Forms.TextBox txtBoxHeldForDocementsTimeout;
+        private System.Windows.Forms.Label lblHeldForDocements;
     }
 }

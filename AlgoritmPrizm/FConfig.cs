@@ -284,8 +284,8 @@ namespace AlgoritmPrizm
                 this.chkBoxEmployeePrintingForEveryLine.Checked = Config.EmployeePrintingForEveryLine;
 
                 // Параметры обработки ошибок при печати чека (откат чека)
-                this.chkBoxHelperForDocements.Checked = Config.IsHelperForDocements;
-                this.txtBoxHelperForDocementsTimeout.Text = Config.HelperForDocementsTimeout.ToString();
+                this.chkBoxHeldForDocements.Checked = Config.IsHeldForDocements;
+                this.txtBoxHeldForDocementsTimeout.Text = Config.HeldForDocementsTimeout.ToString();
             }
             catch (Exception ex)
             {
@@ -525,14 +525,14 @@ namespace AlgoritmPrizm
 
 
                 // Параметры обработки ошибок при печати чека (откат чека)
-                Config.IsHelperForDocements = this.chkBoxHelperForDocements.Checked;
+                Config.IsHeldForDocements = this.chkBoxHeldForDocements.Checked;
                 try
                 {
-                    Config.HelperForDocementsTimeout = int.Parse(this.txtBoxHelperForDocementsTimeout.Text);
+                    Config.HeldForDocementsTimeout = int.Parse(this.txtBoxHeldForDocementsTimeout.Text);
                 }
                 catch (Exception)
                 {
-                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxHelperForDocementsTimeout.Text), GetType().Name, EventEn.Message);
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxHeldForDocementsTimeout.Text), GetType().Name, EventEn.Message);
                 }
 
 
