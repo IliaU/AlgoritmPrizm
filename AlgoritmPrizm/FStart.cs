@@ -10,6 +10,7 @@ using System.Windows.Forms;
 
 using Microsoft.Win32;
 using System.Runtime.InteropServices;
+using System.Threading;
 using AlgoritmPrizm.Lib;
 
 
@@ -29,6 +30,12 @@ namespace AlgoritmPrizm
         private Point FLocation;
         private Size FSize;
         private Boolean DoubleClickIsShow;
+
+        // В каком статусе настройка блокировки настроечного меню
+        private bool GonfigBlock=true;
+        private bool IsRunAsinGonfigBlock = false;
+        private Thread ThrGonfigBlock;
+        private DateTime GonfigBlockDatetime = DateTime.Now;
 
         // Экспортируем неуправляемую библиотеку и создаём переменную и константы для работы нашей библиотеки
         private const int NotifyForThisSession = 0;
@@ -77,6 +84,14 @@ namespace AlgoritmPrizm
             {
                 this.TSMItemAboutPrv.DropDownItems.Add((new Lib.UProvider(item)).InfoToolStripMenuItem());
             }
+
+            // Асинхронный запуск процесса
+            this.IsRunAsinGonfigBlock = true;
+            GonfigBlockDatetime = DateTime.Now;
+            ThrGonfigBlock = new Thread(AGonfigBlock); //Запуск с параметрами   
+            ThrGonfigBlock.Name = "AGonfigBlock";
+            ThrGonfigBlock.IsBackground = true;
+            ThrGonfigBlock.Start(); // Передаём на сколько по времени разблокируется кнопака сверху
         }
 
         /// <summary>
@@ -86,6 +101,8 @@ namespace AlgoritmPrizm
         /// <param name="e"></param>
         protected void Exit_Click(Object sender, System.EventArgs e)
         {
+            this.IsRunAsinGonfigBlock = false;
+            this.ThrGonfigBlock.Join();
             isClosed = true;
             this.m_notifyicon.Dispose();
             Close();
@@ -322,8 +339,13 @@ namespace AlgoritmPrizm
         {
             try
             {
-                FCashiries Frm = new FCashiries();
-                Frm.ShowDialog();
+                if (SystemBlockAction(false))
+                {
+                    using (FCashiries Frm = new FCashiries())
+                    {
+                        Frm.ShowDialog();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -331,14 +353,18 @@ namespace AlgoritmPrizm
             }
         }
 
-
         // Список сотрудников
         private void TSMItemGonfigEmployees_Click(object sender, EventArgs e)
         {
             try
             {
-                FEmployee Frm = new FEmployee();
-                Frm.ShowDialog();
+                if (SystemBlockAction(false))
+                {
+                    using (FEmployee Frm = new FEmployee())
+                    {
+                        Frm.ShowDialog();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -351,8 +377,11 @@ namespace AlgoritmPrizm
         {
             try
             {
-                FConfig Frm = new FConfig();
-                Frm.ShowDialog();
+                if (SystemBlockAction(false))
+                {
+                    FConfig Frm = new FConfig();
+                    Frm.ShowDialog();
+                }
             }
             catch (Exception ex)
             {
@@ -365,8 +394,13 @@ namespace AlgoritmPrizm
         {
             try
             {
-                FLic Frm = new FLic();
-                Frm.ShowDialog();
+                if (SystemBlockAction(false))
+                {
+                    using (FLic Frm = new FLic())
+                    {
+                        Frm.ShowDialog();
+                    }
+                }
             }
             catch (Exception ex)
             {
@@ -397,18 +431,163 @@ namespace AlgoritmPrizm
         // Пользователь решил поправить подключение
         private void TSMItemConfigDB_Click(object sender, EventArgs e)
         {
-            using (FConnetSetup Frm = new FConnetSetup())
+            if (SystemBlockAction(false))
             {
-                Frm.ShowDialog();
+                using (FConnetSetup Frm = new FConnetSetup())
+                {
+                    Frm.ShowDialog();
+                }
             }
         }
 
         // Пользователь решил править инфорамцию про терминал сбора данных
         private void TSMItemConfigTerminalSD_Click(object sender, EventArgs e)
         {
-            using (FTerminalSD Frm = new FTerminalSD())
+            if (SystemBlockAction(false))
             {
-                Frm.ShowDialog();
+                using (FTerminalSD Frm = new FTerminalSD())
+                {
+                    Frm.ShowDialog();
+                }
+            }
+        }
+
+
+        delegate bool dl_SystemBlockAction(bool HashRender);
+        /// <summary>
+        /// Проверка доступа и возвращает результат проверки предоставлн ли доступ к системному меню
+        /// </summary>
+        /// <param name="HashRender">Флаг заставляющий только переключить переключатель без ввода логина и пароля для того чтобы асинхронный процесс не попал на ввод пароля</param>
+        /// <returns>Возвражает true если пользователю разрешено редактировать в конфиге</returns>
+        private bool SystemBlockAction(bool HashRender)
+        {
+            bool RezLock = false;
+
+            try
+            {
+                if (this.InvokeRequired)
+                {
+                    dl_SystemBlockAction dl = new dl_SystemBlockAction(SystemBlockAction);
+                    return (bool) this.Invoke(dl, new object[] { HashRender });
+                }
+                else
+                {
+                    // Если запрашивает пользователь то он просит вывести интерфейс если нет то это парралельны процесс и интерфейс выводить не стои
+                    if (HashRender) this.GonfigBlock = false;   // если без ввывода интерфейса значит это поток который только может блокировать соответсвенно выставляем что текущее состояние не заблокировано чтобы дальше система переключила в другое состояние
+                    else
+                    {
+                        // Если сейчас админская консоль разблокирована то надо просто обновить время чтобы она не закрылась
+                        if (!this.GonfigBlock)
+                        {
+                            this.GonfigBlockDatetime = DateTime.Now;
+                            return true;
+                        }
+                        else
+                        {
+                            // Теперь можно спросить у пользователя пароль
+                            //using (FTerminalSD Frm = new FTerminalSD())
+                            //{
+                            //    Frm.ShowDialog();
+                            //}
+
+                            // Если пользователь вёл правильный пароль то ничего не делаем
+                            //а вот еслли не правильный то поступаем как с асинхронным потоком просто присваиваем жёстко переменной значение
+                            //this.GonfigBlock = false;
+                        }
+                    }
+
+
+                    // Проверяем текущий статус
+                    if (this.GonfigBlock)
+                    {
+                        // Меняем видимость картинок
+                        this.pctBoxSystemLock.Visible = false;
+                        this.pctBoxSystemUnLock.Visible = true;
+
+                        // Ставим текужее время чтобы было что сравнивать механизму блокировки
+                        this.GonfigBlockDatetime = DateTime.Now;
+
+                        // Было заблокировано теперь отображаем элемент
+                        this.GonfigBlock = false;
+                    }
+                    else
+                    {
+                        // Меняем видимость картинок
+                        this.pctBoxSystemUnLock.Visible = false;
+                        this.pctBoxSystemLock.Visible = true;
+
+                        // Ставим текужее время чтобы было что сравнивать механизму блокировки
+                        this.GonfigBlockDatetime = DateTime.Now;
+
+                        // Было разблокировано теперь скрываем элемент элемент
+                        this.GonfigBlock = true;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Com.Log.EventSave(ae.Message, "Fstart.AGonfigBlock", EventEn.Error);
+                //throw ae;
+            }
+
+            return RezLock;
+        }
+
+      
+
+        // Отдельный поток который будет блокировать вход через время
+        private void AGonfigBlock (/*object TimeOutLock*/)
+        {
+            try
+            {
+                // Цыкл для риёма запросов от пользователя
+                while (IsRunAsinGonfigBlock)
+                {
+                    // Проверяем текущий статус если не даблокировано и таймаут исчерпался то надо заблокировать путём нажатия на кнопку блокировки
+                    if (!this.GonfigBlock && this.GonfigBlockDatetime.AddSeconds(10)<DateTime.Now)
+                    {
+                        this.SystemBlockAction(true);
+                    }
+
+                    Thread.Sleep(1000);
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Com.Log.EventSave(ae.Message, "Fstart.AGonfigBlock", EventEn.Error);
+                //throw ae;
+            }
+        }
+
+        // Пользователь разблокировать хочет через нажатие на закрытый замок
+        private void pctBoxSystemLock_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.SystemBlockAction(false);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Com.Log.EventSave(ae.Message, "Fstart.pctBoxSystemLock_Click", EventEn.Error);
+                //throw ae;
+            }
+        }
+
+        // Пользователь хочет заблокировать через нажатие на открытый замок
+        private void pctBoxSystemUnLock_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.SystemBlockAction(true);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
+                Com.Log.EventSave(ae.Message, "Fstart.pctBoxSystemUnLock_Click", EventEn.Error);
+                //throw ae;
             }
         }
     }
