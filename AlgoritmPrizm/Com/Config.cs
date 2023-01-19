@@ -365,6 +365,16 @@ namespace AlgoritmPrizm.Com
         /// Таймаут отката после регистрации ошибки (сек)
         /// </summary>
         private static int _HeldForDocementsTimeout = 2;
+
+        /// <summary>
+        /// Пароль по умолчанию для доступа к системному меню
+        /// </summary>
+        private static string _BlockActionPassword = "AkS";
+
+        /// <summary>
+        /// Колличество секунд перед блокировкой системного меню после ввода пароля
+        /// </summary>
+        private static int _BlockActionTimeOut = 120;
         #endregion
 
         #region Public Param
@@ -1425,6 +1435,40 @@ namespace AlgoritmPrizm.Com
                 _HeldForDocementsTimeout = value;
             }
         }
+
+        /// <summary>
+        /// Пароль по умолчанию для доступа к системному меню
+        /// </summary>
+        public static string BlockActionPassword
+        {
+            get
+            {
+                return _BlockActionPassword;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("BlockActionPassword", Com.Lic.InCode(value.ToString()));
+                Save();
+                _BlockActionPassword = value.ToString();
+            }
+        }
+
+        /// <summary>
+        /// Колличество секунд перед блокировкой системного меню после ввода пароля
+        /// </summary>
+        public static int BlockActionTimeOut
+        {
+            get
+            {
+                return _BlockActionTimeOut;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("BlockActionTimeOut", value.ToString());
+                Save();
+                _BlockActionTimeOut = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1724,6 +1768,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("CalculatedDaySumForUrik", _CalculatedDaySumForUrik.ToString());
                     xmlMain.SetAttribute("IsHeldForDocements", _IsHeldForDocements.ToString());
                     xmlMain.SetAttribute("HeldForDocementsTimeout", _HeldForDocementsTimeout.ToString());
+                    xmlMain.SetAttribute("BlockActionPassword", Com.Lic.InCode(_BlockActionPassword));
+                    xmlMain.SetAttribute("BlockActionTimeOut", _BlockActionTimeOut.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1849,6 +1895,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "CalculatedDaySumForUrik") try { _CalculatedDaySumForUrik = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "IsHeldForDocements") try { _IsHeldForDocements = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HeldForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "BlockActionPassword") try { _BlockActionPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "BlockActionTimeOut") try { _BlockActionTimeOut = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
                     
                     // Подгружаем провайдер

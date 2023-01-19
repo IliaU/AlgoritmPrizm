@@ -286,6 +286,10 @@ namespace AlgoritmPrizm
                 // Параметры обработки ошибок при печати чека (откат чека)
                 this.chkBoxHeldForDocements.Checked = Config.IsHeldForDocements;
                 this.txtBoxHeldForDocementsTimeout.Text = Config.HeldForDocementsTimeout.ToString();
+
+                // Заполняем настройку по паролю и доступу к системному меню
+                this.txtBoxBlockActionPassword.Text = Config.BlockActionPassword;
+                this.txtBoxBlockActionTimeOut.Text = Config.BlockActionTimeOut.ToString();
             }
             catch (Exception ex)
             {
@@ -535,6 +539,17 @@ namespace AlgoritmPrizm
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxHeldForDocementsTimeout.Text), GetType().Name, EventEn.Message);
                 }
 
+                // Заполняем настройку по паролю и доступу к системному меню
+                if (String.IsNullOrWhiteSpace(this.txtBoxBlockActionPassword.Text)) Com.Log.EventSave(string.Format(@"Пароль для администратора обязателен.", this.txtBoxBlockActionTimeOut.Text), GetType().Name, EventEn.Warning, true, true);
+                else Config.BlockActionPassword = this.txtBoxBlockActionPassword.Text;
+                try
+                {
+                    Config.BlockActionTimeOut = int.Parse(this.txtBoxBlockActionTimeOut.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxBlockActionTimeOut.Text), GetType().Name, EventEn.Warning);
+                }
 
                 this.Close();
             }

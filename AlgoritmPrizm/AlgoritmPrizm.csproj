@@ -178,6 +178,12 @@
     <Compile Include="Com\SmtpLib\Mail.cs" />
     <Compile Include="Com\SmtpLib\SMTPClient.cs" />
     <Compile Include="Com\SQLList.cs" />
+    <Compile Include="FBlockAction.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FBlockAction.Designer.cs">
+      <DependentUpon>FBlockAction.cs</DependentUpon>
+    </Compile>
     <Compile Include="FCashiries.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -249,6 +255,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Com\Provider\ODBC\FInfo.resx">
       <DependentUpon>FInfo.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FBlockAction.resx">
+      <DependentUpon>FBlockAction.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FCashiries.resx">
       <DependentUpon>FCashiries.cs</DependentUpon>

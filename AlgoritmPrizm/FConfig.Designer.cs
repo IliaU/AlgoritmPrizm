@@ -122,6 +122,11 @@
             this.chkBoxCalculatedDaySumForUrik = new System.Windows.Forms.CheckBox();
             this.txtBoxLimitCachForUrik = new System.Windows.Forms.TextBox();
             this.lbl_LimitCachForUrik = new System.Windows.Forms.Label();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
+            this.grpBoxHeldForDocements = new System.Windows.Forms.GroupBox();
+            this.chkBoxHeldForDocements = new System.Windows.Forms.CheckBox();
+            this.txtBoxHeldForDocementsTimeout = new System.Windows.Forms.TextBox();
+            this.lblHeldForDocements = new System.Windows.Forms.Label();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.pnl_ProdictMatrixClassFill = new System.Windows.Forms.Panel();
             this.dgProdictMatrixClass = new System.Windows.Forms.DataGridView();
@@ -139,11 +144,11 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.chkBoxHeldForDocements = new System.Windows.Forms.CheckBox();
-            this.lblHeldForDocements = new System.Windows.Forms.Label();
-            this.txtBoxHeldForDocementsTimeout = new System.Windows.Forms.TextBox();
-            this.grpBoxHeldForDocements = new System.Windows.Forms.GroupBox();
+            this.grpBoxBlockAction = new System.Windows.Forms.GroupBox();
+            this.txtBoxBlockActionPassword = new System.Windows.Forms.TextBox();
+            this.lblBlockActionPassword = new System.Windows.Forms.Label();
+            this.lblBlockActionTimeOut = new System.Windows.Forms.Label();
+            this.txtBoxBlockActionTimeOut = new System.Windows.Forms.TextBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.groupBoxDisplay.SuspendLayout();
@@ -156,6 +161,8 @@
             this.tabControl2.SuspendLayout();
             this.tabPage5.SuspendLayout();
             this.tabPage6.SuspendLayout();
+            this.tabPage8.SuspendLayout();
+            this.grpBoxHeldForDocements.SuspendLayout();
             this.tabPage7.SuspendLayout();
             this.pnl_ProdictMatrixClassFill.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).BeginInit();
@@ -163,8 +170,7 @@
             this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
-            this.tabPage8.SuspendLayout();
-            this.grpBoxHeldForDocements.SuspendLayout();
+            this.grpBoxBlockAction.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -191,7 +197,7 @@
             // 
             this.txtBoxHost.Location = new System.Drawing.Point(46, 59);
             this.txtBoxHost.Name = "txtBoxHost";
-            this.txtBoxHost.Size = new System.Drawing.Size(272, 20);
+            this.txtBoxHost.Size = new System.Drawing.Size(222, 20);
             this.txtBoxHost.TabIndex = 3;
             // 
             // lblHost
@@ -206,7 +212,7 @@
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(9, 88);
+            this.lblPort.Location = new System.Drawing.Point(274, 62);
             this.lblPort.Name = "lblPort";
             this.lblPort.Size = new System.Drawing.Size(32, 13);
             this.lblPort.TabIndex = 5;
@@ -214,9 +220,9 @@
             // 
             // txtBoxPort
             // 
-            this.txtBoxPort.Location = new System.Drawing.Point(46, 85);
+            this.txtBoxPort.Location = new System.Drawing.Point(311, 59);
             this.txtBoxPort.Name = "txtBoxPort";
-            this.txtBoxPort.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxPort.Size = new System.Drawing.Size(46, 20);
             this.txtBoxPort.TabIndex = 6;
             // 
             // lblFfd
@@ -491,6 +497,7 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.grpBoxBlockAction);
             this.tabPage1.Controls.Add(this.groupBoxDisplay);
             this.tabPage1.Controls.Add(this.lblNameCompany);
             this.tabPage1.Controls.Add(this.txtBoxNameCompany);
@@ -527,7 +534,7 @@
             this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
             this.groupBoxDisplay.Location = new System.Drawing.Point(370, 33);
             this.groupBoxDisplay.Name = "groupBoxDisplay";
-            this.groupBoxDisplay.Size = new System.Drawing.Size(385, 95);
+            this.groupBoxDisplay.Size = new System.Drawing.Size(385, 99);
             this.groupBoxDisplay.TabIndex = 11;
             this.groupBoxDisplay.TabStop = false;
             this.groupBoxDisplay.Text = "Дисплей покупателя";
@@ -1062,6 +1069,54 @@
             this.lbl_LimitCachForUrik.TabIndex = 0;
             this.lbl_LimitCachForUrik.Text = "Лимит по юр лицам при покупке за нал";
             // 
+            // tabPage8
+            // 
+            this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
+            this.tabPage8.Location = new System.Drawing.Point(23, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Size = new System.Drawing.Size(739, 382);
+            this.tabPage8.TabIndex = 2;
+            this.tabPage8.Text = "Операции с чеками";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            // 
+            // grpBoxHeldForDocements
+            // 
+            this.grpBoxHeldForDocements.Controls.Add(this.chkBoxHeldForDocements);
+            this.grpBoxHeldForDocements.Controls.Add(this.txtBoxHeldForDocementsTimeout);
+            this.grpBoxHeldForDocements.Controls.Add(this.lblHeldForDocements);
+            this.grpBoxHeldForDocements.Location = new System.Drawing.Point(17, 14);
+            this.grpBoxHeldForDocements.Name = "grpBoxHeldForDocements";
+            this.grpBoxHeldForDocements.Size = new System.Drawing.Size(599, 124);
+            this.grpBoxHeldForDocements.TabIndex = 25;
+            this.grpBoxHeldForDocements.TabStop = false;
+            this.grpBoxHeldForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
+            // 
+            // chkBoxHeldForDocements
+            // 
+            this.chkBoxHeldForDocements.AutoSize = true;
+            this.chkBoxHeldForDocements.Location = new System.Drawing.Point(18, 27);
+            this.chkBoxHeldForDocements.Name = "chkBoxHeldForDocements";
+            this.chkBoxHeldForDocements.Size = new System.Drawing.Size(353, 17);
+            this.chkBoxHeldForDocements.TabIndex = 24;
+            this.chkBoxHeldForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
+            this.chkBoxHeldForDocements.UseVisualStyleBackColor = true;
+            // 
+            // txtBoxHeldForDocementsTimeout
+            // 
+            this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
+            this.txtBoxHeldForDocementsTimeout.Name = "txtBoxHeldForDocementsTimeout";
+            this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
+            this.txtBoxHeldForDocementsTimeout.TabIndex = 23;
+            // 
+            // lblHeldForDocements
+            // 
+            this.lblHeldForDocements.AutoSize = true;
+            this.lblHeldForDocements.Location = new System.Drawing.Point(15, 49);
+            this.lblHeldForDocements.Name = "lblHeldForDocements";
+            this.lblHeldForDocements.Size = new System.Drawing.Size(255, 13);
+            this.lblHeldForDocements.TabIndex = 22;
+            this.lblHeldForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
+            // 
             // tabPage7
             // 
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassFill);
@@ -1228,53 +1283,51 @@
             this.pnlFill.Size = new System.Drawing.Size(774, 416);
             this.pnlFill.TabIndex = 40;
             // 
-            // tabPage8
+            // grpBoxBlockAction
             // 
-            this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
-            this.tabPage8.Location = new System.Drawing.Point(23, 4);
-            this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(739, 382);
-            this.tabPage8.TabIndex = 2;
-            this.tabPage8.Text = "Операции с чеками";
-            this.tabPage8.UseVisualStyleBackColor = true;
+            this.grpBoxBlockAction.Controls.Add(this.txtBoxBlockActionTimeOut);
+            this.grpBoxBlockAction.Controls.Add(this.lblBlockActionTimeOut);
+            this.grpBoxBlockAction.Controls.Add(this.txtBoxBlockActionPassword);
+            this.grpBoxBlockAction.Controls.Add(this.lblBlockActionPassword);
+            this.grpBoxBlockAction.ForeColor = System.Drawing.Color.Maroon;
+            this.grpBoxBlockAction.Location = new System.Drawing.Point(12, 85);
+            this.grpBoxBlockAction.Name = "grpBoxBlockAction";
+            this.grpBoxBlockAction.Size = new System.Drawing.Size(352, 47);
+            this.grpBoxBlockAction.TabIndex = 43;
+            this.grpBoxBlockAction.TabStop = false;
+            this.grpBoxBlockAction.Text = "Доступ администратора к настройкам плагина";
             // 
-            // chkBoxHeldForDocements
+            // txtBoxBlockActionPassword
             // 
-            this.chkBoxHeldForDocements.AutoSize = true;
-            this.chkBoxHeldForDocements.Location = new System.Drawing.Point(18, 27);
-            this.chkBoxHeldForDocements.Name = "chkBoxHeldForDocements";
-            this.chkBoxHeldForDocements.Size = new System.Drawing.Size(353, 17);
-            this.chkBoxHeldForDocements.TabIndex = 24;
-            this.chkBoxHeldForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
-            this.chkBoxHeldForDocements.UseVisualStyleBackColor = true;
+            this.txtBoxBlockActionPassword.Location = new System.Drawing.Point(54, 18);
+            this.txtBoxBlockActionPassword.Name = "txtBoxBlockActionPassword";
+            this.txtBoxBlockActionPassword.Size = new System.Drawing.Size(141, 20);
+            this.txtBoxBlockActionPassword.TabIndex = 43;
             // 
-            // lblHeldForDocements
+            // lblBlockActionPassword
             // 
-            this.lblHeldForDocements.AutoSize = true;
-            this.lblHeldForDocements.Location = new System.Drawing.Point(15, 49);
-            this.lblHeldForDocements.Name = "lblHeldForDocements";
-            this.lblHeldForDocements.Size = new System.Drawing.Size(255, 13);
-            this.lblHeldForDocements.TabIndex = 22;
-            this.lblHeldForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
+            this.lblBlockActionPassword.AutoSize = true;
+            this.lblBlockActionPassword.Location = new System.Drawing.Point(6, 21);
+            this.lblBlockActionPassword.Name = "lblBlockActionPassword";
+            this.lblBlockActionPassword.Size = new System.Drawing.Size(45, 13);
+            this.lblBlockActionPassword.TabIndex = 44;
+            this.lblBlockActionPassword.Text = "Пароль";
             // 
-            // txtBoxHeldForDocementsTimeout
+            // lblBlockActionTimeOut
             // 
-            this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
-            this.txtBoxHeldForDocementsTimeout.Name = "txtBoxHeldForDocementsTimeout";
-            this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
-            this.txtBoxHeldForDocementsTimeout.TabIndex = 23;
+            this.lblBlockActionTimeOut.AutoSize = true;
+            this.lblBlockActionTimeOut.Location = new System.Drawing.Point(201, 21);
+            this.lblBlockActionTimeOut.Name = "lblBlockActionTimeOut";
+            this.lblBlockActionTimeOut.Size = new System.Drawing.Size(91, 13);
+            this.lblBlockActionTimeOut.TabIndex = 45;
+            this.lblBlockActionTimeOut.Text = "Блок через (сек)";
             // 
-            // grpBoxHeldForDocements
+            // txtBoxBlockActionTimeOut
             // 
-            this.grpBoxHeldForDocements.Controls.Add(this.chkBoxHeldForDocements);
-            this.grpBoxHeldForDocements.Controls.Add(this.txtBoxHeldForDocementsTimeout);
-            this.grpBoxHeldForDocements.Controls.Add(this.lblHeldForDocements);
-            this.grpBoxHeldForDocements.Location = new System.Drawing.Point(17, 14);
-            this.grpBoxHeldForDocements.Name = "grpBoxHeldForDocements";
-            this.grpBoxHeldForDocements.Size = new System.Drawing.Size(599, 124);
-            this.grpBoxHeldForDocements.TabIndex = 25;
-            this.grpBoxHeldForDocements.TabStop = false;
-            this.grpBoxHeldForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
+            this.txtBoxBlockActionTimeOut.Location = new System.Drawing.Point(297, 18);
+            this.txtBoxBlockActionTimeOut.Name = "txtBoxBlockActionTimeOut";
+            this.txtBoxBlockActionTimeOut.Size = new System.Drawing.Size(48, 20);
+            this.txtBoxBlockActionTimeOut.TabIndex = 46;
             // 
             // FConfig
             // 
@@ -1308,6 +1361,9 @@
             this.tabPage5.PerformLayout();
             this.tabPage6.ResumeLayout(false);
             this.tabPage6.PerformLayout();
+            this.tabPage8.ResumeLayout(false);
+            this.grpBoxHeldForDocements.ResumeLayout(false);
+            this.grpBoxHeldForDocements.PerformLayout();
             this.tabPage7.ResumeLayout(false);
             this.pnl_ProdictMatrixClassFill.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).EndInit();
@@ -1316,9 +1372,8 @@
             this.pnl_ProdictMatrixClassTopTop.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
-            this.tabPage8.ResumeLayout(false);
-            this.grpBoxHeldForDocements.ResumeLayout(false);
-            this.grpBoxHeldForDocements.PerformLayout();
+            this.grpBoxBlockAction.ResumeLayout(false);
+            this.grpBoxBlockAction.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1440,5 +1495,10 @@
         private System.Windows.Forms.CheckBox chkBoxHeldForDocements;
         private System.Windows.Forms.TextBox txtBoxHeldForDocementsTimeout;
         private System.Windows.Forms.Label lblHeldForDocements;
+        private System.Windows.Forms.GroupBox grpBoxBlockAction;
+        private System.Windows.Forms.TextBox txtBoxBlockActionTimeOut;
+        private System.Windows.Forms.Label lblBlockActionTimeOut;
+        private System.Windows.Forms.TextBox txtBoxBlockActionPassword;
+        private System.Windows.Forms.Label lblBlockActionPassword;
     }
 }

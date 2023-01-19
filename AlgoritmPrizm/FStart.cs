@@ -485,14 +485,29 @@ namespace AlgoritmPrizm
                         else
                         {
                             // Теперь можно спросить у пользователя пароль
-                            //using (FTerminalSD Frm = new FTerminalSD())
-                            //{
-                            //    Frm.ShowDialog();
-                            //}
+                            DialogResult RrFBlockAction = DialogResult.No;
+                            using (FBlockAction Frm = new FBlockAction())
+                            {
+                                RrFBlockAction = Frm.ShowDialog();
+                            }
+                            
+                            // Проверяем результат проверки пароля если пользователь ввёл его успешно то выставляем что форма заблокирована аэтот влаг поменяется при последующей обработке
+                            if (RrFBlockAction == DialogResult.Yes)
+                            {
+                                Com.Log.EventSave("Пароль введён верный к настройке системных параметров.", "Fstart.SystemBlockAction", EventEn.Message);
+                                this.GonfigBlock = true;
+                                RezLock = true;
+                            }
+                            else // Если пользователь не правильно ввёл пароль то увы говорим ему об этом и блокируем доступ
+                            {
+                                Com.Log.EventSave("Введён не верный пароль к настройке системных параметров.", "Fstart.SystemBlockAction", EventEn.Error, true, true);
+                                this.GonfigBlock = false;
+                                RezLock = false;
+                            }
 
                             // Если пользователь вёл правильный пароль то ничего не делаем
                             //а вот еслли не правильный то поступаем как с асинхронным потоком просто присваиваем жёстко переменной значение
-                            //this.GonfigBlock = false;
+                            //
                         }
                     }
 
@@ -527,7 +542,7 @@ namespace AlgoritmPrizm
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Com.Log.EventSave(ae.Message, "Fstart.AGonfigBlock", EventEn.Error);
+                Com.Log.EventSave(ae.Message, "Fstart.SystemBlockAction", EventEn.Error);
                 //throw ae;
             }
 
@@ -545,7 +560,7 @@ namespace AlgoritmPrizm
                 while (IsRunAsinGonfigBlock)
                 {
                     // Проверяем текущий статус если не даблокировано и таймаут исчерпался то надо заблокировать путём нажатия на кнопку блокировки
-                    if (!this.GonfigBlock && this.GonfigBlockDatetime.AddSeconds(10)<DateTime.Now)
+                    if (!this.GonfigBlock && this.GonfigBlockDatetime.AddSeconds(Com.Config.BlockActionTimeOut) <DateTime.Now)
                     {
                         this.SystemBlockAction(true);
                     }
