@@ -400,6 +400,17 @@ namespace AlgoritmPrizm.Com
                         if (TenderRowTmp.Count > 0) Doc.tenders[i] = TenderRowTmp[0];
                     }
                 }
+                else
+                {
+                    for (int i = 0; i < Doc.tenders.Count; i++)
+                    {
+                        List<JsonPrintFiscDocTender> TenderRowTmp = Web.GetCopyDocumentsTenderRestSharp(Doc.tenders[i].link);
+                        if (TenderRowTmp.Count > 0)
+                        {
+                            Doc.tenders[i] = TenderRowTmp[0];
+                        }
+                    }
+                }
 
                 // Открываем чек
                 OpenReceipt(Doc, TekCustomer, DocCustTyp, IsCopy);
