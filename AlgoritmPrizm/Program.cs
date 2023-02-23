@@ -133,13 +133,14 @@ namespace AlgoritmPrizm
                 try
                 {
                     BLL.InvnSbsItemText TmpTextInfo = Com.ProviderFarm.CurrentPrv.GetInvnSbsItemText("618666651000144769");
-                    MessageBox.Show("Наш клиент успех" + TmpTextInfo.Text3);
+                    MessageBox.Show("Наш клиент успех (" + TmpTextInfo.Text3 + ")");
                 }
                 catch (Exception ex)
                 {
                     MessageBox.Show("Наш клиент (" + ex.Message + ")");
                 }
                 */
+                
 
 
                 Application.EnableVisualStyles();
