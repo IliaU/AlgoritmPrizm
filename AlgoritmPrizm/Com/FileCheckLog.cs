@@ -82,6 +82,9 @@ namespace AlgoritmPrizm.Com
             {
                 lock (obj)
                 {
+                    // Фиксируем дополнительно в обычном логе
+                    Log.EventSave(string.Format("матрикс = {0}", Matrix), "Com.FileCheckLog.EventPrintSave", EventEn.Message);
+
                     using (StreamWriter SwFileLog = new StreamWriter(Environment.CurrentDirectory + @"\" + Config.FileCheckLog, true))
                     {
                         SwFileLog.WriteLine(DateTime.Now.ToString() 
