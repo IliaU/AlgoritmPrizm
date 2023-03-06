@@ -130,7 +130,6 @@ namespace AlgoritmPrizm.Com
         /// </summary>
         private static int _TenderTypeGiftCert = 9;
 
-
         /// <summary>
         /// Идентификатор типа оплаты подарочная карта
         /// </summary>
@@ -375,6 +374,11 @@ namespace AlgoritmPrizm.Com
         /// Колличество секунд перед блокировкой системного меню после ввода пароля
         /// </summary>
         private static int _BlockActionTimeOut = 120;
+
+        /// <summary>
+        /// Отправка матрикс кода меховых товаров
+        /// </summary>
+        private static bool _MexSendItemBarcode = false;
         #endregion
 
         #region Public Param
@@ -1469,6 +1473,23 @@ namespace AlgoritmPrizm.Com
                 _BlockActionTimeOut = value;
             }
         }
+
+        /// <summary>
+        /// Отправка матрикс кода меховых товаров
+        /// </summary>
+        public static bool MexSendItemBarcode
+        {
+            get
+            {
+                return _MexSendItemBarcode;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("MexSendItemBarcodes", value.ToString());
+                Save();
+                _MexSendItemBarcode = value;
+            }
+        }
         #endregion
 
         #region Puplic Method
@@ -1770,6 +1791,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("HeldForDocementsTimeout", _HeldForDocementsTimeout.ToString());
                     xmlMain.SetAttribute("BlockActionPassword", Com.Lic.InCode(_BlockActionPassword));
                     xmlMain.SetAttribute("BlockActionTimeOut", _BlockActionTimeOut.ToString());
+                    xmlMain.SetAttribute("MexSendItemBarcode", _MexSendItemBarcode.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1897,6 +1919,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HeldForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "BlockActionPassword") try { _BlockActionPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "BlockActionTimeOut") try { _BlockActionTimeOut = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "MexSendItemBarcode") try { _MexSendItemBarcode = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }  
                     }
                     
                     // Подгружаем провайдер

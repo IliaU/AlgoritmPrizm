@@ -1334,87 +1334,106 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
-                // Если есть матрихс код то добавляем его
-                if (!IsCopy && !string.IsNullOrWhiteSpace(note))
+                // Если это не копия чека
+                if (!IsCopy)
                 {
-                    // парсинг относительно ТЗ (Доработка КМ перед передачей в ККТ)
-                    // 01
-                    string PrefA = null;
-                    if (note.Length > 1) PrefA = note.Substring(0, 2);
-                    // Gtin
-                    string PrefBgtin = null;
-                    if (note.Length > 15) PrefBgtin = note.Substring(2, 14);
-                    // 21
-                    string PrefC = null;
-                    if (note.Length > 17) PrefC = note.Substring(16, 2);
-                    // Идентификатор экземпляра
-                    string PrefD = null;
-                    if (note.Length > 30) PrefD = note.Substring(18, 13);
-                    // 91
-                    string PrefE = null;
-                    if (note.Length > 32) PrefE = note.Substring(31, 2);
-                    //
-                    string PrefF = null;
-                    if (note.Length > 36) PrefF = note.Substring(33, 4);
-                    // 92
-                    string PrefG = null;
-                    if (note.Length > 38) PrefG = note.Substring(37, 2);
-                    // Крипто хвост
-                    string PrefH = null;
-                    if (note.Length > 40) PrefH = note.Substring(39);
-
-                    // Вставляем тег матрикс кода
-                    Fr.MarkingType = 5408;
-
-                    // Проверяем версию FFD
-                    switch (Config.Ffd)
+                    // Если есть матрихс код то добавляем его
+                    if (!string.IsNullOrWhiteSpace(note))
                     {
-                        case FfdEn.v1_05:
+                        // Если это меховой товар то делаем просто отправку бар кода
+                        if (Com.Config.MexSendItemBarcode && note.IndexOf("RU-") == 0)
+                        {
                             Fr.BarCode = note;
-                            break;
-                        case FfdEn.v1_2:
-                            // Если хоть один параметр не найден то работаем по логике предыдущей версии
-                            if (string.IsNullOrEmpty(PrefA) || string.IsNullOrEmpty(PrefBgtin)
-                                || string.IsNullOrEmpty(PrefC) || string.IsNullOrEmpty(PrefD)
-                                || string.IsNullOrEmpty(PrefE) || string.IsNullOrEmpty(PrefF)
-                                || string.IsNullOrEmpty(PrefG) || string.IsNullOrEmpty(PrefH))
+                            //Fr.ItemStatus = 1;
+
+                            if (Fr.FNSendItemBarcode() != 0)             // Отправляем матрикс код
                             {
-                                Fr.BarCode = note;
-                                Log.EventSave(string.Format("Не смогли преобразовать матрикс код к формату ФФД 1.2 ({0})", note), "Com.FR.PrintCheckItem", EventEn.Error);
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
                             }
-                            else
+                        }
+                        else
+                        {
+                            // парсинг относительно ТЗ (Доработка КМ перед передачей в ККТ)
+                            // 01
+                            string PrefA = null;
+                            if (note.Length > 1) PrefA = note.Substring(0, 2);
+                            // Gtin
+                            string PrefBgtin = null;
+                            if (note.Length > 15) PrefBgtin = note.Substring(2, 14);
+                            // 21
+                            string PrefC = null;
+                            if (note.Length > 17) PrefC = note.Substring(16, 2);
+                            // Идентификатор экземпляра
+                            string PrefD = null;
+                            if (note.Length > 30) PrefD = note.Substring(18, 13);
+                            // 91
+                            string PrefE = null;
+                            if (note.Length > 32) PrefE = note.Substring(31, 2);
+                            //
+                            string PrefF = null;
+                            if (note.Length > 36) PrefF = note.Substring(33, 4);
+                            // 92
+                            string PrefG = null;
+                            if (note.Length > 38) PrefG = note.Substring(37, 2);
+                            // Крипто хвост
+                            string PrefH = null;
+                            if (note.Length > 40) PrefH = note.Substring(39);
+
+                            // Вставляем тег матрикс кода
+                            Fr.MarkingType = 5408;
+
+                            // Проверяем версию FFD
+                            switch (Config.Ffd)
                             {
-                                string BarCodeTmp = string.Format("{1}{2}{3}{4}{0}{5}{6}{0}{7}{8}", (char)29, PrefA, PrefBgtin, PrefC, PrefD, PrefE, PrefF, PrefG, PrefH);
+                                case FfdEn.v1_05:
+                                    Fr.BarCode = note;
+                                    break;
+                                case FfdEn.v1_2:
+                                    // Если хоть один параметр не найден то работаем по логике предыдущей версии
+                                    if (string.IsNullOrEmpty(PrefA) || string.IsNullOrEmpty(PrefBgtin)
+                                        || string.IsNullOrEmpty(PrefC) || string.IsNullOrEmpty(PrefD)
+                                        || string.IsNullOrEmpty(PrefE) || string.IsNullOrEmpty(PrefF)
+                                        || string.IsNullOrEmpty(PrefG) || string.IsNullOrEmpty(PrefH))
+                                    {
+                                        Fr.BarCode = note;
+                                        Log.EventSave(string.Format("Не смогли преобразовать матрикс код к формату ФФД 1.2 ({0})", note), "Com.FR.PrintCheckItem", EventEn.Error);
+                                    }
+                                    else
+                                    {
+                                        string BarCodeTmp = string.Format("{1}{2}{3}{4}{0}{5}{6}{0}{7}{8}", (char)29, PrefA, PrefBgtin, PrefC, PrefD, PrefE, PrefF, PrefG, PrefH);
 
-                                Fr.BarCode = BarCodeTmp;
-                                Fr.ItemStatus = 1;
-                                Fr.TLVDataHex = "";     // На текущий момент стало поступать достаточно много вопросов связанных с причинами возникновения ошибки 11: "Неразрешенные реквизиты" в ответ на команду проверки кода маркировки (метод FNCheckItemBarcode, реализующий команду FF61h). Не смотря на то, что данная ошибки не декларирована в протоколе ФН под ФФД1.2, но она возникает. Причина ошибки в том, что при заполнении реквизитов, необходимых для проверки кода маркировки, пользователь (разработчик ПО) не заполняет все необходимые поля, а именно свойство TLVDataHex. Если не реализуется дробное кол-во предмета расчета, то в данное свойство нужно в явном виде передавать "пустую строку". Если этого не сделать, то в него будет внесен ответ от сервера ОИСМ от предыдущей проверки кода маркировки.
+                                        Fr.BarCode = BarCodeTmp;
+                                        Fr.ItemStatus = 1;
+                                        Fr.TLVDataHex = "";     // На текущий момент стало поступать достаточно много вопросов связанных с причинами возникновения ошибки 11: "Неразрешенные реквизиты" в ответ на команду проверки кода маркировки (метод FNCheckItemBarcode, реализующий команду FF61h). Не смотря на то, что данная ошибки не декларирована в протоколе ФН под ФФД1.2, но она возникает. Причина ошибки в том, что при заполнении реквизитов, необходимых для проверки кода маркировки, пользователь (разработчик ПО) не заполняет все необходимые поля, а именно свойство TLVDataHex. Если не реализуется дробное кол-во предмета расчета, то в данное свойство нужно в явном виде передавать "пустую строку". Если этого не сделать, то в него будет внесен ответ от сервера ОИСМ от предыдущей проверки кода маркировки.
+                                    }
+
+                                    break;
+                                default:
+                                    throw new ApplicationException(string.Format("Упали с ошибкой при выборе версии ФФД Пока не описано как с этой версией работать ({0})", Config.Ffd.ToString()));
                             }
 
-                            break;
-                        default:
-                            throw new ApplicationException(string.Format("Упали с ошибкой при выборе версии ФФД Пока не описано как с этой версией работать ({0})", Config.Ffd.ToString()));
-                    }
+                            if (Config.Ffd != FfdEn.v1_05)
+                            {
+                                if (Fr.FNCheckItemBarcode() != 0)             // Отправляем матрикс код
+                                {
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                                }
 
-                    if (Config.Ffd != FfdEn.v1_05)
-                    {
-                        if (Fr.FNCheckItemBarcode() != 0)             // Отправляем матрикс код
-                        {
-                            Verification(Fr);
-                            throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                                if (Fr.FNAcceptMakringCode() != 0)             // Отправляем матрикс код
+                                {
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                                }
+                            }
+
+                            if (Fr.FNSendItemBarcode() != 0)             // Отправляем матрикс код
+                            {
+                                Verification(Fr);
+                                throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
+                            }
                         }
-
-                        if (Fr.FNAcceptMakringCode() != 0)             // Отправляем матрикс код
-                        {
-                            Verification(Fr);
-                            throw new ApplicationException(string.Format("Упали с ошибкой при проверке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
-                        }
-                    }
-
-                    if (Fr.FNSendItemBarcode() != 0)             // Отправляем матрикс код
-                    {
-                        Verification(Fr);
-                        throw new ApplicationException(string.Format("Упали с ошибкой при отправке матрикс кода в строке {1}: {0}", Status.Description, item.item_pos));
                     }
                 }
 

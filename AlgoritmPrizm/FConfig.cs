@@ -290,6 +290,9 @@ namespace AlgoritmPrizm
                 // Заполняем настройку по паролю и доступу к системному меню
                 this.txtBoxBlockActionPassword.Text = Config.BlockActionPassword;
                 this.txtBoxBlockActionTimeOut.Text = Config.BlockActionTimeOut.ToString();
+
+                // Поддержка реализации меха
+                this.chkBox_MexSendItemBarcode.Checked = Config.MexSendItemBarcode;
             }
             catch (Exception ex)
             {
@@ -528,6 +531,9 @@ namespace AlgoritmPrizm
                 Config.CalculatedDaySumForUrik = this.chkBoxCalculatedDaySumForUrik.Checked;
 
 
+                // Поддержка реализации меха
+                Config.MexSendItemBarcode = this.chkBox_MexSendItemBarcode.Checked;
+
                 // Параметры обработки ошибок при печати чека (откат чека)
                 Config.IsHeldForDocements = this.chkBoxHeldForDocements.Checked;
                 try
@@ -550,6 +556,7 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxBlockActionTimeOut.Text), GetType().Name, EventEn.Warning);
                 }
+
 
                 this.Close();
             }
