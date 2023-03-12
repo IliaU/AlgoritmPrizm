@@ -1485,7 +1485,7 @@ namespace AlgoritmPrizm.Com
             }
             set
             {
-                xmlRoot.SetAttribute("MexSendItemBarcodes", value.ToString());
+                xmlRoot.SetAttribute("MexSendItemBarcode", value.ToString());
                 Save();
                 _MexSendItemBarcode = value;
             }

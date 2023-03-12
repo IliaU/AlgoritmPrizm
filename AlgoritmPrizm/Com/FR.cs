@@ -1354,6 +1354,8 @@ namespace AlgoritmPrizm.Com
                         }
                         else
                         {
+                            if (note.IndexOf("RU-") == 0) Log.EventSave("Обнаружена продажа меха при выключенной поддержки реализации меха.", "Com.FR.PrintCheckItem", EventEn.Warning);
+
                             // парсинг относительно ТЗ (Доработка КМ перед передачей в ККТ)
                             // 01
                             string PrefA = null;
