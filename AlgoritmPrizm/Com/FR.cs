@@ -384,6 +384,18 @@ namespace AlgoritmPrizm.Com
 
                     DocCustTyp = EnFrTyp.ReturnDeposit;
                 }
+                else
+                {
+                    // Если скидка есть а процент в Json нет явно косяк, идём в API и получаем строчку от туда
+                    if (Doc.items.Count(t => t.discount_perc == 0 && t.discount_amt != 0) > 0)
+                    {
+                        for (int i = 0; i < Doc.items.Count; i++)
+                        {
+                            List<JsonPrintFiscDocItem> JournalRowTmp = Web.GetCopyDocumentsJournalRestSharp(Doc.items[i].link);
+                            Doc.items[i].discount_perc = JournalRowTmp[0].discount_perc;
+                        }
+                    }
+                }
 
                 // Если это копия то нужно инфу подтянуть по API  та как падла не передаёт в доке :-(
                 if (IsCopy)
