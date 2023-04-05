@@ -137,6 +137,7 @@
     <Compile Include="Com\Display.cs" />
     <Compile Include="Com\DisplayFarm.cs" />
     <Compile Include="Com\DisplayPlg\DisplayDSP840.cs" />
+    <Compile Include="Com\DisplayPlg\DisplayPD2800.cs" />
     <Compile Include="Com\DisplayPlg\Lib\CustomerDisplayBase.cs" />
     <Compile Include="Com\DisplayPlg\Lib\CustomerDisplayI.cs" />
     <Compile Include="Com\FileCheckLog.cs" />
