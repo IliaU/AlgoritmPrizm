@@ -48,7 +48,7 @@ namespace AlgoritmPrizm.Com
         /// <summary>
         /// Тип дисплея покупателя
         /// </summary>
-        private static string _DisplayDspFullName = "DisplayDSP840";
+        private static string _DisplayDspFullName = "DisplayPD2800";
 
         /// <summary>
         /// Порт дисплея покупателя
@@ -1921,7 +1921,22 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "BlockActionTimeOut") try { _BlockActionTimeOut = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MexSendItemBarcode") try { _MexSendItemBarcode = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }  
                     }
-                    
+
+                    // Подгружаем дисплей
+                    if (!string.IsNullOrWhiteSpace(_DisplayDspFullName))
+                    {
+                        try
+                        {
+                            Com.Display CurDispt = Com.DisplayFarm.CreateNewDisplay(_DisplayDspFullName, _DisplayPort, _DisplayBaudRate, _DisplayParity, _DisplayDataBits, _DisplayStpBits);
+                            Com.DisplayFarm.SetCurrentDisplay(CurDispt);
+                        }
+                        catch (Exception ex)
+                        {
+                            ApplicationException ae = new ApplicationException(string.Format("Упали при создании дисплея покупателя с ошибкой: {0}", ex.Message));
+                            Log.EventSave(ae.Message, ".GetDate()", EventEn.Error);
+                        }
+                    }
+
                     // Подгружаем провайдер
                     try
                     {

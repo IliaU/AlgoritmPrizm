@@ -2285,6 +2285,10 @@ namespace AlgoritmPrizm.Com
                 // Заполняем сумму в фискальнике
                 FrGetSummCheckRez Itog = GetSummCheck(Doc, DocTyp, true);
 
+                // Печать итога на дисплей                
+                Com.DisplayFarm.CurDisplay.ShowText(string.Format("Итого: {0} руб.", (Fr.Summ1 + Fr.Summ2 + Fr.Summ3 + Fr.Summ4 + Fr.Summ5
+                    + Fr.Summ6 + Fr.Summ7 + Fr.Summ8 + Fr.Summ9 + Fr.Summ10 + Fr.Summ11 + Fr.Summ12 + Fr.Summ13 + Fr.Summ14 + Fr.Summ15 + Fr.Summ16).ToString("0.00")));
+
                 // Печатеам концовку для копии чека
                 //                if (IsCopy) Thread.Sleep(300);
                 PrintSeparator();

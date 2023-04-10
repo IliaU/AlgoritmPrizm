@@ -243,9 +243,11 @@ namespace AlgoritmPrizm.Com
                                 bool HashProductClass = false;
                                 bool Mandatory = Config.MandatoryDefault;
 
+                                JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
+
                                 if (!Config.GetMatrixAlways)
                                 {
-                                    JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
+                                    //JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
                                     string dcs_code = EnProductMatrixClassType.dcs_code.ToString();
                                     switch (Config.ProductMatrixClassType)
                                     {
@@ -338,6 +340,11 @@ namespace AlgoritmPrizm.Com
                                             }
                                         }*/
                                     }
+                                }
+
+                                if (FineDoc != null)
+                                {
+                                    Com.DisplayFarm.CurDisplay.ShowText(string.Format("{0} {1} руб.", FineDoc.item_description1, FineDoc.price));
                                 }
 
                                 if (Config.GetMatrixAlways || HashProductClass)

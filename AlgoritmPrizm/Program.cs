@@ -208,7 +208,6 @@ namespace AlgoritmPrizm
                         
                     }*/
 
-
                     // Подключаем Web модуль
                     Com.Web SrvWeb = new Com.Web(Com.Config.Host, Com.Config.Port);
 
