@@ -342,7 +342,7 @@ namespace AlgoritmPrizm.Com
                                     }
                                 }
 
-                                if (FineDoc != null)
+                                if (FineDoc != null && Com.DisplayFarm.CurDisplay!=null)
                                 {
                                     Com.DisplayFarm.CurDisplay.ShowText(string.Format("{0} {1} руб.", FineDoc.item_description1, FineDoc.price));
                                 }

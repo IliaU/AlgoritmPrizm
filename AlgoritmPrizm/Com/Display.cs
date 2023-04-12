@@ -27,7 +27,15 @@ namespace AlgoritmPrizm.Com
         /// <param name="Text"></param>
         public void ShowText(string Text)
         {
-            ShowTextStart(Text);
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(Com.Config.DisplayDspFullName))
+                {
+                    ShowTextStart(Text);
+                }
+            }
+            catch (Exception)
+            {}
         }
     }
 }
