@@ -63,7 +63,7 @@ namespace AlgoritmPrizm.Com.DisplayPlg
         {
             try
             {
-                _serialPort = new SerialPort(string.Format("COM{0}", base.Port), 19200/*base.BaudRate*/, base.Parity, base.DataBits, base.StpBits);
+                _serialPort = new SerialPort(string.Format("COM{0}", base.Port), base.BaudRate, base.Parity, base.DataBits, base.StpBits);
                 _serialPort.Open();
                 _serialPort.DiscardOutBuffer();
                 _serialPort.Write(setTypCommand, 0, setTypCommand.Length);

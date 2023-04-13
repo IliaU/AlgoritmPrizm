@@ -139,6 +139,7 @@
             this.Mandatory = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pnl_ProdictMatrixClassTop = new System.Windows.Forms.Panel();
             this.pnl_ProdictMatrixClassTopTop = new System.Windows.Forms.Panel();
+            this.chkBox_MexSendItemBarcode = new System.Windows.Forms.CheckBox();
             this.lblProductMatrixEndOff = new System.Windows.Forms.Label();
             this.txtBoxProductMatrixEndOff = new System.Windows.Forms.TextBox();
             this.chkBox_GetMatrixAlways = new System.Windows.Forms.CheckBox();
@@ -149,7 +150,8 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkBox_MexSendItemBarcode = new System.Windows.Forms.CheckBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBoxDisplayFieldItem = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -178,7 +180,7 @@
             // 
             this.chkTrace.AutoSize = true;
             this.chkTrace.Location = new System.Drawing.Point(8, 11);
-            this.chkTrace.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkTrace.Margin = new System.Windows.Forms.Padding(4);
             this.chkTrace.Name = "chkTrace";
             this.chkTrace.Size = new System.Drawing.Size(108, 21);
             this.chkTrace.TabIndex = 1;
@@ -188,7 +190,7 @@
             // btnSave
             // 
             this.btnSave.Location = new System.Drawing.Point(452, 7);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
             this.btnSave.Name = "btnSave";
             this.btnSave.Size = new System.Drawing.Size(100, 28);
             this.btnSave.TabIndex = 2;
@@ -199,7 +201,7 @@
             // txtBoxHost
             // 
             this.txtBoxHost.Location = new System.Drawing.Point(61, 73);
-            this.txtBoxHost.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxHost.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxHost.Name = "txtBoxHost";
             this.txtBoxHost.Size = new System.Drawing.Size(295, 22);
             this.txtBoxHost.TabIndex = 3;
@@ -227,7 +229,7 @@
             // txtBoxPort
             // 
             this.txtBoxPort.Location = new System.Drawing.Point(415, 73);
-            this.txtBoxPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxPort.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxPort.Name = "txtBoxPort";
             this.txtBoxPort.Size = new System.Drawing.Size(60, 22);
             this.txtBoxPort.TabIndex = 6;
@@ -247,7 +249,7 @@
             this.cmbBoxFfd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFfd.FormattingEnabled = true;
             this.cmbBoxFfd.Location = new System.Drawing.Point(161, 22);
-            this.cmbBoxFfd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFfd.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFfd.Name = "cmbBoxFfd";
             this.cmbBoxFfd.Size = new System.Drawing.Size(160, 24);
             this.cmbBoxFfd.TabIndex = 8;
@@ -265,7 +267,7 @@
             // txtBoxFrPort
             // 
             this.txtBoxFrPort.Location = new System.Drawing.Point(512, 22);
-            this.txtBoxFrPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxFrPort.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxFrPort.Name = "txtBoxFrPort";
             this.txtBoxFrPort.Size = new System.Drawing.Size(64, 22);
             this.txtBoxFrPort.TabIndex = 10;
@@ -283,7 +285,7 @@
             // txtBoxTenderTypeCash
             // 
             this.txtBoxTenderTypeCash.Location = new System.Drawing.Point(423, 16);
-            this.txtBoxTenderTypeCash.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxTenderTypeCash.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxTenderTypeCash.Name = "txtBoxTenderTypeCash";
             this.txtBoxTenderTypeCash.Size = new System.Drawing.Size(120, 22);
             this.txtBoxTenderTypeCash.TabIndex = 12;
@@ -291,7 +293,7 @@
             // txtBoxTenderTypeCredit
             // 
             this.txtBoxTenderTypeCredit.Location = new System.Drawing.Point(423, 48);
-            this.txtBoxTenderTypeCredit.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxTenderTypeCredit.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxTenderTypeCredit.Name = "txtBoxTenderTypeCredit";
             this.txtBoxTenderTypeCredit.Size = new System.Drawing.Size(120, 22);
             this.txtBoxTenderTypeCredit.TabIndex = 14;
@@ -309,7 +311,7 @@
             // txtBoxTenderTypeGiftCert
             // 
             this.txtBoxTenderTypeGiftCert.Location = new System.Drawing.Point(423, 80);
-            this.txtBoxTenderTypeGiftCert.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxTenderTypeGiftCert.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxTenderTypeGiftCert.Name = "txtBoxTenderTypeGiftCert";
             this.txtBoxTenderTypeGiftCert.Size = new System.Drawing.Size(120, 22);
             this.txtBoxTenderTypeGiftCert.TabIndex = 16;
@@ -327,7 +329,7 @@
             // txtBoxTenderTypeGiftCard
             // 
             this.txtBoxTenderTypeGiftCard.Location = new System.Drawing.Point(423, 112);
-            this.txtBoxTenderTypeGiftCard.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxTenderTypeGiftCard.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxTenderTypeGiftCard.Name = "txtBoxTenderTypeGiftCard";
             this.txtBoxTenderTypeGiftCard.Size = new System.Drawing.Size(120, 22);
             this.txtBoxTenderTypeGiftCard.TabIndex = 18;
@@ -345,7 +347,7 @@
             // txtBoxGiftCardCode
             // 
             this.txtBoxGiftCardCode.Location = new System.Drawing.Point(421, 39);
-            this.txtBoxGiftCardCode.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxGiftCardCode.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxGiftCardCode.Name = "txtBoxGiftCardCode";
             this.txtBoxGiftCardCode.Size = new System.Drawing.Size(120, 22);
             this.txtBoxGiftCardCode.TabIndex = 20;
@@ -364,7 +366,7 @@
             // 
             this.chkBoxGiftCardEnable.AutoSize = true;
             this.chkBoxGiftCardEnable.Location = new System.Drawing.Point(21, 18);
-            this.chkBoxGiftCardEnable.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxGiftCardEnable.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxGiftCardEnable.Name = "chkBoxGiftCardEnable";
             this.chkBoxGiftCardEnable.Size = new System.Drawing.Size(316, 21);
             this.chkBoxGiftCardEnable.TabIndex = 21;
@@ -374,7 +376,7 @@
             // txtBoxGiftCardTax
             // 
             this.txtBoxGiftCardTax.Location = new System.Drawing.Point(421, 71);
-            this.txtBoxGiftCardTax.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxGiftCardTax.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxGiftCardTax.Name = "txtBoxGiftCardTax";
             this.txtBoxGiftCardTax.Size = new System.Drawing.Size(120, 22);
             this.txtBoxGiftCardTax.TabIndex = 23;
@@ -394,7 +396,7 @@
             this.cmbBoxFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem.FormattingEnabled = true;
             this.cmbBoxFieldItem.Location = new System.Drawing.Point(185, 208);
-            this.cmbBoxFieldItem.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem.Name = "cmbBoxFieldItem";
             this.cmbBoxFieldItem.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem.TabIndex = 25;
@@ -412,7 +414,7 @@
             // txtBoxHostPrizmApi
             // 
             this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(413, 11);
-            this.txtBoxHostPrizmApi.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxHostPrizmApi.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxHostPrizmApi.Name = "txtBoxHostPrizmApi";
             this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(311, 22);
             this.txtBoxHostPrizmApi.TabIndex = 27;
@@ -430,7 +432,7 @@
             // txtBoxPrizmApiSystemLogon
             // 
             this.txtBoxPrizmApiSystemLogon.Location = new System.Drawing.Point(413, 43);
-            this.txtBoxPrizmApiSystemLogon.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxPrizmApiSystemLogon.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxPrizmApiSystemLogon.Name = "txtBoxPrizmApiSystemLogon";
             this.txtBoxPrizmApiSystemLogon.Size = new System.Drawing.Size(120, 22);
             this.txtBoxPrizmApiSystemLogon.TabIndex = 29;
@@ -448,7 +450,7 @@
             // txtBoxPrizmApiSystemPassord
             // 
             this.txtBoxPrizmApiSystemPassord.Location = new System.Drawing.Point(413, 75);
-            this.txtBoxPrizmApiSystemPassord.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxPrizmApiSystemPassord.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxPrizmApiSystemPassord.Name = "txtBoxPrizmApiSystemPassord";
             this.txtBoxPrizmApiSystemPassord.Size = new System.Drawing.Size(120, 22);
             this.txtBoxPrizmApiSystemPassord.TabIndex = 31;
@@ -466,7 +468,7 @@
             // txtBoxPrizmApiTimeLiveTockenMinute
             // 
             this.txtBoxPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(413, 107);
-            this.txtBoxPrizmApiTimeLiveTockenMinute.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxPrizmApiTimeLiveTockenMinute.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxPrizmApiTimeLiveTockenMinute.Name = "txtBoxPrizmApiTimeLiveTockenMinute";
             this.txtBoxPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(120, 22);
             this.txtBoxPrizmApiTimeLiveTockenMinute.TabIndex = 33;
@@ -486,7 +488,7 @@
             this.cmbBoxFieldDocNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldDocNum.FormattingEnabled = true;
             this.cmbBoxFieldDocNum.Location = new System.Drawing.Point(185, 241);
-            this.cmbBoxFieldDocNum.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldDocNum.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldDocNum.Name = "cmbBoxFieldDocNum";
             this.cmbBoxFieldDocNum.Size = new System.Drawing.Size(160, 24);
             this.cmbBoxFieldDocNum.TabIndex = 35;
@@ -504,7 +506,7 @@
             // txtBoxFileCheckLog
             // 
             this.txtBoxFileCheckLog.Location = new System.Drawing.Point(291, 41);
-            this.txtBoxFileCheckLog.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxFileCheckLog.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxFileCheckLog.Name = "txtBoxFileCheckLog";
             this.txtBoxFileCheckLog.Size = new System.Drawing.Size(132, 22);
             this.txtBoxFileCheckLog.TabIndex = 37;
@@ -528,10 +530,10 @@
             this.tabControl1.Controls.Add(this.tabPage7);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1032, 512);
+            this.tabControl1.Size = new System.Drawing.Size(1032, 592);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
@@ -550,10 +552,10 @@
             this.tabPage1.Controls.Add(this.lblPort);
             this.tabPage1.Controls.Add(this.txtBoxPort);
             this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage1.Size = new System.Drawing.Size(1024, 483);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Size = new System.Drawing.Size(1024, 563);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -566,9 +568,9 @@
             this.grpBoxBlockAction.Controls.Add(this.lblBlockActionPassword);
             this.grpBoxBlockAction.ForeColor = System.Drawing.Color.Maroon;
             this.grpBoxBlockAction.Location = new System.Drawing.Point(16, 105);
-            this.grpBoxBlockAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpBoxBlockAction.Margin = new System.Windows.Forms.Padding(4);
             this.grpBoxBlockAction.Name = "grpBoxBlockAction";
-            this.grpBoxBlockAction.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpBoxBlockAction.Padding = new System.Windows.Forms.Padding(4);
             this.grpBoxBlockAction.Size = new System.Drawing.Size(469, 58);
             this.grpBoxBlockAction.TabIndex = 43;
             this.grpBoxBlockAction.TabStop = false;
@@ -577,7 +579,7 @@
             // txtBoxBlockActionTimeOut
             // 
             this.txtBoxBlockActionTimeOut.Location = new System.Drawing.Point(396, 22);
-            this.txtBoxBlockActionTimeOut.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxBlockActionTimeOut.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxBlockActionTimeOut.Name = "txtBoxBlockActionTimeOut";
             this.txtBoxBlockActionTimeOut.Size = new System.Drawing.Size(63, 22);
             this.txtBoxBlockActionTimeOut.TabIndex = 46;
@@ -595,7 +597,7 @@
             // txtBoxBlockActionPassword
             // 
             this.txtBoxBlockActionPassword.Location = new System.Drawing.Point(72, 22);
-            this.txtBoxBlockActionPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxBlockActionPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxBlockActionPassword.Name = "txtBoxBlockActionPassword";
             this.txtBoxBlockActionPassword.Size = new System.Drawing.Size(187, 22);
             this.txtBoxBlockActionPassword.TabIndex = 43;
@@ -612,6 +614,8 @@
             // 
             // groupBoxDisplay
             // 
+            this.groupBoxDisplay.Controls.Add(this.label1);
+            this.groupBoxDisplay.Controls.Add(this.cmbBoxDisplayFieldItem);
             this.groupBoxDisplay.Controls.Add(this.cmbBoxStopBits);
             this.groupBoxDisplay.Controls.Add(this.lblStopBits);
             this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayDataBits);
@@ -624,11 +628,11 @@
             this.groupBoxDisplay.Controls.Add(this.lblDisplayDspFullName);
             this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayPort);
             this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
-            this.groupBoxDisplay.Location = new System.Drawing.Point(493, 41);
-            this.groupBoxDisplay.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(15, 463);
+            this.groupBoxDisplay.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxDisplay.Name = "groupBoxDisplay";
-            this.groupBoxDisplay.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBoxDisplay.Size = new System.Drawing.Size(513, 122);
+            this.groupBoxDisplay.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBoxDisplay.Size = new System.Drawing.Size(996, 91);
             this.groupBoxDisplay.TabIndex = 11;
             this.groupBoxDisplay.TabStop = false;
             this.groupBoxDisplay.Text = "Дисплей покупателя";
@@ -637,8 +641,8 @@
             // 
             this.cmbBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxStopBits.FormattingEnabled = true;
-            this.cmbBoxStopBits.Location = new System.Drawing.Point(304, 86);
-            this.cmbBoxStopBits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxStopBits.Location = new System.Drawing.Point(800, 50);
+            this.cmbBoxStopBits.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxStopBits.Name = "cmbBoxStopBits";
             this.cmbBoxStopBits.Size = new System.Drawing.Size(181, 24);
             this.cmbBoxStopBits.TabIndex = 18;
@@ -646,7 +650,7 @@
             // lblStopBits
             // 
             this.lblStopBits.AutoSize = true;
-            this.lblStopBits.Location = new System.Drawing.Point(227, 90);
+            this.lblStopBits.Location = new System.Drawing.Point(723, 54);
             this.lblStopBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblStopBits.Name = "lblStopBits";
             this.lblStopBits.Size = new System.Drawing.Size(60, 17);
@@ -655,8 +659,8 @@
             // 
             // txtBoxDisplayDataBits
             // 
-            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(97, 86);
-            this.txtBoxDisplayDataBits.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(632, 49);
+            this.txtBoxDisplayDataBits.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxDisplayDataBits.Name = "txtBoxDisplayDataBits";
             this.txtBoxDisplayDataBits.Size = new System.Drawing.Size(64, 22);
             this.txtBoxDisplayDataBits.TabIndex = 16;
@@ -664,7 +668,7 @@
             // lblDisplayDataBits
             // 
             this.lblDisplayDataBits.AutoSize = true;
-            this.lblDisplayDataBits.Location = new System.Drawing.Point(16, 90);
+            this.lblDisplayDataBits.Location = new System.Drawing.Point(551, 53);
             this.lblDisplayDataBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDisplayDataBits.Name = "lblDisplayDataBits";
             this.lblDisplayDataBits.Size = new System.Drawing.Size(61, 17);
@@ -675,8 +679,8 @@
             // 
             this.cmbBoxDisplayParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayParity.FormattingEnabled = true;
-            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(304, 55);
-            this.cmbBoxDisplayParity.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(800, 19);
+            this.cmbBoxDisplayParity.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxDisplayParity.Name = "cmbBoxDisplayParity";
             this.cmbBoxDisplayParity.Size = new System.Drawing.Size(181, 24);
             this.cmbBoxDisplayParity.TabIndex = 14;
@@ -684,7 +688,7 @@
             // lblDisplayParity
             // 
             this.lblDisplayParity.AutoSize = true;
-            this.lblDisplayParity.Location = new System.Drawing.Point(227, 59);
+            this.lblDisplayParity.Location = new System.Drawing.Point(723, 23);
             this.lblDisplayParity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDisplayParity.Name = "lblDisplayParity";
             this.lblDisplayParity.Size = new System.Drawing.Size(44, 17);
@@ -693,8 +697,8 @@
             // 
             // txtBoxDisplayBaudRate
             // 
-            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(97, 55);
-            this.txtBoxDisplayBaudRate.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(632, 18);
+            this.txtBoxDisplayBaudRate.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxDisplayBaudRate.Name = "txtBoxDisplayBaudRate";
             this.txtBoxDisplayBaudRate.Size = new System.Drawing.Size(64, 22);
             this.txtBoxDisplayBaudRate.TabIndex = 12;
@@ -702,7 +706,7 @@
             // lblDisplayBaudRate
             // 
             this.lblDisplayBaudRate.AutoSize = true;
-            this.lblDisplayBaudRate.Location = new System.Drawing.Point(16, 59);
+            this.lblDisplayBaudRate.Location = new System.Drawing.Point(551, 22);
             this.lblDisplayBaudRate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblDisplayBaudRate.Name = "lblDisplayBaudRate";
             this.lblDisplayBaudRate.Size = new System.Drawing.Size(69, 17);
@@ -714,7 +718,7 @@
             this.cmbBoxDisplayDspFullName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayDspFullName.FormattingEnabled = true;
             this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(121, 22);
-            this.cmbBoxDisplayDspFullName.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxDisplayDspFullName.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxDisplayDspFullName.Name = "cmbBoxDisplayDspFullName";
             this.cmbBoxDisplayDspFullName.Size = new System.Drawing.Size(181, 24);
             this.cmbBoxDisplayDspFullName.TabIndex = 8;
@@ -732,7 +736,7 @@
             // txtBoxDisplayPort
             // 
             this.txtBoxDisplayPort.Location = new System.Drawing.Point(441, 22);
-            this.txtBoxDisplayPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxDisplayPort.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxDisplayPort.Name = "txtBoxDisplayPort";
             this.txtBoxDisplayPort.Size = new System.Drawing.Size(64, 22);
             this.txtBoxDisplayPort.TabIndex = 10;
@@ -760,7 +764,7 @@
             // txtBoxNameCompany
             // 
             this.txtBoxNameCompany.Location = new System.Drawing.Point(368, 9);
-            this.txtBoxNameCompany.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxNameCompany.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxNameCompany.Name = "txtBoxNameCompany";
             this.txtBoxNameCompany.Size = new System.Drawing.Size(504, 22);
             this.txtBoxNameCompany.TabIndex = 40;
@@ -775,9 +779,9 @@
             this.groupBox2.Controls.Add(this.PnlSmsTypGateway);
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
             this.groupBox2.Location = new System.Drawing.Point(15, 313);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox2.Size = new System.Drawing.Size(996, 142);
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
@@ -806,7 +810,7 @@
             // txtBoxSmsTypGatewayPassword
             // 
             this.txtBoxSmsTypGatewayPassword.Location = new System.Drawing.Point(432, 102);
-            this.txtBoxSmsTypGatewayPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewayPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewayPassword.Name = "txtBoxSmsTypGatewayPassword";
             this.txtBoxSmsTypGatewayPassword.Size = new System.Drawing.Size(228, 22);
             this.txtBoxSmsTypGatewayPassword.TabIndex = 14;
@@ -816,7 +820,7 @@
             this.cmbBoxSmsTypGateway.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxSmsTypGateway.FormattingEnabled = true;
             this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(199, 27);
-            this.cmbBoxSmsTypGateway.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxSmsTypGateway.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxSmsTypGateway.Name = "cmbBoxSmsTypGateway";
             this.cmbBoxSmsTypGateway.Size = new System.Drawing.Size(197, 24);
             this.cmbBoxSmsTypGateway.TabIndex = 8;
@@ -843,7 +847,7 @@
             this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewaySmtp);
             this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewaySmtp);
             this.PnlSmsTypGateway.Location = new System.Drawing.Point(8, 17);
-            this.PnlSmsTypGateway.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.PnlSmsTypGateway.Margin = new System.Windows.Forms.Padding(4);
             this.PnlSmsTypGateway.Name = "PnlSmsTypGateway";
             this.PnlSmsTypGateway.Size = new System.Drawing.Size(893, 78);
             this.PnlSmsTypGateway.TabIndex = 9;
@@ -862,7 +866,7 @@
             // txtBoxSmsTypGatewaySmtpPassword
             // 
             this.txtBoxSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(652, 42);
-            this.txtBoxSmsTypGatewaySmtpPassword.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewaySmtpPassword.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewaySmtpPassword.Name = "txtBoxSmsTypGatewaySmtpPassword";
             this.txtBoxSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(228, 22);
             this.txtBoxSmsTypGatewaySmtpPassword.TabIndex = 18;
@@ -880,7 +884,7 @@
             // txtBoxSmsTypGatewaySmtpLogin
             // 
             this.txtBoxSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(293, 42);
-            this.txtBoxSmsTypGatewaySmtpLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewaySmtpLogin.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewaySmtpLogin.Name = "txtBoxSmsTypGatewaySmtpLogin";
             this.txtBoxSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(228, 22);
             this.txtBoxSmsTypGatewaySmtpLogin.TabIndex = 16;
@@ -898,7 +902,7 @@
             // txtBoxSmsTypGatewayPort
             // 
             this.txtBoxSmsTypGatewayPort.Location = new System.Drawing.Point(817, 10);
-            this.txtBoxSmsTypGatewayPort.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewayPort.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewayPort.Name = "txtBoxSmsTypGatewayPort";
             this.txtBoxSmsTypGatewayPort.Size = new System.Drawing.Size(63, 22);
             this.txtBoxSmsTypGatewayPort.TabIndex = 10;
@@ -916,7 +920,7 @@
             // txtBoxSmsTypGatewaySmtp
             // 
             this.txtBoxSmsTypGatewaySmtp.Location = new System.Drawing.Point(516, 10);
-            this.txtBoxSmsTypGatewaySmtp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewaySmtp.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewaySmtp.Name = "txtBoxSmsTypGatewaySmtp";
             this.txtBoxSmsTypGatewaySmtp.Size = new System.Drawing.Size(181, 22);
             this.txtBoxSmsTypGatewaySmtp.TabIndex = 8;
@@ -924,7 +928,7 @@
             // txtBoxSmsTypGatewayLogin
             // 
             this.txtBoxSmsTypGatewayLogin.Location = new System.Drawing.Point(73, 102);
-            this.txtBoxSmsTypGatewayLogin.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxSmsTypGatewayLogin.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxSmsTypGatewayLogin.Name = "txtBoxSmsTypGatewayLogin";
             this.txtBoxSmsTypGatewayLogin.Size = new System.Drawing.Size(228, 22);
             this.txtBoxSmsTypGatewayLogin.TabIndex = 12;
@@ -939,9 +943,9 @@
             this.groupBoxFfd.Controls.Add(this.txtBoxFrPort);
             this.groupBoxFfd.Controls.Add(this.lblFrPort);
             this.groupBoxFfd.Location = new System.Drawing.Point(15, 164);
-            this.groupBoxFfd.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxFfd.Margin = new System.Windows.Forms.Padding(4);
             this.groupBoxFfd.Name = "groupBoxFfd";
-            this.groupBoxFfd.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBoxFfd.Padding = new System.Windows.Forms.Padding(4);
             this.groupBoxFfd.Size = new System.Drawing.Size(996, 142);
             this.groupBoxFfd.TabIndex = 2;
             this.groupBoxFfd.TabStop = false;
@@ -951,7 +955,7 @@
             // 
             this.chkBoxPrintingIpForFr.AutoSize = true;
             this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(524, 89);
-            this.chkBoxPrintingIpForFr.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxPrintingIpForFr.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxPrintingIpForFr.Name = "chkBoxPrintingIpForFr";
             this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(419, 21);
             this.chkBoxPrintingIpForFr.TabIndex = 13;
@@ -963,7 +967,7 @@
             // 
             this.chkBoxPrintingUrikForFr.AutoSize = true;
             this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(524, 60);
-            this.chkBoxPrintingUrikForFr.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxPrintingUrikForFr.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxPrintingUrikForFr.Name = "chkBoxPrintingUrikForFr";
             this.chkBoxPrintingUrikForFr.Size = new System.Drawing.Size(457, 21);
             this.chkBoxPrintingUrikForFr.TabIndex = 12;
@@ -975,7 +979,7 @@
             // 
             this.chkBoxProcessingUrikForFr.AutoSize = true;
             this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(8, 60);
-            this.chkBoxProcessingUrikForFr.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxProcessingUrikForFr.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxProcessingUrikForFr.Name = "chkBoxProcessingUrikForFr";
             this.chkBoxProcessingUrikForFr.Size = new System.Drawing.Size(496, 21);
             this.chkBoxProcessingUrikForFr.TabIndex = 11;
@@ -1008,9 +1012,9 @@
             this.tabPage3.Controls.Add(this.lblTenderTypeCredit);
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
             this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1024, 483);
+            this.tabPage3.Size = new System.Drawing.Size(1024, 563);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1019,7 +1023,7 @@
             // 
             this.chkBoxEmployeePrintingForEveryLine.AutoSize = true;
             this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(563, 20);
-            this.chkBoxEmployeePrintingForEveryLine.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxEmployeePrintingForEveryLine.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxEmployeePrintingForEveryLine.Name = "chkBoxEmployeePrintingForEveryLine";
             this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(367, 21);
             this.chkBoxEmployeePrintingForEveryLine.TabIndex = 45;
@@ -1031,7 +1035,7 @@
             this.cmbBoxFieldItem5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem5.FormattingEnabled = true;
             this.cmbBoxFieldItem5.Location = new System.Drawing.Point(825, 208);
-            this.cmbBoxFieldItem5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem5.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem5.Name = "cmbBoxFieldItem5";
             this.cmbBoxFieldItem5.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem5.TabIndex = 44;
@@ -1041,7 +1045,7 @@
             this.cmbBoxFieldItem4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem4.FormattingEnabled = true;
             this.cmbBoxFieldItem4.Location = new System.Drawing.Point(697, 208);
-            this.cmbBoxFieldItem4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem4.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem4.Name = "cmbBoxFieldItem4";
             this.cmbBoxFieldItem4.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem4.TabIndex = 43;
@@ -1051,7 +1055,7 @@
             this.cmbBoxFieldItem3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem3.FormattingEnabled = true;
             this.cmbBoxFieldItem3.Location = new System.Drawing.Point(569, 208);
-            this.cmbBoxFieldItem3.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem3.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem3.Name = "cmbBoxFieldItem3";
             this.cmbBoxFieldItem3.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem3.TabIndex = 42;
@@ -1061,7 +1065,7 @@
             this.cmbBoxFieldItem2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem2.FormattingEnabled = true;
             this.cmbBoxFieldItem2.Location = new System.Drawing.Point(441, 208);
-            this.cmbBoxFieldItem2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem2.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem2.Name = "cmbBoxFieldItem2";
             this.cmbBoxFieldItem2.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem2.TabIndex = 41;
@@ -1071,7 +1075,7 @@
             this.cmbBoxFieldItem1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem1.FormattingEnabled = true;
             this.cmbBoxFieldItem1.Location = new System.Drawing.Point(313, 208);
-            this.cmbBoxFieldItem1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldItem1.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldItem1.Name = "cmbBoxFieldItem1";
             this.cmbBoxFieldItem1.Size = new System.Drawing.Size(119, 24);
             this.cmbBoxFieldItem1.TabIndex = 40;
@@ -1079,7 +1083,7 @@
             // txtBoxTenderTypeAvans
             // 
             this.txtBoxTenderTypeAvans.Location = new System.Drawing.Point(423, 144);
-            this.txtBoxTenderTypeAvans.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxTenderTypeAvans.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxTenderTypeAvans.Name = "txtBoxTenderTypeAvans";
             this.txtBoxTenderTypeAvans.Size = new System.Drawing.Size(120, 22);
             this.txtBoxTenderTypeAvans.TabIndex = 39;
@@ -1099,7 +1103,7 @@
             this.cmbBoxFieldInnTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldInnTyp.FormattingEnabled = true;
             this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(272, 274);
-            this.cmbBoxFieldInnTyp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxFieldInnTyp.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxFieldInnTyp.Name = "cmbBoxFieldInnTyp";
             this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(160, 24);
             this.cmbBoxFieldInnTyp.TabIndex = 37;
@@ -1125,9 +1129,9 @@
             this.tabPage2.Controls.Add(this.lblPrizmApiSystemPassord);
             this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemPassord);
             this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage2.Size = new System.Drawing.Size(1024, 483);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
@@ -1137,7 +1141,7 @@
             // 
             this.tabPage4.Controls.Add(this.tabControl2);
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Size = new System.Drawing.Size(1024, 483);
             this.tabPage4.TabIndex = 3;
@@ -1152,7 +1156,7 @@
             this.tabControl2.Controls.Add(this.tabPage8);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabControl2.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
@@ -1167,9 +1171,9 @@
             this.tabPage5.Controls.Add(this.lblGiftCardTax);
             this.tabPage5.Controls.Add(this.txtBoxGiftCardCode);
             this.tabPage5.Location = new System.Drawing.Point(25, 4);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(4);
             this.tabPage5.Size = new System.Drawing.Size(995, 475);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
@@ -1181,10 +1185,10 @@
             this.tabPage6.Controls.Add(this.txtBoxLimitCachForUrik);
             this.tabPage6.Controls.Add(this.lbl_LimitCachForUrik);
             this.tabPage6.Location = new System.Drawing.Point(25, 4);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.tabPage6.Size = new System.Drawing.Size(992, 472);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(4);
+            this.tabPage6.Size = new System.Drawing.Size(995, 475);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1193,7 +1197,7 @@
             // 
             this.chkBoxCalculatedDaySumForUrik.AutoSize = true;
             this.chkBoxCalculatedDaySumForUrik.Location = new System.Drawing.Point(12, 43);
-            this.chkBoxCalculatedDaySumForUrik.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxCalculatedDaySumForUrik.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxCalculatedDaySumForUrik.Name = "chkBoxCalculatedDaySumForUrik";
             this.chkBoxCalculatedDaySumForUrik.Size = new System.Drawing.Size(405, 21);
             this.chkBoxCalculatedDaySumForUrik.TabIndex = 46;
@@ -1203,7 +1207,7 @@
             // txtBoxLimitCachForUrik
             // 
             this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(293, 11);
-            this.txtBoxLimitCachForUrik.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxLimitCachForUrik.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxLimitCachForUrik.Name = "txtBoxLimitCachForUrik";
             this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(221, 22);
             this.txtBoxLimitCachForUrik.TabIndex = 1;
@@ -1222,9 +1226,9 @@
             // 
             this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
             this.tabPage8.Location = new System.Drawing.Point(25, 4);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage8.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(992, 472);
+            this.tabPage8.Size = new System.Drawing.Size(995, 475);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "Операции с чеками";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1235,9 +1239,9 @@
             this.grpBoxHeldForDocements.Controls.Add(this.txtBoxHeldForDocementsTimeout);
             this.grpBoxHeldForDocements.Controls.Add(this.lblHeldForDocements);
             this.grpBoxHeldForDocements.Location = new System.Drawing.Point(23, 17);
-            this.grpBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4);
             this.grpBoxHeldForDocements.Name = "grpBoxHeldForDocements";
-            this.grpBoxHeldForDocements.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.grpBoxHeldForDocements.Padding = new System.Windows.Forms.Padding(4);
             this.grpBoxHeldForDocements.Size = new System.Drawing.Size(799, 153);
             this.grpBoxHeldForDocements.TabIndex = 25;
             this.grpBoxHeldForDocements.TabStop = false;
@@ -1247,7 +1251,7 @@
             // 
             this.chkBoxHeldForDocements.AutoSize = true;
             this.chkBoxHeldForDocements.Location = new System.Drawing.Point(24, 33);
-            this.chkBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxHeldForDocements.Name = "chkBoxHeldForDocements";
             this.chkBoxHeldForDocements.Size = new System.Drawing.Size(455, 21);
             this.chkBoxHeldForDocements.TabIndex = 24;
@@ -1257,7 +1261,7 @@
             // txtBoxHeldForDocementsTimeout
             // 
             this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(424, 57);
-            this.txtBoxHeldForDocementsTimeout.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxHeldForDocementsTimeout.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxHeldForDocementsTimeout.Name = "txtBoxHeldForDocementsTimeout";
             this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(120, 22);
             this.txtBoxHeldForDocementsTimeout.TabIndex = 23;
@@ -1277,7 +1281,7 @@
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassFill);
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
             this.tabPage7.Location = new System.Drawing.Point(4, 25);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPage7.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage7.Name = "tabPage7";
             this.tabPage7.Size = new System.Drawing.Size(1024, 483);
             this.tabPage7.TabIndex = 4;
@@ -1289,7 +1293,7 @@
             this.pnl_ProdictMatrixClassFill.Controls.Add(this.dgProdictMatrixClass);
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 135);
-            this.pnl_ProdictMatrixClassFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnl_ProdictMatrixClassFill.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
             this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(1024, 348);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
@@ -1302,7 +1306,7 @@
             this.Mandatory});
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
-            this.dgProdictMatrixClass.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgProdictMatrixClass.Margin = new System.Windows.Forms.Padding(4);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
             this.dgProdictMatrixClass.RowHeadersWidth = 51;
             this.dgProdictMatrixClass.Size = new System.Drawing.Size(1024, 348);
@@ -1331,7 +1335,7 @@
             this.pnl_ProdictMatrixClassTop.Controls.Add(this.pnl_ProdictMatrixClassTopTop);
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
-            this.pnl_ProdictMatrixClassTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnl_ProdictMatrixClassTop.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
             this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(1024, 135);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
@@ -1349,10 +1353,21 @@
             this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.cmbBoxProductMatrixClassType);
             this.pnl_ProdictMatrixClassTopTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTopTop.Location = new System.Drawing.Point(0, 0);
-            this.pnl_ProdictMatrixClassTopTop.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnl_ProdictMatrixClassTopTop.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassTopTop.Name = "pnl_ProdictMatrixClassTopTop";
             this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(1024, 124);
             this.pnl_ProdictMatrixClassTopTop.TabIndex = 40;
+            // 
+            // chkBox_MexSendItemBarcode
+            // 
+            this.chkBox_MexSendItemBarcode.AutoSize = true;
+            this.chkBox_MexSendItemBarcode.Location = new System.Drawing.Point(728, 20);
+            this.chkBox_MexSendItemBarcode.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBox_MexSendItemBarcode.Name = "chkBox_MexSendItemBarcode";
+            this.chkBox_MexSendItemBarcode.Size = new System.Drawing.Size(222, 21);
+            this.chkBox_MexSendItemBarcode.TabIndex = 40;
+            this.chkBox_MexSendItemBarcode.Text = "Поддержка реализации меха";
+            this.chkBox_MexSendItemBarcode.UseVisualStyleBackColor = true;
             // 
             // lblProductMatrixEndOff
             // 
@@ -1368,7 +1383,7 @@
             // txtBoxProductMatrixEndOff
             // 
             this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(848, 95);
-            this.txtBoxProductMatrixEndOff.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxProductMatrixEndOff.Margin = new System.Windows.Forms.Padding(4);
             this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
             this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(52, 22);
             this.txtBoxProductMatrixEndOff.TabIndex = 3;
@@ -1378,7 +1393,7 @@
             // 
             this.chkBox_GetMatrixAlways.AutoSize = true;
             this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(11, 4);
-            this.chkBox_GetMatrixAlways.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBox_GetMatrixAlways.Margin = new System.Windows.Forms.Padding(4);
             this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
             this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(487, 21);
             this.chkBox_GetMatrixAlways.TabIndex = 0;
@@ -1400,7 +1415,7 @@
             // 
             this.chkBoxMandatoryDefault.AutoSize = true;
             this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(11, 32);
-            this.chkBoxMandatoryDefault.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.chkBoxMandatoryDefault.Margin = new System.Windows.Forms.Padding(4);
             this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
             this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(526, 21);
             this.chkBoxMandatoryDefault.TabIndex = 1;
@@ -1412,7 +1427,7 @@
             this.cmbBoxMatrixParceTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxMatrixParceTyp.FormattingEnabled = true;
             this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(368, 94);
-            this.cmbBoxMatrixParceTyp.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxMatrixParceTyp.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxMatrixParceTyp.Name = "cmbBoxMatrixParceTyp";
             this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(143, 24);
             this.cmbBoxMatrixParceTyp.TabIndex = 38;
@@ -1433,7 +1448,7 @@
             this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
             this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(231, 57);
-            this.cmbBoxProductMatrixClassType.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmbBoxProductMatrixClassType.Margin = new System.Windows.Forms.Padding(4);
             this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
             this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(143, 24);
             this.cmbBoxProductMatrixClassType.TabIndex = 37;
@@ -1442,8 +1457,8 @@
             // 
             this.pnlBotton.Controls.Add(this.btnSave);
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotton.Location = new System.Drawing.Point(0, 512);
-            this.pnlBotton.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlBotton.Location = new System.Drawing.Point(0, 592);
+            this.pnlBotton.Margin = new System.Windows.Forms.Padding(4);
             this.pnlBotton.Name = "pnlBotton";
             this.pnlBotton.Size = new System.Drawing.Size(1032, 44);
             this.pnlBotton.TabIndex = 39;
@@ -1453,31 +1468,40 @@
             this.pnlFill.Controls.Add(this.tabControl1);
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
-            this.pnlFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.pnlFill.Margin = new System.Windows.Forms.Padding(4);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(1032, 512);
+            this.pnlFill.Size = new System.Drawing.Size(1032, 592);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkBox_MexSendItemBarcode
+            // label1
             // 
-            this.chkBox_MexSendItemBarcode.AutoSize = true;
-            this.chkBox_MexSendItemBarcode.Location = new System.Drawing.Point(728, 20);
-            this.chkBox_MexSendItemBarcode.Margin = new System.Windows.Forms.Padding(4);
-            this.chkBox_MexSendItemBarcode.Name = "chkBox_MexSendItemBarcode";
-            this.chkBox_MexSendItemBarcode.Size = new System.Drawing.Size(222, 21);
-            this.chkBox_MexSendItemBarcode.TabIndex = 40;
-            this.chkBox_MexSendItemBarcode.Text = "Поддержка реализации меха";
-            this.chkBox_MexSendItemBarcode.UseVisualStyleBackColor = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 57);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(173, 17);
+            this.label1.TabIndex = 45;
+            this.label1.Text = "Поле вывода на дисплей";
+            // 
+            // cmbBoxDisplayFieldItem
+            // 
+            this.cmbBoxDisplayFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxDisplayFieldItem.FormattingEnabled = true;
+            this.cmbBoxDisplayFieldItem.Location = new System.Drawing.Point(192, 53);
+            this.cmbBoxDisplayFieldItem.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxDisplayFieldItem.Name = "cmbBoxDisplayFieldItem";
+            this.cmbBoxDisplayFieldItem.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxDisplayFieldItem.TabIndex = 46;
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1032, 556);
+            this.ClientSize = new System.Drawing.Size(1032, 636);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FConfig";
             this.Text = "FConfig";
             this.Load += new System.EventHandler(this.FConfig_Load);
@@ -1642,5 +1666,7 @@
         private System.Windows.Forms.TextBox txtBoxBlockActionPassword;
         private System.Windows.Forms.Label lblBlockActionPassword;
         private System.Windows.Forms.CheckBox chkBox_MexSendItemBarcode;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox cmbBoxDisplayFieldItem;
     }
 }

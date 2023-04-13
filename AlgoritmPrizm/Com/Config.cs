@@ -76,6 +76,11 @@ namespace AlgoritmPrizm.Com
         private static StopBits _DisplayStpBits = StopBits.One;
 
         /// <summary>
+        /// Наименование поля с именем товара для диплея
+        /// </summary>
+        private static FieldItemEn _DisplayFieldItem = FieldItemEn.Description1;
+
+        /// <summary>
         /// Список продавцов
         /// </summary>
         private static List<Custumer> _customers = new List<Custumer>();
@@ -562,6 +567,23 @@ namespace AlgoritmPrizm.Com
                 xmlRoot.SetAttribute("DisplayStpBits", val.ToString());
                 Save();
                 _DisplayStpBits = val;
+            }
+        }
+
+        /// <summary>
+        /// Наименование поля с именем товара для диплея
+        /// </summary>
+        public static FieldItemEn DisplayFieldItem
+        {
+            get
+            {
+                return _DisplayFieldItem;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DisplayFieldItem", value.ToString());
+                Save();
+                _DisplayFieldItem = value;
             }
         }
 
@@ -1740,6 +1762,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("DisplayParity", _DisplayParity.ToString());
                     xmlMain.SetAttribute("DisplayDataBits", _DisplayDataBits.ToString());
                     xmlMain.SetAttribute("DisplayStpBits", _DisplayStpBits.ToString());
+                    xmlMain.SetAttribute("DisplayFieldItem", _DisplayFieldItem.ToString());
                     xmlMain.SetAttribute("Ffd", _Ffd.ToString());
                     xmlMain.SetAttribute("FrPort", _FrPort.ToString());
                     xmlMain.SetAttribute("TenderTypeCash", _TenderTypeCash.ToString());
@@ -1866,6 +1889,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "DisplayParity") try { _DisplayParity = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayParity); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "DisplayDataBits") try { _DisplayDataBits = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "DisplayStpBits") try { _DisplayStpBits = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayStpBits); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DisplayFieldItem") try { _DisplayFieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayFieldItem); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Ffd") try { _Ffd = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _Ffd); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FrPort") try { _FrPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCash") try { _TenderTypeCash = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }

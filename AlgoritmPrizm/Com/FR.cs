@@ -1454,13 +1454,20 @@ namespace AlgoritmPrizm.Com
                 // Печать инфа по скидке по позиции
                 if (item.discount_amt != 0)
                 {
+                    // Заметили что призм иногда процент скидки не считает а сумма скидки есть. Считаем её сами
+                    double tmp_discount_perc = item.discount_perc;
+                    if (tmp_discount_perc == 0)
+                    {
+                        tmp_discount_perc = item.discount_amt * 100 / (item.discount_amt + (double)PriceForPrinting);
+                    }
+
                     if (item.discount_amt > 0)
                     {
-                        Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(item.discount_perc, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt));
+                        Print2in1Line(string.Format("Вкл. скидку {0}%", Math.Round(tmp_discount_perc, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt));
                     }
                     else
                     {
-                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(item.discount_perc * -1, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt * -1));
+                        Print2in1Line(string.Format("Вкл. наценку {0}%", Math.Round(tmp_discount_perc * -1, 2).ToString("0.00")), string.Format("{0} руб.", item.discount_amt * -1));
                     }
                 }
             }

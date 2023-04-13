@@ -107,6 +107,16 @@ namespace AlgoritmPrizm
                 }
                 if (SelectStopBits > -1) cmbBoxStopBits.SelectedIndex = SelectStopBits;
 
+                this.cmbBoxDisplayFieldItem.Items.Clear();
+                int PositionDisplayFieldItem = -1;
+                int SelectPositionDisplayFieldItem = -1;
+                foreach (FieldItemEn item in FieldItemEn.GetValues(typeof(FieldItemEn)))
+                {
+                    PositionDisplayFieldItem++;
+                    cmbBoxDisplayFieldItem.Items.Add(item.ToString());
+                    if (item == Config.DisplayFieldItem) SelectPositionDisplayFieldItem = PositionDisplayFieldItem;
+                }
+                if (SelectPositionDisplayFieldItem > -1) cmbBoxDisplayFieldItem.SelectedIndex = SelectPositionDisplayFieldItem;
 
                 cmbBoxSmsTypGateway.SelectedIndexChanged -= cmbBoxSmsTypGateway_SelectedIndexChanged;
                 cmbBoxSmsTypGateway.Items.Clear();
@@ -370,7 +380,7 @@ namespace AlgoritmPrizm
                 if (DefaultDisplayDspFullName != null) Com.DisplayFarm.SetCurrentDisplay(Com.DisplayFarm.CreateNewDisplay("DisplayDSP840"));
                 else Com.DisplayFarm.SetCurrentDisplay(null);
 
-                
+                Config.DisplayFieldItem = EventConvertor.Convert(cmbBoxDisplayFieldItem.Items[cmbBoxDisplayFieldItem.SelectedIndex].ToString(), Config.DisplayFieldItem);
 
                 Config.SmsTypGateway = EventConvertor.Convert(cmbBoxSmsTypGateway.Items[cmbBoxSmsTypGateway.SelectedIndex].ToString(), Config.SmsTypGateway);
 

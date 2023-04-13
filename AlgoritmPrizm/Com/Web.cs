@@ -342,9 +342,78 @@ namespace AlgoritmPrizm.Com
                                     }
                                 }
 
-                                if (FineDoc != null && Com.DisplayFarm.CurDisplay!=null)
+                                // Отображение информации на дисплей покупателя
+                                if (FineDoc != null && Com.DisplayFarm.CurDisplay != null)
                                 {
-                                    Com.DisplayFarm.CurDisplay.ShowText(string.Format("{0} {1} руб.", FineDoc.item_description1, FineDoc.price));
+                                    //Описание товара
+                                    InvnSbsItemText TmpTextInfo = ProviderFarm.CurrentPrv.GetInvnSbsItemText(FineDoc.invn_sbs_item_sid);
+                                    string TmpDisplayOut = null;
+                                    switch (Config.DisplayFieldItem)
+                                    {
+                                        case FieldItemEn.Description1:
+                                            TmpDisplayOut = FineDoc.item_description1;
+                                            break;
+                                        case FieldItemEn.Description2:
+                                            TmpDisplayOut = FineDoc.item_description2;
+                                            break;
+                                        case FieldItemEn.InvnSbsItemNo:
+                                            TmpDisplayOut = FineDoc.item_pos.ToString();
+                                            break;
+                                        case FieldItemEn.Attribute:
+                                            TmpDisplayOut = FineDoc.attribute;
+                                            break;
+                                        case FieldItemEn.ItemSize:
+                                            TmpDisplayOut = FineDoc.item_size;
+                                            break;
+                                        case FieldItemEn.ScanUpc:
+                                            TmpDisplayOut = FineDoc.scan_upc;
+                                            break;
+                                        case FieldItemEn.Text1:
+                                            TmpDisplayOut = TmpTextInfo.Text1;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text2:
+                                            TmpDisplayOut = TmpTextInfo.Text2;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text3:
+                                            TmpDisplayOut = TmpTextInfo.Text3;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text4:
+                                            TmpDisplayOut = TmpTextInfo.Text4;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text5:
+                                            TmpDisplayOut = TmpTextInfo.Text5;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text6:
+                                            TmpDisplayOut = TmpTextInfo.Text6;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text7:
+                                            TmpDisplayOut = TmpTextInfo.Text7;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text8:
+                                            TmpDisplayOut = TmpTextInfo.Text8;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text9:
+                                            TmpDisplayOut = TmpTextInfo.Text9;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        case FieldItemEn.Text10:
+                                            TmpDisplayOut = TmpTextInfo.Text10;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                        default:
+                                            TmpDisplayOut = FineDoc.item_description1;
+                                            if (TmpDisplayOut != null) TmpDisplayOut = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(TmpDisplayOut)));
+                                            break;
+                                    }
+                                    Com.DisplayFarm.CurDisplay.ShowText(string.Format("{0} {1} руб.", TmpDisplayOut, FineDoc.price));
                                 }
 
                                 if (Config.GetMatrixAlways || HashProductClass)
