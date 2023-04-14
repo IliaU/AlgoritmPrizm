@@ -1458,7 +1458,7 @@ namespace AlgoritmPrizm.Com
                     double tmp_discount_perc = item.discount_perc;
                     if (tmp_discount_perc == 0)
                     {
-                        tmp_discount_perc = item.discount_amt * 100 / (item.discount_amt + (double)PriceForPrinting);
+                        tmp_discount_perc = item.discount_amt * 100 / (item.discount_amt + (double)Fr.Price);
                     }
 
                     if (item.discount_amt > 0)
