@@ -351,7 +351,7 @@ namespace AlgoritmPrizm.Com
                 if (ConfigStatusFR(Doc, OperatorNumber, DocName)) return rezWeb;
 
                 // Проверка строк документа если они пустые то получаем их из базы давнных и обогощаем тем что имеем
-                if (Doc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
+                /*if (Doc.items.Count(t => string.IsNullOrWhiteSpace(t.invn_sbs_item_sid) &&
                     !string.IsNullOrWhiteSpace(t.link)) > 0)
                 {
                     List<JsonPrintFiscDocItem> DocTmp = Com.ProviderFarm.CurrentPrv.GetItemsForReturnOrder(Doc.sid);
@@ -360,7 +360,7 @@ namespace AlgoritmPrizm.Com
                         DocTmp[i].link = Doc.items[i].link;
                         Doc.items[i] = DocTmp[i];
                     }
-                }
+                }*/
 
                 // Если нет строк то надо получить инфу от ссылки на докумен для специального документа (возврат депозита)
                 if (Doc.items.Count == 0)
@@ -387,18 +387,34 @@ namespace AlgoritmPrizm.Com
                 else
                 {
                     // Если скидка есть а процент в Json нет явно косяк, идём в API и получаем строчку от туда
-                    if (Doc.items.Count(t => t.discount_perc == 0 && t.discount_amt != 0) > 0)
+                    /*if (Doc.items.Count(t => t.discount_perc == 0 && t.discount_amt != 0) > 0)
                     {
                         for (int i = 0; i < Doc.items.Count; i++)
                         {
                             List<JsonPrintFiscDocItem> JournalRowTmp = Web.GetCopyDocumentsJournalRestSharp(Doc.items[i].link);
                             Doc.items[i].discount_perc = JournalRowTmp[0].discount_perc;
                         }
+                    }*/
+
+                    // В общем этой лабуде нет доверия вообще ни какого тащим всё из АПИ
+                    for (int i = 0; i < Doc.items.Count(); i++)
+                    {
+                        List<JsonPrintFiscDocItem> JournalRowTmp = Web.GetCopyDocumentsJournalRestSharp(Doc.items[i].link);
+                        if (JournalRowTmp.Count > 0) Doc.items[i] = JournalRowTmp[0];
+                    }
+
+                    for (int i = 0; i < Doc.tenders.Count; i++)
+                    {
+                        List<JsonPrintFiscDocTender> TenderRowTmp = Web.GetCopyDocumentsTenderRestSharp(Doc.tenders[i].link);
+                        if (TenderRowTmp.Count > 0)
+                        {
+                            Doc.tenders[i] = TenderRowTmp[0];
+                        }
                     }
                 }
 
-                // Если это копия то нужно инфу подтянуть по API  та как падла не передаёт в доке :-(
-                if (IsCopy)
+                // Если это копия то нужно инфу подтянуть по API та как падла не передаёт в доке :-(
+                /*if (IsCopy)
                 {
                     for (int i = 0; i < Doc.items.Count; i++)
                     {
@@ -422,7 +438,7 @@ namespace AlgoritmPrizm.Com
                             Doc.tenders[i] = TenderRowTmp[0];
                         }
                     }
-                }
+                }*/
 
                 // Открываем чек
                 OpenReceipt(Doc, TekCustomer, DocCustTyp, IsCopy);
