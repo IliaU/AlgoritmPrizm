@@ -1,0 +1,39 @@
+<div ng-if="contentReady">
+    <div class="row form-group">
+        <div class="col-xs-3">
+            <inven-access-button></inven-access-button>
+        </div>
+        <div class="col-xs-3">
+            <pi-button></pi-button>
+        </div>
+        <div class="col-xs-3">
+            <vendor-access-button layout="2"></vendor-access-button>
+        </div>
+        <div class="col-xs-3">
+            <department-access-button layout="2"></department-access-button>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-xs-3">
+            <am-button-new adj-memo-type="'cost'"></am-button-new>
+        </div>
+        <div class="col-xs-3">
+            <am-button-new adj-memo-type="'price'"></am-button-new>
+        </div>
+        <div class="col-xs-3">
+            <am-button-new adj-memo-type="'qty'"></am-button-new>
+        </div>
+        <div class="col-xs-3">
+            <am-button-lookup></am-button-lookup>
+        </div>
+    </div>
+    <div class="row form-group">
+        <div class="col-xs-3">
+          <pm-access-button></pm-access-button>
+        </div>
+        <div class="col-xs-3">
+            <img-btn onclick="printPriceList()" img-src="'/images/pos/pos_new_48.png'"
+                button-text="'Прайс Лист'"></img-btn>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,365 @@
+<form name="itemReturnForm" id="itemReturnForm" class="form-horizontal">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span data-translate="608">Transaction Filter</span>
+                    </div>
+                    <div class="panel-body height30">
+                        <div class="form-group">
+                            <label class="col-xs-5 control-label" for="start-date" data-translate="1451">From Date:</label>
+                            <div class="col-xs-7">
+                              <p class="input-group" ng-click="openCalendar($event, 'startDate')">
+                                  <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                  </span>
+                                  <input type="button" id="start-date" class="form-control" datetime-picker="medium" ng-model="startDate.date" value="{{(startDate.date)?(startDate.date | date:'medium'):(startDate.placeholder)}}" is-open="startDate.open" enable-time="true" datepicker-options="startDate.datepickerOptions" timepicker-options="startDate.timepickerOptions" when-closed="startDate.closed()" placeholder="{{startDate.placeholder}}">
+                              </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-5 control-label" for="end-date" data-translate="1452">To Date:</label>
+                            <div class="col-xs-7">
+                                <p class="input-group" ng-click="openCalendar($event, 'endDate')">
+                                    <span class="input-group-btn">
+                                      <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-calendar"></i></button>
+                                    </span>
+                                    <input type="button" id="end-date" class="form-control" datetime-picker="medium" ng-model="endDate.date" value="{{(endDate.date)?(endDate.date | date:'medium'):(endDate.placeholder)}}" is-open="endDate.open" enable-time="true" datepicker-options="endDate.datepickerOptions" timepicker-options="endDate.timepickerOptions" when-closed="endDate.closed()" placeholder="{{endDate.placeholder}}">
+                                </p>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-5 control-label" data-translate="794">
+                                Document No
+                            </label>
+                            <div class="col-xs-7">
+                                <input id="searchDocumentNumber" numberonly="" name="searchDocumentNumber" class="form-control" bar-code="" type="text" ng-model="filters.searchDocumentNumber">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-xs-5 control-label" data-translate="6741">
+                            Customer First Name
+                          </label>
+                          <div class="col-xs-7">
+                            <input id="searchFirstName" name="searchFirstName" class="form-control" type="text" ng-model="filters.searchFirstName" ng-readonly="lockSearchName">
+                          </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-xs-5 control-label" data-translate="787">
+                                Customer Last Name
+                            </label>
+                            <div class="col-xs-7">
+                                <input id="searchLastName" name="searchLastName" class="form-control" type="text" ng-model="filters.searchLastName" ng-readonly="lockSearchName">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="margin-bottom: 0;">
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button event-name="posItemReturnFind" id="returnItemFindTransactionButton" name="returnItemFindTransactionButton" type="submit" class="btn btn-info" ng-click="runSearch()" ng-disabled="retForm.before>retForm.today||retSearchDisabled||totalReturnQuantity > 0||!retForm.before||!retForm.today">
+                                    <span data-translate="630">Search</span></button>
+
+                                <button event-name="posItemReturnReset" id="returnItemResetSearchButton" name="returnItemResetSearchButton" type="button" class="btn btn-info" ng-click="resetFields()">
+                                    <span data-translate="614">Reset</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span data-translate="1396">Transactions</span>
+                        <span class="pull-right" data-translate="1395">Select the transaction with items to be returned</span>
+                    </div>
+                    <div id="returnDocumentList" class="panel-body height30 autoOverflow">
+                        <div class="list-group">
+                            <div ng-repeat="thisTransaction in documentList">
+                            <button ng-disabled="totalReturnQuantity > 0" id="searchTransactionsResult{{$index}}" type="button" class="btn btn-block btn-link no-outline" ng-class="{'btn-info': $index === selectedDocumentIndex}" ng-click="selectDocument($index)">
+                                <div class="row top-margin">
+                                   <div class="col-xs-4 text-left">
+                                        <strong><span data-translate="619">Transaction No</span></strong> {{ thisTransaction.document_number }}
+                                   </div>
+                                   <div class="col-xs-8 text-left">
+                                     <strong><span data-translate="790">Customer</span></strong> {{ thisTransaction.bt_first_name }} {{ thisTransaction.bt_last_name }}
+                                   </div>
+                                </div>
+                                <div class="row top-margin">
+                                    <div class="col-xs-4 text-left">
+                                        <strong><span data-translate="979">Total</span></strong> {{ thisTransaction.transaction_total_amt|currency}}
+                                    </div>
+                                    <div class="col-xs-8 text-left">
+                                        <strong><span data-translate="533">Created Date</span></strong> {{ thisTransaction.invoice_posted_date|cleanDate:'locale' }}
+                                    </div>
+                                </div>
+                            </button>
+                                <hr style="margin:0; padding: 0;">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-footer" style="margin-bottom: 0;">
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button class="btn btn-info" style="visibility: hidden"><span>&nbsp;</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-5">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span data-translate="1397">Return Details</span>
+                    </div>
+                    <div class="panel-body height30 autoOverflow">
+
+                        <div class="row top-margin">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="1398">Transaction Qty</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{itemResultCount | number}}</p>
+                                    </div>
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="1399">Available Qty</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{availableQty | number}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row top-margin">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="1400">Total Return Qty</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{totalReturnQuantity | number}}</p>
+                                    </div>
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="1401">Total Return Amt</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{totalReturnAmount | currency}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row top-margin">
+                            <div class="form-group">
+                                <label class="col-xs-4 control-label">
+                                    <strong data-translate="1412">Return Reason</strong>
+                                </label>
+                                <div class="col-xs-8">
+                                    <select id="return_reason" name="return_reason" class="form-control" tabindex="10" ng-model="retForm.return_reason" ng-required="reasonIsRequired" ng-options="r.name as r.name for r in returnReasonsList">
+                                        <option value="" style="display:none" data-translate="1358">Select...</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row top-margin">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="5206">Available Fee Amt</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{availRetFeeAmt | currency}}</p>
+                                    </div>
+                                    <label class="col-xs-4 control-label" data-translate="5207">
+                                        Return Fee Amt
+                                    </label>
+                                    <div class="col-xs-2" ng-class="{'has-error': retForm.returnFeeAmt > availRetFeeAmt}">
+                                        <input id="returnfeeamt" name="returnfeeamt" type="tel" tabindex="16" autoselect="true" class="form-control" data-currency-formatter="" numberonly="" ng-model="retForm.returnFeeAmt" ng-disabled="disableAmts || availRetFeeAmt===0" ng-blur="checkRetFeeAmt()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row top-margin">
+                            <div class="col-xs-12">
+                                <div class="form-group">
+                                    <label class="col-xs-4 control-label">
+                                        <strong data-translate="5208">Available Shipping Amt</strong>
+                                    </label>
+                                    <div class="col-xs-2">
+                                        <p class="form-control-static"> {{availRetShipAmt | currency}}</p>
+                                    </div>
+                                    <label class="col-xs-4 control-label" data-translate="5209">
+                                        Return Shipping Amt
+                                    </label>
+                                    <div class="col-xs-2" ng-class="{'has-error': retForm.returnShipAmt > availRetShipAmt}">
+                                        <input id="returnshipamt" name="returnshipamt" type="tel" tabindex="16" autoselect="true" class="form-control" data-currency-formatter="" numberonly="" ng-model="retForm.returnShipAmt" ng-disabled="disableAmts || availRetShipAmt===0" ng-blur="checkRetShipAmt()">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="panel-footer" style="margin-bottom: 0;">
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button class="btn btn-info" style="visibility: hidden"><span>&nbsp;</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xs-7">
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span class="pull-right" data-translate="1402">Click on the item(s) to be returned</span>
+                        <span data-translate="1403">Transaction Items</span>
+                    </div>
+                    <div id="returnItemsList" class="panel-body height30 autoOverflow">
+                        <div class="list-group">
+                            <a id="searchTransactionItemsResult{{$index}}" tabindex="10{{$index}}" index="{{$index}}" data-item-group="data-item-group" ng-class="{'list-group-item':true, 'header':thisTransactionItem.kit_flag == 3, 'component':thisTransactionItem.kit_flag == 5}" ng-repeat="thisTransactionItem in itemList" ng-click="selectItem($index)">
+
+                                <div class="row">
+                                    <div class="col-xs-11">
+                                        <div class="row">
+                                           <div class="col-xs-4">
+                                              <strong><span data-translate="621">Store No</span></strong> {{ thisTransactionItem.store_number }}
+                                            </div>
+                                            <div class="col-xs-8">
+                                                <strong><span data-translate="675">Desc 1</span></strong>  {{thisTransactionItem.item_description1 }}
+                                           </div>
+                                         </div>
+
+                                        <div class="row">
+                                            <div class="col-xs-4">
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="677">UPC</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.scan_upc|padUPC }}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="679">Size</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.item_size}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="678">Attr</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.attribute}}</div>
+                                                </div>
+                                                <div ng-if="thisTransactionItem.serial_number" class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="2122">Serial No</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.serial_number}}</div>
+                                                </div>
+                                                <div ng-if="thisTransactionItem.shipping_amt !== 0" class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="861">Shipping Method</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.ship_method}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-5">
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <strong><span data-translate="768">Item Type</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-5">{{thisTransactionItem.item_type | itemTypeName | translate}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <strong><span data-translate="764">Qty</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-5">{{thisTransactionItem.quantity |number:thisTransactionItem.inventory_use_quantity_decimals}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-7">
+                                                        <strong><span data-translate="1404">Avail Return Qty</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-5">{{thisTransactionItem.availableQuantity |number:thisTransactionItem.inventory_use_quantity_decimals}}</div>
+                                                </div>
+                                                <div ng-if="thisTransactionItem.lot_number" class="row">
+                                                    <div class="col-xs-7">
+                                                        <strong><span data-translate="2121">Lot No</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-5">{{thisTransactionItem.lot_number}}</div>
+                                                </div>
+                                                <div ng-if="thisTransactionItem.shipping_amt !== 0" class="row">
+                                                    <div class="col-xs-4">
+                                                        <strong><span data-translate="863">Shipping Amount</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-8">{{thisTransactionItem.shipping_amt|currency}}</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-xs-3">
+                                                <div class="row">
+                                                    <div class="col-xs-8">
+                                                        <strong><span data-translate="773">Price</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-4">{{thisTransactionItem.price|currency}}</div>
+                                                </div>
+                                                <div ng-if="thisTransactionItem.original_price !== thisTransactionItem.price" class="row">
+                                                    <div class="col-xs-8">
+                                                        <strong><span data-translate="4775">Original Sale Price</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-4">{{thisTransactionItem.original_price|currency}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-8">
+                                                        <strong><span data-translate="1405">Return Value</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-4">{{thisTransactionItem.returningThisMany * thisTransactionItem.price | currency}}</div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-xs-8">
+                                                        <strong><span data-translate="625">Return Qty</span></strong>
+                                                    </div>
+                                                    <div class="col-xs-4">{{thisTransactionItem.returningThisMany|number:thisTransactionItem.inventory_use_quantity_decimals}}</div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-xs-1 text-right">
+                                        <img ng-src="/images/{{imagePath(thisTransactionItem.returningThisMany, thisTransactionItem.canReturn)}}">
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button event-name="posItemReturnReturnItem" id="returnItemReturnItemButton" name="returnItemReturnItemButton" type="button" class="btn btn-info" ng-disabled="returnItemButtonDisabled" ng-click="returnItem()">
+                                    <span data-translate="793">Return Item</span></button>
+                                <button event-name="posItemReturnClearItem" id="returnItemClearItemButton" name="returnItemClearItemButton" type="button" class="btn btn-info" ng-disabled="returnItemClearButtonDisabled" ng-click="clearItem()">
+                                    <span data-translate="1406">Clear Item</span></button>
+                                <button event-name="posItemReturnSelectAll" id="returnItemSelectAllButton" name="returnItemSelectAllButton" type="button" class="btn btn-info" ng-disabled="availableQty === 0" ng-click="selectAll()">
+                                    <span data-translate="971">Select All</span></button>
+                                <button event-name="posItemReturnClearAll" id="returnItemClearAllButton" name="returnItemClearAllButton" type="button" class="btn btn-info" ng-disabled="returnClearAllButtonDisabled" ng-click="clearAll()">
+                                    <span data-translate="1407">Clear All</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-right">
+                <button event-name="posItemReturnReturnToDocument" id="returnItemReturnToDocumentButton" name="returnItemReturnToDocumentButton" type="button" class="btn btn-lg btn-default" ng-click="returnToDocument()" ng-disabled="totalReturnQuantity > 0 && (itemReturnForm.$invalid || returning)">
+                    <span data-translate="792">Return to Document</span></button>
+            </div>
+        </div>
+    </div>
+</form>

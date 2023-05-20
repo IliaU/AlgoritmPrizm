@@ -40,17 +40,19 @@ namespace AlgoritmPrizm
             this.lblBlockAction.AutoSize = true;
             this.lblBlockAction.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.lblBlockAction.ForeColor = System.Drawing.Color.Maroon;
-            this.lblBlockAction.Location = new System.Drawing.Point(12, 24);
+            this.lblBlockAction.Location = new System.Drawing.Point(16, 30);
+            this.lblBlockAction.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblBlockAction.Name = "lblBlockAction";
-            this.lblBlockAction.Size = new System.Drawing.Size(401, 20);
+            this.lblBlockAction.Size = new System.Drawing.Size(499, 25);
             this.lblBlockAction.TabIndex = 0;
             this.lblBlockAction.Text = "Для доступа к системе необходимо ввести пароль.";
             // 
             // btnBlockAction
             // 
-            this.btnBlockAction.Location = new System.Drawing.Point(219, 72);
+            this.btnBlockAction.Location = new System.Drawing.Point(292, 89);
+            this.btnBlockAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnBlockAction.Name = "btnBlockAction";
-            this.btnBlockAction.Size = new System.Drawing.Size(111, 23);
+            this.btnBlockAction.Size = new System.Drawing.Size(148, 28);
             this.btnBlockAction.TabIndex = 1;
             this.btnBlockAction.Text = "Проверить пароль";
             this.btnBlockAction.UseVisualStyleBackColor = true;
@@ -58,20 +60,24 @@ namespace AlgoritmPrizm
             // 
             // txtBoxBlockAction
             // 
-            this.txtBoxBlockAction.Location = new System.Drawing.Point(43, 74);
+            this.txtBoxBlockAction.Location = new System.Drawing.Point(57, 91);
+            this.txtBoxBlockAction.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBoxBlockAction.Name = "txtBoxBlockAction";
-            this.txtBoxBlockAction.Size = new System.Drawing.Size(149, 20);
+            this.txtBoxBlockAction.Size = new System.Drawing.Size(197, 22);
             this.txtBoxBlockAction.TabIndex = 2;
+            this.txtBoxBlockAction.UseSystemPasswordChar = true;
+            this.txtBoxBlockAction.KeyDown += new System.Windows.Forms.KeyEventHandler(this.txtBoxBlockAction_KeyDown);
             // 
             // FBlockAction
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(438, 126);
+            this.ClientSize = new System.Drawing.Size(584, 155);
             this.Controls.Add(this.txtBoxBlockAction);
             this.Controls.Add(this.btnBlockAction);
             this.Controls.Add(this.lblBlockAction);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FBlockAction";
             this.Text = "Ввод пароля для доступа к системным настройкам";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FBlockAction_FormClosing);

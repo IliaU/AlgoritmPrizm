@@ -13,9 +13,9 @@
         <voucher-select-po-item-button request-counter="requestCounter" voucher="sharedData.receiving.voucher.info"></voucher-select-po-item-button>
         <voucher-item-details-button loader-handler="prismAjaxLoader.handler"></voucher-item-details-button>
         <voucher-show-cost-button callback="overrideSeeItemCost.action" disable="overrideSeeItemCost.disable"></voucher-show-cost-button>
-        <label for="file" class="btn btn-info">Load from file</label>
+        <label for="file" ng-show="sharedData.receiving.voucher.workingMode" class="btn btn-info">Загрузить из файла</label>
         <input accept=".txt,.dat" type="file" id="file" onchange="loadFile(this, 'voucher')" style="display: none">
-        <button id="verification-buttton" class="btn btn-info" onclick="openVerification('voucher')">Verification</button>
+        <button id="verification-buttton" class="btn btn-info" onclick="openVerification('voucher')">Сверка</button>
         </div>
     </div>
   </div>>

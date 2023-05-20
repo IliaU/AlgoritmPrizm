@@ -1,0 +1,33 @@
+<form name="cashInOutForm">
+    <div class="modal-content">
+        <div class="modal-header">
+            <div class="row">
+                <div class="col-xs-12">
+                    <h4>Списание с бонусного счета</h4>
+                </div>
+            </div>
+        </div>
+        <div class="modal-body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-group">
+                        <label for="amount">Сумма списания:</label>
+                        <input tabindex="1" type="number" id="amount" class="form-control" ng-model="criteria.amount" min="0" max="{{ bonusAmount }}" step="0.01" pattern="[0-9]+(\.[0-9]{1,2})?" required autofocus>
+                    </div>
+                    <p>Доступно <b>{{ bonusAmount }} бонусных рублей.</b></p>
+                    {{ infoMessage }}
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-xs-12">
+                        <button type="button" tabindex="3" class="btn btn btn-success" ng-click="save()" ng-disabled="!cashInOutForm.$valid">Списать</button>
+                        <button type="button" tabindex="4" class="btn btn btn-default" ng-click="cancel()">Накопить</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

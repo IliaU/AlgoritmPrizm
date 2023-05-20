@@ -1,4 +1,4 @@
-<form name="myForm">
+<form name="myForm" class="z-index: 99000 !important;">
     <div class="modal-content">
         <div class="modal-header">
             <div class="row">
@@ -10,13 +10,10 @@
         <div class="modal-body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-4">
+                    <div class="col">
                         <div class="form-group">
                             <label for="search">Scan Barcode</label>
-                            <input tabindex="1" type="text" id="search" name="search" class="form-control searchBox" ng-model="criteria.enterMarking" required>
-                        </div>
-                        <div class="form-group">
-                            <button type="button" class="btn btn-lg btn-success" ng-click="search()" ng-disabled="!myForm.$valid" ng-bind="caption || 'Enter'">{{caption}}</button>
+                            <input pattern="[^\а-яА-Я]*" tabindex="1" type="text" id="search" name="search" class="form-control searchBox" ng-model="criteria.enterMarking" autofocus required>
                         </div>
                     </div>
                     <div class="col-md-8">
@@ -30,6 +27,7 @@
                 <div class="row">
                     <div class="col-xs-12">
                         <button type="button" class="btn btn-lg btn-default" ng-disabled="Mandatory" ng-click="close()">Close</button>
+                        <button class="btn btn-lg btn-success" ng-click="search()" ng-disabled="!myForm.$valid" ng-bind="caption || 'Enter'">{{caption}}</button>
                     </div>
                 </div>
             </div>

@@ -1,0 +1,26 @@
+Folder PATH listing for volume VBOX_slmmsm69a
+Volume serial number is 0000009E 9AAF:2732
+Z:.
+|   dd.txt
+|   
++---images
+|       Gucci_logo200.jpg
+|       Gucci_logo200bi.jpg
+|       Gucci_logo200l.jpg
+|       
++---styles
+|       gru-customer.css
+|       
++---template
+|   \---document-item
+|           simple-layouts-template.htm
+|           
+\---views
+    |   login-partial.htm
+    |   
+    \---default
+            pos-itemdetails-partial.htm
+            pos-itemreturn-partial.htm
+            pos-tender-partial.htm
+            simple-transactions-detailblock-partial.htm
+            

@@ -1600,7 +1600,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка кассиров с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".SetCustomers", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.SetCustomers", EventEn.Error);
                 throw ae;
             }
         }
@@ -1643,7 +1643,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка сотрудников с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".SetEmployees", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.SetEmployees", EventEn.Error);
                 throw ae;
             }
         }
@@ -1685,7 +1685,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении нового списка с классами продуктов по которым нужно запросить матрикс код: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".SetProdictMatrixClassList", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.SetProdictMatrixClassList", EventEn.Error);
                 throw ae;
             }
         }
@@ -1708,7 +1708,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".Load()", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.Load()", EventEn.Error);
                 throw ae;
             }
         }
@@ -1728,7 +1728,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации в файл с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".Save()", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.Save()", EventEn.Error);
                 throw ae;
             }
         }
@@ -1847,7 +1847,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при соpдании конфигурационного файла с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".Create()", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.Create()", EventEn.Error);
                 throw ae;
             }
         }
@@ -1957,7 +1957,7 @@ namespace AlgoritmPrizm.Com
                         catch (Exception ex)
                         {
                             ApplicationException ae = new ApplicationException(string.Format("Упали при создании дисплея покупателя с ошибкой: {0}", ex.Message));
-                            Log.EventSave(ae.Message, ".GetDate()", EventEn.Error);
+                            Log.EventSave(ae.Message, "Config.GetDate()", EventEn.Error);
                         }
                     }
 
@@ -2175,7 +2175,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при разборе конфигурационного файла с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, ".GetDate()", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.GetDate()", EventEn.Error);
                 throw ae;
             }
         }
@@ -2200,7 +2200,7 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {0}}", ex.Message));
-                Log.EventSave(ae.Message, ".UpdateVersionXml(XmlElement root, int oldVersion)", EventEn.Error);
+                Log.EventSave(ae.Message, "Config.UpdateVersionXml(XmlElement root, int oldVersion)", EventEn.Error);
                 throw ae;
             }
         }

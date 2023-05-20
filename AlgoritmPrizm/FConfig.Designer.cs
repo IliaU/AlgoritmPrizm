@@ -74,6 +74,8 @@
             this.txtBoxBlockActionPassword = new System.Windows.Forms.TextBox();
             this.lblBlockActionPassword = new System.Windows.Forms.Label();
             this.groupBoxDisplay = new System.Windows.Forms.GroupBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.cmbBoxDisplayFieldItem = new System.Windows.Forms.ComboBox();
             this.cmbBoxStopBits = new System.Windows.Forms.ComboBox();
             this.lblStopBits = new System.Windows.Forms.Label();
             this.txtBoxDisplayDataBits = new System.Windows.Forms.TextBox();
@@ -150,8 +152,6 @@
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.label1 = new System.Windows.Forms.Label();
-            this.cmbBoxDisplayFieldItem = new System.Windows.Forms.ComboBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -636,6 +636,26 @@
             this.groupBoxDisplay.TabIndex = 11;
             this.groupBoxDisplay.TabStop = false;
             this.groupBoxDisplay.Text = "Дисплей покупателя";
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(13, 57);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(173, 17);
+            this.label1.TabIndex = 45;
+            this.label1.Text = "Поле вывода на дисплей";
+            // 
+            // cmbBoxDisplayFieldItem
+            // 
+            this.cmbBoxDisplayFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxDisplayFieldItem.FormattingEnabled = true;
+            this.cmbBoxDisplayFieldItem.Location = new System.Drawing.Point(192, 53);
+            this.cmbBoxDisplayFieldItem.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxDisplayFieldItem.Name = "cmbBoxDisplayFieldItem";
+            this.cmbBoxDisplayFieldItem.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxDisplayFieldItem.TabIndex = 46;
             // 
             // cmbBoxStopBits
             // 
@@ -1132,7 +1152,7 @@
             this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1024, 483);
+            this.tabPage2.Size = new System.Drawing.Size(1024, 563);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1143,7 +1163,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 25);
             this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1024, 483);
+            this.tabPage4.Size = new System.Drawing.Size(1024, 563);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1160,7 +1180,7 @@
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1024, 483);
+            this.tabControl2.Size = new System.Drawing.Size(1024, 563);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -1174,7 +1194,7 @@
             this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage5.Size = new System.Drawing.Size(995, 475);
+            this.tabPage5.Size = new System.Drawing.Size(995, 555);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1283,7 +1303,7 @@
             this.tabPage7.Location = new System.Drawing.Point(4, 25);
             this.tabPage7.Margin = new System.Windows.Forms.Padding(4);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1024, 483);
+            this.tabPage7.Size = new System.Drawing.Size(1024, 563);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Матрикс коды";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1295,7 +1315,7 @@
             this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 135);
             this.pnl_ProdictMatrixClassFill.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(1024, 348);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(1024, 428);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -1309,7 +1329,7 @@
             this.dgProdictMatrixClass.Margin = new System.Windows.Forms.Padding(4);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
             this.dgProdictMatrixClass.RowHeadersWidth = 51;
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(1024, 348);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(1024, 428);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -1473,26 +1493,6 @@
             this.pnlFill.Size = new System.Drawing.Size(1032, 592);
             this.pnlFill.TabIndex = 40;
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 57);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(173, 17);
-            this.label1.TabIndex = 45;
-            this.label1.Text = "Поле вывода на дисплей";
-            // 
-            // cmbBoxDisplayFieldItem
-            // 
-            this.cmbBoxDisplayFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxDisplayFieldItem.FormattingEnabled = true;
-            this.cmbBoxDisplayFieldItem.Location = new System.Drawing.Point(192, 53);
-            this.cmbBoxDisplayFieldItem.Margin = new System.Windows.Forms.Padding(4);
-            this.cmbBoxDisplayFieldItem.Name = "cmbBoxDisplayFieldItem";
-            this.cmbBoxDisplayFieldItem.Size = new System.Drawing.Size(119, 24);
-            this.cmbBoxDisplayFieldItem.TabIndex = 46;
-            // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -1503,7 +1503,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FConfig";
-            this.Text = "FConfig";
+            this.Text = "Основные настройки";
             this.Load += new System.EventHandler(this.FConfig_Load);
             this.tabControl1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);

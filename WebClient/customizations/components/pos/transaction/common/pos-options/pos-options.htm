@@ -1,0 +1,110 @@
+<form name="transactionOptionsForm" id="transactionOptionsForm" class="form-horizontal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <div class="row">
+        <div class="col-xs-12">
+          <h4 data-translate="3282">Transaction Options</h4>
+        </div>
+      </div>
+    </div>
+    <div class="modal-body">
+      <div class="container-fluid">
+        <div class="row">
+          <label class="sr-only">
+            <!-- DO NOT REMOVE THIS LABEL!!! -->
+          </label>
+          <div class="col-xs-12">
+            <button event-name="posOptionsTransactionLookup" type="button" tabindex="900" class="btn btn-info btn-block" id="transactionLookupButton" ng-disabled="disableLookup()" ng-click="transactionLookup2()">
+              <span data-translate="503">Transaction Lookup</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button event-name="posOptionsPendingTransactions" tabindex="901" class="btn btn-info btn-block" type="button" ng-click="pendingTransactions()" data-permission-disabled="disableLookup()" data-permission="posaccesspendingtransactions">
+              <span data-translate="504">Pending Transactions</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin" ng-if="showSpecialOrderButton()">
+          <div class="col-xs-12">
+            <button event-name="posSpecialOrder" type="button" tabindex="902" class="btn btn-info btn-block" id="posSpecialOrderButton" ng-disabled="disableSpecialOrderButton()" ng-click="specialOrderAddItemAction()">
+              <span data-translate="894">Special Order</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button event-name="posGeneratePO" type="button" tabindex="903" class="btn btn-info btn-block" id="posGeneratePOButton" ng-disabled="disableGeneratePO()" ng-click="generatePO()">
+              <span data-translate="7164">Generate Purchase Order</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button event-name="posOptionsPrintTags" tabindex="121" class="btn btn-info btn-block" type="button" ng-click="printTags()" ng-disabled="transactionPrintTagsButton">
+              <span data-translate="4253">Print Tags</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <top-filter-change-button asklayout="0" disable="false" on-close="updateTopFilter"></top-filter-change-button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12" ng-controller="printCopyController">
+            <button class="btn btn-info btn-block" type="button" ng-click="printDocumentCopy()">
+              <span>Копия чека</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button class="btn btn-info btn-block" type="button" onclick="printDoc('Returnblank')">
+              <span>Бланк возврата</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <button class="btn btn-info btn-block" type="button" onclick="printDoc('UPD')">
+              <span>УПД</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="row top-margin" ng-show="form.showGiftCard">
+          <div class="col-xs-12">
+            <button event-name="posOptionsGiftCardBalance" type="button" tabindex="2" id="posGiftCardBalance" class="btn btn-info btn-block" ng-click="giftModal('eft')">
+              <span data-translate="3281">Gift Card Balance</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin" ng-show="form.showCentralGiftCard">
+          <div class="col-xs-12">
+            <button event-name="posOptionsCentralGiftCardBalance" type="button" tabindex="2" id="posCentralGiftCardBalance" class="btn btn-info btn-block" ng-click="giftCardBalance('central')" ng-disabled="!sessionInfo.permissions.checkcentralgiftcardbal">
+              <span data-translate="5941">Central Gift Card Details</span>
+            </button>
+          </div>
+        </div>
+        <div class="row top-margin">
+          <div class="col-xs-12">
+            <promo-apply-manually-button document-sid="document.sid" callback="refreshTransaction" layout="1"></promo-apply-manually-button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-xs-12">
+            <button event-name="posTransactionOptionsCancel" id="cancelTransactionOptionsButton" type="button" tabindex="6" class="btn btn-lg btn-default" ng-click="cancel()">
+              <span data-translate="1.2">Cancel</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -2,18 +2,20 @@
     var dependencies = [];
 
     /*DO NOT MODIFY ABOVE THIS LINE!*/
+    /* START DEDAGROUP CUSTOMIZATION */
+    dependencies.push('ddg.CopyFunction');
+    dependencies.push('ddg.BarcodeScanner');
+    dependencies.push('ddg.LocalStorage');
+    dependencies.push('ddg.Translate');
+    dependencies.push('ddg.PlanetTaxFree');
+    dependencies.push('ddg.TransactionsLookup');
+	dependencies.push('ddg.GucciCrmIntegration');
+	dependencies.push('ddg.GucciVoucherWritePackageNumber');
+	
+    /* END DEDAGROUP CUSTOMIZATION */
 
     //Usage example:
     //dependencies.push('dependencyName');
-
-  // Add/Remove Comments to Enable/Disable Cayan/Genius EFT Plugin
-  dependencies.push('prismPluginsSample.module.cayanRouteModule');
-  dependencies.push('prismPluginsSample.service.eftCayanService');
-  dependencies.push('prismPluginsSample.controller.cayanDeviceController');
-  dependencies.push('prismPluginsSample.controller.cayanGiftCardController');
-  dependencies.push('prismPluginsSample.controller.cayanSigCapController');
-  dependencies.push('prismPluginsSample.controller.cayanCancelController');
-
 
     /*DO NOT MODIFY BELOW THIS LINE!*/
     ng.module('prismApp.customizations', dependencies, null);

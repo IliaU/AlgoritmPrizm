@@ -1,0 +1,37 @@
+/* Store custom CSS in this file to prevent overwriting changes with software updates */
+/* inserire la sotto riga in customer.css
+@import "../customizations/styles/gru-customer.css";
+*/
+
+
+.logo
+{
+display: block;
+-moz-box-sizing: border-box;
+box-sizing: border-box;
+background: url(/customizations/images/Gucci_logo200bi.jpg) no-repeat;
+width: 200px;
+height: 45px;
+padding-left: 200px;
+}
+
+body
+{
+background-color: #000000;
+}
+
+#loading-bar .bar{
+	background:#4682B4;
+	height:20px}
+
+#associatePane > div:nth-child(2),
+#associatePane > div:nth-child(3),
+#associatePane > div:nth-child(4),
+#associatePane > div:nth-child(5),
+#prismBody > div.container-fluid.ng-scope > div.row > div:nth-child(2)
+{
+display: none;
+}
+/*
+#prismBody > div.container-fluid.ng-scope > div.row > div:nth-child(2)
+*/

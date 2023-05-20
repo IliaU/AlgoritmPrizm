@@ -1,24 +1,133 @@
-<!-- Add/Remove Comments to Enable/Disabled Cayan/Genius EFT Plugin -->
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Config.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Device-Controller.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Gift-Controller.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-SigCap-Controller.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Cancel-Controller.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Void-Config.js"></script>
- <script type="text/javascript" src="/plugins/sample/cayan/EFT-Cayan-Service.js"></script>
+
+<!-- FrontendLocalStorage START -->
+<script type="text/javascript" src="plugins/ddg/LocalStorage/LocalStorage.js"></script>
+<script type="text/javascript" src="plugins/ddg/LocalStorage/libs/angular-local-storage.min.js"></script>
+<script type="text/javascript" src="plugins/ddg/LocalStorage/services/storage.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/LocalStorage/config.js"></script>
+<!-- FrontendLocalStorage END -->
 
 
-<!-- Add/Remove Comments to Enable/Disabled B+S Card Service EFT Plugin -->
-<!-- <script type="text/javascript" src="/plugins/EFT/B+S/config.js"></script> -->
-<!-- <script type="text/javascript" src="/plugins/EFT/B+S/void-config.js"></script> -->
 
-<script type="text/javascript" src="/customizations/js/getSaleDocInfo.js"></script>
-<script type="text/javascript" src="/customizations/js/getXreports.js"></script>
-<script type="text/javascript" src="/customizations/js/getZreports.js"></script>
-<script type="text/javascript" src="/customizations/js/closeShiftController.js"></script>
-<script type="text/javascript" src="/customizations/js/openShiftController.js"></script>
-<script type="text/javascript" src="/customizations/js/docItemBeforeInsertHandler.js"></script> 
-<!--<script type="text/javascript" src="/customizations/js/docBeforeCloseHandler.js"></script> -->
-<script type="text/javascript" src="/customizations/js/loadInv.js"></script>
-<script type="text/javascript" src="/customizations/js/verification.js"></script> 
-<!-- <script type="text/javascript" src="/customizations/js/loadReceivingController.js"></script>  -->
+<!-- retailpro-prism-frontend-plugin-translate START -->
+<script type="text/javascript" src="plugins/ddg/Translate/Translate.js"></script>
+<script type="text/javascript" src="plugins/ddg/Translate/services/labels-service.js"></script>
+<script type="text/javascript" src="plugins/ddg/Translate/interceptors/translate-interceptor.js"></script>
+<script type="text/javascript" src="plugins/ddg/Translate/plugins.js"></script>
+<script type="text/javascript" src="plugins/ddg/Translate/config.js"></script>
+<!-- retailpro-prism-frontend-plugin-translate END -->
+
+
+
+<!-- FrontendBarcodeScanner START -->
+<script type="text/javascript" src="plugins/ddg/BarcodeScanner/BarcodeScanner.js"></script>
+<script type="text/javascript" src="plugins/ddg/BarcodeScanner/libs/angular-barcode-scanner/angular-barcode-scanner.js"></script>
+<script type="text/javascript" src="plugins/ddg/BarcodeScanner/config.js"></script>
+<!-- FrontendBarcodeScanner END -->
+
+
+
+<!-- FrontendCopyFunction START -->
+<script type="text/javascript" src="plugins/ddg/CopyFunction/CopyFunction.js"></script>
+<script type="text/javascript" src="plugins/ddg/CopyFunction/buttonhooks/copy.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/CopyFunction/constant.js"></script>
+<script type="text/javascript" src="plugins/ddg/CopyFunction/config.js"></script>
+
+<!-- FrontendCopyFunction END -->
+
+
+
+<!-- PrismTransactionsLookupFrontend START -->
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/TransactionsLookup.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/constant.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/services/TL.storage.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/services/transactions.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/services/subsidiary.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/services/store.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/components/search-filters/Filter.js"></script>
+<script type="text/javascript"
+  src="plugins/ddg/TransactionsLookup/components/search-filters/search-filters.component.js"></script>
+<script type="text/javascript"
+  src="plugins/ddg/TransactionsLookup/components/search-results/search-results.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/components/main/GridSettings.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/components/main/main.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/sidebuttons/sideButton.js"></script>
+<script type="text/javascript" src="plugins/ddg/TransactionsLookup/config.js"></script>
+<!-- PrismTransactionsLookupFrontend END -->
+
+
+
+<!-- PlanetTaxFreeFrontend START -->
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/libs/mrz.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/libs/cleave-angular.min.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/libs/ng-iban.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/PlanetTaxFree.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/constant.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/transactionsLookup.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/events.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/settings.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/taxfree.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/country.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/refund.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/modelServiceHelper.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/voucher.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/modal.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/PTF.storage.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/fiscalDriverIntegration.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/services/notification.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/modeSelection/modeSelection.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/customerDataForm/customerDataForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/barcodeScanner/barcodeScanner.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/refundForm/refundForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/creditCardForm/creditCardForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/alipayForm/alipayForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/bankTransferForm/bankTransferForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/chequeForm/chequeForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/overrideUserForm/overrideUserForm.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/buttonhooks/modeSelection.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/buttonhooks/customerDataForm.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/buttonhooks/cleanTransaction.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/components/messageModal/messageModal.component.js"></script>
+<script type="text/javascript" src="plugins/ddg/PlanetTaxFree/config.js"></script>
+
+<!-- PlanetTaxFreeFrontend END -->
+
+<!-- Gucci CRM Integration -->
+
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/GucciCrmIntegration.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/constant.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/services/grucrm.storage.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/services/notification.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/services/crm.service.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/sidebuttons/sideButton.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/buttonhooks/lookup.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/buttonhooks/detail.buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciCrmIntegration/config.js"></script>
+
+<!-- Gucci VoucherPkgno Plugin -->
+
+<script type="text/javascript" src="plugins/ddg/GucciVoucherWritePackageNumber/GucciVoucherWritePackageNumber.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciVoucherWritePackageNumber/constant.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciVoucherWritePackageNumber/buttonhook.js"></script>
+<script type="text/javascript" src="plugins/ddg/GucciVoucherWritePackageNumber/config.js"></script>
+
+<!--AKS Plugins-->
+<script type="text/javascript" src="/customizations/js/loadConfig.js"></script>
+<script type="text/javascript" src="/customizations/js/pos/getXreport.js"></script>
+<!--<script type="text/javascript" src="/customizations/js/pos/getZreport.js"></script>-->
+<script type="text/javascript" src="/customizations/js/pos/closeShift.js"></script>
+<script type="text/javascript" src="/customizations/js/pos/openShift.js"></script>
+<script type="text/javascript" src="/customizations/js/pos/cashInOut.js"></script>
+<script type="text/javascript" src="/customizations/js/pos/openDrawer.js"></script>
+<script type="text/javascript" src="/customizations/js/transaction/processTransaction.js"></script>
+<script type="text/javascript" src="/customizations/js/transaction/itemMarking.js"></script>
+<script type="text/javascript" src="/customizations/js/transaction/legalCustomer.js"></script>
+<!--<script type="text/javascript" src="/customizations/js/transaction/bonusAccount.js"></script>-->
+<script type="text/javascript" src="/customizations/js/store-ops/piPrint.js"></script>
+<script type="text/javascript" src="/customizations/js/store-ops/loadInv.js"></script>
+<script type="text/javascript" src="/customizations/js/store-ops/openVerification.js"></script>
+<script type="text/javascript" src="/customizations/js/pos/transactionReport.js"></script>
+<script type="text/javascript" src="/customizations/js/transaction/depositRefund.js"></script>
+<script type="text/javascript" src="/customizations/js/transaction/customerDisplay.js"></script>
+<script type="text/javascript" src="/customizations/js/store-ops/priceListPrint.js"></script>
+
+

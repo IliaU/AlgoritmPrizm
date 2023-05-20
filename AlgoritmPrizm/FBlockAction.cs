@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 
 using AlgoritmPrizm.Lib;
+using AlgoritmPrizm.Com;
 
 namespace AlgoritmPrizm
 {
@@ -21,7 +22,16 @@ namespace AlgoritmPrizm
         /// </summary>
         public FBlockAction()
         {
-            InitializeComponent();
+            try
+            {
+                InitializeComponent();
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при чтении конфигурации с ошибкой: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                throw ae;
+            }
         }
 
         // Закрытие формы
@@ -34,8 +44,8 @@ namespace AlgoritmPrizm
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Com.Log.EventSave(ae.Message, "Fstart.btnBlockAction_Click", EventEn.Error);
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации с ошибкой: ({0})", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.btnBlockAction_Click", GetType().Name), EventEn.Error);
                 //throw ae;
             }
         }
@@ -57,8 +67,26 @@ namespace AlgoritmPrizm
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой: {0}", ex.Message));
-                Com.Log.EventSave(ae.Message, "Fstart.btnBlockAction_Click", EventEn.Error);
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации с ошибкой: ({0})", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.btnBlockAction_Click", GetType().Name), EventEn.Error);
+                //throw ae;
+            }
+        }
+
+        // Пользователь нажимает любую клавишу
+        private void txtBoxBlockAction_KeyDown(object sender, KeyEventArgs e)
+        {
+            try
+            {
+                if (e.KeyCode == Keys.Enter )
+                {
+                    this.btnBlockAction_Click(null, null);
+                }
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сохранении конфигурации с ошибкой: ({0})", ex.Message));
+                Log.EventSave(ae.Message, string.Format("{0}.txtBoxBlockAction_KeyDown", GetType().Name), EventEn.Error);
                 //throw ae;
             }
         }

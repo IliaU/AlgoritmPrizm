@@ -1,4 +1,3 @@
-const HOSTNAME  = "http://10.8.35.100"
 const operations = { // 1=Sale;2=Return;3=Order;4=Exchange;5=Void
 	1: "Продажа",
 	2: "Возврат",
@@ -23,8 +22,8 @@ function initTable1 () {
 			field: 'description2',
 			title: 'Опис 2'
 		}, {
-			field: 'description3',
-			title: 'Опис 3'
+			field: 'attribute',
+			title: 'Атрибут'
 		}]
 	});
 }
@@ -579,7 +578,7 @@ async function showReport (searchButton) {
 	searchButton.disabled = true;
 
 	// try to get item info
-	let item = await loadDataByUPC(UPC, ["description1", "description2", "description3"]);
+	let item = await loadDataByUPC(UPC, ["description1", "description2", "attribute"]);
 	if (!item) {
 		alert("Товара с таким UPC не существует");
 		searchButton.disabled = false;

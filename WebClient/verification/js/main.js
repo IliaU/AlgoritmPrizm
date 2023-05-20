@@ -1,4 +1,3 @@
-const HOSTNAME = "http://10.8.35.100";
 const verificationTypeParams = {
     voucher: {
         documentName: "receiving",
@@ -16,10 +15,9 @@ const verificationTypeParams = {
         documentName: "adjustment",
         documentNumber: "adjno",
         documentItemName: "adjitem",
-        itemQty: "adjsid"
+        itemQty: "adjvalue"
     }
 };
-const session = JSON.parse(sessionStorage.getItem("session"));
 const verificationField = "note";
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -64,36 +62,48 @@ async function loadFile(input) {
         let dataFile = reader.result;
         let itemStrings = dataFile.split("\r\n");
 
-        let lostItems = documentItems;
-        let invalidItems = [];
-
-        for (const itemData of itemStrings) {
-            let [UPC, quantity] = itemData.split("~");
-            if (UPC && quantity) {
-                if (UPC.length === 13) {
-                    UPC = parseInt(UPC).toString();
-                    let verifiedItem = verifyItem(UPC, quantity);
-                    if (verifiedItem) {
-                        lostItems = lostItems.filter(item => item.itempos !== verifiedItem.itempos);
+        let scannedItems = {};
+		for (const item of itemStrings) {
+			let ALU = item.split("~")[0];
+            if (ALU.length > 5) {
+                    if (!scannedItems[ALU]) {
+                        scannedItems[ALU] = 1;
                     } else {
-                        let newItem = await getItemInfo(UPC);
-                        if (newItem) {
-                            addItem(newItem);
-                        } else {
-                            let error = {
-                                upc: UPC,
-                                description: "Этого UPC нет в документе"
-                            };
-                            invalidItems.push(error);
-                        }
+                        scannedItems[ALU] += 1;
                     }
                 } else {
-                    let error = {
-                        upc: UPC,
-                        description: "Не соответствует формату"
-                    };
-                    invalidItems.push(error);
+                    alert("ALU " + ALU + " не соответствует формату.");
                 }
+        }
+
+        let lostItems = documentItems;
+        let invalidItems = [];
+        for (const [ ALU, quantity ] of Object.entries(scannedItems)) {
+            if (ALU.length > 5) {
+                // ALU = parseInt(ALU).toString();
+                let verifiedItem = verifyItem(ALU, quantity);
+                if (verifiedItem) {
+                    lostItems = lostItems.filter(item => item.itempos !== verifiedItem.itempos);
+                } else {
+                    let newItem = await getItemInfo(ALU);
+                    newItem.read = quantity;
+					newItem.difference = quantity;
+                    if (newItem) {
+                        addItem(newItem);
+                    } else {
+                        let error = {
+                            alu: ALU,
+                            description: "Этого ALU нет в документе"
+                        };
+                        invalidItems.push(error);
+                    }
+                }
+            } else {
+                let error = {
+                    alu: ALU,
+                    description: "Не соответствует формату"
+                };
+                invalidItems.push(error);
             }
         }
 
@@ -107,7 +117,7 @@ async function loadFile(input) {
             });
         }
 
-        if (invalidItems) {
+        if (invalidItems.length) {
             initErrorTable();
             for (let i = 0; i < invalidItems.length; i++) {
                 errorTable.bootstrapTable("append", invalidItems[i]);
@@ -116,8 +126,8 @@ async function loadFile(input) {
     }
 }
 
-function verifyItem (UPC, quantity) {
-    let item = documentItems.find((item) => item.upc === UPC);
+function verifyItem (ALU, quantity) {
+    let item = documentItems.find((item) => item.alu === ALU);
 
     if (!item) {
         return null;
@@ -136,9 +146,9 @@ function verifyItem (UPC, quantity) {
     return item;
 }
 
-async function getItemInfo (UPC) {
+async function getItemInfo (ALU) {
     const cols = ["description1", "description2"];
-    let url = HOSTNAME + "/v1/rest/inventory?cols=upc," + cols.join() + "&filter=upc,eq," + UPC;
+    let url = HOSTNAME + "/v1/rest/inventory?cols=alu," + cols.join() + "&filter=alu,eq," + ALU;
     let response = await fetch(url, {
         method: "GET",
         headers: {
@@ -160,8 +170,8 @@ function initItemsTable () {
             field: 'position',
             title: '№'
         }, {
-            field: 'upc',
-            title: 'UPC'
+            field: 'alu',
+            title: 'ALU'
         }, {
             field: 'description1',
             title: 'Описание 1'
@@ -170,10 +180,10 @@ function initItemsTable () {
             title: 'Описание 2'
         }, {
             field: 'quantity',
-            title: 'Кол-во'
+            title: 'В документе'
         }, {
             field: 'read',
-            title: 'Считано'
+            title: 'Сканировано'
         }, {
             field: 'difference',
             title: 'Расхождение'
@@ -189,8 +199,8 @@ function initErrorTable () {
     $("#errors")[0].style.display = "block";
     $("#error-table").bootstrapTable({
         columns: [{
-            field: "upc",
-            title: "UPC"
+            field: "alu",
+            title: "ALU"
         }, {
             field: "description",
             title: "Описание ошибки"
@@ -201,12 +211,12 @@ function initErrorTable () {
 function addItem (item) {
     $('#table').bootstrapTable("append", {
         position: item.itempos,
-        upc: item.upc,
+        alu: item.alu,
         description1: item.description1,
         description2: item.description2,
-        quantity: item.quantity,
+        quantity: item.quantity ?? 0,
         read: item.read ?? 0,
-        difference: 0,
+        difference: item.difference ?? 0,
     });
 }
 
@@ -219,7 +229,7 @@ async function getItemsFromAPI(SID, verificationType) {
         SID +
         "/" +
         verificationTypeParams[verificationType].documentItemName +
-        "?cols=itempos,upc,description1,description2," +
+        "?cols=itempos,upc,description1,description2,alu," +
         verificationTypeParams[verificationType].itemQty;
 
     let response = await fetch(url, {
@@ -321,4 +331,3 @@ async function verifyDocument () {
 
 
 loadDocumentContent();
-

@@ -1,0 +1,181 @@
+<table class="table table-condensed table-responsive col-xs-12 table-striped">
+  <tbody>
+    <tr>
+    <td>
+      <strong><span data-translate="862">Tracking No.</span></strong>
+    </td>
+    <td class="text-right">
+      {{document.tracking_number}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong><span data-translate="683">Store</span></strong>
+    </td>
+    <td class="text-right">
+      {{storeName}}
+    </td>
+  </tr>
+  <tr ng-show="document.store_number">
+    <td>
+      <strong><span data-translate="3613">Store Number</span></strong>
+    </td>
+    <td class="text-right">
+      {{document.store_number}}
+    </td>
+  </tr>
+  <tr ng-show="document.document_number">
+    <td>
+      <strong>{{document.receipt_type|receipt_type_names}} <span data-translate="2337">Receipt No</span></strong>
+    </td>
+    <td class="text-right">
+      {{document.document_number}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_document_number">
+    <td>
+      <strong>{{document.order_type|order_type_names}} <span data-translate="2338" ng-show="!hasSendSaleItems">Order No</span> <span data-translate="6232" ng-show="hasSendSaleItems">Send Sale No</span></strong>
+    </td>
+    <td class="text-right">
+      {{document.order_document_number}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong data-translate="622">Cashier</strong>
+    </td>
+    <td class="text-right">
+      {{document.cashier_login_name}}
+    </td>
+  </tr>
+  <tr ng-show="document.sold_qty">
+    <td>
+      <strong data-translate="623">Sold Qty</strong>
+    </td>
+    <td class="text-right">{{document.sold_qty|number}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong data-translate="3070">Sales Subtotal</strong>
+    </td>
+    <td class="text-right">{{document.sale_subtotal|currency}}
+    </td>
+  </tr>
+
+  <tr ng-show="document.discount_amount">
+    <td>
+      <strong data-translate="3071">Sales Discount</strong>
+    </td>
+    <td class="text-right">{{document.discount_amount|currency}}
+    </td>
+  </tr>
+
+  <tr ng-show="document.lty_redeem_amt">
+    <td>
+      <strong data-translate="5371">Loyalty Discount</strong>
+    </td>
+    <td class="text-right">{{document.lty_redeem_amt|currency}}
+    </td>
+  </tr>
+
+  <tr>
+    <td>
+      <strong data-translate="2150">Sales Tax</strong>
+    </td>
+    <td class="text-right">{{document.sale_total_tax_amt_rounded|tax}}
+    </td>
+  </tr>
+  <tr ng-show="document.fee_amt1">
+    <td>
+      <strong data-translate="3072">Sales Fees</strong>
+    </td>
+    <td class="text-right">{{document.fee_amt1|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.shipping_amt">
+    <td>
+      <strong data-translate="784">Shipping</strong>
+    </td>
+    <td class="text-right">{{document.shipping_amt|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_qty">
+    <td>
+      <strong data-translate="624" ng-show="!hasSendSaleItems">Order Qty</strong>
+      <strong data-translate="6233" ng-show="hasSendSaleItems">Send Sale Qty</strong>
+    </td>
+    <td class="text-right">{{document.order_qty|number}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_subtotal">
+    <td>
+      <strong data-translate="3074" ng-show="!hasSendSaleItems">Order Subtotal</strong>
+      <strong data-translate="6234" ng-show="hasSendSaleItems">Send Sale Subtotal</strong>
+    </td>
+    <td class="text-right">{{document.order_subtotal|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_discount_amount">
+    <td>
+      <strong data-translate="2896" ng-show="!hasSendSaleItems">Order Discount</strong>
+      <strong data-translate="6235" ng-show="hasSendSaleItems">Send Sale Discount</strong>
+    </td>
+    <td class="text-right">{{document.order_discount_amount|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_total_tax_amt">
+    <td>
+      <strong data-translate="3075" ng-show="!hasSendSaleItems">Order Tax</strong>
+      <strong data-translate="6236" ng-show="hasSendSaleItems">Send Sale Tax</strong>
+    </td>
+    <td class="text-right">{{document.order_total_tax_amt|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_fee_amt1">
+    <td>
+      <strong data-translate="692.1" ng-show="!hasSendSaleItems">Order Fee</strong>
+      <strong data-translate="6237" ng-show="hasSendSaleItems">Send Sale Fee</strong>
+    </td>
+    <td class="text-right">{{document.order_fee_amt1|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.order_shipping_amt">
+    <td>
+      <strong data-translate="3077" ng-show="!hasSendSaleItems">Order Shipping</strong>
+      <strong data-translate="6238" ng-show="hasSendSaleItems">Send Sale Shipping</strong>
+    </td>
+    <td class="text-right">{{document.order_shipping_amt|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.return_qty">
+    <td>
+      <strong data-translate="625">Return Qty</strong>
+    </td>
+    <td class="text-right">{{document.return_qty|number}}
+    </td>
+  </tr>
+  <tr ng-show="document.return_subtotal">
+    <td>
+      <strong data-translate="3345">Return Subtotal</strong>
+    </td>
+    <td class="text-right">{{document.return_subtotal|currency}}
+    </td>
+  </tr>
+  <tr ng-show="document.return_total_tax_amt_rounded">
+    <td>
+      <strong data-translate="3346">Return Tax</strong>
+    </td>
+    <td class="text-right">{{document.return_total_tax_amt_rounded|currency}}
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <strong data-translate="2109">Transaction Total</strong>
+    </td>
+    <td class="text-right">{{document.transaction_total_amt |currency}}
+    </td>
+  </tr>
+  </tbody>
+</table>
+

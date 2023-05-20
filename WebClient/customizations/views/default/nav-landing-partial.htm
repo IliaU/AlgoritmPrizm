@@ -135,6 +135,33 @@
             </div>
             <div class="panel-body">
                 <div class="row form-group">
+                    <div ng-controller="openShiftCntrl">
+                        <div class="col-xs-3">
+                            <img-btn ng-click="openShift()" event-name="navLandingOpenShift" tabindex="135"
+                                img-src="'/images/pos/pos_new_48.png'" button-text="'Открыть смену'"></img-btn>
+                        </div>
+                    </div>
+                    <div ng-controller="closeShiftCntrl">
+                        <div class="col-xs-3">
+                            <img-btn ng-click="closeShift()" tabindex="136" img-src="'/images/pos/Zout_Closed_48.png'"
+                                button-text="'Закрыть смену'"></img-btn>
+                        </div>
+                    </div>
+                    <div ng-controller="cashInOutCntrl">
+                        <div class="col-xs-3">
+                            <img-btn ng-click="cashIn()" tabindex="136" img-src="'/images/pos/disbursements_48.png'"
+                                button-text="'Внести наличные'"></img-btn>
+                        </div>
+                    </div>
+                    <div ng-controller="cashInOutCntrl">
+                        <div class="col-xs-3">
+                            <img-btn ng-click="cashOut()" tabindex="136" img-src="'/images/pos/Zout_Closed_48.png'"
+                                button-text="'Изъять наличные'"></img-btn>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row form-group">
                     <div class="col-xs-3">
                         <img-btn event-name="navLandingXOut" tabindex="135" translation-name="'506'"
                             img-src="'/images/pos/Xout_48.png'" click-handler="goToXOut" disable="allowXout"
@@ -153,20 +180,21 @@
                 </div>
 
                 <!-- End Custom Reserve Buttons Block -->
-                <div class="row form-group">
-                    <div ng-controller="openShiftCntrl">
+                <!-- <div class="row form-group">
+                    <div ng-controller="cashInCntrl">
                         <div class="col-xs-3">
-                            <img-btn ng-click="openShift()" event-name="navLandingOpenShift" tabindex="135"
-                                img-src="'/images/pos/pos_new_48.png'" button-text="'Открыть смену'"></img-btn>
+                            <img-btn ng-click="cashIn()" tabindex="136" img-src="'/images/pos/Zout_Closed_48.png'"
+                                button-text="'Внести наличные'"></img-btn>
                         </div>
                     </div>
-                    <div ng-controller="closeShiftCntrl">
+                    <div ng-controller="cashOutCntrl">
                         <div class="col-xs-3">
-                            <img-btn ng-click="closeShift()" tabindex="136" img-src="'/images/pos/Zout_Closed_48.png'"
-                                button-text="'Закрыть смену'"></img-btn>
+                            <img-btn ng-click="cashOut()" tabindex="136" img-src="'/images/pos/Zout_Closed_48.png'"
+                                button-text="'Изъять наличные'"></img-btn>
                         </div>
                     </div>
-                </div>
+                </div> -->
+
                 <!-- End Custom Reserve Buttons Block -->
 
 				<!-- <div class="row form-group">
