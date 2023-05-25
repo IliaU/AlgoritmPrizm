@@ -57,9 +57,15 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         void SetQtyRollbackItem(string ProductSid, double qty);
 
         /// <summary>
+        /// Установка признака отложенности докумнета
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор документа</param>
+        void SetIsHelpRollbackDoc(string DocumentSid);
+
+        /// <summary>
         /// Установка признака отложенного чека в документе
         /// </summary>
-        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="DocumentSid">Идентификатор документа</param>
         /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
         void SetIsHeldForDocements(string DocumentSid, int IsHeld);
 

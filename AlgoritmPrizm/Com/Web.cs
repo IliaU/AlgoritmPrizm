@@ -936,7 +936,10 @@ namespace AlgoritmPrizm.Com
                     try
                     {
                         // Пауза во времени
-                        Thread.Sleep(Config.HeldForDocementsTimeout*1000);
+                        Thread.Sleep(Config.HeldForDocementsTimeout * 1000);
+
+                        //Установка признака отложенности докумнета
+                        Com.ProviderFarm.CurrentPrv.SetIsHelpRollbackDoc(RollbackDoc.sid);
 
                         // Пробегаем по позициям в чеке
                         foreach (JsonPrintFiscDocItem RollbackItem in RollbackDoc.items)

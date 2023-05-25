@@ -325,9 +325,49 @@ namespace AlgoritmPrizm.Com.Provider
         }
 
         /// <summary>
+        /// Установка признака отложенности докумнета
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор документа</param>
+        public void SetIsHelpRollbackDoc(string DocumentSid) 
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            SetIsHelpRollbackDocORA(DocumentSid);
+                            break;
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            SetIsHelpRollbackDocMySql(DocumentSid);
+                            break;
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "SetIsHelpRollbackDoc", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        /// <summary>
         /// Установка признака отложенного чека в документе
         /// </summary>
-        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="DocumentSid">Идентификатор документа</param>
         /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
         public void SetIsHeldForDocements(string DocumentSid, int IsHeld)
         {
@@ -364,7 +404,6 @@ namespace AlgoritmPrizm.Com.Provider
                 MessageBox.Show(ex.Message);
             }
         }
-
 
         /// <summary>
         /// Получить сумму по клиенту за дату
@@ -951,9 +990,47 @@ namespace AlgoritmPrizm.Com.Provider
         }
 
         /// <summary>
+        /// Установка признака отложенности докумнета
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор документа</param>
+        public void SetIsHelpRollbackDocORA(string DocumentSid)
+        {
+            string CommandSql = String.Format(@"update rpsods.document set created_datetime=created_by, modified_by=created_by, is_held=1 where sid='{0}'", DocumentSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelpRollbackDocORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelpRollbackDocORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocORA", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
         /// Установка признака отложенного чека в документе
         /// </summary>
-        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="DocumentSid">Идентификатор документа</param>
         /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
         public void SetIsHeldForDocementsORA(string DocumentSid, int IsHeld)
         {
@@ -1797,11 +1874,49 @@ Where t.doc_sid ='{0}'", docsid);
             }
         }
 
+        /// <summary>
+        /// Установка признака отложенности докумнета
+        /// </summary>
+        /// <param name="DocumentSid">Идентификатор документа</param>
+        public void SetIsHelpRollbackDocMySql(string DocumentSid)
+        {
+            string CommandSql = String.Format(@"update `rpsods`.`document` set `created_datetime`=`created_by`, `modified_by`=`created_by`, `is_held`=1 where `sid`='{0}'", DocumentSid);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocMySql", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        com.ExecuteNonQuery();
+                    }
+                }
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelpRollbackDocMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".SetIsHelpRollbackDocMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".SetIsHelpRollbackDocMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
 
         /// <summary>
         /// Установка признака отложенного чека в документе
         /// </summary>
-        /// <param name="DocumentSid">Идентификатор товара</param>
+        /// <param name="DocumentSid">Идентификатор документа</param>
         /// <param name="IsHeld">Признак отложенного чека (0 активный | 1 отложенный)</param>
         public void SetIsHeldForDocementsMySql(string DocumentSid, int IsHeld)
         {
