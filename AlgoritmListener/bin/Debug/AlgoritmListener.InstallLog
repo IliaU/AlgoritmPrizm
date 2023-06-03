@@ -1,0 +1,74 @@
+﻿Выполняется установка сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Устанавливается служба AlgoritmListener...
+Создается исходный EventLog AlgoritmListener в журнале Application...
+Выполняется откат для сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Восстанавливается исходное состояние журнала событий для источника AlgoritmListener.
+При выполнении программы установки System.Diagnostics.EventLogInstaller на этапе отката возникло исключение.
+System.Security.SecurityException: Источник не найден, но не удалось выполнить поиск по нескольким или всем журналам событий.  Недоступные журналы: Security, State.
+На этапе отката процедуры установки возникло исключение. Это исключение будет проигнорировано, и откат будет продолжен. Однако после завершения отката компьютер может не вернуться полностью в исходное состояние.
+Выполняется установка сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Устанавливается служба AlgoritmListener...
+Создается исходный EventLog AlgoritmListener в журнале Application...
+Выполняется откат для сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Восстанавливается исходное состояние журнала событий для источника AlgoritmListener.
+При выполнении программы установки System.Diagnostics.EventLogInstaller на этапе отката возникло исключение.
+System.Security.SecurityException: Источник не найден, но не удалось выполнить поиск по нескольким или всем журналам событий.  Недоступные журналы: Security, State.
+На этапе отката процедуры установки возникло исключение. Это исключение будет проигнорировано, и откат будет продолжен. Однако после завершения отката компьютер может не вернуться полностью в исходное состояние.
+Выполняется установка сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Устанавливается служба AlgoritmListener...
+Служба AlgoritmListener успешно установлена.
+Создается исходный EventLog AlgoritmListener в журнале Application...
+Выполняется фиксация сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Выполняется удаление сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Выполняется удаление источника EventLog AlgoritmListener.
+Выполняется удаление службы AlgoritmListener из системы...
+Служба AlgoritmListener успешно удалена из системы.
+Выполняется установка сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Устанавливается служба AlgoritmListener...
+Служба AlgoritmListener успешно установлена.
+Создается исходный EventLog AlgoritmListener в журнале Application...
+Выполняется фиксация сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Выполняется удаление сборки 'C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe'.
+Затронуты следующие параметры:
+   logtoconsole = 
+   assemblypath = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.exe
+   logfile = C:\Users\Admin\source\GIT\AlgoritmPrizm\AlgoritmListener\bin\Debug\AlgoritmListener.InstallLog
+Выполняется удаление источника EventLog AlgoritmListener.
+Выполняется удаление службы AlgoritmListener из системы...
+Служба AlgoritmListener успешно удалена из системы.

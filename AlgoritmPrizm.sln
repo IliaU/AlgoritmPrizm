@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30711.63
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoritmPrizm", "AlgoritmPrizm\AlgoritmPrizm.csproj", "{352F7DC0-B5DA-4F3F-BE78-F571F571C01B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AlgoritmListener", "AlgoritmListener\AlgoritmListener.csproj", "{BAF2B918-3319-438D-A406-5865475014C0}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,8 +17,15 @@ Global
 		{352F7DC0-B5DA-4F3F-BE78-F571F571C01B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{352F7DC0-B5DA-4F3F-BE78-F571F571C01B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{352F7DC0-B5DA-4F3F-BE78-F571F571C01B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BAF2B918-3319-438D-A406-5865475014C0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BAF2B918-3319-438D-A406-5865475014C0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BAF2B918-3319-438D-A406-5865475014C0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BAF2B918-3319-438D-A406-5865475014C0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {77012722-2D80-4940-B633-923F51F08FA5}
 	EndGlobalSection
 EndGlobal
