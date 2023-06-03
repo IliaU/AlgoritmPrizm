@@ -18,3 +18,7 @@ LicLib
 AlgoritmPrizm.xml
 Log.txt
 AlgoritmPrizm/bin/Debug/Log.txt
+/AlgoritmListener/bin/Debug/*.exe
+/AlgoritmListener/bin/Debug/*.dll
+/AlgoritmListener/bin/Release/*.exe
+/AlgoritmListener/bin/Release/*.dll
