@@ -54,7 +54,7 @@ namespace AlgoritmListener.Com
             if (string.IsNullOrWhiteSpace(LogFile)) File = "AlgoritmListener.log";
             else File = LogFile;
 
-            if (string.IsNullOrWhiteSpace(LogDir)) Dir = "";
+            if (string.IsNullOrWhiteSpace(LogDir)) Dir = @"C:\Program Files\AlgoritmListener";
             else Dir = LogDir;
 
             EventSave("Запуск службы", "AlgoritmListener", EventEn.Message);

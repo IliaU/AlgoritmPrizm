@@ -9,8 +9,10 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO;
+using System.Net.Http;
 using AlgoritmListener.Lib;
 using AlgoritmListener.Com;
+using AlgoritmListener.BLL;
 
 namespace AlgoritmListener
 {
@@ -21,7 +23,13 @@ namespace AlgoritmListener
         /// </summary>
         public static string LogDir = @"C:\Program Files";
         public static string LogFile = "AlgoritmListener.txt";
+        public static string FileXml = "AlgoritmListener.xml";
 
+        public static HttpClient IoIodeWebClientIsv = new HttpClient()
+        { 
+            BaseAddress = new Uri("http://isv:5000"),
+        };
+        
         public Service1()
         {
             InitializeComponent();
@@ -39,13 +47,30 @@ namespace AlgoritmListener
                 // Обработка ошибок чтобы сервис не свалился
                 try
                 {
+                    // Запуск службы и настройка логирования
                     if (!Directory.Exists(string.Format(@"{0}\AlgoritmListener", LogDir))) Directory.CreateDirectory(string.Format(@"{0}\AlgoritmListener", LogDir));
-
+                    //
                     // Если не писали о том что служба стартанула пишем об этом в лог
                     if (!flagStardet)
                     {
-                        Com.Log.SetupLog(string.Format(@"{0}\AlgoritmListener", LogDir), LogFile);
+                        Log.SetupLog(string.Format(@"{0}\AlgoritmListener", LogDir), LogFile);
                         flagStardet = true;
+
+                        // Запускаем чтение файла конфигурации
+                        Config.SetupConfig(string.Format(@"{0}\AlgoritmListener", LogDir), FileXml);
+
+                        // Для теста того что конфиг запустился и с него можно что-то считать
+                        //Log.EventSave(Config.PrizmListener_FileConf, "AlgoritmListener", EventEn.Message);
+                    }
+
+                    // Запускаем процесс проверки асинхронный модуля по плагину призма
+                    try
+                    {
+                        PrizmListener.Verif();
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.EventSave(string.Format("Не смогли запустить проверку по PrizmListener. Ошибка: {0}", ex.Message), "AlgoritmListener", EventEn.Error);
                     }
                 }
                 catch (Exception) { }

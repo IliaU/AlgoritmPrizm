@@ -58,6 +58,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BLL\PrizmListener.cs" />
+    <Compile Include="Com\Config.cs" />
     <Compile Include="Com\Log.cs" />
     <Compile Include="Lib\EventEn.cs" />
     <Compile Include="Lib\EventLog.cs" />
