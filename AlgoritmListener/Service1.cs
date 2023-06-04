@@ -76,7 +76,7 @@ namespace AlgoritmListener
                 catch (Exception) { }
 
                 // Пауза между циклами
-                await Task.Delay(3000);
+                await Task.Delay(10000);
             }
         }
 
