@@ -89,6 +89,11 @@ namespace AlgoritmListener.BLL
                             HttpResponseMessage respMes = resp.EnsureSuccessStatusCode();
                             if (respMes.StatusCode == System.Net.HttpStatusCode.OK)
                             {
+
+                                // Читаем контерн в виде потока данных
+                                System.IO.Stream jsonResponseStream = await resp.Content.ReadAsStreamAsync();  // таким способом можно сразу читать из респонса и тормазится поток пока не прочитает
+
+                                // Логируем окончание стения
                                 Log.EventSave("Бекенд для призма работает.", "PrizmListener.Verif", EventEn.Message);
                                 FlagAlgoritmPrizmExistProcess = true;
                             }

@@ -19,6 +19,11 @@ namespace AlgoritmListener
     public partial class Service1 : ServiceBase
     {
         /// <summary>
+        /// Статус последней дату от которой отсчитываем неделю и если старый лог то грохаем его
+        /// </summary>
+        private static DateTime LastDateLog;
+
+        /// <summary>
         /// Место хранения лога
         /// </summary>
         public static string LogDir = @"C:\Program Files";
@@ -40,6 +45,7 @@ namespace AlgoritmListener
         {
             // Флаг пишет что сервис стартанул
             bool flagStardet = false;
+            LastDateLog = DateTime.Now.Date;
 
             // Запускаем службу чтобы работала бесконечно
             while (true)
@@ -52,16 +58,23 @@ namespace AlgoritmListener
                     //
                     // Если не писали о том что служба стартанула пишем об этом в лог
                     if (!flagStardet)
-                    {
+                    {   
+                        // Регистрируем службу логирования
                         Log.SetupLog(string.Format(@"{0}\AlgoritmListener", LogDir), LogFile);
-                        flagStardet = true;
+                        flagStardet = true;                      
 
                         // Запускаем чтение файла конфигурации
                         Config.SetupConfig(string.Format(@"{0}\AlgoritmListener", LogDir), FileXml);
 
-                        // Для теста того что конфиг запустился и с него можно что-то считать
-                        //Log.EventSave(Config.PrizmListener_FileConf, "AlgoritmListener", EventEn.Message);
+                        // Нужно проверить файл и его грохнуть если он не нужен
+                        Log.EventSave("test", "tttt", EventEn.Message);
+                        Log.EventSave(LogDir, "tttt - LogDir", EventEn.Message);
+                        Log.EventSave(LogFile, "tttt - LogFile", EventEn.Message);
+                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile));
+                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile));
                     }
+                    
+
 
                     // Запускаем процесс проверки асинхронный модуля по плагину призма
                     try
@@ -73,10 +86,17 @@ namespace AlgoritmListener
                         Log.EventSave(string.Format("Не смогли запустить проверку по PrizmListener. Ошибка: {0}", ex.Message), "AlgoritmListener", EventEn.Error);
                     }
                 }
-                catch (Exception) { }
+                catch (Exception ex) 
+                {
+                    try
+                    {
+                        Log.EventSave(string.Format("Ошибка: {0}", ex.Message), "AlgoritmListener", EventEn.Error);
+                    }
+                    catch (Exception){}
+                }
 
                 // Пауза между циклами
-                await Task.Delay(10000);
+                await Task.Delay(Com.Config.TimeOutSec*1000);
             }
         }
 

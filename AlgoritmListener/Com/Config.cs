@@ -23,6 +23,11 @@ namespace AlgoritmListener.Com
         private static int _Version = 1;
 
         /// <summary>
+        /// Тайм аут между циклами проверки
+        /// </summary>
+        private static int _TimeOutSec = 10;
+
+        /// <summary>
         /// Объект XML файла
         /// </summary>
         private static XmlDocument Document = new XmlDocument();
@@ -54,6 +59,12 @@ namespace AlgoritmListener.Com
         /// Версия XML файла
         /// </summary>
         public static int Version { get { return _Version; } private set { } }
+
+
+        /// <summary>
+        /// Тайм аут между циклами проверки
+        /// </summary>
+        public static int TimeOutSec { get { return _TimeOutSec; } private set { } }
 
         /// <summary>
         /// Место хранения конфига нешего плагина к призму
@@ -149,6 +160,7 @@ namespace AlgoritmListener.Com
                 // Создаём начальное тело с которым мы будем потом работать
                 XmlElement xmlMain = Document.CreateElement("AlgoritmListener");
                 xmlMain.SetAttribute("Version", _Version.ToString());
+                xmlMain.SetAttribute("TimeOutSec", _TimeOutSec.ToString());
                 Document.AppendChild(xmlMain);
 
                 // Создаём список в который будем помещать элементы с пользователями
@@ -186,13 +198,7 @@ namespace AlgoritmListener.Com
                 // Получаем значения из заголовка
                 for (int i = 0; i < xmlRoot.Attributes.Count; i++)
                 {
-                    /*
-                    if (xmlRoot.Attributes[i].Name == "Trace") try { _Trace = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
-                    if (xmlRoot.Attributes[i].Name == "NameCompany") try { _NameCompany = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
-                    if (xmlRoot.Attributes[i].Name == "PrvFullName") PrvFullName = xmlRoot.Attributes[i].Value.ToString();
-                    try { if (xmlRoot.Attributes[i].Name == "ConnectionString") ConnectionString = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); }
-                    catch (Exception) { }
-                    */
+                    if (xmlRoot.Attributes[i].Name == "TimeOutSec") try {_TimeOutSec = int.Parse(xmlRoot.Attributes[i].Value.ToString());}catch (Exception) {}
                 }
 
                 // Получаем список вложенных объектов
