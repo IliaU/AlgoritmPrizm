@@ -26,6 +26,11 @@ namespace AlgoritmListener.BLL
         /// </summary>
         private static int _Version = 1;
 
+        /// <summary>
+        /// Объект для блокировки в одиин поток
+        /// </summary>
+        private static object lobj = new object();
+
         #endregion
 
         #region Public Param
@@ -47,33 +52,36 @@ namespace AlgoritmListener.BLL
         {
             try
             {
-                try
+                lock (lobj)
                 {
-                    XmlDocument Document= new XmlDocument();
-                    Document.Load(Config.PrizmListener_FileConf);
-                    XmlElement xmlRoot = Document.DocumentElement;
-
-                    ApplicationException appM = new ApplicationException("Неправильный настроечный файл, скорее всего не от этой программы.");
-                    ApplicationException appV = new ApplicationException(string.Format("Неправильная версия настроечного яайла, требуется {0} версия", _Version));
-
-                    // Проверяем значения заголовка
-                    if (xmlRoot.Name != "AlgoritmPrizm") throw appM;
-                    if (Version < int.Parse(xmlRoot.GetAttribute("Version"))) throw appV;
-
-                    // Получаем путь из конфига и если ещё не инициировали объекто то создаём его
-                    string XmlUrl = string.Format("http://{0}:{1}", xmlRoot.GetAttribute("Host"), xmlRoot.GetAttribute("Port"));
-                    if (IoIodeWebClientIsv == null || IoIodeWebClientIsv.BaseAddress.ToString() != XmlUrl)
+                    try
                     {
-                        Log.EventSave(string.Format("Прочитали с конфига адрес который над проверить. ({0})", XmlUrl), "PrizmListener.Verif", EventEn.Message);
-                        IoIodeWebClientIsv = new HttpClient()
+                        XmlDocument Document = new XmlDocument();
+                        Document.Load(Config.PrizmListener_FileConf);
+                        XmlElement xmlRoot = Document.DocumentElement;
+
+                        ApplicationException appM = new ApplicationException("Неправильный настроечный файл, скорее всего не от этой программы.");
+                        ApplicationException appV = new ApplicationException(string.Format("Неправильная версия настроечного яайла, требуется {0} версия", _Version));
+
+                        // Проверяем значения заголовка
+                        if (xmlRoot.Name != "AlgoritmPrizm") throw appM;
+                        if (Version < int.Parse(xmlRoot.GetAttribute("Version"))) throw appV;
+
+                        // Получаем путь из конфига и если ещё не инициировали объекто то создаём его
+                        string XmlUrl = string.Format("http://{0}:{1}", xmlRoot.GetAttribute("Host"), xmlRoot.GetAttribute("Port"));
+                        if (IoIodeWebClientIsv == null || IoIodeWebClientIsv.BaseAddress.ToString() != XmlUrl)
                         {
-                            BaseAddress = new Uri(XmlUrl),
-                        };
+                            Log.EventSave(string.Format("Прочитали с конфига адрес который над проверить. ({0})", XmlUrl), "PrizmListener.Verif", EventEn.Message);
+                            IoIodeWebClientIsv = new HttpClient()
+                            {
+                                BaseAddress = new Uri(XmlUrl),
+                            };
+                        }
                     }
-                }
-                catch (Exception ex)
-                {
-                    Log.EventSave(string.Format("Обнаружена проблема при чтении файла конфигурации AlgoritmPrizm.xml. Ошибка: {0}", ex.Message), "PrizmListener.Verif", EventEn.Error);
+                    catch (Exception ex)
+                    {
+                        Log.EventSave(string.Format("Обнаружена проблема при чтении файла конфигурации AlgoritmPrizm.xml. Ошибка: {0}", ex.Message), "PrizmListener.Verif", EventEn.Error);
+                    }
                 }
 
                 // Если объект найден то запускаем проверку объекта в системе
@@ -108,30 +116,33 @@ namespace AlgoritmListener.BLL
                         Log.EventSave(string.Format("Обнаружено что наш бекенд для призма не запущен. Ошибка: {0}", ex.Message), "PrizmListener.Verif", EventEn.Error);
                     }
 
-                    // Если обнаружили что нет процесса то нужно перезапустить наш екзешник
-                    if (!FlagAlgoritmPrizmExistProcess)
+                    lock (lobj)
                     {
-                        try
+                        // Если обнаружили что нет процесса то нужно перезапустить наш екзешник
+                        if (!FlagAlgoritmPrizmExistProcess)
                         {
-                            /*
-                            // Проверка по процессам, чтобы приложение было в единственном экземпляре.
-                            bool oneOnlyProg;
-                            Mutex m = new Mutex(true, "AlgoritmPrizm", out oneOnlyProg);
-                            if (oneOnlyProg != true) // Если процесс существует надо его убить
+                            try
                             {
-                            }
-                            */
+                                /*
+                                // Проверка по процессам, чтобы приложение было в единственном экземпляре.
+                                bool oneOnlyProg;
+                                Mutex m = new Mutex(true, "AlgoritmPrizm", out oneOnlyProg);
+                                if (oneOnlyProg != true) // Если процесс существует надо его убить
+                                {
+                                }
+                                */
 
-                            ProcessStartInfo prc = new ProcessStartInfo();
-                            prc.FileName = string.Format(@"{0}\AlgoritmPrizm.exe", Path.GetDirectoryName(Config.PrizmListener_FileConf));
-                            prc.UseShellExecute = true;
-                            prc.CreateNoWindow = false;
-                            prc.WorkingDirectory = Path.GetDirectoryName(Config.PrizmListener_FileConf);
-                            Process.Start(prc);
-                        }
-                        catch (Exception ex)
-                        {
-                            Log.EventSave(string.Format("Не смогли перезапустить наш процесс. Ошибка: {0}", ex.Message), "PrizmListener.Verif", EventEn.Error);
+                                ProcessStartInfo prc = new ProcessStartInfo();
+                                prc.FileName = string.Format(@"{0}\AlgoritmPrizm.exe", Path.GetDirectoryName(Config.PrizmListener_FileConf));
+                                prc.UseShellExecute = true;
+                                prc.CreateNoWindow = false;
+                                prc.WorkingDirectory = Path.GetDirectoryName(Config.PrizmListener_FileConf);
+                                Process.Start(prc);
+                            }
+                            catch (Exception ex)
+                            {
+                                Log.EventSave(string.Format("Не смогли перезапустить наш процесс. Ошибка: {0}", ex.Message), "PrizmListener.Verif", EventEn.Error);
+                            }
                         }
                     }
                 }

@@ -22,6 +22,11 @@ namespace AlgoritmListener.Com
         /// Количество милесекунд мкжду попутками записи
         /// </summary>
         private static int IOWhileInt = 500;
+
+        /// <summary>
+        /// Объект для блокировки в одиин поток
+        /// </summary>
+        private static object lobj = new object();
         #endregion
 
         #region Public Param
@@ -57,6 +62,8 @@ namespace AlgoritmListener.Com
             if (string.IsNullOrWhiteSpace(LogDir)) Dir = @"C:\Program Files\AlgoritmListener";
             else Dir = LogDir;
 
+            Thread.Sleep(1000);
+
             EventSave("Запуск службы", "AlgoritmListener", EventEn.Message);
         }
         
@@ -69,25 +76,27 @@ namespace AlgoritmListener.Com
         /// <param name="evn">Тип события</param>
         public static void EventSave(string Message, string Source, EventEn evn)
         {
-            EventSave(File, Message, Source, evn, IOCountPoput);
+            lock (lobj)
+            {
+                EventSave(Message, Source, evn, IOCountPoput);
+            }
         }
         #endregion
 
         #region Private Method
 
+        /// <summary>
+        /// Запись в файл
         /// </summary>
-        /// <param name="FileName">Файл в котрый пишем лог</param>
         /// <param name="Message">Сообщение</param>
         /// <param name="Source">Источник</param>
         /// <param name="evn">Тип события</param>
         /// <param name="IOCountPoput">Количество попыток записи в лог</param>
-        private static void EventSave(string FileName, string Message, string Source, EventEn evn, int IOCountPoput)
+        private static void EventSave(string Message, string Source, EventEn evn, int IOCountPoput)
         {
             try
             {
-                string newFile = (string.IsNullOrWhiteSpace(FileName) ? File : FileName);
-
-                using (StreamWriter SwFileLog = new StreamWriter(Dir + @"\" + newFile, true))
+                using (StreamWriter SwFileLog = new StreamWriter(Dir + @"\" + File, true))
                 {
                     SwFileLog.WriteLine(DateTime.Now.ToString() + "\t" + evn.ToString() + "\t" + Source + "\t" + Message);
                 }
@@ -98,7 +107,7 @@ namespace AlgoritmListener.Com
                 if (IOCountPoput > 0)
                 {
                     Thread.Sleep(IOWhileInt);
-                    EventSave(FileName, Message, Source, evn, IOCountPoput - 1);
+                    EventSave(Message, Source, evn, IOCountPoput - 1);
                 }
                 else throw;
             }

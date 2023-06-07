@@ -28,6 +28,11 @@ namespace AlgoritmListener.Com
         private static int _TimeOutSec = 10;
 
         /// <summary>
+        /// Через какое время нужно чистить лог чтобы не распухал диск в днях
+        /// </summary>
+        private static int _ClearLogDay = 3;
+
+        /// <summary>
         /// Объект XML файла
         /// </summary>
         private static XmlDocument Document = new XmlDocument();
@@ -67,6 +72,11 @@ namespace AlgoritmListener.Com
         public static int TimeOutSec { get { return _TimeOutSec; } private set { } }
 
         /// <summary>
+        /// Через какое время нужно чистить лог чтобы не распухал диск в днях
+        /// </summary>
+        public static int ClearLogDay { get { return _ClearLogDay; } private set { } }
+
+        /// <summary>
         /// Место хранения конфига нешего плагина к призму
         /// </summary>
         public static string PrizmListener_FileConf = "";
@@ -89,8 +99,9 @@ namespace AlgoritmListener.Com
                 if (string.IsNullOrWhiteSpace(DirConfig)) DirXml = @"C:\Program Files\AlgoritmListener";
                 else DirXml = DirConfig;
 
+                // Логируем начало чтения конфига
                 Log.EventSave("Чтение конфигурационного файла", "Config", EventEn.Message);
-
+                
                 // Читаем файл или создаём
                 if (File.Exists(DirXml + @"\" + FileXml)) { Load(); }
                 else { Create(); }
@@ -98,6 +109,9 @@ namespace AlgoritmListener.Com
                 // Получаем кастомизированный объект
                 GetDate();
 
+                // Логирууем параметры которые применили при чтении лога
+                Log.EventSave(string.Format("TimeOutSec: {0}", _TimeOutSec), "Config", EventEn.Dump);
+                Log.EventSave(string.Format("ClearLogDay: {0}", _ClearLogDay), "Config", EventEn.Dump);
             }
             catch (Exception ex)
             {
@@ -161,6 +175,7 @@ namespace AlgoritmListener.Com
                 XmlElement xmlMain = Document.CreateElement("AlgoritmListener");
                 xmlMain.SetAttribute("Version", _Version.ToString());
                 xmlMain.SetAttribute("TimeOutSec", _TimeOutSec.ToString());
+                xmlMain.SetAttribute("ClearLogDay", _ClearLogDay.ToString());
                 Document.AppendChild(xmlMain);
 
                 // Создаём список в который будем помещать элементы с пользователями
@@ -199,6 +214,7 @@ namespace AlgoritmListener.Com
                 for (int i = 0; i < xmlRoot.Attributes.Count; i++)
                 {
                     if (xmlRoot.Attributes[i].Name == "TimeOutSec") try {_TimeOutSec = int.Parse(xmlRoot.Attributes[i].Value.ToString());}catch (Exception) {}
+                    if (xmlRoot.Attributes[i].Name == "ClearLogDay") try { _ClearLogDay = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                 }
 
                 // Получаем список вложенных объектов

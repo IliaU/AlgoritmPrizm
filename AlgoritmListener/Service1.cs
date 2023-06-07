@@ -43,9 +43,21 @@ namespace AlgoritmListener
         // Запуск службы
         protected override async void OnStart(string[] args)
         {
-            // Флаг пишет что сервис стартанул
-            bool flagStardet = false;
+            // фиксируем дату
             LastDateLog = DateTime.Now.Date;
+
+            // Запуск службы и настройка логирования
+            if (!Directory.Exists(string.Format(@"{0}\AlgoritmListener", LogDir))) Directory.CreateDirectory(string.Format(@"{0}\AlgoritmListener", LogDir));
+
+            // Чистка старого лога
+            if (File.Exists(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile));
+            if (File.Exists(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile))) File.Move(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile), string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile));
+
+            // Запуск логирования
+            Log.SetupLog(string.Format(@"{0}\AlgoritmListener", LogDir), LogFile);
+                        
+            // Запускаем чтение файла конфигурации
+            Config.SetupConfig(string.Format(@"{0}\AlgoritmListener", LogDir), FileXml);
 
             // Запускаем службу чтобы работала бесконечно
             while (true)
@@ -53,29 +65,17 @@ namespace AlgoritmListener
                 // Обработка ошибок чтобы сервис не свалился
                 try
                 {
-                    // Запуск службы и настройка логирования
-                    if (!Directory.Exists(string.Format(@"{0}\AlgoritmListener", LogDir))) Directory.CreateDirectory(string.Format(@"{0}\AlgoritmListener", LogDir));
-                    //
-                    // Если не писали о том что служба стартанула пишем об этом в лог
-                    if (!flagStardet)
-                    {   
-                        // Регистрируем службу логирования
-                        Log.SetupLog(string.Format(@"{0}\AlgoritmListener", LogDir), LogFile);
-                        flagStardet = true;                      
+                    // Проверяем дату и выполняем чистку логов 
+                    if(LastDateLog.AddDays(Com.Config.ClearLogDay)<DateTime.Now)
+                    {
+                        // Чистка старого лога
+                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile));
+                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile))) File.Move(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile), string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile));
 
-                        // Запускаем чтение файла конфигурации
-                        Config.SetupConfig(string.Format(@"{0}\AlgoritmListener", LogDir), FileXml);
-
-                        // Нужно проверить файл и его грохнуть если он не нужен
-                        Log.EventSave("test", "tttt", EventEn.Message);
-                        Log.EventSave(LogDir, "tttt - LogDir", EventEn.Message);
-                        Log.EventSave(LogFile, "tttt - LogFile", EventEn.Message);
-                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\Old{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile));
-                        if (File.Exists(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile))) File.Delete(string.Format(@"{0}\AlgoritmListener\{1}", LogDir, LogFile));
+                        // фиксируем дату
+                        LastDateLog = DateTime.Now.Date;
                     }
-                    
-
-
+                                        
                     // Запускаем процесс проверки асинхронный модуля по плагину призма
                     try
                     {
