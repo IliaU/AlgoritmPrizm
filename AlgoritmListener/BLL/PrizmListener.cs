@@ -12,6 +12,10 @@ using System.Diagnostics;
 using AlgoritmListener.Lib;
 using AlgoritmListener.Com;
 
+
+using System.Security.Principal;
+using System.Security;
+
 namespace AlgoritmListener.BLL
 {
     /// <summary>
@@ -129,13 +133,36 @@ namespace AlgoritmListener.BLL
                                 Mutex m = new Mutex(true, "AlgoritmPrizm", out oneOnlyProg);
                                 if (oneOnlyProg != true) // Если процесс существует надо его убить
                                 {
+                                runas /user:ИМЯ_пользователя
+                                }
+                                */
+                                /*
+                                char[] dd = "rpro".ToCharArray();
+                                SecureString sp = new SecureString();
+                                foreach (char item in dd)
+                                {
+                                    sp.AppendChar(item);
+                                }
+
+                                // Можно проверять парва с какимимзапустили
+                                WindowsPrincipal pricipal = new WindowsPrincipal(WindowsIdentity.GetCurrent());
+                                bool hasAdministrativeRight = pricipal.IsInRole(WindowsBuiltInRole.Administrator);
+
+                                if (hasAdministrativeRight == false)
+                                {
                                 }
                                 */
 
+
                                 ProcessStartInfo prc = new ProcessStartInfo();
                                 prc.FileName = string.Format(@"{0}\AlgoritmPrizm.exe", Path.GetDirectoryName(Config.PrizmListener_FileConf));
-                                prc.UseShellExecute = true;
-                                prc.CreateNoWindow = false;
+                                //prc.UserName = "store";
+                                //prc.Verb = "runas";
+                                //prc.Password = sp;
+                                //prc.PasswordInClearText = "rpro";
+                                //prc.Domain = null;
+                                prc.UseShellExecute = false;
+                                //prc.CreateNoWindow = true;
                                 prc.WorkingDirectory = Path.GetDirectoryName(Config.PrizmListener_FileConf);
                                 Process.Start(prc);
                             }
@@ -154,6 +181,5 @@ namespace AlgoritmListener.BLL
                 throw ae;
             }
         }
-
     }
 }
