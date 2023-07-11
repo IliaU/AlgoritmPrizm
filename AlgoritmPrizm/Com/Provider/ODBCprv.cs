@@ -995,7 +995,7 @@ namespace AlgoritmPrizm.Com.Provider
         /// <param name="DocumentSid">Идентификатор документа</param>
         public void SetIsHelpRollbackDocORA(string DocumentSid)
         {
-            string CommandSql = String.Format(@"update rpsods.document set created_datetime=created_by, modified_by=created_by, is_held=1 where sid='{0}'", DocumentSid);
+            string CommandSql = String.Format(@"update rpsods.document set created_datetime=to_date('01.01.1982','DD.MM.YYYY'), modified_by=to_date('01.01.1982','DD.MM.YYYY'), is_held=1 where sid='{0}'", DocumentSid);
 
             try
             {
@@ -1880,7 +1880,7 @@ Where t.doc_sid ='{0}'", docsid);
         /// <param name="DocumentSid">Идентификатор документа</param>
         public void SetIsHelpRollbackDocMySql(string DocumentSid)
         {
-            string CommandSql = String.Format(@"update `rpsods`.`document` set `created_datetime`=`created_by`, `modified_by`=`created_by`, `is_held`=1 where `sid`='{0}'", DocumentSid);
+            string CommandSql = String.Format(@"update `rpsods`.`document` set `created_datetime`=STR_TO_DATE('01/01/1980', '%m/%d/%Y'), `modified_by`=STR_TO_DATE('01/01/1980', '%m/%d/%Y'), `is_held`=1 where `sid`='{0}'", DocumentSid);
 
             try
             {
