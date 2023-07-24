@@ -560,10 +560,15 @@ namespace AlgoritmPrizm.Com
 
                                         // Отправляем на печать
                                         rezPrintCheck = FR.PrintCheck(Doc, 1, "Рога и копыта");
+
                                     }
                                     catch (Exception ex)
                                     {
                                         Rollbackprintfiscdoc = true;
+
+                                        // Устанавливаем дату и признак отложенного документа если есть ошибка
+                                        Com.ProviderFarm.CurrentPrv.SetIsHelpRollbackDoc(RollbackDoc.sid);
+
                                         throw ex;
                                     }
                                 }
