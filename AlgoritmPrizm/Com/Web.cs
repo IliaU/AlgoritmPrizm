@@ -566,9 +566,6 @@ namespace AlgoritmPrizm.Com
                                     {
                                         Rollbackprintfiscdoc = true;
 
-                                        // Устанавливаем дату и признак отложенного документа если есть ошибка
-                                        Com.ProviderFarm.CurrentPrv.SetIsHelpRollbackDoc(RollbackDoc.sid);
-
                                         throw ex;
                                     }
                                 }
@@ -909,6 +906,9 @@ namespace AlgoritmPrizm.Com
                     {
                         // Устанавливаем признак отложенного документа
                         Com.ProviderFarm.CurrentPrv.SetIsHeldForDocements(RollbackDoc.sid, 1);
+
+                        // Устанавливаем дату и признак отложенного документа если есть ошибка
+                        Com.ProviderFarm.CurrentPrv.SetIsHelpRollbackDoc(RollbackDoc.sid);
                     }
 
                     string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
