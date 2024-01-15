@@ -245,6 +245,15 @@ namespace AlgoritmPrizm.Com
 
                                 JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
 
+                                // Проверка что это кассир который имеет право пробивать чеки
+                                bool FAccessSale = false;
+                                foreach (Custumer item in Config.customers)
+                                {
+                                    if (item.login.ToUpper() == FineDoc.employee1_name.Trim().ToUpper()
+                                        && !string.IsNullOrWhiteSpace(item.inn)) FAccessSale = true;
+                                }
+                                if (!FAccessSale) throw new ApplicationException(string.Format("указанный Вами сотрудник {0} не является кассиром. Смените сотрудника.", FineDoc.employee1_name));
+
                                 if (!Config.GetMatrixAlways)
                                 {
                                     //JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);

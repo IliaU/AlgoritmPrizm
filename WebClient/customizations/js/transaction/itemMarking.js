@@ -1,6 +1,18 @@
 var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationService', '$http', 'DocumentPersistedData', '$rootScope', '$uibModal', '$state',
     function (ModelEvent, LoadingScreen, NotificationService, $http, DocumentPersistedData, $rootScope, $uibModalInstance, $state) 
 	{
+		var convertLayout = function (dm) {
+			const rus = "ё1234567890-=йцукенгшщзхъфывапролджэячсмитьбю.Ё!\"№;%:?*()_+ЙЦУКЕНГШЩЗХЪ/ФЫВАПРОЛДЖЭЯЧСМИТЬБЮ,";
+			const eng = "`1234567890-=qwertyuiop[]asdfghjkl;\'zxcvbnm,./~!@#$%^&*()_+QWERTYUIOP{}|ASDFGHJKL:\"ZXCVBNM<>?";
+			let result = "";
+			for (let i = 0; i < dm.length; i++) {
+				let rus_letter = dm[i];
+				result += eng[rus.indexOf(rus_letter)];
+			}
+			console.log("converted", dm, "to", result);
+			return result;
+		};
+
 		var handleBeforeItemInsert = function ($q, item) 
 		{
             console.log('markingController Loaded');
@@ -20,15 +32,16 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 			$http({
                 method: 'POST',
                 url:    `${UTIL_HOSTNAME}/marking`,
-                headers: {
-					"Content-Type": "application/json",
-                    "Access-Control-Allow-Origin": "*"
-                },
+                // headers: {
+				// 	"Content-Type": "application/json",
+                //     "Access-Control-Allow-Origin": "*"
+                // },
                 data: body
             }).then(function successCallback(response) {
 					console.log(response.data);
 
 					if (response.data.scan_marking) 
+					// if (true) 
 					{
 						if (response.data.marking_list_full) 
 						{
@@ -58,21 +71,30 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 
 										$scope.search = function () {
 											let marking = $scope.criteria.enterMarking;
-											ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, cols: '*' }).then(function (items) {
-												let currentItem = items[0];
-												for (let i = 1; i <=11; i++) {
-													console.log(currentItem.note1);
-													if (!currentItem[`note${i}`].length) {
-														currentItem[`note${i}`] = marking.replace('"','\"');
-														break;
-													}
+											
+											if (marking.length<15) {
+												NotificationService.addAlert('Отсканируйте Код Маркировки (КМ)', 'Server Error');
+											}
+											else {
+												if (RegExp('[а-яА-Я]').test(marking)) {
+													marking = convertLayout(marking);
 												}
-												currentItem.save().then(function () {
-													$state.go($state.current, {}, {reload: true});
-													deferred.resolve();
-													$uibModalInstance.close();
+												ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, 	cols: '*' }).then(function (items) {
+													let currentItem = items[0];
+													for (let i = 1; i <=11; i++) {
+														console.log(currentItem.note1);
+														if (!currentItem[`note${i}`].length) {
+															currentItem[`note${i}`] = marking.replace('"','\"');
+															break;
+														}
+													}
+													currentItem.save().then(function () {
+														$state.go($state.current, {}, {reload: true});
+														deferred.resolve();
+														$uibModalInstance.close();
+													});
 												});
-											});
+											}
 										}
 
 										$scope.close = function () {
