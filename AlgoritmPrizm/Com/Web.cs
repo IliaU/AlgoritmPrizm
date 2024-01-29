@@ -249,7 +249,7 @@ namespace AlgoritmPrizm.Com
                                 bool FAccessSale = false;
                                 foreach (Custumer item in Config.customers)
                                 {
-                                    if (item.login.ToUpper() == FineDoc.employee1_name.Trim().ToUpper()
+                                    if (item.login.ToUpper() == FineDoc.created_by.Trim().ToUpper()
                                         && !string.IsNullOrWhiteSpace(item.inn)) FAccessSale = true;
                                 }
                                 if (!FAccessSale) throw new ApplicationException(string.Format("указанный Вами сотрудник {0} не является кассиром. Смените сотрудника.", FineDoc.employee1_name));
