@@ -77,23 +77,30 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 											}
 											else {
 												if (RegExp('[а-яА-Я]').test(marking)) {
-													marking = convertLayout(marking);
-												}
-												ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, 	cols: '*' }).then(function (items) {
-													let currentItem = items[0];
-													for (let i = 1; i <=11; i++) {
-														console.log(currentItem.note1);
-														if (!currentItem[`note${i}`].length) {
-															currentItem[`note${i}`] = marking.replace('"','\"');
-															break;
-														}
+														marking = convertLayout(marking);
 													}
-													currentItem.save().then(function () {
-														$state.go($state.current, {}, {reload: true});
-														deferred.resolve();
-														$uibModalInstance.close();
+												
+												if ((marking.length==20 && marking.indexOf("RU-")==0) || (marking.indexOf("01")==0 && marking.indexOf("21")==16 && marking.indexOf("91")==31 && marking.indexOf("92")==37) )  {
+													
+													ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, 	cols: '*' }).then(function (items) {
+														let currentItem = items[0];
+														for (let i = 1; i <=11; i++) {
+															console.log(currentItem.note1);
+															if (!currentItem[`note${i}`].length) {
+																currentItem[`note${i}`] = marking.replace('"','\"');
+																break;
+															}
+														}
+														currentItem.save().then(function () {
+															$state.go($state.current, {}, {reload: true});
+															deferred.resolve();
+															$uibModalInstance.close();
+														});
 													});
-												});
+												}
+												else {
+													NotificationService.addAlert('Ошибка Кода маркировки', 'Server Error');
+												}
 											}
 										}
 
