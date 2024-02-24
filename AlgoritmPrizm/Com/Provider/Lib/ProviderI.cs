@@ -125,5 +125,12 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// <param name="docsid">Номер документа</param>
         /// <returns>строки тендера из документа</returns>
         List<BLL.JsonPrintFiscDocTender> GetTendersForDocument(string docsid);
+
+        /// <summary>
+        /// Полусение логона пользователя по полному имени из таблицы rpsods.employee
+        /// </summary>
+        /// <param name="FullName">Полное имя</param>
+        /// <returns>Логин</returns>
+        string GetLoginFromFullName(string FullName);
     }
 }

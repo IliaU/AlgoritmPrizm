@@ -733,6 +733,47 @@ namespace AlgoritmPrizm.Com.Provider
                 return null;
             }
         }
+
+        /// <summary>
+        /// Полусение логона пользователя по полному имени из таблицы rpsods.employee
+        /// </summary>
+        /// <param name="FullName">Полное имя</param>
+        /// <returns>Логин</returns>
+        public string GetLoginFromFullName(string FullName)
+        {
+            try
+            {
+                // Если мы работаем в режиме без базы то выводим тестовые записи
+                if (!this.HashConnect()) throw new ApplicationException("Не установлено подключение с базой данных.");
+                else
+                {
+                    // Проверка типа трайвера мы не можем обрабатьывать любой тип у каждого типа могут быть свои особенности
+                    switch (this.Driver)
+                    {
+                        case "SQORA32.DLL":
+                        case "SQORA64.DLL":
+                            return GetLoginFromFullNameORA(FullName);
+                        case "myodbc8a.dll":
+                        case "myodbc8w.dll":
+                            return GetLoginFromFullNameMySql(FullName);
+                        default:
+                            throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
+                            //break;
+                    }
+                }
+                //return true;
+            }
+            catch (Exception ex)
+            {
+                // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetLoginFromFullName", EventEn.Error);
+
+                // Отображаем ошибку если это нужно
+                MessageBox.Show(ex.Message);
+
+                return null;
+            }
+        }
         #endregion
 
         #region Private metod
@@ -1681,6 +1722,76 @@ Where t.doc_sid ='{0}'", docsid);
                 throw;
             }
         }
+
+        /// <summary>
+        /// Полусение логона пользователя по полному имени из таблицы rpsods.employee
+        /// </summary>
+        /// <param name="FullName">Полное имя</param>
+        /// <returns>Логин</returns>
+        public string GetLoginFromFullNameORA(string FullName)
+        {
+            string rez = null;
+
+            string CommandSql = String.Format(@"SELECT t.user_name
+FROM rpsods.employee t
+Where t.full_name ='{0}'", FullName);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("USER_NAME").ToUpper()) rez = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+                throw;
+            }
+        }
         #endregion
 
         #region Private method MySql
@@ -1911,7 +2022,6 @@ Where t.doc_sid ='{0}'", docsid);
                 throw;
             }
         }
-
 
         /// <summary>
         /// Установка признака отложенного чека в документе
@@ -2599,6 +2709,76 @@ Where t.doc_sid ='{0}'", docsid);
             {
                 base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetTendersForDocumentMySql", EventEn.Error);
                 if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetTendersForDocumentMySql", EventEn.Dump);
+                throw;
+            }
+        }
+
+        /// <summary>
+        /// Полусение логона пользователя по полному имени из таблицы rpsods.employee
+        /// </summary>
+        /// <param name="FullName">Полное имя</param>
+        /// <returns>Логин</returns>
+        public string GetLoginFromFullNameMySql(string FullName)
+        {
+            string rez = null;
+
+            string CommandSql = String.Format(@"SELECT t.user_name
+FROM rpsods.employee t
+Where t.full_name ='{0}'", FullName);
+
+            try
+            {
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
+
+                // Закрывать конект не нужно он будет закрыт деструктором
+                using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
+                {
+                    con.Open();
+
+                    using (OdbcCommand com = new OdbcCommand(CommandSql, con))
+                    {
+                        com.CommandTimeout = 900;  // 15 минут
+                        using (OdbcDataReader dr = com.ExecuteReader())
+                        {
+
+                            if (dr.HasRows)
+                            {
+                                // Получаем схему таблицы
+                                //DataTable tt = dr.GetSchemaTable();
+
+                                //foreach (DataRow item in tt.Rows)
+                                //{
+                                //    DataColumn ncol = new DataColumn(item["ColumnName"].ToString(), Type.GetType(item["DataType"].ToString()));
+                                //ncol.SetOrdinal(int.Parse(item["ColumnOrdinal"].ToString()));
+                                //ncol.MaxLength = (int.Parse(item["ColumnSize"].ToString()) < 300 ? 300 : int.Parse(item["ColumnSize"].ToString()));
+                                //rez.Columns.Add(ncol);
+                                //}
+
+                                // пробегаем по строкам
+                                while (dr.Read())
+                                {
+                                    for (int i = 0; i < dr.FieldCount; i++)
+                                    {
+                                        if (!dr.IsDBNull(i) && dr.GetName(i).ToUpper() == ("USER_NAME").ToUpper()) rez = dr.GetValue(i).ToString();
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+
+                return rez;
+            }
+            catch (OdbcException ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
+                throw;
+            }
+            catch (Exception ex)
+            {
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
                 throw;
             }
         }

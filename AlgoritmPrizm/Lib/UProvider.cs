@@ -576,5 +576,24 @@ namespace AlgoritmPrizm.Lib
                 }
             }
         }
+
+        /// <summary>
+        /// Полусение логона пользователя по полному имени из таблицы rpsods.employee
+        /// </summary>
+        /// <param name="FullName">Полное имя</param>
+        /// <returns>Логин</returns>
+        public string GetLoginFromFullName(string FullName)
+        {
+            try
+            {
+                return this.PrvI.GetLoginFromFullName(FullName);
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали с ошибкой при получениии логина из базы данных по полному имени: {0}", ex.Message));
+                Log.EventSave(ae.Message, "Com.UProvider.GetLoginFromFullName", EventEn.Error);
+                throw ae;
+            }
+        }
     }
 }

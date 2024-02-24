@@ -244,19 +244,20 @@ namespace AlgoritmPrizm.Com
                                 bool Mandatory = Config.MandatoryDefault;
 
                                 JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
+                                string login = Com.ProviderFarm.CurrentPrv.GetLoginFromFullName(FineDoc.employee1_full_name);
 
                                 // Проверка что это кассир который имеет право пробивать чеки
                                 bool FAccessSale = false;
                                 foreach (Custumer item in Config.customers)
                                 {
-                                    if (item.login.ToUpper() == FineDoc.created_by.Trim().ToUpper()
+                                    if (item.login.ToUpper() == login.Trim().ToUpper()
                                         && !string.IsNullOrWhiteSpace(item.inn))
                                     {
                                         FAccessSale = true;
                                         break;
                                     }
                                 }
-                                if (!FAccessSale) throw new ApplicationException(string.Format("указанный Вами сотрудник {0} не является кассиром. Смените сотрудника.", FineDoc.created_by));
+                                if (!FAccessSale) throw new ApplicationException(string.Format("указанный Вами сотрудник {0} не является кассиром. Смените сотрудника.", login));
 
                                 if (!Config.GetMatrixAlways)
                                 {
