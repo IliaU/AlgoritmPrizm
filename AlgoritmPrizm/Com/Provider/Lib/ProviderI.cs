@@ -131,6 +131,6 @@ namespace AlgoritmPrizm.Com.Provider.Lib
         /// </summary>
         /// <param name="FullName">Полное имя</param>
         /// <returns>Логин</returns>
-        string GetLoginFromFullName(string FullName);
+        string GetLoginFromEmplName(string FullName);
     }
 }

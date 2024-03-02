@@ -582,11 +582,11 @@ namespace AlgoritmPrizm.Lib
         /// </summary>
         /// <param name="FullName">Полное имя</param>
         /// <returns>Логин</returns>
-        public string GetLoginFromFullName(string FullName)
+        public string GetLoginFromEmplName(string FullName)
         {
             try
             {
-                return this.PrvI.GetLoginFromFullName(FullName);
+                return this.PrvI.GetLoginFromEmplName(FullName);
             }
             catch (Exception ex)
             {

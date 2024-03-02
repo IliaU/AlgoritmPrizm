@@ -739,7 +739,7 @@ namespace AlgoritmPrizm.Com.Provider
         /// </summary>
         /// <param name="FullName">Полное имя</param>
         /// <returns>Логин</returns>
-        public string GetLoginFromFullName(string FullName)
+        public string GetLoginFromEmplName(string FullName)
         {
             try
             {
@@ -752,10 +752,10 @@ namespace AlgoritmPrizm.Com.Provider
                     {
                         case "SQORA32.DLL":
                         case "SQORA64.DLL":
-                            return GetLoginFromFullNameORA(FullName);
+                            return GetLoginFromEmplNameORA(FullName);
                         case "myodbc8a.dll":
                         case "myodbc8w.dll":
-                            return GetLoginFromFullNameMySql(FullName);
+                            return GetLoginFromEmplNameMySql(FullName);
                         default:
                             throw new ApplicationException("Извините. Мы не умеем работать с драйвером: " + this.Driver);
                             //break;
@@ -766,7 +766,7 @@ namespace AlgoritmPrizm.Com.Provider
             catch (Exception ex)
             {
                 // Логируем ошибку если её должен видеть пользователь или если взведён флаг трассировке в файле настройки программы
-                if (Com.Config.Trace) base.EventSave(ex.Message, "GetLoginFromFullName", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(ex.Message, "GetLoginFromEmplName", EventEn.Error);
 
                 // Отображаем ошибку если это нужно
                 MessageBox.Show(ex.Message);
@@ -1728,17 +1728,17 @@ Where t.doc_sid ='{0}'", docsid);
         /// </summary>
         /// <param name="FullName">Полное имя</param>
         /// <returns>Логин</returns>
-        public string GetLoginFromFullNameORA(string FullName)
+        public string GetLoginFromEmplNameORA(string FullName)
         {
             string rez = null;
 
             string CommandSql = String.Format(@"SELECT t.user_name
 FROM rpsods.employee t
-Where t.full_name ='{0}'", FullName);
+Where t.empl_name ='{0}'", FullName);
 
             try
             {
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameORA", EventEn.Dump);
 
                 // Закрывать конект не нужно он будет закрыт деструктором
                 using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
@@ -1781,14 +1781,14 @@ Where t.full_name ='{0}'", FullName);
             }
             catch (OdbcException ex)
             {
-                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameORA", EventEn.Error);
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromEmplNameORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameORA", EventEn.Dump);
                 throw;
             }
             catch (Exception ex)
             {
-                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameORA", EventEn.Error);
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameORA", EventEn.Dump);
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromEmplNameORA", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameORA", EventEn.Dump);
                 throw;
             }
         }
@@ -2718,17 +2718,17 @@ Where t.doc_sid ='{0}'", docsid);
         /// </summary>
         /// <param name="FullName">Полное имя</param>
         /// <returns>Логин</returns>
-        public string GetLoginFromFullNameMySql(string FullName)
+        public string GetLoginFromEmplNameMySql(string FullName)
         {
             string rez = null;
 
             string CommandSql = String.Format(@"SELECT t.user_name
 FROM rpsods.employee t
-Where t.full_name ='{0}'", FullName);
+Where t.empl_name ='{0}'", FullName);
 
             try
             {
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameMySql", EventEn.Dump);
 
                 // Закрывать конект не нужно он будет закрыт деструктором
                 using (OdbcConnection con = new OdbcConnection(base.ConnectionString))
@@ -2771,14 +2771,14 @@ Where t.full_name ='{0}'", FullName);
             }
             catch (OdbcException ex)
             {
-                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Error);
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromEmplNameMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameMySql", EventEn.Dump);
                 throw;
             }
             catch (Exception ex)
             {
-                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Error);
-                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromFullNameMySql", EventEn.Dump);
+                base.EventSave(string.Format("Произожла ошибка при получении данных с источника. {0}", ex.Message), GetType().Name + ".GetLoginFromEmplNameMySql", EventEn.Error);
+                if (Com.Config.Trace) base.EventSave(CommandSql, GetType().Name + ".GetLoginFromEmplNameMySql", EventEn.Dump);
                 throw;
             }
         }

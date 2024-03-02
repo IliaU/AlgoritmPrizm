@@ -244,7 +244,7 @@ namespace AlgoritmPrizm.Com
                                 bool Mandatory = Config.MandatoryDefault;
 
                                 JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
-                                string login = Com.ProviderFarm.CurrentPrv.GetLoginFromFullName(FineDoc.employee1_full_name);
+                                string login = Com.ProviderFarm.CurrentPrv.GetLoginFromEmplName(FineDoc.created_by);
 
                                 // Проверка что это кассир который имеет право пробивать чеки
                                 bool FAccessSale = false;

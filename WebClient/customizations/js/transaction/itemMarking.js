@@ -80,7 +80,7 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 														marking = convertLayout(marking);
 													}
 												
-												if ((marking.length==20 && marking.indexOf("RU-")==0) || (marking.indexOf("01")==0 && marking.indexOf("21")==16 && marking.indexOf("91")==31 && marking.indexOf("92")==37) )  {
+												if ((marking.length==20 && marking.indexOf("RU-")==0) || (marking.length>40 && marking.substring(0,2)=='01' && marking.substring(16,18)=='21' && marking.substring(31,33)=='91' && marking.substring(37,39)=='92') )  {
 													
 													ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, 	cols: '*' }).then(function (items) {
 														let currentItem = items[0];
