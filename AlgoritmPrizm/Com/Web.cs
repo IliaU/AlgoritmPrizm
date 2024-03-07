@@ -245,6 +245,7 @@ namespace AlgoritmPrizm.Com
 
                                 JsonDocMarking FineDoc = JsonDocMarking.DeserializeJson(BufPostRequest);
                                 string login = Com.ProviderFarm.CurrentPrv.GetLoginFromEmplName(FineDoc.created_by);
+                                if (string.IsNullOrWhiteSpace(login)) throw new ApplicationException(string.Format("Пользователь с логином {0} в базе не найден.", FineDoc.created_by));
 
                                 // Проверка что это кассир который имеет право пробивать чеки
                                 bool FAccessSale = false;

@@ -1734,7 +1734,7 @@ Where t.doc_sid ='{0}'", docsid);
 
             string CommandSql = String.Format(@"SELECT t.user_name
 FROM rpsods.employee t
-Where t.empl_name ='{0}'", FullName);
+Where Upper(t.empl_name)='{0}'", FullName.ToUpper().Trim());
 
             try
             {
@@ -2724,7 +2724,7 @@ Where t.doc_sid ='{0}'", docsid);
 
             string CommandSql = String.Format(@"SELECT t.user_name
 FROM rpsods.employee t
-Where t.empl_name ='{0}'", FullName);
+Where Upper(t.empl_name)='{0}'", FullName.ToUpper().Trim());
 
             try
             {
