@@ -43,16 +43,17 @@
             this.TSMItemConfigDB = new System.Windows.Forms.ToolStripMenuItem();
             this.TSMItemConfigTerminalSD = new System.Windows.Forms.ToolStripMenuItem();
             this.Pnl_TopRight = new System.Windows.Forms.Panel();
-            this.Pnl_Fill = new System.Windows.Forms.Panel();
-            this.pctBoxSystemLock = new System.Windows.Forms.PictureBox();
             this.pctBoxSystemUnLock = new System.Windows.Forms.PictureBox();
+            this.pctBoxSystemLock = new System.Windows.Forms.PictureBox();
+            this.Pnl_Fill = new System.Windows.Forms.Panel();
+            this.TSMItemConfigCrypto = new System.Windows.Forms.ToolStripMenuItem();
             this.statusStrip.SuspendLayout();
             this.Pnl_Top.SuspendLayout();
             this.Pnl_TopFill.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.Pnl_TopRight.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemLock)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemUnLock)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemLock)).BeginInit();
             this.SuspendLayout();
             // 
             // statusStrip
@@ -109,7 +110,8 @@
             this.TSMItemLic,
             this.TSMItemAboutPrv,
             this.TSMItemConfigDB,
-            this.TSMItemConfigTerminalSD});
+            this.TSMItemConfigTerminalSD,
+            this.TSMItemConfigCrypto});
             this.TSMItemGonfig.Name = "TSMItemGonfig";
             this.TSMItemGonfig.Size = new System.Drawing.Size(78, 20);
             this.TSMItemGonfig.Text = "Настройка";
@@ -117,48 +119,48 @@
             // TSMItemGonfigCashiries
             // 
             this.TSMItemGonfigCashiries.Name = "TSMItemGonfigCashiries";
-            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemGonfigCashiries.Size = new System.Drawing.Size(328, 22);
             this.TSMItemGonfigCashiries.Text = "Кассиры";
             this.TSMItemGonfigCashiries.Click += new System.EventHandler(this.TSMItemGonfigCashiries_Click);
             // 
             // TSMItemGonfigEmployees
             // 
             this.TSMItemGonfigEmployees.Name = "TSMItemGonfigEmployees";
-            this.TSMItemGonfigEmployees.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemGonfigEmployees.Size = new System.Drawing.Size(328, 22);
             this.TSMItemGonfigEmployees.Text = "Сотрудники";
             this.TSMItemGonfigEmployees.Click += new System.EventHandler(this.TSMItemGonfigEmployees_Click);
             // 
             // TSMItemGonfigOther
             // 
             this.TSMItemGonfigOther.Name = "TSMItemGonfigOther";
-            this.TSMItemGonfigOther.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemGonfigOther.Size = new System.Drawing.Size(328, 22);
             this.TSMItemGonfigOther.Text = "Основные";
             this.TSMItemGonfigOther.Click += new System.EventHandler(this.TSMItemGonfigOther_Click);
             // 
             // TSMItemLic
             // 
             this.TSMItemLic.Name = "TSMItemLic";
-            this.TSMItemLic.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemLic.Size = new System.Drawing.Size(328, 22);
             this.TSMItemLic.Text = "Лицензия";
             this.TSMItemLic.Click += new System.EventHandler(this.TSMItemLic_Click);
             // 
             // TSMItemAboutPrv
             // 
             this.TSMItemAboutPrv.Name = "TSMItemAboutPrv";
-            this.TSMItemAboutPrv.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemAboutPrv.Size = new System.Drawing.Size(328, 22);
             this.TSMItemAboutPrv.Text = "Доступные провайдеры";
             // 
             // TSMItemConfigDB
             // 
             this.TSMItemConfigDB.Name = "TSMItemConfigDB";
-            this.TSMItemConfigDB.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemConfigDB.Size = new System.Drawing.Size(328, 22);
             this.TSMItemConfigDB.Text = "Подключение к базе данных";
             this.TSMItemConfigDB.Click += new System.EventHandler(this.TSMItemConfigDB_Click);
             // 
             // TSMItemConfigTerminalSD
             // 
             this.TSMItemConfigTerminalSD.Name = "TSMItemConfigTerminalSD";
-            this.TSMItemConfigTerminalSD.Size = new System.Drawing.Size(299, 22);
+            this.TSMItemConfigTerminalSD.Size = new System.Drawing.Size(328, 22);
             this.TSMItemConfigTerminalSD.Text = "Управление терминалами сбора данных";
             this.TSMItemConfigTerminalSD.Click += new System.EventHandler(this.TSMItemConfigTerminalSD_Click);
             // 
@@ -172,13 +174,18 @@
             this.Pnl_TopRight.Size = new System.Drawing.Size(59, 27);
             this.Pnl_TopRight.TabIndex = 0;
             // 
-            // Pnl_Fill
+            // pctBoxSystemUnLock
             // 
-            this.Pnl_Fill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.Pnl_Fill.Location = new System.Drawing.Point(0, 27);
-            this.Pnl_Fill.Name = "Pnl_Fill";
-            this.Pnl_Fill.Size = new System.Drawing.Size(521, 320);
-            this.Pnl_Fill.TabIndex = 3;
+            this.pctBoxSystemUnLock.Dock = System.Windows.Forms.DockStyle.Right;
+            this.pctBoxSystemUnLock.Image = ((System.Drawing.Image)(resources.GetObject("pctBoxSystemUnLock.Image")));
+            this.pctBoxSystemUnLock.Location = new System.Drawing.Point(13, 0);
+            this.pctBoxSystemUnLock.Name = "pctBoxSystemUnLock";
+            this.pctBoxSystemUnLock.Size = new System.Drawing.Size(24, 27);
+            this.pctBoxSystemUnLock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.pctBoxSystemUnLock.TabIndex = 2;
+            this.pctBoxSystemUnLock.TabStop = false;
+            this.pctBoxSystemUnLock.Visible = false;
+            this.pctBoxSystemUnLock.Click += new System.EventHandler(this.pctBoxSystemUnLock_Click);
             // 
             // pctBoxSystemLock
             // 
@@ -192,18 +199,20 @@
             this.pctBoxSystemLock.TabStop = false;
             this.pctBoxSystemLock.Click += new System.EventHandler(this.pctBoxSystemLock_Click);
             // 
-            // pctBoxSystemUnLock
+            // Pnl_Fill
             // 
-            this.pctBoxSystemUnLock.Dock = System.Windows.Forms.DockStyle.Right;
-            this.pctBoxSystemUnLock.Image = ((System.Drawing.Image)(resources.GetObject("pctBoxSystemUnLock.Image")));
-            this.pctBoxSystemUnLock.Location = new System.Drawing.Point(13, 0);
-            this.pctBoxSystemUnLock.Name = "pctBoxSystemUnLock";
-            this.pctBoxSystemUnLock.Size = new System.Drawing.Size(24, 27);
-            this.pctBoxSystemUnLock.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
-            this.pctBoxSystemUnLock.TabIndex = 2;
-            this.pctBoxSystemUnLock.TabStop = false;
-            this.pctBoxSystemUnLock.Visible = false;
-            this.pctBoxSystemUnLock.Click += new System.EventHandler(this.pctBoxSystemUnLock_Click);
+            this.Pnl_Fill.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.Pnl_Fill.Location = new System.Drawing.Point(0, 27);
+            this.Pnl_Fill.Name = "Pnl_Fill";
+            this.Pnl_Fill.Size = new System.Drawing.Size(521, 320);
+            this.Pnl_Fill.TabIndex = 3;
+            // 
+            // TSMItemConfigCrypto
+            // 
+            this.TSMItemConfigCrypto.Name = "TSMItemConfigCrypto";
+            this.TSMItemConfigCrypto.Size = new System.Drawing.Size(328, 22);
+            this.TSMItemConfigCrypto.Text = "Настройка подключения к криптопровайдеру";
+            this.TSMItemConfigCrypto.Click += new System.EventHandler(this.TSMItemConfigCrypto_Click);
             // 
             // FStart
             // 
@@ -230,8 +239,8 @@
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.Pnl_TopRight.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemLock)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemUnLock)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pctBoxSystemLock)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -255,6 +264,7 @@
         private System.Windows.Forms.Panel Pnl_Fill;
         private System.Windows.Forms.PictureBox pctBoxSystemUnLock;
         private System.Windows.Forms.PictureBox pctBoxSystemLock;
+        private System.Windows.Forms.ToolStripMenuItem TSMItemConfigCrypto;
     }
 }
 

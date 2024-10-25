@@ -9,6 +9,7 @@ using System.IO;
 using System.IO.Ports;
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.BLL;
+using System.Net;
 
 namespace AlgoritmPrizm.Com
 {
@@ -384,6 +385,56 @@ namespace AlgoritmPrizm.Com
         /// Отправка матрикс кода меховых товаров
         /// </summary>
         private static bool _MexSendItemBarcode = false;
+
+        /// <summary>
+        /// Включить сервис шифрования
+        /// </summary>
+        private static bool _EnableServiceCrypto = true;
+
+        /// <summary>
+        /// Текущий сертификат
+        /// </summary>
+        private static string _CrptCert;
+
+        /// <summary>
+        /// Через сколько минут считать токен протухшим и получить его заново
+        /// </summary>
+        private static int _DefaultActivMinToken = 20;
+
+        /// <summary>
+        /// Сайт с которым мы работам для обработки документов
+        /// </summary>
+        private static string _WebSiteForIsmp = @"https://markirovka.sandbox.crptech.ru";// @"https://markirovka.crpt.ru";
+
+        /// <summary>
+        /// Через какое время чистить из оперативы ответ если вдруг фронт лёг, чтобы небыло утечки памяти
+        /// </summary>
+        private static int _ClearJsonCdnFarmMin = 20;
+
+        /// <summary>
+        /// Значение токена по умолчанию если не удалось получить используя ЕЦП
+        /// </summary>
+        private static string _DefaultTokenEcp = @"*********-****-****-****-************";
+
+        /// <summary>
+        /// идентификатор ФОИВ; фиксировано
+        /// </summary>
+        private static string _FrTag1262 = "030";
+
+        /// <summary>
+        /// дата документа основания; фиксировано
+        /// </summary>
+        private static string _FrTag1263 = "21.11.2023";
+
+        /// <summary>
+        /// номер документа основания; фиксировано
+        /// </summary>
+        private static string _FrTag1264 = "1944";
+
+        /// <summary>
+        /// SSL протокол который будет использовать наша программа
+        /// </summary>
+        private static SecurityProtocolType _WebSecurityProtocolType = SecurityProtocolType.Tls12;
         #endregion
 
         #region Public Param
@@ -1512,6 +1563,174 @@ namespace AlgoritmPrizm.Com
                 _MexSendItemBarcode = value;
             }
         }
+
+        /// <summary>
+        /// Включить сервис шифрования
+        /// </summary>
+        public static bool EnableServiceCrypto
+        {
+            get
+            {
+                return _EnableServiceCrypto;
+            }
+            private set { }
+        }
+
+        /// <summary>
+        /// Текущий сертификат
+        /// </summary>
+        public static string CrptCert
+        {
+            get
+            {
+                return _CrptCert;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("CrptCert", value.ToString());
+                _CrptCert = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// Через сколько минут считать токен протухшим и получить его заново
+        /// </summary>
+        public static int DefaultActivMinToken
+        {
+            get
+            {
+                return _DefaultActivMinToken;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DefaultActivMinToken", value.ToString());
+                Save();
+                _DefaultActivMinToken = value;
+            }
+        }
+
+        /// <summary>
+        /// Сайт с которым мы работам для обработки документов
+        /// </summary>
+        public static string WebSiteForIsmp
+        {
+            get
+            {
+                return _WebSiteForIsmp;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("WebSiteForIsmp", value.ToString());
+                _WebSiteForIsmp = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// Через какое время чистить из оперативы ответ если вдруг фронт лёг, чтобы небыло утечки памяти
+        /// </summary>
+        public static int ClearJsonCdnFarmMin
+        {
+            get
+            {
+                return _ClearJsonCdnFarmMin;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("ClearJsonCdnFarmMin", value.ToString());
+                Save();
+                _ClearJsonCdnFarmMin = value;
+            }
+        }
+
+
+        /// <summary>
+        /// Значение токена по умолчанию если не удалось получить используя ЕЦП
+        /// </summary>
+        public static string DefaultTokenEcp
+        {
+            get
+            {
+                return _DefaultTokenEcp;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("DefaultTokenEcp", value.ToString());
+                _DefaultTokenEcp = value.ToString();
+                Save();
+            }
+        }
+
+
+        /// <summary>
+        /// идентификатор ФОИВ; фиксировано
+        /// </summary>
+        public static string FrTag1262
+        {
+            get
+            {
+                return _FrTag1262;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FrTag1262", value.ToString());
+                _FrTag1262 = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// дата документа основания; фиксировано
+        /// </summary>
+        public static string FrTag1263
+        {
+            get
+            {
+                return _FrTag1263;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FrTag1263", value.ToString());
+                _FrTag1263 = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// номер документа основания; фиксировано
+        /// </summary>
+        public static string FrTag1264
+        {
+            get
+            {
+                return _FrTag1264;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FrTag1264", value.ToString());
+                _FrTag1264 = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// SSL протокол который будет использовать наша программа
+        /// </summary>
+        public static SecurityProtocolType WebSecurityProtocolType
+        {
+            get
+            {
+                return _WebSecurityProtocolType;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("WebSecurityProtocolType", value.ToString());
+                _WebSecurityProtocolType = value;
+                Save();
+            }
+        }
+
         #endregion
 
         #region Puplic Method
@@ -1815,6 +2034,15 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("BlockActionPassword", Com.Lic.InCode(_BlockActionPassword));
                     xmlMain.SetAttribute("BlockActionTimeOut", _BlockActionTimeOut.ToString());
                     xmlMain.SetAttribute("MexSendItemBarcode", _MexSendItemBarcode.ToString());
+                    xmlMain.SetAttribute("EnableServiceCrypto", _EnableServiceCrypto.ToString());
+                    xmlMain.SetAttribute("DefaultActivMinToken", _DefaultActivMinToken.ToString());
+                    xmlMain.SetAttribute("WebSiteForIsmp", _WebSiteForIsmp);
+                    xmlMain.SetAttribute("ClearJsonCdnFarmMin", _ClearJsonCdnFarmMin.ToString());
+                    xmlMain.SetAttribute("DefaultTokenEcp", _DefaultTokenEcp);
+                    xmlMain.SetAttribute("FrTag1262", _FrTag1262);
+                    xmlMain.SetAttribute("FrTag1263", _FrTag1263);
+                    xmlMain.SetAttribute("FrTag1264", _FrTag1264);
+                    xmlMain.SetAttribute("WebSecurityProtocolType", _WebSecurityProtocolType.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -1943,8 +2171,29 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "HeldForDocementsTimeout") try { _HeldForDocementsTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "BlockActionPassword") try { _BlockActionPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "BlockActionTimeOut") try { _BlockActionTimeOut = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
-                        if (xmlRoot.Attributes[i].Name == "MexSendItemBarcode") try { _MexSendItemBarcode = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }  
+                        if (xmlRoot.Attributes[i].Name == "MexSendItemBarcode") try { _MexSendItemBarcode = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "EnableServiceCrypto") try { _EnableServiceCrypto = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); }
+                            catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "CrptCert") _CrptCert = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "DefaultActivMinToken") try { _DefaultActivMinToken = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "WebSiteForIsmp") _WebSiteForIsmp = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "ClearJsonCdnFarmMin") try { _ClearJsonCdnFarmMin = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "DefaultTokenEcp") _DefaultTokenEcp = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "FrTag1262") _FrTag1262 = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "FrTag1263") _FrTag1263 = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "FrTag1264") _FrTag1264 = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "WebSecurityProtocolType") try { _WebSecurityProtocolType = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _WebSecurityProtocolType); } catch (Exception) { }
                     }
+
+                    // Подгружаем текущий сертификат
+                    try
+                    {
+                        if (!string.IsNullOrWhiteSpace(_CrptCert))
+                        {
+                            Com.Crypto.OpenSert(_CrptCert);
+                        }
+                    }
+                    catch (Exception) { }
 
                     // Подгружаем дисплей
                     if (!string.IsNullOrWhiteSpace(_DisplayDspFullName))
@@ -2199,7 +2448,7 @@ namespace AlgoritmPrizm.Com
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {0}}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при обновлении конфигурационного в файла с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, "Config.UpdateVersionXml(XmlElement root, int oldVersion)", EventEn.Error);
                 throw ae;
             }

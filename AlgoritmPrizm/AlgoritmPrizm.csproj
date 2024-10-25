@@ -44,6 +44,9 @@
       <HintPath>..\packages\AsyncIO.0.1.69\lib\net40\AsyncIO.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CryptoPro.Sharpei.Base, Version=1.4.0.10, Culture=neutral, PublicKeyToken=473b8c5086e795f5, processorArchitecture=MSIL" />
+    <Reference Include="CryptoPro.Sharpei.ServiceModel45, Version=1.4.0.1, Culture=neutral, PublicKeyToken=473b8c5086e795f5, processorArchitecture=MSIL" />
+    <Reference Include="CryptoPro.Sharpei.Xml, Version=1.4.0.10, Culture=neutral, PublicKeyToken=473b8c5086e795f5, processorArchitecture=MSIL" />
     <Reference Include="NaCl, Version=0.1.13.0, Culture=neutral, PublicKeyToken=827c20e50a9775fa, processorArchitecture=MSIL">
       <HintPath>..\packages\NaCl.Net.0.1.13\lib\net45\NaCl.dll</HintPath>
       <Private>True</Private>
@@ -70,6 +73,7 @@
       <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.3\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Security" />
     <Reference Include="System.ServiceModel" />
     <Reference Include="System.Threading.Tasks.Extensions, Version=4.2.0.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Threading.Tasks.Extensions.4.5.4\lib\portable-net45+win8+wp8+wpa81\System.Threading.Tasks.Extensions.dll</HintPath>
@@ -99,6 +103,12 @@
     <Compile Include="BLL\Employee.cs" />
     <Compile Include="BLL\InvnSbsItemText.cs" />
     <Compile Include="BLL\ItemSQL.cs" />
+    <Compile Include="BLL\JsonCdnCheck.cs" />
+    <Compile Include="BLL\JsonCdnForIsmp.cs" />
+    <Compile Include="BLL\JsonCdnForIsmpHost.cs" />
+    <Compile Include="BLL\JsonCdnForIsmpResponce.cs" />
+    <Compile Include="BLL\JsonCdnForIsmpResponceItem.cs" />
+    <Compile Include="BLL\JsonCndResponce.cs" />
     <Compile Include="BLL\JsonConfig.cs" />
     <Compile Include="BLL\JsonConfigFfdConverter.cs" />
     <Compile Include="BLL\JsonConfigFieldDocNumConverter.cs" />
@@ -136,6 +146,7 @@
     <Compile Include="BLL\ProdictMatrixClass.cs" />
     <Compile Include="Client.cs" />
     <Compile Include="Com\Config.cs" />
+    <Compile Include="Com\Crypto.cs" />
     <Compile Include="Com\Display.cs" />
     <Compile Include="Com\DisplayFarm.cs" />
     <Compile Include="Com\DisplayPlg\DisplayDSP840.cs" />
@@ -144,6 +155,7 @@
     <Compile Include="Com\DisplayPlg\Lib\CustomerDisplayI.cs" />
     <Compile Include="Com\FileCheckLog.cs" />
     <Compile Include="Com\FR.cs" />
+    <Compile Include="Com\JsonCdnFarm.cs" />
     <Compile Include="Com\ProviderFarm.cs" />
     <Compile Include="Com\Provider\Lib\ProviderBase.cs" />
     <Compile Include="Com\Provider\Lib\ProviderI.cs" />
@@ -205,6 +217,12 @@
     <Compile Include="FConnetSetup.Designer.cs">
       <DependentUpon>FConnetSetup.cs</DependentUpon>
     </Compile>
+    <Compile Include="FCryptoSetup.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FCryptoSetup.Designer.cs">
+      <DependentUpon>FCryptoSetup.cs</DependentUpon>
+    </Compile>
     <Compile Include="FEmployee.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -223,11 +241,13 @@
     <Compile Include="FTerminalSD.Designer.cs">
       <DependentUpon>FTerminalSD.cs</DependentUpon>
     </Compile>
+    <Compile Include="Lib\CryptoStatusEn.cs" />
     <Compile Include="Lib\EnFrTyp.cs" />
     <Compile Include="Lib\EnMatrixParceTyp.cs" />
     <Compile Include="Lib\EnProductMatrixClassType.cs" />
     <Compile Include="Lib\EnSmsTypGateway.cs" />
     <Compile Include="Lib\EnSmtpTyp.cs" />
+    <Compile Include="Lib\EventCrypto.cs" />
     <Compile Include="Lib\EventProviderFarm.cs" />
     <Compile Include="Lib\EventSmtpListStatus.cs" />
     <Compile Include="Lib\EventSQLList.cs" />
@@ -267,6 +287,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="FConfig.resx">
       <DependentUpon>FConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FCryptoSetup.resx">
+      <DependentUpon>FCryptoSetup.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FEmployee.resx">
       <DependentUpon>FEmployee.cs</DependentUpon>
@@ -313,12 +336,12 @@
   <ItemGroup>
     <COMReference Include="DrvFRLib">
       <Guid>{332C8050-469C-4B4D-A192-68CD3CB252BA}</Guid>
-      <VersionMajor>1</VersionMajor>
-      <VersionMinor>3</VersionMinor>
+      <VersionMajor>5</VersionMajor>
+      <VersionMinor>17</VersionMinor>
       <Lcid>0</Lcid>
       <WrapperTool>tlbimp</WrapperTool>
       <Isolated>False</Isolated>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

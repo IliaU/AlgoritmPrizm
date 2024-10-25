@@ -75,7 +75,7 @@ namespace AlgoritmPrizm.Com.DisplayPlg
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке драйвера для работы с фискальным регистратором с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
-                throw ae;
+                //throw ae;
             }
         }
 
