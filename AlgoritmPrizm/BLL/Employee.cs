@@ -43,7 +43,7 @@ namespace AlgoritmPrizm.BLL
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке конфигурации с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
                 throw ae;
             }

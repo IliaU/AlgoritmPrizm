@@ -36,12 +36,14 @@ namespace AlgoritmListener
             // 
             this.serviceProcessInstaller1.Password = null;
             this.serviceProcessInstaller1.Username = null;
+            this.serviceProcessInstaller1.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceProcessInstaller1_AfterInstall);
             // 
             // serviceInstaller1
             // 
             this.serviceInstaller1.Description = "Слушатель сервисев от Алгоритм";
             this.serviceInstaller1.DisplayName = "AlgoritmListener (слушатель сервисев от Алгоритм) ";
             this.serviceInstaller1.ServiceName = "AlgoritmListener";
+            this.serviceInstaller1.AfterInstall += new System.Configuration.Install.InstallEventHandler(this.serviceInstaller1_AfterInstall);
             // 
             // ProjectInstaller
             // 

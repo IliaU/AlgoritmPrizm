@@ -85,6 +85,9 @@ namespace AlgoritmPrizm
                 this.TSMItemAboutPrv.DropDownItems.Add((new Lib.UProvider(item)).InfoToolStripMenuItem());
             }
 
+            //
+            Com.Crypto.onEventChangeHashExecuting += new EventHandler<Lib.EventCrypto>(Crypto_onEventChangeHashExecuting);
+
             // Асинхронный запуск процесса
             this.IsRunAsinGonfigBlock = true;
             GonfigBlockDatetime = DateTime.Now;
@@ -334,6 +337,34 @@ namespace AlgoritmPrizm
             }
         }
 
+        delegate void delig_Token(object sender, Lib.EventCrypto e);
+        /// <summary>
+        /// Отрисовка событий связанных с изменением статуса наличия заданий по токену
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        void Crypto_onEventChangeHashExecuting(object sender, Lib.EventCrypto e)
+        {
+            try
+            {
+                if (this.InvokeRequired)
+                {
+                    delig_Token dl = new delig_Token(Crypto_onEventChangeHashExecuting);
+                    this.Invoke(dl, new object[] { sender, e });
+                }
+                else
+                {
+                    // Отрисовываем агрегированный статус
+                    //SetStatpnlTopRight();
+                }
+            }
+            catch (Exception ex)
+            {
+                // если завершение работы то ошибку не фиксируем
+                //if (this.IsRunAUpdateStatusCon) Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "Crypto_onEventChangeHashExecuting", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
+            }
+        }
+
         // Список касиров
         private void TSMItemGonfigCashiries_Click(object sender, EventArgs e)
         {
@@ -451,6 +482,27 @@ namespace AlgoritmPrizm
                 }
             }
         }
+
+        // Пользователь настраивает подключение к криптопровайдеру
+        private void TSMItemConfigCrypto_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (SystemBlockAction(false))
+                {
+                    using (FCryptoSetup Frm = new FCryptoSetup())
+                    {
+                        Frm.ShowDialog();
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "TSMItemConfigCrypto_Click", ex.Message), this.GetType().FullName, EventEn.Error, true, true);
+            }
+        }
+
+
 
 
         delegate bool dl_SystemBlockAction(bool HashRender);
@@ -605,5 +657,7 @@ namespace AlgoritmPrizm
                 //throw ae;
             }
         }
+
+        
     }
 }

@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 using System.IO.Ports;
+using System.Net;
 
 namespace AlgoritmPrizm.Lib
 {
@@ -238,6 +239,31 @@ namespace AlgoritmPrizm.Lib
                 return DefaultStopBits;
             }
         }
-        
+
+        /// <summary>
+        /// Конвертация в объект SecurityProtocolType
+        /// </summary>
+        /// <param name="SecurityProtocolTypeStr">Строка которую надо конвертнуть</param>
+        /// <param name="DefaultSecurityProtocolType">Если не можем конвертнуть что в этом случае вернуть</param>
+        /// <returns></returns>
+        public static SecurityProtocolType Convert(string SecurityProtocolTypeStr, SecurityProtocolType DefaultSecurityProtocolType)
+        {
+            try
+            {
+                if (!string.IsNullOrWhiteSpace(SecurityProtocolTypeStr))
+                {
+                    foreach (SecurityProtocolType item in SecurityProtocolType.GetValues(typeof(SecurityProtocolType)))
+                    {
+                        if (item.ToString().ToUpper() == SecurityProtocolTypeStr.Trim().ToUpper()) return item;
+                    }
+                }
+                return DefaultSecurityProtocolType;
+            }
+            catch (Exception)
+            {
+                return DefaultSecurityProtocolType;
+            }
+        }
+
     }
 }

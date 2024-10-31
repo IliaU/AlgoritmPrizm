@@ -173,7 +173,7 @@ namespace AlgoritmPrizm.BLL
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при десериализации объекта JsonConfig с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при десериализации объекта JsonConfig с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".DeserializeJson", EventEn.Error);
                 throw ae;
             }
@@ -192,7 +192,7 @@ namespace AlgoritmPrizm.BLL
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при сериализации объекта JsonConfig с ошибкой: {)}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сериализации объекта JsonConfig с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".SerializeObject", EventEn.Error);
                 throw ae;
             }

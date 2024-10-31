@@ -15,6 +15,11 @@ namespace AlgoritmPrizm
     static class Program
     {
         /// <summary>
+        /// Флаг для работы сборщика муссора
+        /// </summary>
+        private static bool RunGC = true;
+
+        /// <summary>
         /// Главная точка входа для приложения.
         /// </summary>
         [STAThread]
@@ -230,9 +235,25 @@ namespace AlgoritmPrizm
                         // Тест для екселя
                         //Com.ReportWordDotxFarm.CreateReportPl();
 
+                        // Тест проверки матрикс кода на площадке сдн
+                        //BLL.JsonCdnForIsmpResponce respcpt = Com.Web.CdnForIsmpCheck("0102900002249316215hOQ5IVWGHp%X91FFD092dGVzdDXXAcucssljH6c6cZ6kfs2kb97+T0Aca5NZBfE=");
+                        //Com.JsonCdnFarm.BufferAdd(respcpt);
+                        //BLL.JsonCdnForIsmpResponce tt = Com.JsonCdnFarm.BufferRemove("ghfghjdhjk");
+                        //BLL.JsonCdnForIsmpResponce respcpt = Com.Web.CdnForIsmpCheck(@"0104068848016771215iFCOEKfbX;""a91EE1092kmY9OvtPRKqWfxpYZ6DUPrjMHe82TUe1ZfT3hniwNa0=");
+
+                        // Асинхронный запуск процесса
+                        Thread thr = new Thread(GarbColRun);
+                        //thr = new Thread(new ParameterizedThreadStart(Run)); //Запуск с параметрами   
+                        thr.Name = "AE_Thr_GC";
+                        thr.IsBackground = true;
+                        thr.Start();
 
                         // Запуск формы
                         Application.Run(new FStart());
+
+                        // Ожидаем завершения работы сборщика мусора
+                        RunGC = false;
+                        thr.Join();
 
                         // Остановка слушителя веб морды
                         Com.Web.StopAWeb();
@@ -250,6 +271,29 @@ namespace AlgoritmPrizm
                 MessageBox.Show(String.Format("Не смогли запуститься ошибка: {0}", ex.Message));
             }
             
+        }
+
+        /// <summary>
+        /// Асинхронный процесс сборщика мусора
+        /// </summary>
+        private static void GarbColRun()
+        {
+            int DefaultCountSec = 60 * 60;
+            int CurCountSec = DefaultCountSec;
+            while (RunGC)
+            {
+                if (CurCountSec > 0) { Thread.Sleep(1000); CurCountSec--; }
+                else
+                {
+                    Com.JsonCdnFarm.ClearOld();
+
+                    GC.Collect();
+                    GC.WaitForPendingFinalizers();
+                    GC.Collect();
+
+                    CurCountSec = DefaultCountSec;
+                }
+            }
         }
     }
 }

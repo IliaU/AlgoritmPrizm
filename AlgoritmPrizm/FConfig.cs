@@ -11,6 +11,7 @@ using System.Windows.Forms;
 using System.IO.Ports;
 using AlgoritmPrizm.Lib;
 using AlgoritmPrizm.Com;
+using System.Net;
 
 namespace AlgoritmPrizm
 {
@@ -303,6 +304,33 @@ namespace AlgoritmPrizm
 
                 // Поддержка реализации меха
                 this.chkBox_MexSendItemBarcode.Checked = Config.MexSendItemBarcode;
+
+                // Сайт с которым мы работам для обработки документов
+                this.txtBoxWebSiteForIsmp.Text = Config.WebSiteForIsmp;
+                // Через какое время чистить из оперативы ответ если вдруг фронт лёг, чтобы небыло утечки памяти
+                this.txtBoxClearJsonCdnFarmMin.Text = Config.ClearJsonCdnFarmMin.ToString();
+                // Значение токена по умолчанию если не удалось получить используя ЕЦП
+                this.txtBoxDefaultTokenEcp.Text = Config.DefaultTokenEcp;
+
+                // идентификатор ФОИВ; фиксировано
+                this.txtBoxFrTag1262.Text = Config.FrTag1262;
+                // дата документа основания; фиксировано
+                this.txtBoxFrTag1263.Text = Config.FrTag1263;
+                // номер документа основания; фиксировано
+                this.txtBoxFrTag1264.Text = Config.FrTag1264;
+
+                // SSL протокол который будет использовать наша программа
+                this.cmbBoxWebSecurityProtocolType.Items.Clear();
+                int PositionWebSecurityProtocolType = -1;
+                int SelectWebSecurityProtocolType = -1;
+                foreach (SecurityProtocolType item in SecurityProtocolType.GetValues(typeof(SecurityProtocolType)))
+                {
+                    PositionWebSecurityProtocolType++;
+                    cmbBoxWebSecurityProtocolType.Items.Add(item.ToString());
+                    if (item == Config.WebSecurityProtocolType) SelectWebSecurityProtocolType = PositionWebSecurityProtocolType;
+                }
+                if (SelectWebSecurityProtocolType > -1) cmbBoxWebSecurityProtocolType.SelectedIndex = SelectWebSecurityProtocolType;
+
             }
             catch (Exception ex)
             {
@@ -567,6 +595,31 @@ namespace AlgoritmPrizm
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxBlockActionTimeOut.Text), GetType().Name, EventEn.Warning);
                 }
 
+                // Сайт с которым мы работам для обработки документов
+                Config.WebSiteForIsmp = this.txtBoxWebSiteForIsmp.Text;
+                //
+                // Через какое время чистить из оперативы ответ если вдруг фронт лёг, чтобы небыло утечки памяти
+                try
+                {
+                    Config.ClearJsonCdnFarmMin = int.Parse(this.txtBoxClearJsonCdnFarmMin.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxClearJsonCdnFarmMin.Text), GetType().Name, EventEn.Warning);
+                }
+                //
+                // Значение токена по умолчанию если не удалось получить используя ЕЦП
+                Config.DefaultTokenEcp = this.txtBoxDefaultTokenEcp.Text;
+
+                // идентификатор ФОИВ; фиксировано
+                Config.FrTag1262 = this.txtBoxFrTag1262.Text;
+                // дата документа основания; фиксировано
+                Config.FrTag1263 = this.txtBoxFrTag1263.Text;
+                // номер документа основания; фиксировано
+                Config.FrTag1264 = this.txtBoxFrTag1264.Text;
+
+                // SSL протокол который будет использовать наша программ
+                Config.WebSecurityProtocolType = EventConvertor.Convert(cmbBoxWebSecurityProtocolType.Items[cmbBoxWebSecurityProtocolType.SelectedIndex].ToString(), Config.WebSecurityProtocolType);
 
                 this.Close();
             }

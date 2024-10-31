@@ -879,6 +879,13 @@ namespace AlgoritmPrizm.Com
                     }
                 }
 
+
+               
+
+
+
+
+
                 // Печать штрих кода
                 //if (!string.IsNullOrWhiteSpace(item.scan_upc)) PrintLine(item.scan_upc);
 
@@ -1366,8 +1373,112 @@ namespace AlgoritmPrizm.Com
                 if (!IsCopy)
                 {
                     // Если есть матрихс код то добавляем его
-                    if (!string.IsNullOrWhiteSpace(note))
+                    if (!string.IsNullOrWhiteSpace(note) && Doc.receipt_type == 0)
                     {
+
+                        JsonCdnForIsmpResponce CdnForIsmpResponce = JsonCdnFarm.BufferRemove(note);
+                        if (CdnForIsmpResponce != null && !string.IsNullOrWhiteSpace(CdnForIsmpResponce.reqId) && CdnForIsmpResponce.reqTimestamp != 0)
+                        {
+                            /*
+                            Fr.TagNumber = 1260;
+                            switch (Fr.FNBeginSTLVTag())
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли сделать составной тег для  покупателя: {0}", Status.Description));
+                            }
+                            */
+
+                            // 1262 – идентификатор ФОИВ; фиксировано 
+                            Fr.TagID = 0;
+                            Fr.TagNumber = 1262;
+                            Fr.TagType = 7;
+                            Fr.TagValueStr = Config.FrTag1262;  //"030";
+                            switch (Fr.FNSendTagOperation())    //Fr.FNAddTag()
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли добавить наименование юр лица: {0}", Status.Description));
+                            }
+
+                            // 1263 – дата документа основания; фиксировано 
+                            Fr.TagID = 0;
+                            Fr.TagNumber = 1263;
+                            Fr.TagType = 7;
+                            Fr.TagValueStr = Config.FrTag1263; //"21.11.2023";
+                            switch (Fr.FNSendTagOperation())
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
+                            }
+
+                            // 1264 – номер документа основания; фиксировано – “1944”
+                            Fr.TagID = 0;
+                            Fr.TagNumber = 1264;
+                            Fr.TagType = 7;
+                            Fr.TagValueStr = Config.FrTag1264; //"1944";
+                            switch (Fr.FNSendTagOperation())
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
+                            }
+
+                            // 1265 – значение ответа сервера; “UUID=<reqId>&Time=<reqTimestamp>”
+                            //Fr.TagID = 0;
+                            Fr.TagNumber = 1265;
+                            //Fr.TagType = 7;
+                            string hhh = string.Format(@"UUID={0}&Time={1}", CdnForIsmpResponce.reqId, CdnForIsmpResponce.reqTimestamp);
+                            Fr.TagValueStr = hhh;
+                            switch (Fr.FNSendTagOperation())
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
+                            }
+
+                            /*
+                            switch (Fr.GetTagAsTLV())
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли добавить ИНН юр лица: {0}", Status.Description));
+                            }
+                            */
+
+                            //string str = Fr.TLVDataHex;
+                            /* Пример ответа
+                                F1 04 3C 00 55 55 49 44 3D 35 31 64 39 36 31 63 62 2D 33 39 62 35 2D 34 61 66 32 2D 38 63 38 39 2D 61 31 31 62 65 35 66 37 32 35 61 38 26 54 69 6D 65 3D 31 37 32 39 35 34 32 37 38 34 38 31 30
+                                */
+
+                            //Fr.FNSendSTLVTagOperation()
+
+
+                            /*
+                            // отправка составного тега
+                            switch (Fr.FNSendSTLVTag())  //FNSendSTLVTag
+                            {
+                                case 0:
+                                    break;
+                                default:
+                                    Verification(Fr);
+                                    throw new ApplicationException(string.Format("Не смогли отправить составной тег по юр лицу: {0}", Status.Description));
+                            }*/
+                        }
+
                         // Если это меховой товар то делаем просто отправку бар кода
                         if (Com.Config.MexSendItemBarcode && note.IndexOf("RU-") == 0)
                         {
@@ -1827,6 +1938,7 @@ namespace AlgoritmPrizm.Com
 
                 //                if (IsCopy) Thread.Sleep(300);
 
+                /*
                 // ПЕЧАТЬ ШТРИХ-КОДА
                 Fr.BarCode = DocNum.ToString();
                 Fr.BarWidth = 2;
@@ -1838,6 +1950,7 @@ namespace AlgoritmPrizm.Com
                     Verification(Fr);
                     throw new ApplicationException(string.Format("Не смогли напечатать ПЕЧАТЬ ШТРИХ-КОДА: {0}", Status.Description));
                 }
+                */
 
                 //                if (IsCopy) Thread.Sleep(300);
 

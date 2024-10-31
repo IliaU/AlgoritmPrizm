@@ -72,6 +72,8 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 										$scope.search = function () {
 											let marking = $scope.criteria.enterMarking;
 											
+											
+											
 											if (marking.length<15) {
 												NotificationService.addAlert('Отсканируйте Код Маркировки (КМ)', 'Server Error');
 											}
@@ -82,6 +84,29 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 												
 												if ((marking.length==20 && marking.indexOf("RU-")==0) || (marking.length>40 && marking.substring(0,2)=='01' && marking.substring(16,18)=='21' && marking.substring(31,33)=='91' && marking.substring(37,39)=='92') )  {
 													
+													// Проверка что документ не возврат
+													if (item.return_reason != 'RETURN') {
+														
+														// Проверяем матрикс код на платформе СДН
+														body = marking; 
+														$http({
+															method: 'POST',
+															url:    `${UTIL_HOSTNAME}/CdnForIsmpCheck`,
+															// headers: {
+															// 	"Content-Type": "application/json",
+															//     "Access-Control-Allow-Origin": "*"
+															// },
+															data: body
+														}).then(function successCallback(response) {
+																console.log(response.data);
+																
+														}, function errorCallback(response) {
+																NotificationService.addAlert(response.data, 'КМ Ошибка');
+															}
+														);
+													}
+													
+													
 													ModelService.get('Item', { sid: item.sid, document_sid: item.document_sid, 	cols: '*' }).then(function (items) {
 														let currentItem = items[0];
 														for (let i = 1; i <=11; i++) {
@@ -91,6 +116,7 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 																break;
 															}
 														}
+																												
 														currentItem.save().then(function () {
 															$state.go($state.current, {}, {reload: true});
 															deferred.resolve();

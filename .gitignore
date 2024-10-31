@@ -24,3 +24,15 @@ AlgoritmPrizm/bin/Debug/Log.txt
 /AlgoritmListener/bin/Release/*.dll
 /AlgoritmListener/bin/Debug/AlgoritmListener.InstallLog
 /AlgoritmListener/bin/Debug/AlgoritmListener.pdb
+/AlgoritmPrizmCom/bin/Debug/*.exe
+/AlgoritmPrizmCom/bin/Debug/*.dll
+/AlgoritmPrizmCom/bin/Release/*.exe
+/AlgoritmPrizmCom/bin/Release/*.dll
+/AlgoritmPrizmComListener/bin/Debug/*.exe
+/AlgoritmPrizmComListener/bin/Debug/*.dll
+/AlgoritmPrizmComListener/bin/Release/*.exe
+/AlgoritmPrizmComListener/bin/Release/*.dll
+/AlgoritmPrizmComTst/bin/Debug/*.exe
+/AlgoritmPrizmComTst/bin/Debug/*.dll
+/AlgoritmPrizmComTst/bin/Release/*.exe
+/AlgoritmPrizmComTst/bin/Release/*.dll

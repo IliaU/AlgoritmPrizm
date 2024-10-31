@@ -107,6 +107,13 @@
             this.txtBoxSmsTypGatewaySmtp = new System.Windows.Forms.TextBox();
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBoxFfd = new System.Windows.Forms.GroupBox();
+            this.lblTagInfo1260 = new System.Windows.Forms.Label();
+            this.txtBoxFrTag1264 = new System.Windows.Forms.TextBox();
+            this.txtBoxFrTag1263 = new System.Windows.Forms.TextBox();
+            this.txtBoxFrTag1262 = new System.Windows.Forms.TextBox();
+            this.lblFrTag1264 = new System.Windows.Forms.Label();
+            this.lblFrTag1263 = new System.Windows.Forms.Label();
+            this.lblFrTag1262 = new System.Windows.Forms.Label();
             this.chkBoxPrintingIpForFr = new System.Windows.Forms.CheckBox();
             this.chkBoxPrintingUrikForFr = new System.Windows.Forms.CheckBox();
             this.chkBoxProcessingUrikForFr = new System.Windows.Forms.CheckBox();
@@ -150,8 +157,17 @@
             this.cmbBoxMatrixParceTyp = new System.Windows.Forms.ComboBox();
             this.lblProductMatrixClassType = new System.Windows.Forms.Label();
             this.cmbBoxProductMatrixClassType = new System.Windows.Forms.ComboBox();
+            this.tabPage9 = new System.Windows.Forms.TabPage();
+            this.txtBoxDefaultTokenEcp = new System.Windows.Forms.TextBox();
+            this.txtBoxClearJsonCdnFarmMin = new System.Windows.Forms.TextBox();
+            this.lblDefaultTokenEcp = new System.Windows.Forms.Label();
+            this.lblClearJsonCdnFarmMin = new System.Windows.Forms.Label();
+            this.txtBoxWebSiteForIsmp = new System.Windows.Forms.TextBox();
+            this.lblWebSiteForIsmp = new System.Windows.Forms.Label();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
+            this.cmbBoxWebSecurityProtocolType = new System.Windows.Forms.ComboBox();
+            this.lblWebSecurityProtocolType = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -172,6 +188,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.dgProdictMatrixClass)).BeginInit();
             this.pnl_ProdictMatrixClassTop.SuspendLayout();
             this.pnl_ProdictMatrixClassTopTop.SuspendLayout();
+            this.tabPage9.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
             this.SuspendLayout();
@@ -179,20 +196,18 @@
             // chkTrace
             // 
             this.chkTrace.AutoSize = true;
-            this.chkTrace.Location = new System.Drawing.Point(8, 11);
-            this.chkTrace.Margin = new System.Windows.Forms.Padding(4);
+            this.chkTrace.Location = new System.Drawing.Point(6, 9);
             this.chkTrace.Name = "chkTrace";
-            this.chkTrace.Size = new System.Drawing.Size(108, 21);
+            this.chkTrace.Size = new System.Drawing.Size(87, 17);
             this.chkTrace.TabIndex = 1;
             this.chkTrace.Text = "Трасировка";
             this.chkTrace.UseVisualStyleBackColor = true;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(452, 7);
-            this.btnSave.Margin = new System.Windows.Forms.Padding(4);
+            this.btnSave.Location = new System.Drawing.Point(339, 6);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(100, 28);
+            this.btnSave.Size = new System.Drawing.Size(75, 23);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Сохранить";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -200,47 +215,42 @@
             // 
             // txtBoxHost
             // 
-            this.txtBoxHost.Location = new System.Drawing.Point(61, 73);
-            this.txtBoxHost.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxHost.Location = new System.Drawing.Point(46, 59);
             this.txtBoxHost.Name = "txtBoxHost";
-            this.txtBoxHost.Size = new System.Drawing.Size(295, 22);
+            this.txtBoxHost.Size = new System.Drawing.Size(222, 20);
             this.txtBoxHost.TabIndex = 3;
             // 
             // lblHost
             // 
             this.lblHost.AutoSize = true;
-            this.lblHost.Location = new System.Drawing.Point(12, 76);
-            this.lblHost.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHost.Location = new System.Drawing.Point(9, 62);
             this.lblHost.Name = "lblHost";
-            this.lblHost.Size = new System.Drawing.Size(39, 17);
+            this.lblHost.Size = new System.Drawing.Size(31, 13);
             this.lblHost.TabIndex = 4;
             this.lblHost.Text = "Хост";
             // 
             // lblPort
             // 
             this.lblPort.AutoSize = true;
-            this.lblPort.Location = new System.Drawing.Point(365, 76);
-            this.lblPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPort.Location = new System.Drawing.Point(274, 62);
             this.lblPort.Name = "lblPort";
-            this.lblPort.Size = new System.Drawing.Size(41, 17);
+            this.lblPort.Size = new System.Drawing.Size(32, 13);
             this.lblPort.TabIndex = 5;
             this.lblPort.Text = "Порт";
             // 
             // txtBoxPort
             // 
-            this.txtBoxPort.Location = new System.Drawing.Point(415, 73);
-            this.txtBoxPort.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxPort.Location = new System.Drawing.Point(311, 59);
             this.txtBoxPort.Name = "txtBoxPort";
-            this.txtBoxPort.Size = new System.Drawing.Size(60, 22);
+            this.txtBoxPort.Size = new System.Drawing.Size(46, 20);
             this.txtBoxPort.TabIndex = 6;
             // 
             // lblFfd
             // 
             this.lblFfd.AutoSize = true;
-            this.lblFfd.Location = new System.Drawing.Point(13, 26);
-            this.lblFfd.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFfd.Location = new System.Drawing.Point(10, 21);
             this.lblFfd.Name = "lblFfd";
-            this.lblFfd.Size = new System.Drawing.Size(95, 17);
+            this.lblFfd.Size = new System.Drawing.Size(77, 13);
             this.lblFfd.TabIndex = 7;
             this.lblFfd.Text = "ФФД версия";
             // 
@@ -248,146 +258,130 @@
             // 
             this.cmbBoxFfd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFfd.FormattingEnabled = true;
-            this.cmbBoxFfd.Location = new System.Drawing.Point(161, 22);
-            this.cmbBoxFfd.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFfd.Location = new System.Drawing.Point(121, 18);
             this.cmbBoxFfd.Name = "cmbBoxFfd";
-            this.cmbBoxFfd.Size = new System.Drawing.Size(160, 24);
+            this.cmbBoxFfd.Size = new System.Drawing.Size(106, 21);
             this.cmbBoxFfd.TabIndex = 8;
             // 
             // lblFrPort
             // 
             this.lblFrPort.AutoSize = true;
-            this.lblFrPort.Location = new System.Drawing.Point(367, 26);
-            this.lblFrPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFrPort.Location = new System.Drawing.Point(248, 21);
             this.lblFrPort.Name = "lblFrPort";
-            this.lblFrPort.Size = new System.Drawing.Size(132, 17);
+            this.lblFrPort.Size = new System.Drawing.Size(103, 13);
             this.lblFrPort.TabIndex = 9;
             this.lblFrPort.Text = "Порт фискальника";
             // 
             // txtBoxFrPort
             // 
-            this.txtBoxFrPort.Location = new System.Drawing.Point(512, 22);
-            this.txtBoxFrPort.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxFrPort.Location = new System.Drawing.Point(357, 18);
             this.txtBoxFrPort.Name = "txtBoxFrPort";
-            this.txtBoxFrPort.Size = new System.Drawing.Size(64, 22);
+            this.txtBoxFrPort.Size = new System.Drawing.Size(49, 20);
             this.txtBoxFrPort.TabIndex = 10;
             // 
             // lblTenderTypeCash
             // 
             this.lblTenderTypeCash.AutoSize = true;
-            this.lblTenderTypeCash.Location = new System.Drawing.Point(17, 20);
-            this.lblTenderTypeCash.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTenderTypeCash.Location = new System.Drawing.Point(13, 16);
             this.lblTenderTypeCash.Name = "lblTenderTypeCash";
-            this.lblTenderTypeCash.Size = new System.Drawing.Size(249, 17);
+            this.lblTenderTypeCash.Size = new System.Drawing.Size(189, 13);
             this.lblTenderTypeCash.TabIndex = 11;
             this.lblTenderTypeCash.Text = "Идентификатор типа оплаты за нал";
             // 
             // txtBoxTenderTypeCash
             // 
-            this.txtBoxTenderTypeCash.Location = new System.Drawing.Point(423, 16);
-            this.txtBoxTenderTypeCash.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxTenderTypeCash.Location = new System.Drawing.Point(317, 13);
             this.txtBoxTenderTypeCash.Name = "txtBoxTenderTypeCash";
-            this.txtBoxTenderTypeCash.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxTenderTypeCash.Size = new System.Drawing.Size(91, 20);
             this.txtBoxTenderTypeCash.TabIndex = 12;
             // 
             // txtBoxTenderTypeCredit
             // 
-            this.txtBoxTenderTypeCredit.Location = new System.Drawing.Point(423, 48);
-            this.txtBoxTenderTypeCredit.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxTenderTypeCredit.Location = new System.Drawing.Point(317, 39);
             this.txtBoxTenderTypeCredit.Name = "txtBoxTenderTypeCredit";
-            this.txtBoxTenderTypeCredit.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxTenderTypeCredit.Size = new System.Drawing.Size(91, 20);
             this.txtBoxTenderTypeCredit.TabIndex = 14;
             // 
             // lblTenderTypeCredit
             // 
             this.lblTenderTypeCredit.AutoSize = true;
-            this.lblTenderTypeCredit.Location = new System.Drawing.Point(17, 52);
-            this.lblTenderTypeCredit.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTenderTypeCredit.Location = new System.Drawing.Point(13, 42);
             this.lblTenderTypeCredit.Name = "lblTenderTypeCredit";
-            this.lblTenderTypeCredit.Size = new System.Drawing.Size(262, 17);
+            this.lblTenderTypeCredit.Size = new System.Drawing.Size(199, 13);
             this.lblTenderTypeCredit.TabIndex = 13;
             this.lblTenderTypeCredit.Text = "Идентификатор типа оплаты за карту";
             // 
             // txtBoxTenderTypeGiftCert
             // 
-            this.txtBoxTenderTypeGiftCert.Location = new System.Drawing.Point(423, 80);
-            this.txtBoxTenderTypeGiftCert.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxTenderTypeGiftCert.Location = new System.Drawing.Point(317, 65);
             this.txtBoxTenderTypeGiftCert.Name = "txtBoxTenderTypeGiftCert";
-            this.txtBoxTenderTypeGiftCert.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxTenderTypeGiftCert.Size = new System.Drawing.Size(91, 20);
             this.txtBoxTenderTypeGiftCert.TabIndex = 16;
             // 
             // lblTenderTypeGiftCert
             // 
             this.lblTenderTypeGiftCert.AutoSize = true;
-            this.lblTenderTypeGiftCert.Location = new System.Drawing.Point(17, 84);
-            this.lblTenderTypeGiftCert.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTenderTypeGiftCert.Location = new System.Drawing.Point(13, 68);
             this.lblTenderTypeGiftCert.Name = "lblTenderTypeGiftCert";
-            this.lblTenderTypeGiftCert.Size = new System.Drawing.Size(371, 17);
+            this.lblTenderTypeGiftCert.Size = new System.Drawing.Size(280, 13);
             this.lblTenderTypeGiftCert.TabIndex = 15;
             this.lblTenderTypeGiftCert.Text = "Идентификатор типа оплаты подарочный сертификат";
             // 
             // txtBoxTenderTypeGiftCard
             // 
-            this.txtBoxTenderTypeGiftCard.Location = new System.Drawing.Point(423, 112);
-            this.txtBoxTenderTypeGiftCard.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxTenderTypeGiftCard.Location = new System.Drawing.Point(317, 91);
             this.txtBoxTenderTypeGiftCard.Name = "txtBoxTenderTypeGiftCard";
-            this.txtBoxTenderTypeGiftCard.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxTenderTypeGiftCard.Size = new System.Drawing.Size(91, 20);
             this.txtBoxTenderTypeGiftCard.TabIndex = 18;
             // 
             // lblTenderTypeGiftCard
             // 
             this.lblTenderTypeGiftCard.AutoSize = true;
-            this.lblTenderTypeGiftCard.Location = new System.Drawing.Point(17, 116);
-            this.lblTenderTypeGiftCard.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTenderTypeGiftCard.Location = new System.Drawing.Point(13, 94);
             this.lblTenderTypeGiftCard.Name = "lblTenderTypeGiftCard";
-            this.lblTenderTypeGiftCard.Size = new System.Drawing.Size(328, 17);
+            this.lblTenderTypeGiftCard.Size = new System.Drawing.Size(247, 13);
             this.lblTenderTypeGiftCard.TabIndex = 17;
             this.lblTenderTypeGiftCard.Text = "Идентификатор типа оплаты подарочная карта";
             // 
             // txtBoxGiftCardCode
             // 
-            this.txtBoxGiftCardCode.Location = new System.Drawing.Point(421, 39);
-            this.txtBoxGiftCardCode.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxGiftCardCode.Location = new System.Drawing.Point(316, 32);
             this.txtBoxGiftCardCode.Name = "txtBoxGiftCardCode";
-            this.txtBoxGiftCardCode.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxGiftCardCode.Size = new System.Drawing.Size(91, 20);
             this.txtBoxGiftCardCode.TabIndex = 20;
             // 
             // lblGiftCardCode
             // 
             this.lblGiftCardCode.AutoSize = true;
-            this.lblGiftCardCode.Location = new System.Drawing.Point(17, 43);
-            this.lblGiftCardCode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGiftCardCode.Location = new System.Drawing.Point(13, 35);
             this.lblGiftCardCode.Name = "lblGiftCardCode";
-            this.lblGiftCardCode.Size = new System.Drawing.Size(161, 17);
+            this.lblGiftCardCode.Size = new System.Drawing.Size(122, 13);
             this.lblGiftCardCode.TabIndex = 19;
             this.lblGiftCardCode.Text = "Код подарочной карты";
             // 
             // chkBoxGiftCardEnable
             // 
             this.chkBoxGiftCardEnable.AutoSize = true;
-            this.chkBoxGiftCardEnable.Location = new System.Drawing.Point(21, 18);
-            this.chkBoxGiftCardEnable.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxGiftCardEnable.Location = new System.Drawing.Point(16, 15);
             this.chkBoxGiftCardEnable.Name = "chkBoxGiftCardEnable";
-            this.chkBoxGiftCardEnable.Size = new System.Drawing.Size(316, 21);
+            this.chkBoxGiftCardEnable.Size = new System.Drawing.Size(245, 17);
             this.chkBoxGiftCardEnable.TabIndex = 21;
             this.chkBoxGiftCardEnable.Text = "Включить использование подарочных карт";
             this.chkBoxGiftCardEnable.UseVisualStyleBackColor = true;
             // 
             // txtBoxGiftCardTax
             // 
-            this.txtBoxGiftCardTax.Location = new System.Drawing.Point(421, 71);
-            this.txtBoxGiftCardTax.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxGiftCardTax.Location = new System.Drawing.Point(316, 58);
             this.txtBoxGiftCardTax.Name = "txtBoxGiftCardTax";
-            this.txtBoxGiftCardTax.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxGiftCardTax.Size = new System.Drawing.Size(91, 20);
             this.txtBoxGiftCardTax.TabIndex = 23;
             // 
             // lblGiftCardTax
             // 
             this.lblGiftCardTax.AutoSize = true;
-            this.lblGiftCardTax.Location = new System.Drawing.Point(17, 75);
-            this.lblGiftCardTax.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblGiftCardTax.Location = new System.Drawing.Point(13, 61);
             this.lblGiftCardTax.Name = "lblGiftCardTax";
-            this.lblGiftCardTax.Size = new System.Drawing.Size(361, 17);
+            this.lblGiftCardTax.Size = new System.Drawing.Size(277, 13);
             this.lblGiftCardTax.TabIndex = 22;
             this.lblGiftCardTax.Text = "Группа налогов при использовании подарочных карт";
             // 
@@ -395,91 +389,81 @@
             // 
             this.cmbBoxFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem.FormattingEnabled = true;
-            this.cmbBoxFieldItem.Location = new System.Drawing.Point(185, 208);
-            this.cmbBoxFieldItem.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem.Location = new System.Drawing.Point(139, 169);
             this.cmbBoxFieldItem.Name = "cmbBoxFieldItem";
-            this.cmbBoxFieldItem.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem.TabIndex = 25;
             // 
             // lblFieldItem
             // 
             this.lblFieldItem.AutoSize = true;
-            this.lblFieldItem.Location = new System.Drawing.Point(13, 212);
-            this.lblFieldItem.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFieldItem.Location = new System.Drawing.Point(10, 172);
             this.lblFieldItem.Name = "lblFieldItem";
-            this.lblFieldItem.Size = new System.Drawing.Size(157, 17);
+            this.lblFieldItem.Size = new System.Drawing.Size(123, 13);
             this.lblFieldItem.TabIndex = 24;
             this.lblFieldItem.Text = "Поле с именем товара";
             // 
             // txtBoxHostPrizmApi
             // 
-            this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(413, 11);
-            this.txtBoxHostPrizmApi.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxHostPrizmApi.Location = new System.Drawing.Point(310, 9);
             this.txtBoxHostPrizmApi.Name = "txtBoxHostPrizmApi";
-            this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(311, 22);
+            this.txtBoxHostPrizmApi.Size = new System.Drawing.Size(234, 20);
             this.txtBoxHostPrizmApi.TabIndex = 27;
             // 
             // lblHostPrizmApi
             // 
             this.lblHostPrizmApi.AutoSize = true;
-            this.lblHostPrizmApi.Location = new System.Drawing.Point(8, 15);
-            this.lblHostPrizmApi.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHostPrizmApi.Location = new System.Drawing.Point(6, 12);
             this.lblHostPrizmApi.Name = "lblHostPrizmApi";
-            this.lblHostPrizmApi.Size = new System.Drawing.Size(359, 17);
+            this.lblHostPrizmApi.Size = new System.Drawing.Size(277, 13);
             this.lblHostPrizmApi.TabIndex = 26;
             this.lblHostPrizmApi.Text = "Хост с приложением Prizm на котором развёрнут API";
             // 
             // txtBoxPrizmApiSystemLogon
             // 
-            this.txtBoxPrizmApiSystemLogon.Location = new System.Drawing.Point(413, 43);
-            this.txtBoxPrizmApiSystemLogon.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxPrizmApiSystemLogon.Location = new System.Drawing.Point(310, 35);
             this.txtBoxPrizmApiSystemLogon.Name = "txtBoxPrizmApiSystemLogon";
-            this.txtBoxPrizmApiSystemLogon.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxPrizmApiSystemLogon.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemLogon.TabIndex = 29;
             // 
             // lblPrizmApiSystemLogon
             // 
             this.lblPrizmApiSystemLogon.AutoSize = true;
-            this.lblPrizmApiSystemLogon.Location = new System.Drawing.Point(8, 47);
-            this.lblPrizmApiSystemLogon.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrizmApiSystemLogon.Location = new System.Drawing.Point(6, 38);
             this.lblPrizmApiSystemLogon.Name = "lblPrizmApiSystemLogon";
-            this.lblPrizmApiSystemLogon.Size = new System.Drawing.Size(360, 17);
+            this.lblPrizmApiSystemLogon.Size = new System.Drawing.Size(278, 13);
             this.lblPrizmApiSystemLogon.TabIndex = 28;
             this.lblPrizmApiSystemLogon.Text = "Login системного пользовательеля для доступа к api";
             // 
             // txtBoxPrizmApiSystemPassord
             // 
-            this.txtBoxPrizmApiSystemPassord.Location = new System.Drawing.Point(413, 75);
-            this.txtBoxPrizmApiSystemPassord.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxPrizmApiSystemPassord.Location = new System.Drawing.Point(310, 61);
             this.txtBoxPrizmApiSystemPassord.Name = "txtBoxPrizmApiSystemPassord";
-            this.txtBoxPrizmApiSystemPassord.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxPrizmApiSystemPassord.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiSystemPassord.TabIndex = 31;
             // 
             // lblPrizmApiSystemPassord
             // 
             this.lblPrizmApiSystemPassord.AutoSize = true;
-            this.lblPrizmApiSystemPassord.Location = new System.Drawing.Point(8, 79);
-            this.lblPrizmApiSystemPassord.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrizmApiSystemPassord.Location = new System.Drawing.Point(6, 64);
             this.lblPrizmApiSystemPassord.Name = "lblPrizmApiSystemPassord";
-            this.lblPrizmApiSystemPassord.Size = new System.Drawing.Size(386, 17);
+            this.lblPrizmApiSystemPassord.Size = new System.Drawing.Size(298, 13);
             this.lblPrizmApiSystemPassord.TabIndex = 30;
             this.lblPrizmApiSystemPassord.Text = "Password системного пользовательеля для доступа к api";
             // 
             // txtBoxPrizmApiTimeLiveTockenMinute
             // 
-            this.txtBoxPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(413, 107);
-            this.txtBoxPrizmApiTimeLiveTockenMinute.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(310, 87);
             this.txtBoxPrizmApiTimeLiveTockenMinute.Name = "txtBoxPrizmApiTimeLiveTockenMinute";
-            this.txtBoxPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(91, 20);
             this.txtBoxPrizmApiTimeLiveTockenMinute.TabIndex = 33;
             // 
             // lblPrizmApiTimeLiveTockenMinute
             // 
             this.lblPrizmApiTimeLiveTockenMinute.AutoSize = true;
-            this.lblPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(8, 111);
-            this.lblPrizmApiTimeLiveTockenMinute.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblPrizmApiTimeLiveTockenMinute.Location = new System.Drawing.Point(6, 90);
             this.lblPrizmApiTimeLiveTockenMinute.Name = "lblPrizmApiTimeLiveTockenMinute";
-            this.lblPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(400, 17);
+            this.lblPrizmApiTimeLiveTockenMinute.Size = new System.Drawing.Size(308, 13);
             this.lblPrizmApiTimeLiveTockenMinute.TabIndex = 32;
             this.lblPrizmApiTimeLiveTockenMinute.Text = "Тайм аут жизни токена после которого он обновится (мин)";
             // 
@@ -487,37 +471,33 @@
             // 
             this.cmbBoxFieldDocNum.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldDocNum.FormattingEnabled = true;
-            this.cmbBoxFieldDocNum.Location = new System.Drawing.Point(185, 241);
-            this.cmbBoxFieldDocNum.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldDocNum.Location = new System.Drawing.Point(139, 196);
             this.cmbBoxFieldDocNum.Name = "cmbBoxFieldDocNum";
-            this.cmbBoxFieldDocNum.Size = new System.Drawing.Size(160, 24);
+            this.cmbBoxFieldDocNum.Size = new System.Drawing.Size(121, 21);
             this.cmbBoxFieldDocNum.TabIndex = 35;
             // 
             // lblFieldDocNum
             // 
             this.lblFieldDocNum.AutoSize = true;
-            this.lblFieldDocNum.Location = new System.Drawing.Point(13, 245);
-            this.lblFieldDocNum.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFieldDocNum.Location = new System.Drawing.Point(10, 199);
             this.lblFieldDocNum.Name = "lblFieldDocNum";
-            this.lblFieldDocNum.Size = new System.Drawing.Size(143, 17);
+            this.lblFieldDocNum.Size = new System.Drawing.Size(114, 13);
             this.lblFieldDocNum.TabIndex = 34;
             this.lblFieldDocNum.Text = "Поле с номером ФД";
             // 
             // txtBoxFileCheckLog
             // 
-            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(291, 41);
-            this.txtBoxFileCheckLog.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxFileCheckLog.Location = new System.Drawing.Point(218, 33);
             this.txtBoxFileCheckLog.Name = "txtBoxFileCheckLog";
-            this.txtBoxFileCheckLog.Size = new System.Drawing.Size(132, 22);
+            this.txtBoxFileCheckLog.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFileCheckLog.TabIndex = 37;
             // 
             // lblFileCheckLog
             // 
             this.lblFileCheckLog.AutoSize = true;
-            this.lblFileCheckLog.Location = new System.Drawing.Point(8, 44);
-            this.lblFileCheckLog.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFileCheckLog.Location = new System.Drawing.Point(6, 36);
             this.lblFileCheckLog.Name = "lblFileCheckLog";
-            this.lblFileCheckLog.Size = new System.Drawing.Size(244, 17);
+            this.lblFileCheckLog.Size = new System.Drawing.Size(192, 13);
             this.lblFileCheckLog.TabIndex = 36;
             this.lblFileCheckLog.Text = "Имя файла логов по матрикс кодам";
             // 
@@ -528,16 +508,18 @@
             this.tabControl1.Controls.Add(this.tabPage2);
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage7);
+            this.tabControl1.Controls.Add(this.tabPage9);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1032, 592);
+            this.tabControl1.Size = new System.Drawing.Size(774, 481);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.lblWebSecurityProtocolType);
+            this.tabPage1.Controls.Add(this.cmbBoxWebSecurityProtocolType);
             this.tabPage1.Controls.Add(this.grpBoxBlockAction);
             this.tabPage1.Controls.Add(this.groupBoxDisplay);
             this.tabPage1.Controls.Add(this.lblNameCompany);
@@ -551,11 +533,10 @@
             this.tabPage1.Controls.Add(this.lblHost);
             this.tabPage1.Controls.Add(this.lblPort);
             this.tabPage1.Controls.Add(this.txtBoxPort);
-            this.tabPage1.Location = new System.Drawing.Point(4, 25);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage1.Size = new System.Drawing.Size(1024, 563);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(766, 455);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -567,48 +548,42 @@
             this.grpBoxBlockAction.Controls.Add(this.txtBoxBlockActionPassword);
             this.grpBoxBlockAction.Controls.Add(this.lblBlockActionPassword);
             this.grpBoxBlockAction.ForeColor = System.Drawing.Color.Maroon;
-            this.grpBoxBlockAction.Location = new System.Drawing.Point(16, 105);
-            this.grpBoxBlockAction.Margin = new System.Windows.Forms.Padding(4);
+            this.grpBoxBlockAction.Location = new System.Drawing.Point(12, 85);
             this.grpBoxBlockAction.Name = "grpBoxBlockAction";
-            this.grpBoxBlockAction.Padding = new System.Windows.Forms.Padding(4);
-            this.grpBoxBlockAction.Size = new System.Drawing.Size(469, 58);
+            this.grpBoxBlockAction.Size = new System.Drawing.Size(352, 47);
             this.grpBoxBlockAction.TabIndex = 43;
             this.grpBoxBlockAction.TabStop = false;
             this.grpBoxBlockAction.Text = "Доступ администратора к настройкам плагина";
             // 
             // txtBoxBlockActionTimeOut
             // 
-            this.txtBoxBlockActionTimeOut.Location = new System.Drawing.Point(396, 22);
-            this.txtBoxBlockActionTimeOut.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxBlockActionTimeOut.Location = new System.Drawing.Point(297, 18);
             this.txtBoxBlockActionTimeOut.Name = "txtBoxBlockActionTimeOut";
-            this.txtBoxBlockActionTimeOut.Size = new System.Drawing.Size(63, 22);
+            this.txtBoxBlockActionTimeOut.Size = new System.Drawing.Size(48, 20);
             this.txtBoxBlockActionTimeOut.TabIndex = 46;
             // 
             // lblBlockActionTimeOut
             // 
             this.lblBlockActionTimeOut.AutoSize = true;
-            this.lblBlockActionTimeOut.Location = new System.Drawing.Point(268, 26);
-            this.lblBlockActionTimeOut.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBlockActionTimeOut.Location = new System.Drawing.Point(201, 21);
             this.lblBlockActionTimeOut.Name = "lblBlockActionTimeOut";
-            this.lblBlockActionTimeOut.Size = new System.Drawing.Size(119, 17);
+            this.lblBlockActionTimeOut.Size = new System.Drawing.Size(91, 13);
             this.lblBlockActionTimeOut.TabIndex = 45;
             this.lblBlockActionTimeOut.Text = "Блок через (сек)";
             // 
             // txtBoxBlockActionPassword
             // 
-            this.txtBoxBlockActionPassword.Location = new System.Drawing.Point(72, 22);
-            this.txtBoxBlockActionPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxBlockActionPassword.Location = new System.Drawing.Point(54, 18);
             this.txtBoxBlockActionPassword.Name = "txtBoxBlockActionPassword";
-            this.txtBoxBlockActionPassword.Size = new System.Drawing.Size(187, 22);
+            this.txtBoxBlockActionPassword.Size = new System.Drawing.Size(141, 20);
             this.txtBoxBlockActionPassword.TabIndex = 43;
             // 
             // lblBlockActionPassword
             // 
             this.lblBlockActionPassword.AutoSize = true;
-            this.lblBlockActionPassword.Location = new System.Drawing.Point(8, 26);
-            this.lblBlockActionPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblBlockActionPassword.Location = new System.Drawing.Point(6, 21);
             this.lblBlockActionPassword.Name = "lblBlockActionPassword";
-            this.lblBlockActionPassword.Size = new System.Drawing.Size(57, 17);
+            this.lblBlockActionPassword.Size = new System.Drawing.Size(45, 13);
             this.lblBlockActionPassword.TabIndex = 44;
             this.lblBlockActionPassword.Text = "Пароль";
             // 
@@ -628,11 +603,9 @@
             this.groupBoxDisplay.Controls.Add(this.lblDisplayDspFullName);
             this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayPort);
             this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
-            this.groupBoxDisplay.Location = new System.Drawing.Point(15, 463);
-            this.groupBoxDisplay.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(11, 376);
             this.groupBoxDisplay.Name = "groupBoxDisplay";
-            this.groupBoxDisplay.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBoxDisplay.Size = new System.Drawing.Size(996, 91);
+            this.groupBoxDisplay.Size = new System.Drawing.Size(747, 74);
             this.groupBoxDisplay.TabIndex = 11;
             this.groupBoxDisplay.TabStop = false;
             this.groupBoxDisplay.Text = "Дисплей покупателя";
@@ -640,10 +613,9 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 57);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(10, 46);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(173, 17);
+            this.label1.Size = new System.Drawing.Size(134, 13);
             this.label1.TabIndex = 45;
             this.label1.Text = "Поле вывода на дисплей";
             // 
@@ -651,47 +623,42 @@
             // 
             this.cmbBoxDisplayFieldItem.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayFieldItem.FormattingEnabled = true;
-            this.cmbBoxDisplayFieldItem.Location = new System.Drawing.Point(192, 53);
-            this.cmbBoxDisplayFieldItem.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxDisplayFieldItem.Location = new System.Drawing.Point(144, 43);
             this.cmbBoxDisplayFieldItem.Name = "cmbBoxDisplayFieldItem";
-            this.cmbBoxDisplayFieldItem.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxDisplayFieldItem.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxDisplayFieldItem.TabIndex = 46;
             // 
             // cmbBoxStopBits
             // 
             this.cmbBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxStopBits.FormattingEnabled = true;
-            this.cmbBoxStopBits.Location = new System.Drawing.Point(800, 50);
-            this.cmbBoxStopBits.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxStopBits.Location = new System.Drawing.Point(600, 41);
             this.cmbBoxStopBits.Name = "cmbBoxStopBits";
-            this.cmbBoxStopBits.Size = new System.Drawing.Size(181, 24);
+            this.cmbBoxStopBits.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxStopBits.TabIndex = 18;
             // 
             // lblStopBits
             // 
             this.lblStopBits.AutoSize = true;
-            this.lblStopBits.Location = new System.Drawing.Point(723, 54);
-            this.lblStopBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblStopBits.Location = new System.Drawing.Point(542, 44);
             this.lblStopBits.Name = "lblStopBits";
-            this.lblStopBits.Size = new System.Drawing.Size(60, 17);
+            this.lblStopBits.Size = new System.Drawing.Size(46, 13);
             this.lblStopBits.TabIndex = 17;
             this.lblStopBits.Text = "StopBits";
             // 
             // txtBoxDisplayDataBits
             // 
-            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(632, 49);
-            this.txtBoxDisplayDataBits.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(474, 40);
             this.txtBoxDisplayDataBits.Name = "txtBoxDisplayDataBits";
-            this.txtBoxDisplayDataBits.Size = new System.Drawing.Size(64, 22);
+            this.txtBoxDisplayDataBits.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayDataBits.TabIndex = 16;
             // 
             // lblDisplayDataBits
             // 
             this.lblDisplayDataBits.AutoSize = true;
-            this.lblDisplayDataBits.Location = new System.Drawing.Point(551, 53);
-            this.lblDisplayDataBits.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDisplayDataBits.Location = new System.Drawing.Point(413, 43);
             this.lblDisplayDataBits.Name = "lblDisplayDataBits";
-            this.lblDisplayDataBits.Size = new System.Drawing.Size(61, 17);
+            this.lblDisplayDataBits.Size = new System.Drawing.Size(47, 13);
             this.lblDisplayDataBits.TabIndex = 15;
             this.lblDisplayDataBits.Text = "DataBits";
             // 
@@ -699,37 +666,33 @@
             // 
             this.cmbBoxDisplayParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayParity.FormattingEnabled = true;
-            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(800, 19);
-            this.cmbBoxDisplayParity.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(600, 15);
             this.cmbBoxDisplayParity.Name = "cmbBoxDisplayParity";
-            this.cmbBoxDisplayParity.Size = new System.Drawing.Size(181, 24);
+            this.cmbBoxDisplayParity.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxDisplayParity.TabIndex = 14;
             // 
             // lblDisplayParity
             // 
             this.lblDisplayParity.AutoSize = true;
-            this.lblDisplayParity.Location = new System.Drawing.Point(723, 23);
-            this.lblDisplayParity.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDisplayParity.Location = new System.Drawing.Point(542, 19);
             this.lblDisplayParity.Name = "lblDisplayParity";
-            this.lblDisplayParity.Size = new System.Drawing.Size(44, 17);
+            this.lblDisplayParity.Size = new System.Drawing.Size(33, 13);
             this.lblDisplayParity.TabIndex = 13;
             this.lblDisplayParity.Text = "Parity";
             // 
             // txtBoxDisplayBaudRate
             // 
-            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(632, 18);
-            this.txtBoxDisplayBaudRate.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(474, 15);
             this.txtBoxDisplayBaudRate.Name = "txtBoxDisplayBaudRate";
-            this.txtBoxDisplayBaudRate.Size = new System.Drawing.Size(64, 22);
+            this.txtBoxDisplayBaudRate.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayBaudRate.TabIndex = 12;
             // 
             // lblDisplayBaudRate
             // 
             this.lblDisplayBaudRate.AutoSize = true;
-            this.lblDisplayBaudRate.Location = new System.Drawing.Point(551, 22);
-            this.lblDisplayBaudRate.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDisplayBaudRate.Location = new System.Drawing.Point(413, 18);
             this.lblDisplayBaudRate.Name = "lblDisplayBaudRate";
-            this.lblDisplayBaudRate.Size = new System.Drawing.Size(69, 17);
+            this.lblDisplayBaudRate.Size = new System.Drawing.Size(55, 13);
             this.lblDisplayBaudRate.TabIndex = 11;
             this.lblDisplayBaudRate.Text = "Скорость";
             // 
@@ -737,56 +700,50 @@
             // 
             this.cmbBoxDisplayDspFullName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayDspFullName.FormattingEnabled = true;
-            this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(121, 22);
-            this.cmbBoxDisplayDspFullName.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(91, 18);
             this.cmbBoxDisplayDspFullName.Name = "cmbBoxDisplayDspFullName";
-            this.cmbBoxDisplayDspFullName.Size = new System.Drawing.Size(181, 24);
+            this.cmbBoxDisplayDspFullName.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxDisplayDspFullName.TabIndex = 8;
             // 
             // lblDisplayDspFullName
             // 
             this.lblDisplayDspFullName.AutoSize = true;
-            this.lblDisplayDspFullName.Location = new System.Drawing.Point(13, 26);
-            this.lblDisplayDspFullName.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDisplayDspFullName.Location = new System.Drawing.Point(10, 21);
             this.lblDisplayDspFullName.Name = "lblDisplayDspFullName";
-            this.lblDisplayDspFullName.Size = new System.Drawing.Size(92, 17);
+            this.lblDisplayDspFullName.Size = new System.Drawing.Size(71, 13);
             this.lblDisplayDspFullName.TabIndex = 7;
             this.lblDisplayDspFullName.Text = "Тип дисплея";
             // 
             // txtBoxDisplayPort
             // 
-            this.txtBoxDisplayPort.Location = new System.Drawing.Point(441, 22);
-            this.txtBoxDisplayPort.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxDisplayPort.Location = new System.Drawing.Point(331, 18);
             this.txtBoxDisplayPort.Name = "txtBoxDisplayPort";
-            this.txtBoxDisplayPort.Size = new System.Drawing.Size(64, 22);
+            this.txtBoxDisplayPort.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayPort.TabIndex = 10;
             // 
             // lblDisplayPort
             // 
             this.lblDisplayPort.AutoSize = true;
-            this.lblDisplayPort.Location = new System.Drawing.Point(331, 26);
-            this.lblDisplayPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblDisplayPort.Location = new System.Drawing.Point(248, 21);
             this.lblDisplayPort.Name = "lblDisplayPort";
-            this.lblDisplayPort.Size = new System.Drawing.Size(100, 17);
+            this.lblDisplayPort.Size = new System.Drawing.Size(77, 13);
             this.lblDisplayPort.TabIndex = 9;
             this.lblDisplayPort.Text = "Порт дисплея";
             // 
             // lblNameCompany
             // 
             this.lblNameCompany.AutoSize = true;
-            this.lblNameCompany.Location = new System.Drawing.Point(212, 12);
-            this.lblNameCompany.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblNameCompany.Location = new System.Drawing.Point(159, 10);
             this.lblNameCompany.Name = "lblNameCompany";
-            this.lblNameCompany.Size = new System.Drawing.Size(140, 17);
+            this.lblNameCompany.Size = new System.Drawing.Size(110, 13);
             this.lblNameCompany.TabIndex = 39;
             this.lblNameCompany.Text = "Название компании";
             // 
             // txtBoxNameCompany
             // 
-            this.txtBoxNameCompany.Location = new System.Drawing.Point(368, 9);
-            this.txtBoxNameCompany.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxNameCompany.Location = new System.Drawing.Point(276, 7);
             this.txtBoxNameCompany.Name = "txtBoxNameCompany";
-            this.txtBoxNameCompany.Size = new System.Drawing.Size(504, 22);
+            this.txtBoxNameCompany.Size = new System.Drawing.Size(379, 20);
             this.txtBoxNameCompany.TabIndex = 40;
             // 
             // groupBox2
@@ -798,11 +755,9 @@
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayLogin);
             this.groupBox2.Controls.Add(this.PnlSmsTypGateway);
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
-            this.groupBox2.Location = new System.Drawing.Point(15, 313);
-            this.groupBox2.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBox2.Location = new System.Drawing.Point(11, 254);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox2.Size = new System.Drawing.Size(996, 142);
+            this.groupBox2.Size = new System.Drawing.Size(747, 115);
             this.groupBox2.TabIndex = 38;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Провайдер для отправки SMS";
@@ -810,49 +765,44 @@
             // lblSmsTypGatewayPassword
             // 
             this.lblSmsTypGatewayPassword.AutoSize = true;
-            this.lblSmsTypGatewayPassword.Location = new System.Drawing.Point(349, 106);
-            this.lblSmsTypGatewayPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewayPassword.Location = new System.Drawing.Point(262, 86);
             this.lblSmsTypGatewayPassword.Name = "lblSmsTypGatewayPassword";
-            this.lblSmsTypGatewayPassword.Size = new System.Drawing.Size(57, 17);
+            this.lblSmsTypGatewayPassword.Size = new System.Drawing.Size(45, 13);
             this.lblSmsTypGatewayPassword.TabIndex = 13;
             this.lblSmsTypGatewayPassword.Text = "Пароль";
             // 
             // lblSmsTypGateway
             // 
             this.lblSmsTypGateway.AutoSize = true;
-            this.lblSmsTypGateway.Location = new System.Drawing.Point(13, 31);
-            this.lblSmsTypGateway.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGateway.Location = new System.Drawing.Point(10, 25);
             this.lblSmsTypGateway.Name = "lblSmsTypGateway";
-            this.lblSmsTypGateway.Size = new System.Drawing.Size(169, 17);
+            this.lblSmsTypGateway.Size = new System.Drawing.Size(133, 13);
             this.lblSmsTypGateway.TabIndex = 7;
             this.lblSmsTypGateway.Text = "Какой шлюз используем";
             // 
             // txtBoxSmsTypGatewayPassword
             // 
-            this.txtBoxSmsTypGatewayPassword.Location = new System.Drawing.Point(432, 102);
-            this.txtBoxSmsTypGatewayPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewayPassword.Location = new System.Drawing.Point(324, 83);
             this.txtBoxSmsTypGatewayPassword.Name = "txtBoxSmsTypGatewayPassword";
-            this.txtBoxSmsTypGatewayPassword.Size = new System.Drawing.Size(228, 22);
+            this.txtBoxSmsTypGatewayPassword.Size = new System.Drawing.Size(172, 20);
             this.txtBoxSmsTypGatewayPassword.TabIndex = 14;
             // 
             // cmbBoxSmsTypGateway
             // 
             this.cmbBoxSmsTypGateway.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxSmsTypGateway.FormattingEnabled = true;
-            this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(199, 27);
-            this.cmbBoxSmsTypGateway.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxSmsTypGateway.Location = new System.Drawing.Point(149, 22);
             this.cmbBoxSmsTypGateway.Name = "cmbBoxSmsTypGateway";
-            this.cmbBoxSmsTypGateway.Size = new System.Drawing.Size(197, 24);
+            this.cmbBoxSmsTypGateway.Size = new System.Drawing.Size(149, 21);
             this.cmbBoxSmsTypGateway.TabIndex = 8;
             this.cmbBoxSmsTypGateway.SelectedIndexChanged += new System.EventHandler(this.cmbBoxSmsTypGateway_SelectedIndexChanged);
             // 
             // lblSmsTypGatewayLogin
             // 
             this.lblSmsTypGatewayLogin.AutoSize = true;
-            this.lblSmsTypGatewayLogin.Location = new System.Drawing.Point(15, 106);
-            this.lblSmsTypGatewayLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewayLogin.Location = new System.Drawing.Point(11, 86);
             this.lblSmsTypGatewayLogin.Name = "lblSmsTypGatewayLogin";
-            this.lblSmsTypGatewayLogin.Size = new System.Drawing.Size(47, 17);
+            this.lblSmsTypGatewayLogin.Size = new System.Drawing.Size(38, 13);
             this.lblSmsTypGatewayLogin.TabIndex = 11;
             this.lblSmsTypGatewayLogin.Text = "Логин";
             // 
@@ -866,95 +816,92 @@
             this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewayPort);
             this.PnlSmsTypGateway.Controls.Add(this.lblSmsTypGatewaySmtp);
             this.PnlSmsTypGateway.Controls.Add(this.txtBoxSmsTypGatewaySmtp);
-            this.PnlSmsTypGateway.Location = new System.Drawing.Point(8, 17);
-            this.PnlSmsTypGateway.Margin = new System.Windows.Forms.Padding(4);
+            this.PnlSmsTypGateway.Location = new System.Drawing.Point(6, 14);
             this.PnlSmsTypGateway.Name = "PnlSmsTypGateway";
-            this.PnlSmsTypGateway.Size = new System.Drawing.Size(893, 78);
+            this.PnlSmsTypGateway.Size = new System.Drawing.Size(670, 63);
             this.PnlSmsTypGateway.TabIndex = 9;
             this.PnlSmsTypGateway.Visible = false;
             // 
             // lblSmsTypGatewaySmtpPassword
             // 
             this.lblSmsTypGatewaySmtpPassword.AutoSize = true;
-            this.lblSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(569, 46);
-            this.lblSmsTypGatewaySmtpPassword.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(427, 37);
             this.lblSmsTypGatewaySmtpPassword.Name = "lblSmsTypGatewaySmtpPassword";
-            this.lblSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(57, 17);
+            this.lblSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(45, 13);
             this.lblSmsTypGatewaySmtpPassword.TabIndex = 17;
             this.lblSmsTypGatewaySmtpPassword.Text = "Пароль";
             // 
             // txtBoxSmsTypGatewaySmtpPassword
             // 
-            this.txtBoxSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(652, 42);
-            this.txtBoxSmsTypGatewaySmtpPassword.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewaySmtpPassword.Location = new System.Drawing.Point(489, 34);
             this.txtBoxSmsTypGatewaySmtpPassword.Name = "txtBoxSmsTypGatewaySmtpPassword";
-            this.txtBoxSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(228, 22);
+            this.txtBoxSmsTypGatewaySmtpPassword.Size = new System.Drawing.Size(172, 20);
             this.txtBoxSmsTypGatewaySmtpPassword.TabIndex = 18;
             // 
             // lblSmsTypGatewaySmtpLogin
             // 
             this.lblSmsTypGatewaySmtpLogin.AutoSize = true;
-            this.lblSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(235, 46);
-            this.lblSmsTypGatewaySmtpLogin.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(176, 37);
             this.lblSmsTypGatewaySmtpLogin.Name = "lblSmsTypGatewaySmtpLogin";
-            this.lblSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(47, 17);
+            this.lblSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(38, 13);
             this.lblSmsTypGatewaySmtpLogin.TabIndex = 15;
             this.lblSmsTypGatewaySmtpLogin.Text = "Логин";
             // 
             // txtBoxSmsTypGatewaySmtpLogin
             // 
-            this.txtBoxSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(293, 42);
-            this.txtBoxSmsTypGatewaySmtpLogin.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewaySmtpLogin.Location = new System.Drawing.Point(220, 34);
             this.txtBoxSmsTypGatewaySmtpLogin.Name = "txtBoxSmsTypGatewaySmtpLogin";
-            this.txtBoxSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(228, 22);
+            this.txtBoxSmsTypGatewaySmtpLogin.Size = new System.Drawing.Size(172, 20);
             this.txtBoxSmsTypGatewaySmtpLogin.TabIndex = 16;
             // 
             // lblSmsTypGatewayPort
             // 
             this.lblSmsTypGatewayPort.AutoSize = true;
-            this.lblSmsTypGatewayPort.Location = new System.Drawing.Point(723, 14);
-            this.lblSmsTypGatewayPort.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewayPort.Location = new System.Drawing.Point(542, 11);
             this.lblSmsTypGatewayPort.Name = "lblSmsTypGatewayPort";
-            this.lblSmsTypGatewayPort.Size = new System.Drawing.Size(83, 17);
+            this.lblSmsTypGatewayPort.Size = new System.Drawing.Size(65, 13);
             this.lblSmsTypGatewayPort.TabIndex = 9;
             this.lblSmsTypGatewayPort.Text = "SMTP Порт";
             // 
             // txtBoxSmsTypGatewayPort
             // 
-            this.txtBoxSmsTypGatewayPort.Location = new System.Drawing.Point(817, 10);
-            this.txtBoxSmsTypGatewayPort.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewayPort.Location = new System.Drawing.Point(613, 8);
             this.txtBoxSmsTypGatewayPort.Name = "txtBoxSmsTypGatewayPort";
-            this.txtBoxSmsTypGatewayPort.Size = new System.Drawing.Size(63, 22);
+            this.txtBoxSmsTypGatewayPort.Size = new System.Drawing.Size(48, 20);
             this.txtBoxSmsTypGatewayPort.TabIndex = 10;
             // 
             // lblSmsTypGatewaySmtp
             // 
             this.lblSmsTypGatewaySmtp.AutoSize = true;
-            this.lblSmsTypGatewaySmtp.Location = new System.Drawing.Point(405, 14);
-            this.lblSmsTypGatewaySmtp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblSmsTypGatewaySmtp.Location = new System.Drawing.Point(304, 11);
             this.lblSmsTypGatewaySmtp.Name = "lblSmsTypGatewaySmtp";
-            this.lblSmsTypGatewaySmtp.Size = new System.Drawing.Size(98, 17);
+            this.lblSmsTypGatewaySmtp.Size = new System.Drawing.Size(77, 13);
             this.lblSmsTypGatewaySmtp.TabIndex = 7;
             this.lblSmsTypGatewaySmtp.Text = "SMTP Сервер";
             // 
             // txtBoxSmsTypGatewaySmtp
             // 
-            this.txtBoxSmsTypGatewaySmtp.Location = new System.Drawing.Point(516, 10);
-            this.txtBoxSmsTypGatewaySmtp.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewaySmtp.Location = new System.Drawing.Point(387, 8);
             this.txtBoxSmsTypGatewaySmtp.Name = "txtBoxSmsTypGatewaySmtp";
-            this.txtBoxSmsTypGatewaySmtp.Size = new System.Drawing.Size(181, 22);
+            this.txtBoxSmsTypGatewaySmtp.Size = new System.Drawing.Size(137, 20);
             this.txtBoxSmsTypGatewaySmtp.TabIndex = 8;
             // 
             // txtBoxSmsTypGatewayLogin
             // 
-            this.txtBoxSmsTypGatewayLogin.Location = new System.Drawing.Point(73, 102);
-            this.txtBoxSmsTypGatewayLogin.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxSmsTypGatewayLogin.Location = new System.Drawing.Point(55, 83);
             this.txtBoxSmsTypGatewayLogin.Name = "txtBoxSmsTypGatewayLogin";
-            this.txtBoxSmsTypGatewayLogin.Size = new System.Drawing.Size(228, 22);
+            this.txtBoxSmsTypGatewayLogin.Size = new System.Drawing.Size(172, 20);
             this.txtBoxSmsTypGatewayLogin.TabIndex = 12;
             // 
             // groupBoxFfd
             // 
+            this.groupBoxFfd.Controls.Add(this.lblTagInfo1260);
+            this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1264);
+            this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1263);
+            this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1262);
+            this.groupBoxFfd.Controls.Add(this.lblFrTag1264);
+            this.groupBoxFfd.Controls.Add(this.lblFrTag1263);
+            this.groupBoxFfd.Controls.Add(this.lblFrTag1262);
             this.groupBoxFfd.Controls.Add(this.chkBoxPrintingIpForFr);
             this.groupBoxFfd.Controls.Add(this.chkBoxPrintingUrikForFr);
             this.groupBoxFfd.Controls.Add(this.chkBoxProcessingUrikForFr);
@@ -962,22 +909,76 @@
             this.groupBoxFfd.Controls.Add(this.lblFfd);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrPort);
             this.groupBoxFfd.Controls.Add(this.lblFrPort);
-            this.groupBoxFfd.Location = new System.Drawing.Point(15, 164);
-            this.groupBoxFfd.Margin = new System.Windows.Forms.Padding(4);
+            this.groupBoxFfd.Location = new System.Drawing.Point(11, 133);
             this.groupBoxFfd.Name = "groupBoxFfd";
-            this.groupBoxFfd.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBoxFfd.Size = new System.Drawing.Size(996, 142);
+            this.groupBoxFfd.Size = new System.Drawing.Size(747, 115);
             this.groupBoxFfd.TabIndex = 2;
             this.groupBoxFfd.TabStop = false;
             this.groupBoxFfd.Text = "Фискальный регистратор";
             // 
+            // lblTagInfo1260
+            // 
+            this.lblTagInfo1260.AutoSize = true;
+            this.lblTagInfo1260.Location = new System.Drawing.Point(460, 26);
+            this.lblTagInfo1260.Name = "lblTagInfo1260";
+            this.lblTagInfo1260.Size = new System.Drawing.Size(146, 13);
+            this.lblTagInfo1260.TabIndex = 20;
+            this.lblTagInfo1260.Text = "Информация для тега 1260";
+            // 
+            // txtBoxFrTag1264
+            // 
+            this.txtBoxFrTag1264.Location = new System.Drawing.Point(501, 93);
+            this.txtBoxFrTag1264.Name = "txtBoxFrTag1264";
+            this.txtBoxFrTag1264.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxFrTag1264.TabIndex = 19;
+            // 
+            // txtBoxFrTag1263
+            // 
+            this.txtBoxFrTag1263.Location = new System.Drawing.Point(501, 70);
+            this.txtBoxFrTag1263.Name = "txtBoxFrTag1263";
+            this.txtBoxFrTag1263.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxFrTag1263.TabIndex = 18;
+            // 
+            // txtBoxFrTag1262
+            // 
+            this.txtBoxFrTag1262.Location = new System.Drawing.Point(501, 47);
+            this.txtBoxFrTag1262.Name = "txtBoxFrTag1262";
+            this.txtBoxFrTag1262.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxFrTag1262.TabIndex = 17;
+            // 
+            // lblFrTag1264
+            // 
+            this.lblFrTag1264.AutoSize = true;
+            this.lblFrTag1264.Location = new System.Drawing.Point(436, 96);
+            this.lblFrTag1264.Name = "lblFrTag1264";
+            this.lblFrTag1264.Size = new System.Drawing.Size(59, 13);
+            this.lblFrTag1264.TabIndex = 16;
+            this.lblFrTag1264.Text = "FrTag1264";
+            // 
+            // lblFrTag1263
+            // 
+            this.lblFrTag1263.AutoSize = true;
+            this.lblFrTag1263.Location = new System.Drawing.Point(436, 73);
+            this.lblFrTag1263.Name = "lblFrTag1263";
+            this.lblFrTag1263.Size = new System.Drawing.Size(59, 13);
+            this.lblFrTag1263.TabIndex = 15;
+            this.lblFrTag1263.Text = "FrTag1263";
+            // 
+            // lblFrTag1262
+            // 
+            this.lblFrTag1262.AutoSize = true;
+            this.lblFrTag1262.Location = new System.Drawing.Point(436, 50);
+            this.lblFrTag1262.Name = "lblFrTag1262";
+            this.lblFrTag1262.Size = new System.Drawing.Size(59, 13);
+            this.lblFrTag1262.TabIndex = 14;
+            this.lblFrTag1262.Text = "FrTag1262";
+            // 
             // chkBoxPrintingIpForFr
             // 
             this.chkBoxPrintingIpForFr.AutoSize = true;
-            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(524, 89);
-            this.chkBoxPrintingIpForFr.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(6, 95);
             this.chkBoxPrintingIpForFr.Name = "chkBoxPrintingIpForFr";
-            this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(419, 21);
+            this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(321, 17);
             this.chkBoxPrintingIpForFr.TabIndex = 13;
             this.chkBoxPrintingIpForFr.Text = "Выводить на печать в чек информацию о покупателе (ИП)";
             this.chkBoxPrintingIpForFr.UseVisualStyleBackColor = true;
@@ -986,10 +987,9 @@
             // chkBoxPrintingUrikForFr
             // 
             this.chkBoxPrintingUrikForFr.AutoSize = true;
-            this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(524, 60);
-            this.chkBoxPrintingUrikForFr.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(6, 72);
             this.chkBoxPrintingUrikForFr.Name = "chkBoxPrintingUrikForFr";
-            this.chkBoxPrintingUrikForFr.Size = new System.Drawing.Size(457, 21);
+            this.chkBoxPrintingUrikForFr.Size = new System.Drawing.Size(347, 17);
             this.chkBoxPrintingUrikForFr.TabIndex = 12;
             this.chkBoxPrintingUrikForFr.Text = "Выводить на печать в чек информацию о покупателе (Юр лице)";
             this.chkBoxPrintingUrikForFr.UseVisualStyleBackColor = true;
@@ -998,10 +998,9 @@
             // chkBoxProcessingUrikForFr
             // 
             this.chkBoxProcessingUrikForFr.AutoSize = true;
-            this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(8, 60);
-            this.chkBoxProcessingUrikForFr.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(6, 49);
             this.chkBoxProcessingUrikForFr.Name = "chkBoxProcessingUrikForFr";
-            this.chkBoxProcessingUrikForFr.Size = new System.Drawing.Size(496, 21);
+            this.chkBoxProcessingUrikForFr.Size = new System.Drawing.Size(381, 17);
             this.chkBoxProcessingUrikForFr.TabIndex = 11;
             this.chkBoxProcessingUrikForFr.Text = "Разрешить обрабатывать в FR в качестве покупателей Юр лица и ИП";
             this.chkBoxProcessingUrikForFr.UseVisualStyleBackColor = true;
@@ -1031,10 +1030,9 @@
             this.tabPage3.Controls.Add(this.lblTenderTypeGiftCert);
             this.tabPage3.Controls.Add(this.lblTenderTypeCredit);
             this.tabPage3.Controls.Add(this.lblFieldDocNum);
-            this.tabPage3.Location = new System.Drawing.Point(4, 25);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(1024, 563);
+            this.tabPage3.Size = new System.Drawing.Size(766, 455);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Специфика Retail";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -1042,10 +1040,9 @@
             // chkBoxEmployeePrintingForEveryLine
             // 
             this.chkBoxEmployeePrintingForEveryLine.AutoSize = true;
-            this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(563, 20);
-            this.chkBoxEmployeePrintingForEveryLine.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxEmployeePrintingForEveryLine.Location = new System.Drawing.Point(422, 16);
             this.chkBoxEmployeePrintingForEveryLine.Name = "chkBoxEmployeePrintingForEveryLine";
-            this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(367, 21);
+            this.chkBoxEmployeePrintingForEveryLine.Size = new System.Drawing.Size(285, 17);
             this.chkBoxEmployeePrintingForEveryLine.TabIndex = 45;
             this.chkBoxEmployeePrintingForEveryLine.Text = "Печать сотрудника на каждой строке если он есть";
             this.chkBoxEmployeePrintingForEveryLine.UseVisualStyleBackColor = true;
@@ -1054,67 +1051,60 @@
             // 
             this.cmbBoxFieldItem5.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem5.FormattingEnabled = true;
-            this.cmbBoxFieldItem5.Location = new System.Drawing.Point(825, 208);
-            this.cmbBoxFieldItem5.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem5.Location = new System.Drawing.Point(619, 169);
             this.cmbBoxFieldItem5.Name = "cmbBoxFieldItem5";
-            this.cmbBoxFieldItem5.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem5.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem5.TabIndex = 44;
             // 
             // cmbBoxFieldItem4
             // 
             this.cmbBoxFieldItem4.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem4.FormattingEnabled = true;
-            this.cmbBoxFieldItem4.Location = new System.Drawing.Point(697, 208);
-            this.cmbBoxFieldItem4.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem4.Location = new System.Drawing.Point(523, 169);
             this.cmbBoxFieldItem4.Name = "cmbBoxFieldItem4";
-            this.cmbBoxFieldItem4.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem4.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem4.TabIndex = 43;
             // 
             // cmbBoxFieldItem3
             // 
             this.cmbBoxFieldItem3.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem3.FormattingEnabled = true;
-            this.cmbBoxFieldItem3.Location = new System.Drawing.Point(569, 208);
-            this.cmbBoxFieldItem3.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem3.Location = new System.Drawing.Point(427, 169);
             this.cmbBoxFieldItem3.Name = "cmbBoxFieldItem3";
-            this.cmbBoxFieldItem3.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem3.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem3.TabIndex = 42;
             // 
             // cmbBoxFieldItem2
             // 
             this.cmbBoxFieldItem2.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem2.FormattingEnabled = true;
-            this.cmbBoxFieldItem2.Location = new System.Drawing.Point(441, 208);
-            this.cmbBoxFieldItem2.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem2.Location = new System.Drawing.Point(331, 169);
             this.cmbBoxFieldItem2.Name = "cmbBoxFieldItem2";
-            this.cmbBoxFieldItem2.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem2.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem2.TabIndex = 41;
             // 
             // cmbBoxFieldItem1
             // 
             this.cmbBoxFieldItem1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldItem1.FormattingEnabled = true;
-            this.cmbBoxFieldItem1.Location = new System.Drawing.Point(313, 208);
-            this.cmbBoxFieldItem1.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldItem1.Location = new System.Drawing.Point(235, 169);
             this.cmbBoxFieldItem1.Name = "cmbBoxFieldItem1";
-            this.cmbBoxFieldItem1.Size = new System.Drawing.Size(119, 24);
+            this.cmbBoxFieldItem1.Size = new System.Drawing.Size(90, 21);
             this.cmbBoxFieldItem1.TabIndex = 40;
             // 
             // txtBoxTenderTypeAvans
             // 
-            this.txtBoxTenderTypeAvans.Location = new System.Drawing.Point(423, 144);
-            this.txtBoxTenderTypeAvans.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxTenderTypeAvans.Location = new System.Drawing.Point(317, 117);
             this.txtBoxTenderTypeAvans.Name = "txtBoxTenderTypeAvans";
-            this.txtBoxTenderTypeAvans.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxTenderTypeAvans.Size = new System.Drawing.Size(91, 20);
             this.txtBoxTenderTypeAvans.TabIndex = 39;
             // 
             // lblTenderTypeAvans
             // 
             this.lblTenderTypeAvans.AutoSize = true;
-            this.lblTenderTypeAvans.Location = new System.Drawing.Point(17, 148);
-            this.lblTenderTypeAvans.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblTenderTypeAvans.Location = new System.Drawing.Point(13, 120);
             this.lblTenderTypeAvans.Name = "lblTenderTypeAvans";
-            this.lblTenderTypeAvans.Size = new System.Drawing.Size(328, 17);
+            this.lblTenderTypeAvans.Size = new System.Drawing.Size(247, 13);
             this.lblTenderTypeAvans.TabIndex = 38;
             this.lblTenderTypeAvans.Text = "Идентификатор типа оплаты подарочная карта";
             // 
@@ -1122,19 +1112,17 @@
             // 
             this.cmbBoxFieldInnTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFieldInnTyp.FormattingEnabled = true;
-            this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(272, 274);
-            this.cmbBoxFieldInnTyp.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxFieldInnTyp.Location = new System.Drawing.Point(204, 223);
             this.cmbBoxFieldInnTyp.Name = "cmbBoxFieldInnTyp";
-            this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(160, 24);
+            this.cmbBoxFieldInnTyp.Size = new System.Drawing.Size(121, 21);
             this.cmbBoxFieldInnTyp.TabIndex = 37;
             // 
             // lblFieldInnTyp
             // 
             this.lblFieldInnTyp.AutoSize = true;
-            this.lblFieldInnTyp.Location = new System.Drawing.Point(13, 278);
-            this.lblFieldInnTyp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblFieldInnTyp.Location = new System.Drawing.Point(10, 226);
             this.lblFieldInnTyp.Name = "lblFieldInnTyp";
-            this.lblFieldInnTyp.Size = new System.Drawing.Size(243, 17);
+            this.lblFieldInnTyp.Size = new System.Drawing.Size(188, 13);
             this.lblFieldInnTyp.TabIndex = 36;
             this.lblFieldInnTyp.Text = "Поле в котором тип клиента и ИНН";
             // 
@@ -1148,11 +1136,10 @@
             this.tabPage2.Controls.Add(this.lblPrizmApiTimeLiveTockenMinute);
             this.tabPage2.Controls.Add(this.lblPrizmApiSystemPassord);
             this.tabPage2.Controls.Add(this.txtBoxPrizmApiSystemPassord);
-            this.tabPage2.Location = new System.Drawing.Point(4, 25);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage2.Size = new System.Drawing.Size(1024, 563);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(766, 455);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Api";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -1160,10 +1147,9 @@
             // tabPage4
             // 
             this.tabPage4.Controls.Add(this.tabControl2);
-            this.tabPage4.Location = new System.Drawing.Point(4, 25);
-            this.tabPage4.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1024, 563);
+            this.tabPage4.Size = new System.Drawing.Size(766, 455);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Доп возможности";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -1176,11 +1162,10 @@
             this.tabControl2.Controls.Add(this.tabPage8);
             this.tabControl2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl2.Location = new System.Drawing.Point(0, 0);
-            this.tabControl2.Margin = new System.Windows.Forms.Padding(4);
             this.tabControl2.Multiline = true;
             this.tabControl2.Name = "tabControl2";
             this.tabControl2.SelectedIndex = 0;
-            this.tabControl2.Size = new System.Drawing.Size(1024, 563);
+            this.tabControl2.Size = new System.Drawing.Size(766, 455);
             this.tabControl2.TabIndex = 0;
             // 
             // tabPage5
@@ -1190,11 +1175,10 @@
             this.tabPage5.Controls.Add(this.lblGiftCardCode);
             this.tabPage5.Controls.Add(this.lblGiftCardTax);
             this.tabPage5.Controls.Add(this.txtBoxGiftCardCode);
-            this.tabPage5.Location = new System.Drawing.Point(25, 4);
-            this.tabPage5.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage5.Location = new System.Drawing.Point(23, 4);
             this.tabPage5.Name = "tabPage5";
-            this.tabPage5.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage5.Size = new System.Drawing.Size(995, 555);
+            this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage5.Size = new System.Drawing.Size(739, 447);
             this.tabPage5.TabIndex = 0;
             this.tabPage5.Text = "Подарочные карты";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -1204,11 +1188,10 @@
             this.tabPage6.Controls.Add(this.chkBoxCalculatedDaySumForUrik);
             this.tabPage6.Controls.Add(this.txtBoxLimitCachForUrik);
             this.tabPage6.Controls.Add(this.lbl_LimitCachForUrik);
-            this.tabPage6.Location = new System.Drawing.Point(25, 4);
-            this.tabPage6.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
-            this.tabPage6.Padding = new System.Windows.Forms.Padding(4);
-            this.tabPage6.Size = new System.Drawing.Size(995, 475);
+            this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage6.Size = new System.Drawing.Size(739, 447);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1216,39 +1199,35 @@
             // chkBoxCalculatedDaySumForUrik
             // 
             this.chkBoxCalculatedDaySumForUrik.AutoSize = true;
-            this.chkBoxCalculatedDaySumForUrik.Location = new System.Drawing.Point(12, 43);
-            this.chkBoxCalculatedDaySumForUrik.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxCalculatedDaySumForUrik.Location = new System.Drawing.Point(9, 35);
             this.chkBoxCalculatedDaySumForUrik.Name = "chkBoxCalculatedDaySumForUrik";
-            this.chkBoxCalculatedDaySumForUrik.Size = new System.Drawing.Size(405, 21);
+            this.chkBoxCalculatedDaySumForUrik.Size = new System.Drawing.Size(313, 17);
             this.chkBoxCalculatedDaySumForUrik.TabIndex = 46;
             this.chkBoxCalculatedDaySumForUrik.Text = "Лимит наботает на весь день если выключено то на чек";
             this.chkBoxCalculatedDaySumForUrik.UseVisualStyleBackColor = true;
             // 
             // txtBoxLimitCachForUrik
             // 
-            this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(293, 11);
-            this.txtBoxLimitCachForUrik.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxLimitCachForUrik.Location = new System.Drawing.Point(220, 9);
             this.txtBoxLimitCachForUrik.Name = "txtBoxLimitCachForUrik";
-            this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(221, 22);
+            this.txtBoxLimitCachForUrik.Size = new System.Drawing.Size(167, 20);
             this.txtBoxLimitCachForUrik.TabIndex = 1;
             // 
             // lbl_LimitCachForUrik
             // 
             this.lbl_LimitCachForUrik.AutoSize = true;
-            this.lbl_LimitCachForUrik.Location = new System.Drawing.Point(8, 15);
-            this.lbl_LimitCachForUrik.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lbl_LimitCachForUrik.Location = new System.Drawing.Point(6, 12);
             this.lbl_LimitCachForUrik.Name = "lbl_LimitCachForUrik";
-            this.lbl_LimitCachForUrik.Size = new System.Drawing.Size(269, 17);
+            this.lbl_LimitCachForUrik.Size = new System.Drawing.Size(208, 13);
             this.lbl_LimitCachForUrik.TabIndex = 0;
             this.lbl_LimitCachForUrik.Text = "Лимит по юр лицам при покупке за нал";
             // 
             // tabPage8
             // 
             this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
-            this.tabPage8.Location = new System.Drawing.Point(25, 4);
-            this.tabPage8.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage8.Location = new System.Drawing.Point(23, 4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(995, 475);
+            this.tabPage8.Size = new System.Drawing.Size(739, 447);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "Операции с чеками";
             this.tabPage8.UseVisualStyleBackColor = true;
@@ -1258,11 +1237,9 @@
             this.grpBoxHeldForDocements.Controls.Add(this.chkBoxHeldForDocements);
             this.grpBoxHeldForDocements.Controls.Add(this.txtBoxHeldForDocementsTimeout);
             this.grpBoxHeldForDocements.Controls.Add(this.lblHeldForDocements);
-            this.grpBoxHeldForDocements.Location = new System.Drawing.Point(23, 17);
-            this.grpBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4);
+            this.grpBoxHeldForDocements.Location = new System.Drawing.Point(17, 14);
             this.grpBoxHeldForDocements.Name = "grpBoxHeldForDocements";
-            this.grpBoxHeldForDocements.Padding = new System.Windows.Forms.Padding(4);
-            this.grpBoxHeldForDocements.Size = new System.Drawing.Size(799, 153);
+            this.grpBoxHeldForDocements.Size = new System.Drawing.Size(599, 124);
             this.grpBoxHeldForDocements.TabIndex = 25;
             this.grpBoxHeldForDocements.TabStop = false;
             this.grpBoxHeldForDocements.Text = "Откат чеков при ошибке в фискальном регистраторе";
@@ -1270,29 +1247,26 @@
             // chkBoxHeldForDocements
             // 
             this.chkBoxHeldForDocements.AutoSize = true;
-            this.chkBoxHeldForDocements.Location = new System.Drawing.Point(24, 33);
-            this.chkBoxHeldForDocements.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxHeldForDocements.Location = new System.Drawing.Point(18, 27);
             this.chkBoxHeldForDocements.Name = "chkBoxHeldForDocements";
-            this.chkBoxHeldForDocements.Size = new System.Drawing.Size(455, 21);
+            this.chkBoxHeldForDocements.Size = new System.Drawing.Size(353, 17);
             this.chkBoxHeldForDocements.TabIndex = 24;
             this.chkBoxHeldForDocements.Text = "Включить откат чеков при ошибках в фискальном регистраторе";
             this.chkBoxHeldForDocements.UseVisualStyleBackColor = true;
             // 
             // txtBoxHeldForDocementsTimeout
             // 
-            this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(424, 57);
-            this.txtBoxHeldForDocementsTimeout.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxHeldForDocementsTimeout.Location = new System.Drawing.Point(318, 46);
             this.txtBoxHeldForDocementsTimeout.Name = "txtBoxHeldForDocementsTimeout";
-            this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(120, 22);
+            this.txtBoxHeldForDocementsTimeout.Size = new System.Drawing.Size(91, 20);
             this.txtBoxHeldForDocementsTimeout.TabIndex = 23;
             // 
             // lblHeldForDocements
             // 
             this.lblHeldForDocements.AutoSize = true;
-            this.lblHeldForDocements.Location = new System.Drawing.Point(20, 60);
-            this.lblHeldForDocements.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblHeldForDocements.Location = new System.Drawing.Point(15, 49);
             this.lblHeldForDocements.Name = "lblHeldForDocements";
-            this.lblHeldForDocements.Size = new System.Drawing.Size(333, 17);
+            this.lblHeldForDocements.Size = new System.Drawing.Size(255, 13);
             this.lblHeldForDocements.TabIndex = 22;
             this.lblHeldForDocements.Text = "Таймаут отката после регистрации ошибки (сек)";
             // 
@@ -1300,10 +1274,9 @@
             // 
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassFill);
             this.tabPage7.Controls.Add(this.pnl_ProdictMatrixClassTop);
-            this.tabPage7.Location = new System.Drawing.Point(4, 25);
-            this.tabPage7.Margin = new System.Windows.Forms.Padding(4);
+            this.tabPage7.Location = new System.Drawing.Point(4, 22);
             this.tabPage7.Name = "tabPage7";
-            this.tabPage7.Size = new System.Drawing.Size(1024, 563);
+            this.tabPage7.Size = new System.Drawing.Size(766, 455);
             this.tabPage7.TabIndex = 4;
             this.tabPage7.Text = "Матрикс коды";
             this.tabPage7.UseVisualStyleBackColor = true;
@@ -1312,10 +1285,9 @@
             // 
             this.pnl_ProdictMatrixClassFill.Controls.Add(this.dgProdictMatrixClass);
             this.pnl_ProdictMatrixClassFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 135);
-            this.pnl_ProdictMatrixClassFill.Margin = new System.Windows.Forms.Padding(4);
+            this.pnl_ProdictMatrixClassFill.Location = new System.Drawing.Point(0, 110);
             this.pnl_ProdictMatrixClassFill.Name = "pnl_ProdictMatrixClassFill";
-            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(1024, 428);
+            this.pnl_ProdictMatrixClassFill.Size = new System.Drawing.Size(766, 345);
             this.pnl_ProdictMatrixClassFill.TabIndex = 2;
             // 
             // dgProdictMatrixClass
@@ -1326,10 +1298,9 @@
             this.Mandatory});
             this.dgProdictMatrixClass.Dock = System.Windows.Forms.DockStyle.Fill;
             this.dgProdictMatrixClass.Location = new System.Drawing.Point(0, 0);
-            this.dgProdictMatrixClass.Margin = new System.Windows.Forms.Padding(4);
             this.dgProdictMatrixClass.Name = "dgProdictMatrixClass";
             this.dgProdictMatrixClass.RowHeadersWidth = 51;
-            this.dgProdictMatrixClass.Size = new System.Drawing.Size(1024, 428);
+            this.dgProdictMatrixClass.Size = new System.Drawing.Size(766, 345);
             this.dgProdictMatrixClass.TabIndex = 0;
             // 
             // ProductClass
@@ -1355,9 +1326,8 @@
             this.pnl_ProdictMatrixClassTop.Controls.Add(this.pnl_ProdictMatrixClassTopTop);
             this.pnl_ProdictMatrixClassTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTop.Location = new System.Drawing.Point(0, 0);
-            this.pnl_ProdictMatrixClassTop.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassTop.Name = "pnl_ProdictMatrixClassTop";
-            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(1024, 135);
+            this.pnl_ProdictMatrixClassTop.Size = new System.Drawing.Size(766, 110);
             this.pnl_ProdictMatrixClassTop.TabIndex = 1;
             // 
             // pnl_ProdictMatrixClassTopTop
@@ -1373,28 +1343,25 @@
             this.pnl_ProdictMatrixClassTopTop.Controls.Add(this.cmbBoxProductMatrixClassType);
             this.pnl_ProdictMatrixClassTopTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.pnl_ProdictMatrixClassTopTop.Location = new System.Drawing.Point(0, 0);
-            this.pnl_ProdictMatrixClassTopTop.Margin = new System.Windows.Forms.Padding(4);
             this.pnl_ProdictMatrixClassTopTop.Name = "pnl_ProdictMatrixClassTopTop";
-            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(1024, 124);
+            this.pnl_ProdictMatrixClassTopTop.Size = new System.Drawing.Size(766, 101);
             this.pnl_ProdictMatrixClassTopTop.TabIndex = 40;
             // 
             // chkBox_MexSendItemBarcode
             // 
             this.chkBox_MexSendItemBarcode.AutoSize = true;
-            this.chkBox_MexSendItemBarcode.Location = new System.Drawing.Point(728, 20);
-            this.chkBox_MexSendItemBarcode.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBox_MexSendItemBarcode.Location = new System.Drawing.Point(546, 16);
             this.chkBox_MexSendItemBarcode.Name = "chkBox_MexSendItemBarcode";
-            this.chkBox_MexSendItemBarcode.Size = new System.Drawing.Size(222, 21);
+            this.chkBox_MexSendItemBarcode.Size = new System.Drawing.Size(175, 17);
             this.chkBox_MexSendItemBarcode.TabIndex = 40;
             this.chkBox_MexSendItemBarcode.Text = "Поддержка реализации меха";
             this.chkBox_MexSendItemBarcode.UseVisualStyleBackColor = true;
             // 
             // lblProductMatrixEndOff
             // 
-            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(532, 82);
-            this.lblProductMatrixEndOff.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblProductMatrixEndOff.Location = new System.Drawing.Point(399, 67);
             this.lblProductMatrixEndOff.Name = "lblProductMatrixEndOff";
-            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(308, 37);
+            this.lblProductMatrixEndOff.Size = new System.Drawing.Size(231, 30);
             this.lblProductMatrixEndOff.TabIndex = 2;
             this.lblProductMatrixEndOff.Text = "Признак окончания класса в поле DCS если пусто то будет сравниваться всё поле цел" +
     "иком (один символ)";
@@ -1402,20 +1369,18 @@
             // 
             // txtBoxProductMatrixEndOff
             // 
-            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(848, 95);
-            this.txtBoxProductMatrixEndOff.Margin = new System.Windows.Forms.Padding(4);
+            this.txtBoxProductMatrixEndOff.Location = new System.Drawing.Point(636, 77);
             this.txtBoxProductMatrixEndOff.Name = "txtBoxProductMatrixEndOff";
-            this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(52, 22);
+            this.txtBoxProductMatrixEndOff.Size = new System.Drawing.Size(40, 20);
             this.txtBoxProductMatrixEndOff.TabIndex = 3;
             this.txtBoxProductMatrixEndOff.Visible = false;
             // 
             // chkBox_GetMatrixAlways
             // 
             this.chkBox_GetMatrixAlways.AutoSize = true;
-            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(11, 4);
-            this.chkBox_GetMatrixAlways.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBox_GetMatrixAlways.Location = new System.Drawing.Point(8, 3);
             this.chkBox_GetMatrixAlways.Name = "chkBox_GetMatrixAlways";
-            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(487, 21);
+            this.chkBox_GetMatrixAlways.Size = new System.Drawing.Size(383, 17);
             this.chkBox_GetMatrixAlways.TabIndex = 0;
             this.chkBox_GetMatrixAlways.Text = "Всегда запрашивать матрикс код к товарам независимо от настроек";
             this.chkBox_GetMatrixAlways.UseVisualStyleBackColor = true;
@@ -1424,20 +1389,18 @@
             // lblMatrixParceTyp
             // 
             this.lblMatrixParceTyp.AutoSize = true;
-            this.lblMatrixParceTyp.Location = new System.Drawing.Point(7, 94);
-            this.lblMatrixParceTyp.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblMatrixParceTyp.Location = new System.Drawing.Point(5, 76);
             this.lblMatrixParceTyp.Name = "lblMatrixParceTyp";
-            this.lblMatrixParceTyp.Size = new System.Drawing.Size(340, 17);
+            this.lblMatrixParceTyp.Size = new System.Drawing.Size(265, 13);
             this.lblMatrixParceTyp.TabIndex = 39;
             this.lblMatrixParceTyp.Text = "Выбираем режим поиска по правилам из таблицы";
             // 
             // chkBoxMandatoryDefault
             // 
             this.chkBoxMandatoryDefault.AutoSize = true;
-            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(11, 32);
-            this.chkBoxMandatoryDefault.Margin = new System.Windows.Forms.Padding(4);
+            this.chkBoxMandatoryDefault.Location = new System.Drawing.Point(8, 26);
             this.chkBoxMandatoryDefault.Name = "chkBoxMandatoryDefault";
-            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(526, 21);
+            this.chkBoxMandatoryDefault.Size = new System.Drawing.Size(406, 17);
             this.chkBoxMandatoryDefault.TabIndex = 1;
             this.chkBoxMandatoryDefault.Text = "Необходимый по умолчанию (как реагировать если не найдено в правиле)";
             this.chkBoxMandatoryDefault.UseVisualStyleBackColor = true;
@@ -1446,20 +1409,18 @@
             // 
             this.cmbBoxMatrixParceTyp.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxMatrixParceTyp.FormattingEnabled = true;
-            this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(368, 94);
-            this.cmbBoxMatrixParceTyp.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxMatrixParceTyp.Location = new System.Drawing.Point(276, 76);
             this.cmbBoxMatrixParceTyp.Name = "cmbBoxMatrixParceTyp";
-            this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(143, 24);
+            this.cmbBoxMatrixParceTyp.Size = new System.Drawing.Size(108, 21);
             this.cmbBoxMatrixParceTyp.TabIndex = 38;
             this.cmbBoxMatrixParceTyp.SelectedIndexChanged += new System.EventHandler(this.cmbBoxMatrixParceTyp_SelectedIndexChanged);
             // 
             // lblProductMatrixClassType
             // 
             this.lblProductMatrixClassType.AutoSize = true;
-            this.lblProductMatrixClassType.Location = new System.Drawing.Point(11, 60);
-            this.lblProductMatrixClassType.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblProductMatrixClassType.Location = new System.Drawing.Point(8, 49);
             this.lblProductMatrixClassType.Name = "lblProductMatrixClassType";
-            this.lblProductMatrixClassType.Size = new System.Drawing.Size(202, 17);
+            this.lblProductMatrixClassType.Size = new System.Drawing.Size(159, 13);
             this.lblProductMatrixClassType.TabIndex = 36;
             this.lblProductMatrixClassType.Text = "В каком поле искать признак";
             // 
@@ -1467,20 +1428,82 @@
             // 
             this.cmbBoxProductMatrixClassType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxProductMatrixClassType.FormattingEnabled = true;
-            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(231, 57);
-            this.cmbBoxProductMatrixClassType.Margin = new System.Windows.Forms.Padding(4);
+            this.cmbBoxProductMatrixClassType.Location = new System.Drawing.Point(173, 46);
             this.cmbBoxProductMatrixClassType.Name = "cmbBoxProductMatrixClassType";
-            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(143, 24);
+            this.cmbBoxProductMatrixClassType.Size = new System.Drawing.Size(108, 21);
             this.cmbBoxProductMatrixClassType.TabIndex = 37;
+            // 
+            // tabPage9
+            // 
+            this.tabPage9.Controls.Add(this.txtBoxDefaultTokenEcp);
+            this.tabPage9.Controls.Add(this.txtBoxClearJsonCdnFarmMin);
+            this.tabPage9.Controls.Add(this.lblDefaultTokenEcp);
+            this.tabPage9.Controls.Add(this.lblClearJsonCdnFarmMin);
+            this.tabPage9.Controls.Add(this.txtBoxWebSiteForIsmp);
+            this.tabPage9.Controls.Add(this.lblWebSiteForIsmp);
+            this.tabPage9.Location = new System.Drawing.Point(4, 22);
+            this.tabPage9.Name = "tabPage9";
+            this.tabPage9.Size = new System.Drawing.Size(766, 455);
+            this.tabPage9.TabIndex = 5;
+            this.tabPage9.Text = "Настройка CDN площадки";
+            this.tabPage9.UseVisualStyleBackColor = true;
+            // 
+            // txtBoxDefaultTokenEcp
+            // 
+            this.txtBoxDefaultTokenEcp.Location = new System.Drawing.Point(430, 67);
+            this.txtBoxDefaultTokenEcp.Name = "txtBoxDefaultTokenEcp";
+            this.txtBoxDefaultTokenEcp.Size = new System.Drawing.Size(232, 20);
+            this.txtBoxDefaultTokenEcp.TabIndex = 5;
+            // 
+            // txtBoxClearJsonCdnFarmMin
+            // 
+            this.txtBoxClearJsonCdnFarmMin.Location = new System.Drawing.Point(562, 110);
+            this.txtBoxClearJsonCdnFarmMin.Name = "txtBoxClearJsonCdnFarmMin";
+            this.txtBoxClearJsonCdnFarmMin.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxClearJsonCdnFarmMin.TabIndex = 4;
+            // 
+            // lblDefaultTokenEcp
+            // 
+            this.lblDefaultTokenEcp.AutoSize = true;
+            this.lblDefaultTokenEcp.Location = new System.Drawing.Point(27, 70);
+            this.lblDefaultTokenEcp.Name = "lblDefaultTokenEcp";
+            this.lblDefaultTokenEcp.Size = new System.Drawing.Size(383, 13);
+            this.lblDefaultTokenEcp.TabIndex = 3;
+            this.lblDefaultTokenEcp.Text = "Значение токена по умолчанию если не удалось получить используя ЕЦП";
+            // 
+            // lblClearJsonCdnFarmMin
+            // 
+            this.lblClearJsonCdnFarmMin.AutoSize = true;
+            this.lblClearJsonCdnFarmMin.Location = new System.Drawing.Point(28, 113);
+            this.lblClearJsonCdnFarmMin.Name = "lblClearJsonCdnFarmMin";
+            this.lblClearJsonCdnFarmMin.Size = new System.Drawing.Size(518, 13);
+            this.lblClearJsonCdnFarmMin.TabIndex = 2;
+            this.lblClearJsonCdnFarmMin.Text = "Через какое время чистить из оперативы ответ если вдруг фронт лёг, чтобы небыло у" +
+    "течки памяти";
+            // 
+            // txtBoxWebSiteForIsmp
+            // 
+            this.txtBoxWebSiteForIsmp.Location = new System.Drawing.Point(430, 22);
+            this.txtBoxWebSiteForIsmp.Name = "txtBoxWebSiteForIsmp";
+            this.txtBoxWebSiteForIsmp.Size = new System.Drawing.Size(232, 20);
+            this.txtBoxWebSiteForIsmp.TabIndex = 1;
+            // 
+            // lblWebSiteForIsmp
+            // 
+            this.lblWebSiteForIsmp.AutoSize = true;
+            this.lblWebSiteForIsmp.Location = new System.Drawing.Point(28, 25);
+            this.lblWebSiteForIsmp.Name = "lblWebSiteForIsmp";
+            this.lblWebSiteForIsmp.Size = new System.Drawing.Size(293, 13);
+            this.lblWebSiteForIsmp.TabIndex = 0;
+            this.lblWebSiteForIsmp.Text = "Сайт с которым мы работам для обработки документов";
             // 
             // pnlBotton
             // 
             this.pnlBotton.Controls.Add(this.btnSave);
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotton.Location = new System.Drawing.Point(0, 592);
-            this.pnlBotton.Margin = new System.Windows.Forms.Padding(4);
+            this.pnlBotton.Location = new System.Drawing.Point(0, 481);
             this.pnlBotton.Name = "pnlBotton";
-            this.pnlBotton.Size = new System.Drawing.Size(1032, 44);
+            this.pnlBotton.Size = new System.Drawing.Size(774, 36);
             this.pnlBotton.TabIndex = 39;
             // 
             // pnlFill
@@ -1488,20 +1511,36 @@
             this.pnlFill.Controls.Add(this.tabControl1);
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
-            this.pnlFill.Margin = new System.Windows.Forms.Padding(4);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(1032, 592);
+            this.pnlFill.Size = new System.Drawing.Size(774, 481);
             this.pnlFill.TabIndex = 40;
+            // 
+            // cmbBoxWebSecurityProtocolType
+            // 
+            this.cmbBoxWebSecurityProtocolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxWebSecurityProtocolType.FormattingEnabled = true;
+            this.cmbBoxWebSecurityProtocolType.Location = new System.Drawing.Point(462, 59);
+            this.cmbBoxWebSecurityProtocolType.Name = "cmbBoxWebSecurityProtocolType";
+            this.cmbBoxWebSecurityProtocolType.Size = new System.Drawing.Size(137, 21);
+            this.cmbBoxWebSecurityProtocolType.TabIndex = 44;
+            // 
+            // lblWebSecurityProtocolType
+            // 
+            this.lblWebSecurityProtocolType.AutoSize = true;
+            this.lblWebSecurityProtocolType.Location = new System.Drawing.Point(382, 62);
+            this.lblWebSecurityProtocolType.Name = "lblWebSecurityProtocolType";
+            this.lblWebSecurityProtocolType.Size = new System.Drawing.Size(77, 13);
+            this.lblWebSecurityProtocolType.TabIndex = 45;
+            this.lblWebSecurityProtocolType.Text = "SSL протокол";
             // 
             // FConfig
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1032, 636);
+            this.ClientSize = new System.Drawing.Size(774, 517);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FConfig";
             this.Text = "Основные настройки";
             this.Load += new System.EventHandler(this.FConfig_Load);
@@ -1537,6 +1576,8 @@
             this.pnl_ProdictMatrixClassTop.ResumeLayout(false);
             this.pnl_ProdictMatrixClassTopTop.ResumeLayout(false);
             this.pnl_ProdictMatrixClassTopTop.PerformLayout();
+            this.tabPage9.ResumeLayout(false);
+            this.tabPage9.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -1668,5 +1709,21 @@
         private System.Windows.Forms.CheckBox chkBox_MexSendItemBarcode;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmbBoxDisplayFieldItem;
+        private System.Windows.Forms.TabPage tabPage9;
+        private System.Windows.Forms.TextBox txtBoxWebSiteForIsmp;
+        private System.Windows.Forms.Label lblWebSiteForIsmp;
+        private System.Windows.Forms.TextBox txtBoxDefaultTokenEcp;
+        private System.Windows.Forms.TextBox txtBoxClearJsonCdnFarmMin;
+        private System.Windows.Forms.Label lblDefaultTokenEcp;
+        private System.Windows.Forms.Label lblClearJsonCdnFarmMin;
+        private System.Windows.Forms.TextBox txtBoxFrTag1264;
+        private System.Windows.Forms.TextBox txtBoxFrTag1263;
+        private System.Windows.Forms.TextBox txtBoxFrTag1262;
+        private System.Windows.Forms.Label lblFrTag1264;
+        private System.Windows.Forms.Label lblFrTag1263;
+        private System.Windows.Forms.Label lblFrTag1262;
+        private System.Windows.Forms.Label lblTagInfo1260;
+        private System.Windows.Forms.Label lblWebSecurityProtocolType;
+        private System.Windows.Forms.ComboBox cmbBoxWebSecurityProtocolType;
     }
 }
