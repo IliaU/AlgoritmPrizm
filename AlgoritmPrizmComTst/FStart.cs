@@ -30,5 +30,17 @@ namespace AlgoritmPrizmComTst
                 MessageBox.Show(ex.Message);
             }
         }
+
+        private void btnCdnForIsmpConfig_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.txtBoxCdnForIsmpConfig.Text = CdnResponceConfig.SerializeObject(Web.CdnForIsmpConfig());
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }

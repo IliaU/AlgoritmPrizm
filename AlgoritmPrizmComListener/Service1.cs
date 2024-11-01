@@ -59,40 +59,66 @@ namespace AlgoritmPrizmComListener
                             buf = null;
                             if (bufrow.Length >= 2 && bufrow[1].Trim() == "Sale")
                             {
-                                buf = CdnResponce.SerializeObject(Web.CdnForIsmpCheck(bufrow[0].Trim()));
+                                try
+                                {
+                                    // Получение настроек конфигурации с AlgoritmPrizm
+                                    CdnResponceConfig cdnConf = Web.CdnForIsmpConfig();
 
-                                if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+                                    // Проверка матрикс кода через наш плагин AlgoritmPrizm
+                                    CdnResponce cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
+                                    buf = CdnResponce.SerializeObject(cndResp);
+                                    if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
 
-
-                                // Проверяем на наличие ошибки
-                                if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
+                                    // Проверяем на наличие ошибки
+                                    if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
+                                    {
+                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                        {
+                                            SwFile.WriteLine("False");
+                                        }
+                                    }
+                                    else
+                                    {
+                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                        {
+                                            SwFile.WriteLine("True");
+                                            SwFile.WriteLine(cdnConf.FrTag1262);
+                                            SwFile.WriteLine(cdnConf.FrTag1263);
+                                            SwFile.WriteLine(cdnConf.FrTag1264);
+                                            SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                        }
+                                    }
+                                }
+                                catch (Exception ex)
                                 {
                                     using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                     {
-                                        SwFile.WriteLine("False");
-                                    }
-                                }
-                                else
-                                {
-                                    using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
-                                    {
-                                        SwFile.WriteLine("True");
+                                        SwFile.WriteLine("Error");
                                     }
                                 }
 
-                                // Пишем ответ в файл
+                                // Удаляем файл запроса
                                 if(File.Exists(string.Format(@"{0}\request.txt", Config.RequestsFolder))) File.Delete(string.Format(@"{0}\request.txt", Config.RequestsFolder));
                             }
                         }
-                        
-
-                        
                     }
                 }
                 catch (Exception ex)
                 {
                     try
                     {
+                        if (ex.Message.IndexOf("Unable to connect to the remote server")>=0)
+                        {
+                            // Наша служба AlgoritmPrizm не включена
+                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                            {
+                                SwFile.WriteLine("Timeout");
+                            }
+
+                            // Удаляем файл запроса
+                            if (File.Exists(string.Format(@"{0}\request.txt", Config.RequestsFolder))) File.Delete(string.Format(@"{0}\request.txt", Config.RequestsFolder));
+                        }
+
                         Log.EventSave(string.Format("Ошибка: {0}", ex.Message), "AlgoritmPrizmComListener", EventEn.Error);
                     }
                     catch (Exception) { }
@@ -108,7 +134,7 @@ namespace AlgoritmPrizmComListener
         {
             try
             {
-                Log.EventSave("Cлужба остановлена.", "AlgoritmListener", EventEn.Message);
+                Log.EventSave("Cлужба остановлена.", "AlgoritmPrizmComListener", EventEn.Message);
             }
             catch (Exception) { }
         }

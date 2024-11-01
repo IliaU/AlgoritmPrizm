@@ -10,25 +10,33 @@ using AlgoritmPrizmCom.Com;
 
 namespace AlgoritmPrizmCom
 {
-    public class CdnResponce
+    public class CdnResponceConfig
     {
         private static JsonSerializerSettings _settings;
 
-        public bool Rezult = false;
+        /// <summary>
+        /// идентификатор ФОИВ; фиксировано
+        /// </summary>
+        public string FrTag1262;
 
-        public string Message;
+        /// <summary>
+        /// дата документа основания; фиксировано
+        /// </summary>
+        public string FrTag1263;
 
-        public string reqId;
-
-        public long reqTimestamp;
+        /// <summary>
+        /// номер документа основания; фиксировано
+        /// </summary>
+        public string FrTag1264;
 
         /// <summary>
         /// Пример на котором тестировали
         /// </summary>
         [JsonIgnore]
         public static string SampleTest = @"{
-    ""Rezult"":""false"",
-    ""Message"":""""
+    ""FrTag1262"":""030"",
+    ""FrTag1263"":""04.09.2023"",
+    ""FrTag1264"":""1944""
 }";
 
         /// <summary>
@@ -43,7 +51,7 @@ namespace AlgoritmPrizmCom
                 _settings.Error = (sender, args) =>
                 {
                     if (object.Equals(args.ErrorContext.Member, "note1") &&
-                      args.ErrorContext.OriginalObject.GetType() == typeof(CdnResponce))
+                      args.ErrorContext.OriginalObject.GetType() == typeof(CdnResponceConfig))
                     {
                         args.ErrorContext.Handled = true;
                     }
@@ -71,15 +79,15 @@ namespace AlgoritmPrizmCom
         /// </summary>
         /// <param name="json"></param>
         /// <returns></returns>
-        public static CdnResponce DeserializeJson(string json)
+        public static CdnResponceConfig DeserializeJson(string json)
         {
             try
             {
-                return JsonConvert.DeserializeObject<CdnResponce>(json, CdnResponce.GetSettings());
+                return JsonConvert.DeserializeObject<CdnResponceConfig>(json, CdnResponceConfig.GetSettings());
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при десериализации объекта CdnResponce с ошибкой: {0}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при десериализации объекта CdnResponceConfig с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".DeserializeJson", EventEn.Error);
                 throw ae;
             }
@@ -90,7 +98,7 @@ namespace AlgoritmPrizmCom
         /// </summary>
         /// <param name="json">Объект представляющий из себя наш конфиг</param>
         /// <returns>JSON</returns>
-        public static string SerializeObject(CdnResponce json)
+        public static string SerializeObject(CdnResponceConfig json)
         {
             try
             {
@@ -98,12 +106,11 @@ namespace AlgoritmPrizmCom
             }
             catch (Exception ex)
             {
-                ApplicationException ae = new ApplicationException(string.Format("Упали при сериализации объекта CdnResponce с ошибкой: {0}", ex.Message));
+                ApplicationException ae = new ApplicationException(string.Format("Упали при сериализации объекта CdnResponceConfig с ошибкой: {0}", ex.Message));
                 Log.EventSave(ae.Message, ".SerializeObject", EventEn.Error);
                 throw ae;
             }
         }
-
 
     }
 }

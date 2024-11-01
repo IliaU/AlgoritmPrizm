@@ -38,17 +38,21 @@ namespace AlgoritmPrizmComTst
             this.txtBoxReguestCdnForIsmpCheck = new System.Windows.Forms.TextBox();
             this.pnlButtom = new System.Windows.Forms.Panel();
             this.btnReguestCdnForIsmpCheck = new System.Windows.Forms.Button();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabPageConfig = new System.Windows.Forms.TabPage();
+            this.lblCdnForIsmpConfig = new System.Windows.Forms.Label();
+            this.txtBoxCdnForIsmpConfig = new System.Windows.Forms.TextBox();
+            this.btnCdnForIsmpConfig = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageCdnForIsmpCheck.SuspendLayout();
             this.pnlFill.SuspendLayout();
             this.pnlButtom.SuspendLayout();
+            this.tabPageConfig.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPageCdnForIsmpCheck);
-            this.tabControl.Controls.Add(this.tabPage2);
+            this.tabControl.Controls.Add(this.tabPageConfig);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
             this.tabControl.Name = "tabControl";
@@ -135,15 +139,45 @@ namespace AlgoritmPrizmComTst
             this.btnReguestCdnForIsmpCheck.UseVisualStyleBackColor = true;
             this.btnReguestCdnForIsmpCheck.Click += new System.EventHandler(this.btnReguestCdnForIsmpCheck_Click);
             // 
-            // tabPage2
+            // tabPageConfig
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(792, 424);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.tabPageConfig.Controls.Add(this.btnCdnForIsmpConfig);
+            this.tabPageConfig.Controls.Add(this.txtBoxCdnForIsmpConfig);
+            this.tabPageConfig.Controls.Add(this.lblCdnForIsmpConfig);
+            this.tabPageConfig.Location = new System.Drawing.Point(4, 22);
+            this.tabPageConfig.Name = "tabPageConfig";
+            this.tabPageConfig.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPageConfig.Size = new System.Drawing.Size(792, 424);
+            this.tabPageConfig.TabIndex = 1;
+            this.tabPageConfig.Text = "Проверка получения конфигурации";
+            this.tabPageConfig.UseVisualStyleBackColor = true;
+            // 
+            // lblCdnForIsmpConfig
+            // 
+            this.lblCdnForIsmpConfig.AutoSize = true;
+            this.lblCdnForIsmpConfig.Location = new System.Drawing.Point(25, 19);
+            this.lblCdnForIsmpConfig.Name = "lblCdnForIsmpConfig";
+            this.lblCdnForIsmpConfig.Size = new System.Drawing.Size(195, 13);
+            this.lblCdnForIsmpConfig.TabIndex = 4;
+            this.lblCdnForIsmpConfig.Text = "Ответ от площадки CdnForIsmpCheck";
+            // 
+            // txtBoxCdnForIsmpConfig
+            // 
+            this.txtBoxCdnForIsmpConfig.Location = new System.Drawing.Point(28, 50);
+            this.txtBoxCdnForIsmpConfig.Multiline = true;
+            this.txtBoxCdnForIsmpConfig.Name = "txtBoxCdnForIsmpConfig";
+            this.txtBoxCdnForIsmpConfig.Size = new System.Drawing.Size(671, 216);
+            this.txtBoxCdnForIsmpConfig.TabIndex = 5;
+            // 
+            // btnCdnForIsmpConfig
+            // 
+            this.btnCdnForIsmpConfig.Location = new System.Drawing.Point(275, 11);
+            this.btnCdnForIsmpConfig.Name = "btnCdnForIsmpConfig";
+            this.btnCdnForIsmpConfig.Size = new System.Drawing.Size(147, 29);
+            this.btnCdnForIsmpConfig.TabIndex = 6;
+            this.btnCdnForIsmpConfig.Text = "Отправить на проверку";
+            this.btnCdnForIsmpConfig.UseVisualStyleBackColor = true;
+            this.btnCdnForIsmpConfig.Click += new System.EventHandler(this.btnCdnForIsmpConfig_Click);
             // 
             // FStart
             // 
@@ -158,6 +192,8 @@ namespace AlgoritmPrizmComTst
             this.pnlFill.ResumeLayout(false);
             this.pnlFill.PerformLayout();
             this.pnlButtom.ResumeLayout(false);
+            this.tabPageConfig.ResumeLayout(false);
+            this.tabPageConfig.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -173,7 +209,10 @@ namespace AlgoritmPrizmComTst
         private System.Windows.Forms.TextBox txtBoxReguestCdnForIsmpCheck;
         private System.Windows.Forms.Panel pnlButtom;
         private System.Windows.Forms.Button btnReguestCdnForIsmpCheck;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage tabPageConfig;
+        private System.Windows.Forms.Button btnCdnForIsmpConfig;
+        private System.Windows.Forms.TextBox txtBoxCdnForIsmpConfig;
+        private System.Windows.Forms.Label lblCdnForIsmpConfig;
     }
 }
 

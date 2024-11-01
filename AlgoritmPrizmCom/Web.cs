@@ -18,6 +18,42 @@ namespace AlgoritmPrizmCom
     public static class Web
     {
         /// <summary>
+        /// Получение конфигурации
+        /// </summary>
+        /// <returns>Конфигурация настроек</returns>
+        public static CdnResponceConfig CdnForIsmpConfig()
+        {
+            try
+            {
+                CdnResponceConfig rez = null;
+
+                if (!string.IsNullOrWhiteSpace(Config.Host))
+                {
+                    // Инициализация лога если этого не произошло
+                    Com.Log Lg = new Com.Log();
+
+                    // Строим заголовки которые будем цеплять во все запросы
+                    List<HederHttp> HederHttpList = new List<HederHttp>();
+                    //HederHttpList.Add(new HederHttp("X-API-KEY", CurTokenForIsmp));
+
+                    // Получаем ответ
+                    string resp = GetObject(MethodTyp.GET, string.Format(@"http://{0}:{1}", Config.Host, Config.Port), @"/config", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
+
+                    rez = CdnResponceConfig.DeserializeJson(resp);
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "CdnForIsmpCheckConfig", ex.Message), "Web", EventEn.Error, true, false);
+                throw ex;
+            }
+        }
+
+
+
+        /// <summary>
         /// Проверка матрикс кода на площадке СДН
         /// </summary>
         /// <param name="MatrixCode">Матрикс код который нужно проверить</param>

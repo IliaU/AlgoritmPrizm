@@ -49,6 +49,7 @@
   <ItemGroup>
     <Compile Include="BLL\HederHttp.cs" />
     <Compile Include="CdnResponce.cs" />
+    <Compile Include="CdnResponceConfig.cs" />
     <Compile Include="Com\Log.cs" />
     <Compile Include="Com\Config.cs" />
     <Compile Include="Lib\EventEn.cs" />

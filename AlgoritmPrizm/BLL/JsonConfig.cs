@@ -50,6 +50,21 @@ namespace AlgoritmPrizm.BLL
         public int LimitCachForUrik;
 
         /// <summary>
+        /// идентификатор ФОИВ; фиксировано
+        /// </summary>
+        public string FrTag1262;
+
+        /// <summary>
+        /// дата документа основания; фиксировано
+        /// </summary>
+        public string FrTag1263;
+
+        /// <summary>
+        /// номер документа основания; фиксировано
+        /// </summary>
+        public string FrTag1264;
+
+        /// <summary>
         /// Пример на котором тестировали
         /// </summary>
         [JsonIgnore]
@@ -78,7 +93,10 @@ namespace AlgoritmPrizm.BLL
     ""FieldInnTyp"":""Comment1""
     ""HostPrizmApi"":""http://172.16.1.102"",
     ""PrizmApiSystemLogon"":""sysadmin"",
-    ""PrizmApiTimeLiveTockenMinute"":5}
+    ""PrizmApiTimeLiveTockenMinute"":5,
+    ""FrTag1262"":""030"",
+    ""FrTag1263"":""21.11.2023"",
+    ""FrTag1264"":""1944""
 }";
         /// <summary>
         /// Конструктор
@@ -117,6 +135,10 @@ namespace AlgoritmPrizm.BLL
                 this.PrizmApiTimeLiveTockenMinute = Config.PrizmApiTimeLiveTockenMinute;
 
                 this.LimitCachForUrik = (int)Config.LimitCachForUrik;
+
+                this.FrTag1262 = Config.FrTag1262;
+                this.FrTag1263 = Config.FrTag1263;
+                this.FrTag1264 = Config.FrTag1264;
             }
         }
         public JsonConfig() :this(false)
