@@ -36,3 +36,5 @@ AlgoritmPrizm/bin/Debug/Log.txt
 /AlgoritmPrizmComTst/bin/Debug/*.dll
 /AlgoritmPrizmComTst/bin/Release/*.exe
 /AlgoritmPrizmComTst/bin/Release/*.dll
+/AlgoritmPrizm/bin/Debug/*.Log
+/AlgoritmPrizmComTst/bin/Debug/*.txt

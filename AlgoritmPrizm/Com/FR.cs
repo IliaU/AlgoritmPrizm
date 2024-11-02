@@ -1373,11 +1373,11 @@ namespace AlgoritmPrizm.Com
                 if (!IsCopy)
                 {
                     // Если есть матрихс код то добавляем его
-                    if (!string.IsNullOrWhiteSpace(note) && Doc.receipt_type == 0)
+                    if (!string.IsNullOrWhiteSpace(note))
                     {
 
                         JsonCdnForIsmpResponce CdnForIsmpResponce = JsonCdnFarm.BufferRemove(note);
-                        if (CdnForIsmpResponce != null && !string.IsNullOrWhiteSpace(CdnForIsmpResponce.reqId) && CdnForIsmpResponce.reqTimestamp != 0)
+                        if (CdnForIsmpResponce != null && !string.IsNullOrWhiteSpace(CdnForIsmpResponce.reqId) && CdnForIsmpResponce.reqTimestamp != 0 && Doc.receipt_type == 0)
                         {
                             /*
                             Fr.TagNumber = 1260;
