@@ -63,6 +63,7 @@ namespace AlgoritmPrizmCom
             try
             {
                 CdnResponce rez = null;
+                string tmpMatrixCode = MatrixCode.Replace(Convert.ToString((char)29), "");
 
                 if (!string.IsNullOrWhiteSpace(Config.Host))
                 {
@@ -74,7 +75,7 @@ namespace AlgoritmPrizmCom
                     //HederHttpList.Add(new HederHttp("X-API-KEY", CurTokenForIsmp));
 
                     // Получаем ответ
-                    string resp = GetObject(MethodTyp.POST, string.Format(@"http://{0}:{1}",Config.Host, Config.Port), @"/CdnForIsmpCheckJson", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, MatrixCode, false, false, true);
+                    string resp = GetObject(MethodTyp.POST, string.Format(@"http://{0}:{1}",Config.Host, Config.Port), @"/CdnForIsmpCheckJson", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, tmpMatrixCode, false, false, true);
                     
                     rez = CdnResponce.DeserializeJson(resp);
                 }
