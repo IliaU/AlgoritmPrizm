@@ -85,7 +85,7 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 												if ((marking.length==20 && marking.indexOf("RU-")==0) || (marking.length>40 && marking.substring(0,2)=='01' && marking.substring(16,18)=='21' && marking.substring(31,33)=='91' && marking.substring(37,39)=='92') )  {
 													
 													// Проверка что документ не возврат
-													if (item.return_reason != 'RETURN') {
+													if (item.return_reason != 'RETURN' && item.return_reason != 'EXCHAN' && item.return_reason != 'STOREC') {
 														
 														// Проверяем матрикс код на платформе СДН
 														body = marking; 
