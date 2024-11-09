@@ -1641,7 +1641,7 @@ namespace AlgoritmPrizm.Com
 
                 //
                 ValidToken();
-                if (!string.IsNullOrWhiteSpace(CurCdnForIsmp))
+                if (!string.IsNullOrWhiteSpace(CurCdnForIsmp) && MatrixCode.Length>37)
                 {
                     // Строим заголовки которые будем цеплять во все запросы
                     List<HederHttp> HederHttpList = new List<HederHttp>();
