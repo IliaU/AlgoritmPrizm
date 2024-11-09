@@ -66,21 +66,29 @@ namespace AlgoritmPrizm.Com
                 {
                     Com.Log.EventSave("Запуск драйвера для работы с фискальным регистратором", GetType().Name, EventEn.Message);
 
-                    // Создаём временный объект для работы с драйвером
-                    int TmpComPort = FRComPort ?? 3;
-                    DrvFRLib.DrvFR TmpFr = new DrvFR();
-                    TmpFr.Password = 30;
-                    TmpFr.PortNumber = TmpComPort;
-                    TmpFr.ComputerName = Environment.MachineName;
-                    //TmpFr.BaudRate скорость от 0..6
-                    //TmpFr.Timeout  тайм аут в приёме байт от 0..255
-
-                    // Если конект успешен
-                    if (TestConnect(TmpFr))
+                    if (Config.isFrEnable)
                     {
-                        // Сохраняем в случае успеха объект для работы других методов
-                        ComPort = TmpComPort;
-                        Fr = TmpFr;
+                        // Создаём временный объект для работы с драйвером
+                        int TmpComPort = FRComPort ?? 3;
+                        DrvFRLib.DrvFR TmpFr = new DrvFR();
+                        TmpFr.Password = 30;
+                        TmpFr.PortNumber = TmpComPort;
+                        TmpFr.ComputerName = Environment.MachineName;
+                        //TmpFr.BaudRate скорость от 0..6
+                        //TmpFr.Timeout  тайм аут в приёме байт от 0..255
+
+                        // Если конект успешен
+                        if (TestConnect(TmpFr))
+                        {
+                            // Сохраняем в случае успеха объект для работы других методов
+                            ComPort = TmpComPort;
+                            Fr = TmpFr;
+                            obj = this;
+                        }
+                    }
+                    else 
+                    {
+                        Com.Log.EventSave("Фискальный регистратор выклюен в настройках программы", GetType().Name, EventEn.Warning);
                         obj = this;
                     }
                 }
@@ -235,6 +243,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 if (Fr.FNCloseSession() != 0)
                 {
                     rez = Verification(Fr);
@@ -266,6 +277,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 if (Fr.PrintReportWithoutCleaning() != 0)
                 {
                     rez = Verification(Fr);
@@ -290,6 +304,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 if (Fr.FNOpenSession() != 0)
                 {
                     rez = Verification(Fr);
@@ -323,6 +340,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 /// Тип документа
                 EnFrTyp DocCustTyp = EnFrTyp.Default;
 
@@ -676,7 +696,7 @@ namespace AlgoritmPrizm.Com
                 throw ae;
             }
         }
-
+        //
         /// <summary>
         /// Печать чека
         /// </summary>
@@ -2116,7 +2136,7 @@ namespace AlgoritmPrizm.Com
         /// СКИДКА/НАЦЕНКА НА ЧЕК
         /// </summary>
         /// <param name="AsCopy">Печатать скидку или нет</param>
-        public static void PrinCheckDiscount(bool AsCopy, JsonPrintFiscDoc Doc)
+        private static void PrinCheckDiscount(bool AsCopy, JsonPrintFiscDoc Doc)
         {
             try
             {
@@ -2203,7 +2223,7 @@ namespace AlgoritmPrizm.Com
         /// <param name="DocTyp">Тип документа</param>
         /// <param name="CrocessSummToFR">Заполнить поля в фискальнике по нашим правилам или нет Fr.Summ1-Fr.Summ16 по умолчанию нет</param>
         /// <returns>Итоговая сумма по всем типам оплат</returns>
-        public static FrGetSummCheckRez GetSummCheck(JsonPrintFiscDoc Doc, EnFrTyp DocTyp, bool CrocessSummToFR)
+        private static FrGetSummCheckRez GetSummCheck(JsonPrintFiscDoc Doc, EnFrTyp DocTyp, bool CrocessSummToFR)
         {
             try
             {
@@ -2572,6 +2592,9 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 if (Fr.OpenDrawer() != 0)
                 {
                     // Сохраняем ошибку
@@ -2594,6 +2617,9 @@ namespace AlgoritmPrizm.Com
         {
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 Fr.CutType = false;
                 if (Fr.CutCheck() != 0)
                 {
@@ -2620,6 +2646,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 try
                 {
                     if (!ConfigStatusFR(null, 0, null)) OpenShift();
@@ -2659,6 +2688,9 @@ namespace AlgoritmPrizm.Com
             Lib.FrStatError rez = new FrStatError();
             try
             {
+                if (obj == null) throw new ApplicationException("Объект не инициирован. Сначала создайте его через конструктор.");
+                if (!Config.isFrEnable) throw new ApplicationException("В настройках программы фискальный регистратор отключен.");
+
                 Fr.Summ1 = Sum;
 
                 if (Fr.CashOutcome() != 0)

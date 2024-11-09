@@ -68,6 +68,8 @@
             this.lblFileCheckLog = new System.Windows.Forms.Label();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.lblWebSecurityProtocolType = new System.Windows.Forms.Label();
+            this.cmbBoxWebSecurityProtocolType = new System.Windows.Forms.ComboBox();
             this.grpBoxBlockAction = new System.Windows.Forms.GroupBox();
             this.txtBoxBlockActionTimeOut = new System.Windows.Forms.TextBox();
             this.lblBlockActionTimeOut = new System.Windows.Forms.Label();
@@ -166,8 +168,7 @@
             this.lblWebSiteForIsmp = new System.Windows.Forms.Label();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.cmbBoxWebSecurityProtocolType = new System.Windows.Forms.ComboBox();
-            this.lblWebSecurityProtocolType = new System.Windows.Forms.Label();
+            this.chkIsFrEnable = new System.Windows.Forms.CheckBox();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -541,6 +542,24 @@
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // lblWebSecurityProtocolType
+            // 
+            this.lblWebSecurityProtocolType.AutoSize = true;
+            this.lblWebSecurityProtocolType.Location = new System.Drawing.Point(382, 62);
+            this.lblWebSecurityProtocolType.Name = "lblWebSecurityProtocolType";
+            this.lblWebSecurityProtocolType.Size = new System.Drawing.Size(77, 13);
+            this.lblWebSecurityProtocolType.TabIndex = 45;
+            this.lblWebSecurityProtocolType.Text = "SSL протокол";
+            // 
+            // cmbBoxWebSecurityProtocolType
+            // 
+            this.cmbBoxWebSecurityProtocolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbBoxWebSecurityProtocolType.FormattingEnabled = true;
+            this.cmbBoxWebSecurityProtocolType.Location = new System.Drawing.Point(462, 59);
+            this.cmbBoxWebSecurityProtocolType.Name = "cmbBoxWebSecurityProtocolType";
+            this.cmbBoxWebSecurityProtocolType.Size = new System.Drawing.Size(137, 21);
+            this.cmbBoxWebSecurityProtocolType.TabIndex = 44;
+            // 
             // grpBoxBlockAction
             // 
             this.grpBoxBlockAction.Controls.Add(this.txtBoxBlockActionTimeOut);
@@ -895,6 +914,7 @@
             // 
             // groupBoxFfd
             // 
+            this.groupBoxFfd.Controls.Add(this.chkIsFrEnable);
             this.groupBoxFfd.Controls.Add(this.lblTagInfo1260);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1264);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1263);
@@ -1515,23 +1535,15 @@
             this.pnlFill.Size = new System.Drawing.Size(774, 481);
             this.pnlFill.TabIndex = 40;
             // 
-            // cmbBoxWebSecurityProtocolType
+            // chkIsFrEnable
             // 
-            this.cmbBoxWebSecurityProtocolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.cmbBoxWebSecurityProtocolType.FormattingEnabled = true;
-            this.cmbBoxWebSecurityProtocolType.Location = new System.Drawing.Point(462, 59);
-            this.cmbBoxWebSecurityProtocolType.Name = "cmbBoxWebSecurityProtocolType";
-            this.cmbBoxWebSecurityProtocolType.Size = new System.Drawing.Size(137, 21);
-            this.cmbBoxWebSecurityProtocolType.TabIndex = 44;
-            // 
-            // lblWebSecurityProtocolType
-            // 
-            this.lblWebSecurityProtocolType.AutoSize = true;
-            this.lblWebSecurityProtocolType.Location = new System.Drawing.Point(382, 62);
-            this.lblWebSecurityProtocolType.Name = "lblWebSecurityProtocolType";
-            this.lblWebSecurityProtocolType.Size = new System.Drawing.Size(77, 13);
-            this.lblWebSecurityProtocolType.TabIndex = 45;
-            this.lblWebSecurityProtocolType.Text = "SSL протокол";
+            this.chkIsFrEnable.AutoSize = true;
+            this.chkIsFrEnable.Location = new System.Drawing.Point(542, 6);
+            this.chkIsFrEnable.Name = "chkIsFrEnable";
+            this.chkIsFrEnable.Size = new System.Drawing.Size(205, 17);
+            this.chkIsFrEnable.TabIndex = 21;
+            this.chkIsFrEnable.Text = "Фискальный регистратор включен";
+            this.chkIsFrEnable.UseVisualStyleBackColor = true;
             // 
             // FConfig
             // 
@@ -1725,5 +1737,6 @@
         private System.Windows.Forms.Label lblTagInfo1260;
         private System.Windows.Forms.Label lblWebSecurityProtocolType;
         private System.Windows.Forms.ComboBox cmbBoxWebSecurityProtocolType;
+        private System.Windows.Forms.CheckBox chkIsFrEnable;
     }
 }

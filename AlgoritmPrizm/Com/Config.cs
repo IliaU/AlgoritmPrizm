@@ -202,7 +202,7 @@ namespace AlgoritmPrizm.Com
         private static string _SmsTypGatewaySmtpPassword = "";
 
         /// <summary>
-        /// Порт на котором будет крутится Web сервис
+        /// Порт на котором будет крутится фискальный регистратор
         /// </summary>
         private static int _FrPort = 3;
 
@@ -435,6 +435,11 @@ namespace AlgoritmPrizm.Com
         /// SSL протокол который будет использовать наша программа
         /// </summary>
         private static SecurityProtocolType _WebSecurityProtocolType = SecurityProtocolType.Tls12;
+
+        /// <summary>
+        /// Статус фискального регистратора включён или выключен
+        /// </summary>
+        private static bool _isFrEnable = true;
         #endregion
 
         #region Public Param
@@ -1731,6 +1736,23 @@ namespace AlgoritmPrizm.Com
             }
         }
 
+        /// <summary>
+        /// Статус фискального регистратора включён или выключен
+        /// </summary>
+        public static bool isFrEnable
+        {
+            get
+            {
+                return _isFrEnable;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("isFrEnable", value.ToString());
+                Save();
+                _isFrEnable = value;
+            }
+        }
+
         #endregion
 
         #region Puplic Method
@@ -1984,6 +2006,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("DisplayFieldItem", _DisplayFieldItem.ToString());
                     xmlMain.SetAttribute("Ffd", _Ffd.ToString());
                     xmlMain.SetAttribute("FrPort", _FrPort.ToString());
+                    xmlMain.SetAttribute("isFrEnable", _isFrEnable.ToString());
                     xmlMain.SetAttribute("TenderTypeCash", _TenderTypeCash.ToString());
                     xmlMain.SetAttribute("TenderTypeCredit", _TenderTypeCredit.ToString());
                     xmlMain.SetAttribute("TenderTypeGiftCert", _TenderTypeGiftCert.ToString());
@@ -2120,6 +2143,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "DisplayFieldItem") try { _DisplayFieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayFieldItem); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Ffd") try { _Ffd = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _Ffd); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FrPort") try { _FrPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "isFrEnable") try { _isFrEnable = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCash") try { _TenderTypeCash = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCredit") try { _TenderTypeCredit = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeGiftCert") try { _TenderTypeGiftCert = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }

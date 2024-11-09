@@ -331,6 +331,8 @@ namespace AlgoritmPrizm
                 }
                 if (SelectWebSecurityProtocolType > -1) cmbBoxWebSecurityProtocolType.SelectedIndex = SelectWebSecurityProtocolType;
 
+                //Статус фискального регистратора включён или выключен
+                this.chkIsFrEnable.Checked = Config.isFrEnable;
             }
             catch (Exception ex)
             {
@@ -620,6 +622,9 @@ namespace AlgoritmPrizm
 
                 // SSL протокол который будет использовать наша программ
                 Config.WebSecurityProtocolType = EventConvertor.Convert(cmbBoxWebSecurityProtocolType.Items[cmbBoxWebSecurityProtocolType.SelectedIndex].ToString(), Config.WebSecurityProtocolType);
+
+                //Статус фискального регистратора включён или выключен
+                Config.isFrEnable = this.chkIsFrEnable.Checked;
 
                 this.Close();
             }
