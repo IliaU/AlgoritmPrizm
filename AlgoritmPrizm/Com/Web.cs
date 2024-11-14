@@ -1586,18 +1586,24 @@ namespace AlgoritmPrizm.Com
 
                     // Получаем токен
                     string resp3 = GetObject(MethodTyp.GET, Com.Config.WebSiteForIsmp, @"/api/v4/true-api/cdn/info", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
+                    if (Config.Trace) Com.Log.EventSave(string.Format(@"Получили список площадок {0}", resp3), "Web.ValidToken", EventEn.Message, true, false);
 
                     // Получаем информацию по Cdn площадкам
                     JsonCdnForIsmp Cdns = JsonCdnForIsmp.DeserializeJson(resp3);
                     //
                     foreach (JsonCdnForIsmpHost item in Cdns.hosts)
                     {
-                        // делаем проверку производительности и доступности площадки
-                        string resp4 = GetObject(MethodTyp.GET, item.host, @"/api/v4/true-api/cdn/health/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
-                        JsonCdnCheck CdnsCheck = JsonCdnCheck.DeserializeJson(resp4);
+                        try
+                        {
+                            // делаем проверку производительности и доступности площадки
+                            string resp4 = GetObject(MethodTyp.GET, item.host, @"/api/v4/true-api/cdn/health/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
+                            if (Config.Trace) Com.Log.EventSave(string.Format(@"Результат проверки по площадоке {0}: {1}", item.host, resp4), "Web.ValidToken", EventEn.Message, true, false);
+                            JsonCdnCheck CdnsCheck = JsonCdnCheck.DeserializeJson(resp4);
 
-                        //Если площадка доступна сохраняем отклик
-                        if (CdnsCheck.code == 0) item.png = CdnsCheck.avgTimeMs;
+                            //Если площадка доступна сохраняем отклик
+                            if (CdnsCheck.code == 0) item.png = CdnsCheck.avgTimeMs;
+                        }
+                        catch (Exception){}
                     }
 
 
@@ -1618,12 +1624,13 @@ namespace AlgoritmPrizm.Com
                     //Проверка и сохранение доступной площадки
                     if (MinJsonCdnForIsmpHost == -1) throw new ApplicationException("Нет доступных площадок");
                     else CurCdnForIsmp = Cdns.hosts[MinJsonCdnForIsmpHost].host;
+                    if (Config.Trace) Com.Log.EventSave(string.Format(@"Выбрана целевой площадка: {0}", CurCdnForIsmp), "Web.ValidToken", EventEn.Message, true, false);
                 }
                 
             }
             catch (Exception ex)
             {
-                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "ValidToken", ex.Message), "Web", EventEn.Error, true, false);
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "ValidToken", ex.Message), "Web.ValidToken", EventEn.Error, true, false);
                 throw ex;
             }
         }
@@ -1758,6 +1765,7 @@ namespace AlgoritmPrizm.Com
 
                     // Создаём подключение к серверу
                     string turl = WebSite + tmpFolder;
+                    if (Config.Trace) Com.Log.EventSave(string.Format(@"Построен адрес запроса {0}", turl), "Web.GetObject", EventEn.Message, true, false);
                     turl = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(turl)));
                     Uri uri = new Uri(turl);
 
@@ -1844,8 +1852,8 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 // Если это тест подклюыения к нету то сообщать пользователю новым окном не будем
-                if (Folder == @"/api/v3/auth/cert/key") Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web", EventEn.Error, true, false);
-                else Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web", EventEn.Error, true, (isNotVisibleMessageError ? false : true));
+                if (Folder == @"/api/v3/auth/cert/key") Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web.GetObject", EventEn.Error, true, false);
+                else Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web.GetObject", EventEn.Error, true, (isNotVisibleMessageError ? false : true));
                 throw ex;
             }
             //return null;
