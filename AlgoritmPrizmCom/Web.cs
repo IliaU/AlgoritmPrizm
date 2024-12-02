@@ -63,23 +63,27 @@ namespace AlgoritmPrizmCom
             try
             {
                 CdnResponce rez = null;
-                string tmpMatrixCode = MatrixCode.Replace(Convert.ToString((char)29), "");
 
-                if (!string.IsNullOrWhiteSpace(Config.Host))
+                if (!string.IsNullOrWhiteSpace(MatrixCode) && MatrixCode.Length > 37)
                 {
-                    // Инициализация лога если этого не произошло
-                    Com.Log Lg = new Com.Log();
 
-                    // Строим заголовки которые будем цеплять во все запросы
-                    List<HederHttp> HederHttpList = new List<HederHttp>();
-                    //HederHttpList.Add(new HederHttp("X-API-KEY", CurTokenForIsmp));
+                    string tmpMatrixCode = MatrixCode.Replace(Convert.ToString((char)29), "");
 
-                    // Получаем ответ
-                    string resp = GetObject(MethodTyp.POST, string.Format(@"http://{0}:{1}",Config.Host, Config.Port), @"/CdnForIsmpCheckJson", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, tmpMatrixCode, false, false, true);
-                    
-                    rez = CdnResponce.DeserializeJson(resp);
+                    if (!string.IsNullOrWhiteSpace(Config.Host))
+                    {
+                        // Инициализация лога если этого не произошло
+                        Com.Log Lg = new Com.Log();
+
+                        // Строим заголовки которые будем цеплять во все запросы
+                        List<HederHttp> HederHttpList = new List<HederHttp>();
+                        //HederHttpList.Add(new HederHttp("X-API-KEY", CurTokenForIsmp));
+
+                        // Получаем ответ
+                        string resp = GetObject(MethodTyp.POST, string.Format(@"http://{0}:{1}", Config.Host, Config.Port), @"/CdnForIsmpCheckJson", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, tmpMatrixCode, false, false, true);
+                        rez = CdnResponce.DeserializeJson(resp);
+                        Com.Log.EventSave(string.Format(@"Ответ сервера {0}:""{1}""", resp), "Web.CdnForIsmpCheck", EventEn.Dump, true, false);
+                    }
                 }
-
                 return rez;
             }
             catch (Exception ex)

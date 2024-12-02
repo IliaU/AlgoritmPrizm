@@ -61,31 +61,45 @@ namespace AlgoritmPrizmComListener
                             {
                                 try
                                 {
-                                    // Получение настроек конфигурации с AlgoritmPrizm
-                                    CdnResponceConfig cdnConf = Web.CdnForIsmpConfig();
-
-                                    // Проверка матрикс кода через наш плагин AlgoritmPrizm
-                                    CdnResponce cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
-                                    buf = CdnResponce.SerializeObject(cndResp);
-                                    if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
-
-                                    // Проверяем на наличие ошибки
-                                    if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
+                                    if (!string.IsNullOrWhiteSpace(bufrow[0].Trim()) && bufrow[0].Trim().Length > 37)
                                     {
-                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+
+
+
+                                        // Получение настроек конфигурации с AlgoritmPrizm
+                                        CdnResponceConfig cdnConf = Web.CdnForIsmpConfig();
+
+                                        // Проверка матрикс кода через наш плагин AlgoritmPrizm
+                                        CdnResponce cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
+                                        buf = CdnResponce.SerializeObject(cndResp);
+                                        if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+
+                                        // Проверяем на наличие ошибки
+                                        if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
                                         {
-                                            SwFile.WriteLine("False");
+                                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                            {
+                                                SwFile.WriteLine("False");
+                                            }
+                                        }
+                                        else
+                                        {
+                                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                            {
+                                                SwFile.WriteLine("True");
+                                                SwFile.WriteLine(cdnConf.FrTag1262);
+                                                SwFile.WriteLine(cdnConf.FrTag1263);
+                                                SwFile.WriteLine(cdnConf.FrTag1264);
+                                                SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                            }
                                         }
                                     }
                                     else
                                     {
+                                        // матрикс код из раздела КИЗ
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                         {
-                                            SwFile.WriteLine("True");
-                                            SwFile.WriteLine(cdnConf.FrTag1262);
-                                            SwFile.WriteLine(cdnConf.FrTag1263);
-                                            SwFile.WriteLine(cdnConf.FrTag1264);
-                                            SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                            SwFile.WriteLine("Timeout");
                                         }
                                     }
                                 }

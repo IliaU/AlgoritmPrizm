@@ -135,6 +135,13 @@ namespace AlgoritmPrizmCom.Com
             {
                 lock (obj)
                 {
+                    if (PathFile.IndexOf(":") > 0)
+                    {
+                        PathFile = string.Format(@"{0}\{1}", Path.GetDirectoryName(PathFile),
+                                        string.Format("{0}{1}{2}", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), Path.GetFileName(PathFile)));
+                    }
+                    else PathFile = string.Format("{0}{1}{2}", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), Path.GetFileName(PathFile));
+
                     using (StreamWriter SwFileLog = new StreamWriter(PathFile, true))
                     {
                         SwFileLog.WriteLine(DateTime.Now.ToString() + "\t" + evn.ToString() + "\t" + Source + "\t" + Message);

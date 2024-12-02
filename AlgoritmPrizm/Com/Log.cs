@@ -155,6 +155,8 @@ namespace AlgoritmPrizm.Com
                 {
                     string newFile = (string.IsNullOrWhiteSpace(FileName) ? File : FileName);
 
+                    newFile = string.Format("{0}{1}{2}", DateTime.Now.Year.ToString(), DateTime.Now.Month.ToString("00"), Path.GetFileName(newFile));
+
                     using (StreamWriter SwFileLog = new StreamWriter(Environment.CurrentDirectory + @"\" + newFile, true))
                     {
                         SwFileLog.WriteLine(DateTime.Now.ToString() + "\t" + evn.ToString() + "\t" + Source + "\t" + Message);
