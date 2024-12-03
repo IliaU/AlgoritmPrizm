@@ -81,7 +81,7 @@ namespace AlgoritmPrizmCom
                         // Получаем ответ
                         string resp = GetObject(MethodTyp.POST, string.Format(@"http://{0}:{1}", Config.Host, Config.Port), @"/CdnForIsmpCheckJson", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, tmpMatrixCode, false, false, true);
                         rez = CdnResponce.DeserializeJson(resp);
-                        Com.Log.EventSave(string.Format(@"Ответ сервера {0}:""{1}""", resp), "Web.CdnForIsmpCheck", EventEn.Dump, true, false);
+                        Com.Log.EventSave(string.Format(@"Ответ сервера:""{0}""", resp), "Web.CdnForIsmpCheck", EventEn.Dump, true, false);
                     }
                 }
                 return rez;
