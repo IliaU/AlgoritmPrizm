@@ -96,10 +96,17 @@ namespace AlgoritmPrizmComListener
                                     }
                                     else
                                     {
-                                        // матрикс код из раздела КИЗ
+                                        
+                                        
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                         {
-                                            SwFile.WriteLine("Timeout");
+                                            // матрикс код из раздела КИЗ
+                                            if (bufrow[0].Trim().IndexOf("RU-") == 0)
+                                            {
+                                                SwFile.WriteLine("Timeout");
+                                            }
+                                            // EAN-13
+                                            else SwFile.WriteLine("Error");
                                         }
                                     }
                                 }
