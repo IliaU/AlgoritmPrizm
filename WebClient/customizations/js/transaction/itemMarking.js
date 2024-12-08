@@ -102,6 +102,15 @@ var DocItemBeforeInsertHandler = ['ModelEvent', 'LoadingScreen', 'NotificationSe
 																
 														}, function errorCallback(response) {
 																NotificationService.addAlert(response.data, 'КМ Ошибка');
+																
+																// Удаление товара который не прошёл проверку на площадке CDN
+																$http.delete(`/v1/rest/document/${item.document_sid}/item/${item.sid}`)
+																item.quantity--;
+																item.save().then(function () {
+																	$state.go($state.current, {}, {reload: true});
+																	deferred.resolve();
+																	$uibModalInstance.close();
+																});
 															}
 														);
 													}
