@@ -98,7 +98,7 @@ namespace AlgoritmPrizm.Com
             try
             {
                 //При запуске приложения указываем SSL протокол который будет использовать наша программа
-                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls12;
+                ServicePointManager.SecurityProtocol = Config.WebSecurityProtocolType;
 
                 while (IsRunAsin)
                 {
