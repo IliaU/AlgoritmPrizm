@@ -152,7 +152,6 @@ namespace AlgoritmPrizm
                     */
 
 
-
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
 
@@ -224,6 +223,8 @@ namespace AlgoritmPrizm
                         // Тест
                         //Server Srv = new Server(5000);
                         //FR.testcM();
+
+
 
                         // Подключаем модуль который потом будет у нас печатать отчёты
                         Com.ReportWordDotxFarm WDotx = new Com.ReportWordDotxFarm();

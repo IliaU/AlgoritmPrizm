@@ -116,6 +116,10 @@
     <Compile Include="BLL\JsonDisplayParams.cs" />
     <Compile Include="BLL\JsonDocMarking.cs" />
     <Compile Include="BLL\JsonDocMarkingHrefs.cs" />
+    <Compile Include="BLL\JsonEniseyRequest.cs" />
+    <Compile Include="BLL\JsonEniseyResponce.cs" />
+    <Compile Include="BLL\JsonEniseyResponceResult.cs" />
+    <Compile Include="BLL\JsonEniseyResponceResultCode.cs" />
     <Compile Include="BLL\JsonGetDocumentJournal.cs" />
     <Compile Include="BLL\JsonGetDocumentJournalHrefs.cs" />
     <Compile Include="BLL\JsonGetDocuments.cs" />

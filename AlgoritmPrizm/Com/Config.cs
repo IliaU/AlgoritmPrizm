@@ -437,6 +437,21 @@ namespace AlgoritmPrizm.Com
         private static SecurityProtocolType _WebSecurityProtocolType = SecurityProtocolType.Tls12;
 
         /// <summary>
+        /// Тайм аут в миллисекндах при веб запросе к площадке CDN
+        /// </summary>
+        private static int _CdnRequestTimeout = 1500;
+
+        /// <summary>
+        /// Имя хоста на котором крутится ЕНИСЕЙ
+        /// </summary>
+        private static string _EniseyHost = Environment.MachineName;
+
+        /// <summary>
+        /// Номер порта на котором крутится ЕНИСЕЙ
+        /// </summary>
+        private static int _EniseyPort = 5995;
+
+        /// <summary>
         /// Статус фискального регистратора включён или выключен
         /// </summary>
         private static bool _isFrEnable = true;
@@ -1737,6 +1752,57 @@ namespace AlgoritmPrizm.Com
         }
 
         /// <summary>
+        /// Тайм аут в миллисекндах при веб запросе к площадке CDN
+        /// </summary>
+        public static int CdnRequestTimeout
+        {
+            get
+            {
+                return _CdnRequestTimeout;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("CdnRequestTimeout", value.ToString());
+                Save();
+                _CdnRequestTimeout = value;
+            }
+        }
+
+        /// <summary>
+        /// Имя хоста на котором крутится ЕНИСЕЙ
+        /// </summary>
+        public static string EniseyHost
+        {
+            get
+            {
+                return _EniseyHost;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("EniseyHost", value.ToString());
+                _EniseyHost = value.ToString();
+                Save();
+            }
+        }
+
+        /// <summary>
+        /// Номер порта на котором крутится ЕНИСЕЙ
+        /// </summary>
+        public static int EniseyPort
+        {
+            get
+            {
+                return _EniseyPort;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("EniseyPort", value.ToString());
+                Save();
+                _EniseyPort = value;
+            }
+        }
+
+        /// <summary>
         /// Статус фискального регистратора включён или выключен
         /// </summary>
         public static bool isFrEnable
@@ -2066,6 +2132,9 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("FrTag1263", _FrTag1263);
                     xmlMain.SetAttribute("FrTag1264", _FrTag1264);
                     xmlMain.SetAttribute("WebSecurityProtocolType", _WebSecurityProtocolType.ToString());
+                    xmlMain.SetAttribute("CdnRequestTimeout", _CdnRequestTimeout.ToString());
+                    xmlMain.SetAttribute("EniseyHost", _EniseyHost);
+                    xmlMain.SetAttribute("EniseyPort", _EniseyPort.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -2196,8 +2265,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "BlockActionPassword") try { _BlockActionPassword = Com.Lic.DeCode(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "BlockActionTimeOut") try { _BlockActionTimeOut = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "MexSendItemBarcode") try { _MexSendItemBarcode = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
-                        if (xmlRoot.Attributes[i].Name == "EnableServiceCrypto") try { _EnableServiceCrypto = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); }
-                            catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "EnableServiceCrypto") try { _EnableServiceCrypto = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "CrptCert") _CrptCert = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "DefaultActivMinToken") try { _DefaultActivMinToken = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "WebSiteForIsmp") _WebSiteForIsmp = xmlRoot.Attributes[i].Value.ToString();
@@ -2207,6 +2275,9 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "FrTag1263") _FrTag1263 = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "FrTag1264") _FrTag1264 = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "WebSecurityProtocolType") try { _WebSecurityProtocolType = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _WebSecurityProtocolType); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "CdnRequestTimeout") try { _CdnRequestTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "EniseyHost") _EniseyHost = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "EniseyPort") try { _EniseyPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                     }
 
                     // Подгружаем текущий сертификат

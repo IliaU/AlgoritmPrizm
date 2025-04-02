@@ -467,7 +467,43 @@ namespace AlgoritmPrizm.Com
                                 JsonCndResponce rezcdn = new JsonCndResponce();
                                 if (!string.IsNullOrWhiteSpace(BufPostRequest))
                                 {
-                                    JsonCdnForIsmpResponce resp = Com.Web.CdnForIsmpCheck(BufPostRequest);
+                                    // Пробуем сделать запрос через площадку CDN
+                                    JsonCdnForIsmpResponce resp = null;
+                                    try
+                                    {
+                                        resp = Com.Web.CdnForIsmpCheck(BufPostRequest);
+                                    }
+                                    catch (Exception)
+                                    {
+                                        try
+                                        {
+                                            // Строим заголовки которые будем цеплять во все запросы
+                                            List<HederHttp> HederHttpList = new List<HederHttp>();
+                                            HederHttpList.Add(new HederHttp("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.Default.GetBytes(@"admin:admin")))));
+                                            HederHttpList.Add(new Web.HederHttp("X-ClientId", "9999078902009263"));
+
+                                            //Построение запроса к базе Енисей
+                                            JsonEniseyRequest reqEnisey = JsonEniseyRequest.DeserializeJson(JsonEniseyRequest.SampleTest);
+
+                                            // Получение даных от Енисея
+                                            string respEniseyTmp = Web.GetObjectEnisey(Web.MethodTyp.POST, @"/api/v1/cis/outCheck", "application/json", HederHttpList, null, true, Encoding.UTF8, JsonEniseyRequest.SerializeObject(reqEnisey), false, false);
+                                            JsonEniseyResponce respEnisey = JsonEniseyResponce.DeserializeJson(respEniseyTmp);
+
+                                            // Проверяем ответ от енисея
+                                            if (respEnisey.results[0].codes[0].isBlocked==false
+                                                || respEnisey.results[0].codes[0].isGreyGtin == false)
+                                            {
+                                                resp = new JsonCdnForIsmpResponce();
+                                                resp.codes.Add(new JsonCdnForIsmpResponceItem());
+                                                resp.codes[0].valid = true;
+                                                resp.codes[0].errorCode = respEnisey.results[0].code;
+                                                resp.codes[0].realizable = (respEnisey.results[0].description == "ok" ? true : false);
+                                                resp.codes[0].isBlocked = respEnisey.results[0].codes[0].isBlocked;
+                                            }
+                                        }
+                                        catch (Exception){ }
+                                    }
+                                    
                                     
                                     // Если есть ответ
                                     if (resp != null)
@@ -477,7 +513,7 @@ namespace AlgoritmPrizm.Com
                                         rezcdn.reqTimestamp = resp.reqTimestamp;
                                     }
 
-
+                                    // Проверка ответа КМ
                                     if (resp!=null && resp.codes.Count == 1 && resp.codes[0].valid && resp.codes[0].errorCode == 0 && resp.codes[0].realizable && !resp.codes[0].isBlocked)
                                     {
                                         Com.JsonCdnFarm.BufferAdd(resp);
@@ -1540,7 +1576,7 @@ namespace AlgoritmPrizm.Com
                         // Com.RepositoryFarm.CurrentRep.WepQueuLoock(LastGetCurToken, CurToken)  делать не нужно этот метод запускается только там где эта проверка прошла
 
                         // Получаем массив данных который нужно подписать
-                        string resp1 = GetObject(MethodTyp.GET, Com.Config.WebSiteForIsmp, @"/api/v3/auth/cert/key", "application/json;charset=UTF-8", null, null, true, Encoding.UTF8, null, false, false, true);
+                        string resp1 = GetObjectCDN(MethodTyp.GET, Com.Config.WebSiteForIsmp, @"/api/v3/auth/cert/key", "application/json;charset=UTF-8", null, null, true, Encoding.UTF8, null, false, false, true);
 
                         if (resp1.IndexOf(@"""uuid""") == -1 || resp1.IndexOf(@"""data""") == -1) throw new ApplicationException("Не удаётся получить данные которые необходимо подписать при авторизации.");
 
@@ -1563,7 +1599,7 @@ namespace AlgoritmPrizm.Com
                         //HederHttpList.Add(new HederHttp("Authorization", "Bearer <token>"));
 
                         // Получаем токен
-                        string resp2 = GetObject(MethodTyp.POST, Com.Config.WebSiteForIsmp, @"/api/v3/true-api/auth/permissive-access", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, request2, false, false, true);
+                        string resp2 = GetObjectCDN(MethodTyp.POST, Com.Config.WebSiteForIsmp, @"/api/v3/true-api/auth/permissive-access", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, request2, false, false, true);
 
                         // Парсим токен
                         string token = resp2.Substring(resp2.IndexOf(@"<access_token>") + 14);
@@ -1585,7 +1621,7 @@ namespace AlgoritmPrizm.Com
                     HederHttpList.Add(new HederHttp("X-API-KEY", CurTokenForIsmp));
 
                     // Получаем токен
-                    string resp3 = GetObject(MethodTyp.GET, Com.Config.WebSiteForIsmp, @"/api/v4/true-api/cdn/info", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
+                    string resp3 = GetObjectCDN(MethodTyp.GET, Com.Config.WebSiteForIsmp, @"/api/v4/true-api/cdn/info", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
                     if (Config.Trace) Com.Log.EventSave(string.Format(@"Получили список площадок {0}", resp3), "Web.ValidToken", EventEn.Message, true, false);
 
                     // Получаем информацию по Cdn площадкам
@@ -1596,7 +1632,7 @@ namespace AlgoritmPrizm.Com
                         try
                         {
                             // делаем проверку производительности и доступности площадки
-                            string resp4 = GetObject(MethodTyp.GET, item.host, @"/api/v4/true-api/cdn/health/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
+                            string resp4 = GetObjectCDN(MethodTyp.GET, item.host, @"/api/v4/true-api/cdn/health/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, null, false, false, true);
                             if (Config.Trace) Com.Log.EventSave(string.Format(@"Результат проверки по площадоке {0}: {1}", item.host, resp4), "Web.ValidToken", EventEn.Message, true, false);
                             JsonCdnCheck CdnsCheck = JsonCdnCheck.DeserializeJson(resp4);
 
@@ -1646,7 +1682,7 @@ namespace AlgoritmPrizm.Com
             {
                 JsonCdnForIsmpResponce rez = null;
 
-                //
+                // Стандартная проверка через площадку CDN
                 ValidToken();
                 if (!string.IsNullOrWhiteSpace(CurCdnForIsmp) && MatrixCode.Length>37)
                 {
@@ -1712,7 +1748,7 @@ namespace AlgoritmPrizm.Com
                     string request2 = @"{""codes"":[""" + tmpMatrixCode + @"""]}";
 
                     // Получаем токен
-                    string resp2 = GetObject(MethodTyp.POST, CurCdnForIsmp, @"/api/v4/true-api/codes/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, request2, false, false, true);
+                    string resp2 = GetObjectCDN(MethodTyp.POST, CurCdnForIsmp, @"/api/v4/true-api/codes/check", "application/json;charset=UTF-8", HederHttpList, null, true, Encoding.UTF8, request2, false, false, true);
                     Com.Log.EventSave(string.Format(@"Отправка кода ({0}) на площадку ЦДН ({1}) и получили ответ:""{2}""", tmpMatrixCode, CurCdnForIsmp, resp2), "WebClient", EventEn.Message,true, false);
 
                     rez = JsonCdnForIsmpResponce.DeserializeJson(resp2);
@@ -1745,7 +1781,7 @@ namespace AlgoritmPrizm.Com
         /// <param name="IsNotWriteLog">Не писать в лог</param>
         /// <param name="isNotVisibleMessageError">Не отображать ошибки пользователю</param>
         /// <returns>результат запроса который возвратил сервер</returns>
-        public static string GetObject(MethodTyp TypRequest, string WebSite, string Folder, string СontentType, List<HederHttp> HederHttpList, string Accept, bool KeepAlive, Encoding EnCod, string JsonQuery, bool lockEventHashExecuting, bool IsNotWriteLog, bool isNotVisibleMessageError)
+        private static string GetObjectCDN(MethodTyp TypRequest, string WebSite, string Folder, string СontentType, List<HederHttp> HederHttpList, string Accept, bool KeepAlive, Encoding EnCod, string JsonQuery, bool lockEventHashExecuting, bool IsNotWriteLog, bool isNotVisibleMessageError)
         {   // https://docs.microsoft.com/ru-ru/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class
             try
             {
@@ -1770,7 +1806,7 @@ namespace AlgoritmPrizm.Com
                     Uri uri = new Uri(turl);
 
                     HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
-                    request.Timeout = 10000000;
+                    request.Timeout = Config.CdnRequestTimeout;
                     // Устанавливаем заголовк
                     if (HederHttpList != null)
                     {
@@ -1854,6 +1890,134 @@ namespace AlgoritmPrizm.Com
                 // Если это тест подклюыения к нету то сообщать пользователю новым окном не будем
                 if (Folder == @"/api/v3/auth/cert/key") Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web.GetObject", EventEn.Error, true, false);
                 else Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObject", ex.Message), "Web.GetObject", EventEn.Error, true, (isNotVisibleMessageError ? false : true));
+                throw ex;
+            }
+            //return null;
+        }
+        //
+        /// <summary>
+        /// Получаем данные
+        /// </summary>
+        /// <param name="TypRequest">Тип POST или GET</param>
+        /// <param name="Folder">Путь после сайта</param>
+        /// <param name="СontentType">Чото указать в типе контекста в заголовке</param>
+        /// <param name="HederHttpList">Список параметров который воткнуть в заголовок</param>
+        /// <param name="KeepAlive">держать конект или нет</param>
+        /// <param name="EnCod">Кодировка в которой делать запрос мы использоватли Encoding.UTF8</param>
+        /// <param name="JsonQuery">Данные которые передаём методом Post</param>
+        /// <param name="IsNotWriteLog">Не писать в лог</param>
+        /// <param name="isNotVisibleMessageError">Не отображать ошибки пользователю</param>
+        /// <returns>результат запроса который возвратил сервер</returns>
+        public static string GetObjectEnisey(MethodTyp TypRequest, string Folder, string СontentType, List<HederHttp> HederHttpList, string Accept, bool KeepAlive, Encoding EnCod, string JsonQuery, bool IsNotWriteLog, bool isNotVisibleMessageError)
+        {   // https://docs.microsoft.com/ru-ru/dotnet/framework/network-programming/how-to-send-data-using-the-webrequest-class
+            try
+            {
+                string rez = null;
+                //
+                string tmpFolder = null;
+                // Правим путь который будет использоваться в запросе на формат, надо чтобы начиналось с /
+                if (!string.IsNullOrWhiteSpace(Folder)) tmpFolder = (@"/" + Folder).Replace(@"//", @"/");
+
+                try
+                {
+                    // Проверяем на наличие адреса к серверу
+                    if (string.IsNullOrWhiteSpace(Config.EniseyHost)) throw new ApplicationException("Не указан сайт Enisey");
+                    if (Config.EniseyPort==0) throw new ApplicationException("Не указан порт Enisey");
+
+                    // Переменная для массива байт в нужной нам кодировке
+                    byte[] MessOut = null;
+
+                    // Создаём подключение к серверу
+                    string turl = string.Format(@"http://{0}:{1}{2}", Config.EniseyHost, Config.EniseyPort, tmpFolder);
+                    if (Config.Trace) Com.Log.EventSave(string.Format(@"Построен адрес запроса {0}", turl), "Web.GetObjectEnisey", EventEn.Message, true, false);
+                    turl = Encoding.UTF8.GetString(Encoding.Convert(Encoding.Default, Encoding.UTF8, Encoding.Default.GetBytes(turl)));
+                    Uri uri = new Uri(turl);
+
+                    HttpWebRequest request = (HttpWebRequest)HttpWebRequest.Create(uri);
+                    request.Timeout = Config.CdnRequestTimeout*10;
+                    // Устанавливаем заголовк
+                    if (HederHttpList != null)
+                    {
+                        WebHeaderCollection myWebHeaderCollection = null;
+                        foreach (HederHttp item in HederHttpList)
+                        {
+                            if (!string.IsNullOrWhiteSpace(item.AtributeName) && !string.IsNullOrWhiteSpace(item.AtributeName))
+                            {
+                                if (myWebHeaderCollection == null) myWebHeaderCollection = request.Headers;
+                                myWebHeaderCollection.Set(item.AtributeName, item.AtributeValue);
+                            }
+                        }
+                    }
+
+                    // Если указан null то берём по умолчанию
+                    request.Accept = Accept ?? @"text/html, application/xhtml+xml, */*";
+                    request.ContentType = (string.IsNullOrWhiteSpace(СontentType) ? @"application/json;charset=UTF-8" : СontentType);
+                    //request.KeepAlive = KeepAlive;
+
+                    if (!string.IsNullOrWhiteSpace(JsonQuery) && TypRequest == MethodTyp.POST)
+                    {
+                        request.Method = TypRequest.ToString();
+
+                        // Получаем массив в байтах
+                        MessOut = Encoding.Convert(Encoding.Default, EnCod, Encoding.Default.GetBytes(JsonQuery));
+
+                        request.ContentLength = MessOut.Length;
+
+                        // Закачиваем то что нам нужно передать на сервер
+                        using (Stream reqStream = request.GetRequestStream())
+                        {
+                            reqStream.Write(MessOut, 0, MessOut.Length);
+                        }
+                    }
+                    else
+                    {
+                        if (TypRequest == MethodTyp.GET) request.Method = TypRequest.ToString();
+                        else request.Method = TypRequest.ToString();
+                    }
+
+
+                    try
+                    {
+                        // Делаем запрос и получаем ответ
+                        HttpWebResponse responce = (HttpWebResponse)request.GetResponse();
+
+                        // Создаём потоки и читаем нужную инфу с сервера
+                        using (Stream respStream = responce.GetResponseStream())
+                        {
+                            using (StreamReader respReader = new StreamReader(respStream, Encoding.UTF8))
+                            {
+                                //rez = respReader.ReadToEnd();
+                                rez = Encoding.Default.GetString(Encoding.Convert(Encoding.UTF8, Encoding.Default, Encoding.UTF8.GetBytes(respReader.ReadToEnd())));
+                            }
+                        }
+                    }
+                    catch (WebException ex)
+                    {
+                        if (!IsNotWriteLog) Log.EventSave("Message: " + ex.Message + "\r\nResponse: " + ex.Response, @"Web.GetObjectEnisey WebException", Lib.EventEn.Error);
+                        throw new ApplicationException(ex.Message);
+                    }
+
+                    // В настройка включена трасировка всех запросов и ответов к web серверу
+                    if (Config.Trace)
+                    {
+                        if (!IsNotWriteLog) Log.EventSave("\r\nrequest=" + JsonQuery, @"Web.GetObjectEnisey", Lib.EventEn.Trace);
+                        if (!IsNotWriteLog) Log.EventSave("\r\nresponse=" + rez, @"Web.GetObjectEnisey", Lib.EventEn.Trace);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    if (!IsNotWriteLog) Log.EventSave(ex.Message, @"Web.GetObjectEnisey", Lib.EventEn.Error);
+                    if (!IsNotWriteLog) Log.EventSave("\r\nfolder=" + tmpFolder + "\r\n" + JsonQuery, @"Web.GetObjectEnisey", Lib.EventEn.Dump);
+                    throw ex;
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                // Если это тест подклюыения к нету то сообщать пользователю новым окном не будем
+                if (Folder == @"/api/v3/auth/cert/key") Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObjectEnisey", ex.Message), "Web.GetObjectEnisey", EventEn.Error, true, false);
+                else Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetObjectEnisey", ex.Message), "Web.GetObject", EventEn.Error, true, (isNotVisibleMessageError ? false : true));
                 throw ex;
             }
             //return null;
