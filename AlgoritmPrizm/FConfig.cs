@@ -63,6 +63,7 @@ namespace AlgoritmPrizm
                 if (SelectPosition > -1) cmbBoxFfd.SelectedIndex = SelectPosition;
                 //
                 this.txtBoxFrPort.Text = Config.FrPort.ToString();
+                this.txtBoxFrSerialNumber.Text = Config.FrSerialNumber;
                 //
                 this.chkBoxProcessingUrikForFr.Checked = Config.ProcessingUrikForFr;
                 this.chkBoxPrintingUrikForFr.Checked = Config.PrintingUrikForFr;
@@ -311,6 +312,8 @@ namespace AlgoritmPrizm
                 this.txtBoxClearJsonCdnFarmMin.Text = Config.ClearJsonCdnFarmMin.ToString();
                 // Значение токена по умолчанию если не удалось получить используя ЕЦП
                 this.txtBoxDefaultTokenEcp.Text = Config.DefaultTokenEcp;
+                // Установка таймаута для ответа  онлайн (ms)
+                this.txtBoxCdnRequestTimeout.Text = Config.CdnRequestTimeout.ToString();
 
                 // идентификатор ФОИВ; фиксировано
                 this.txtBoxFrTag1262.Text = Config.FrTag1262;
@@ -331,8 +334,17 @@ namespace AlgoritmPrizm
                 }
                 if (SelectWebSecurityProtocolType > -1) cmbBoxWebSecurityProtocolType.SelectedIndex = SelectWebSecurityProtocolType;
 
-                //Статус фискального регистратора включён или выключен
+                // Статус фискального регистратора включён или выключен
                 this.chkIsFrEnable.Checked = Config.isFrEnable;
+
+                // Хост
+                this.txtBoxEniseyHost.Text = Config.EniseyHost;
+                // Порт
+                this.txtBoxEniseyPort.Text = Config.EniseyPort.ToString();
+                // Логин
+                this.txtBoxEniseyLogin.Text = Config.EniseyLogin;
+                // Пароль
+                this.txtBoxEniseyPassword.Text = Config.EniseyPassword;
             }
             catch (Exception ex)
             {
@@ -436,6 +448,7 @@ namespace AlgoritmPrizm
                 {
                     Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxFrPort.Text), GetType().Name, EventEn.Message);
                 }
+                Config.FrSerialNumber = this.txtBoxFrSerialNumber.Text;
                 Config.ProcessingUrikForFr = this.chkBoxProcessingUrikForFr.Checked;
                 Config.PrintingUrikForFr = this.chkBoxPrintingUrikForFr.Checked;
                 Config.PrintingIpForFr = this.chkBoxPrintingIpForFr.Checked;
@@ -612,6 +625,15 @@ namespace AlgoritmPrizm
                 //
                 // Значение токена по умолчанию если не удалось получить используя ЕЦП
                 Config.DefaultTokenEcp = this.txtBoxDefaultTokenEcp.Text;
+                // Установка таймаута для ответа  онлайн (ms)
+                try
+                {
+                    Config.CdnRequestTimeout = int.Parse(this.txtBoxCdnRequestTimeout.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxCdnRequestTimeout.Text), GetType().Name, EventEn.Warning);
+                }
 
                 // идентификатор ФОИВ; фиксировано
                 Config.FrTag1262 = this.txtBoxFrTag1262.Text;
@@ -625,6 +647,22 @@ namespace AlgoritmPrizm
 
                 //Статус фискального регистратора включён или выключен
                 Config.isFrEnable = this.chkIsFrEnable.Checked;
+
+                // Хост
+                Config.EniseyHost = this.txtBoxEniseyHost.Text;
+                // Порт
+                try
+                {
+                    Config.EniseyPort = int.Parse(this.txtBoxEniseyPort.Text);
+                }
+                catch (Exception)
+                {
+                    Com.Log.EventSave(string.Format("Не смогли преобраовать {0} в число.", this.txtBoxEniseyPort.Text), GetType().Name, EventEn.Warning);
+                }
+                // Логин
+                Config.EniseyLogin = this.txtBoxEniseyLogin.Text;
+                // Пароль
+                Config.EniseyPassword = this.txtBoxEniseyPassword.Text;
 
                 this.Close();
             }

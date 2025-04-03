@@ -207,6 +207,11 @@ namespace AlgoritmPrizm.Com
         private static int _FrPort = 3;
 
         /// <summary>
+        /// Номер фискального регистратора
+        /// </summary>
+        private static string _FrSerialNumber="*****************";
+
+        /// <summary>
         /// Наименование поля с именем товара
         /// </summary>
         private static FieldItemEn _FieldItem = FieldItemEn.Description1;
@@ -450,6 +455,16 @@ namespace AlgoritmPrizm.Com
         /// Номер порта на котором крутится ЕНИСЕЙ
         /// </summary>
         private static int _EniseyPort = 5995;
+
+        /// <summary>
+        /// Логин от базы ЕНИСЕЙ
+        /// </summary>
+        private static string _EniseyLogin = "admin";
+
+        /// <summary>
+        /// Пароль от базы ЕНИСЕЙ
+        /// </summary>
+        private static string _EniseyPassword = "admin";
 
         /// <summary>
         /// Статус фискального регистратора включён или выключен
@@ -974,6 +989,24 @@ namespace AlgoritmPrizm.Com
                 _FrPort = value;
             }
         }
+
+        /// <summary>
+        /// Номер фискального регистратора
+        /// </summary>
+        public static string FrSerialNumber
+        {
+            get
+            {
+                return _FrSerialNumber;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("FrSerialNumber", value.ToString());
+                Save();
+                _FrSerialNumber = value;
+            }
+        }
+
 
         /// <summary>
         /// Наименование поля с именем товара
@@ -1819,6 +1852,40 @@ namespace AlgoritmPrizm.Com
             }
         }
 
+        /// <summary>
+        /// Логин от базы ЕНИСЕЙ
+        /// </summary>
+        public static string EniseyLogin
+        {
+            get
+            {
+                return _EniseyLogin;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("EniseyLogin", value.ToString());
+                Save();
+                _EniseyLogin = value;
+            }
+        }
+
+        /// <summary>
+        /// Пароль от базы ЕНИСЕЙ
+        /// </summary>
+        public static string EniseyPassword
+        {
+            get
+            {
+                return _EniseyPassword;
+            }
+            set
+            {
+                xmlRoot.SetAttribute("EniseyPassword", value.ToString());
+                Save();
+                _EniseyPassword = value;
+            }
+        }
+
         #endregion
 
         #region Puplic Method
@@ -2072,6 +2139,7 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("DisplayFieldItem", _DisplayFieldItem.ToString());
                     xmlMain.SetAttribute("Ffd", _Ffd.ToString());
                     xmlMain.SetAttribute("FrPort", _FrPort.ToString());
+                    xmlMain.SetAttribute("FrSerialNumber", _FrSerialNumber);
                     xmlMain.SetAttribute("isFrEnable", _isFrEnable.ToString());
                     xmlMain.SetAttribute("TenderTypeCash", _TenderTypeCash.ToString());
                     xmlMain.SetAttribute("TenderTypeCredit", _TenderTypeCredit.ToString());
@@ -2135,6 +2203,8 @@ namespace AlgoritmPrizm.Com
                     xmlMain.SetAttribute("CdnRequestTimeout", _CdnRequestTimeout.ToString());
                     xmlMain.SetAttribute("EniseyHost", _EniseyHost);
                     xmlMain.SetAttribute("EniseyPort", _EniseyPort.ToString());
+                    xmlMain.SetAttribute("EniseyPassword", _EniseyPassword.ToString());
+                    xmlMain.SetAttribute("EniseyLogin", _EniseyLogin.ToString());
                     Document.AppendChild(xmlMain);
 
                     // Для работы с лицензиями
@@ -2212,6 +2282,7 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "DisplayFieldItem") try { _DisplayFieldItem = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _DisplayFieldItem); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "Ffd") try { _Ffd = EventConvertor.Convert(xmlRoot.Attributes[i].Value.ToString(), _Ffd); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "FrPort") try { _FrPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "FrSerialNumber") try { _FrSerialNumber = xmlRoot.Attributes[i].Value.ToString(); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "isFrEnable") try { _isFrEnable = bool.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCash") try { _TenderTypeCash = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "TenderTypeCredit") try { _TenderTypeCredit = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
@@ -2278,6 +2349,8 @@ namespace AlgoritmPrizm.Com
                         if (xmlRoot.Attributes[i].Name == "CdnRequestTimeout") try { _CdnRequestTimeout = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
                         if (xmlRoot.Attributes[i].Name == "EniseyHost") _EniseyHost = xmlRoot.Attributes[i].Value.ToString();
                         if (xmlRoot.Attributes[i].Name == "EniseyPort") try { _EniseyPort = int.Parse(xmlRoot.Attributes[i].Value.ToString()); } catch (Exception) { }
+                        if (xmlRoot.Attributes[i].Name == "EniseyLogin") _EniseyLogin = xmlRoot.Attributes[i].Value.ToString();
+                        if (xmlRoot.Attributes[i].Name == "EniseyPassword") _EniseyPassword = xmlRoot.Attributes[i].Value.ToString();
                     }
 
                     // Подгружаем текущий сертификат

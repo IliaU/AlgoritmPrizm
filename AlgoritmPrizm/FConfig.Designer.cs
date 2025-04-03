@@ -109,6 +109,7 @@
             this.txtBoxSmsTypGatewaySmtp = new System.Windows.Forms.TextBox();
             this.txtBoxSmsTypGatewayLogin = new System.Windows.Forms.TextBox();
             this.groupBoxFfd = new System.Windows.Forms.GroupBox();
+            this.chkIsFrEnable = new System.Windows.Forms.CheckBox();
             this.lblTagInfo1260 = new System.Windows.Forms.Label();
             this.txtBoxFrTag1264 = new System.Windows.Forms.TextBox();
             this.txtBoxFrTag1263 = new System.Windows.Forms.TextBox();
@@ -168,7 +169,19 @@
             this.lblWebSiteForIsmp = new System.Windows.Forms.Label();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
-            this.chkIsFrEnable = new System.Windows.Forms.CheckBox();
+            this.txtBoxFrSerialNumber = new System.Windows.Forms.TextBox();
+            this.lblFrSerialNumber = new System.Windows.Forms.Label();
+            this.txtBoxCdnRequestTimeout = new System.Windows.Forms.TextBox();
+            this.lblCdnRequestTimeout = new System.Windows.Forms.Label();
+            this.grpBoxEnisey = new System.Windows.Forms.GroupBox();
+            this.txtBoxEniseyHost = new System.Windows.Forms.TextBox();
+            this.lblEniseyHost = new System.Windows.Forms.Label();
+            this.txtBoxEniseyPort = new System.Windows.Forms.TextBox();
+            this.lblEniseyPort = new System.Windows.Forms.Label();
+            this.txtBoxEniseyLogin = new System.Windows.Forms.TextBox();
+            this.lblEniseyLogin = new System.Windows.Forms.Label();
+            this.txtBoxEniseyPassword = new System.Windows.Forms.TextBox();
+            this.lblEniseyPassword = new System.Windows.Forms.Label();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -192,6 +205,7 @@
             this.tabPage9.SuspendLayout();
             this.pnlBotton.SuspendLayout();
             this.pnlFill.SuspendLayout();
+            this.grpBoxEnisey.SuspendLayout();
             this.SuspendLayout();
             // 
             // chkTrace
@@ -249,7 +263,7 @@
             // lblFfd
             // 
             this.lblFfd.AutoSize = true;
-            this.lblFfd.Location = new System.Drawing.Point(10, 21);
+            this.lblFfd.Location = new System.Drawing.Point(10, 29);
             this.lblFfd.Name = "lblFfd";
             this.lblFfd.Size = new System.Drawing.Size(77, 13);
             this.lblFfd.TabIndex = 7;
@@ -259,7 +273,7 @@
             // 
             this.cmbBoxFfd.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxFfd.FormattingEnabled = true;
-            this.cmbBoxFfd.Location = new System.Drawing.Point(121, 18);
+            this.cmbBoxFfd.Location = new System.Drawing.Point(94, 26);
             this.cmbBoxFfd.Name = "cmbBoxFfd";
             this.cmbBoxFfd.Size = new System.Drawing.Size(106, 21);
             this.cmbBoxFfd.TabIndex = 8;
@@ -267,7 +281,7 @@
             // lblFrPort
             // 
             this.lblFrPort.AutoSize = true;
-            this.lblFrPort.Location = new System.Drawing.Point(248, 21);
+            this.lblFrPort.Location = new System.Drawing.Point(228, 29);
             this.lblFrPort.Name = "lblFrPort";
             this.lblFrPort.Size = new System.Drawing.Size(103, 13);
             this.lblFrPort.TabIndex = 9;
@@ -275,7 +289,7 @@
             // 
             // txtBoxFrPort
             // 
-            this.txtBoxFrPort.Location = new System.Drawing.Point(357, 18);
+            this.txtBoxFrPort.Location = new System.Drawing.Point(337, 26);
             this.txtBoxFrPort.Name = "txtBoxFrPort";
             this.txtBoxFrPort.Size = new System.Drawing.Size(49, 20);
             this.txtBoxFrPort.TabIndex = 10;
@@ -514,7 +528,7 @@
             this.tabControl1.Location = new System.Drawing.Point(0, 0);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(774, 481);
+            this.tabControl1.Size = new System.Drawing.Size(774, 520);
             this.tabControl1.TabIndex = 38;
             // 
             // tabPage1
@@ -537,7 +551,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(766, 455);
+            this.tabPage1.Size = new System.Drawing.Size(766, 494);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Основные";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -622,7 +636,7 @@
             this.groupBoxDisplay.Controls.Add(this.lblDisplayDspFullName);
             this.groupBoxDisplay.Controls.Add(this.txtBoxDisplayPort);
             this.groupBoxDisplay.Controls.Add(this.lblDisplayPort);
-            this.groupBoxDisplay.Location = new System.Drawing.Point(11, 376);
+            this.groupBoxDisplay.Location = new System.Drawing.Point(11, 410);
             this.groupBoxDisplay.Name = "groupBoxDisplay";
             this.groupBoxDisplay.Size = new System.Drawing.Size(747, 74);
             this.groupBoxDisplay.TabIndex = 11;
@@ -632,7 +646,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(10, 46);
+            this.label1.Location = new System.Drawing.Point(10, 47);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(134, 13);
             this.label1.TabIndex = 45;
@@ -651,7 +665,7 @@
             // 
             this.cmbBoxStopBits.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxStopBits.FormattingEnabled = true;
-            this.cmbBoxStopBits.Location = new System.Drawing.Point(600, 41);
+            this.cmbBoxStopBits.Location = new System.Drawing.Point(600, 42);
             this.cmbBoxStopBits.Name = "cmbBoxStopBits";
             this.cmbBoxStopBits.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxStopBits.TabIndex = 18;
@@ -659,7 +673,7 @@
             // lblStopBits
             // 
             this.lblStopBits.AutoSize = true;
-            this.lblStopBits.Location = new System.Drawing.Point(542, 44);
+            this.lblStopBits.Location = new System.Drawing.Point(542, 45);
             this.lblStopBits.Name = "lblStopBits";
             this.lblStopBits.Size = new System.Drawing.Size(46, 13);
             this.lblStopBits.TabIndex = 17;
@@ -667,7 +681,7 @@
             // 
             // txtBoxDisplayDataBits
             // 
-            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(474, 40);
+            this.txtBoxDisplayDataBits.Location = new System.Drawing.Point(474, 41);
             this.txtBoxDisplayDataBits.Name = "txtBoxDisplayDataBits";
             this.txtBoxDisplayDataBits.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayDataBits.TabIndex = 16;
@@ -675,7 +689,7 @@
             // lblDisplayDataBits
             // 
             this.lblDisplayDataBits.AutoSize = true;
-            this.lblDisplayDataBits.Location = new System.Drawing.Point(413, 43);
+            this.lblDisplayDataBits.Location = new System.Drawing.Point(413, 44);
             this.lblDisplayDataBits.Name = "lblDisplayDataBits";
             this.lblDisplayDataBits.Size = new System.Drawing.Size(47, 13);
             this.lblDisplayDataBits.TabIndex = 15;
@@ -685,7 +699,7 @@
             // 
             this.cmbBoxDisplayParity.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayParity.FormattingEnabled = true;
-            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(600, 15);
+            this.cmbBoxDisplayParity.Location = new System.Drawing.Point(600, 16);
             this.cmbBoxDisplayParity.Name = "cmbBoxDisplayParity";
             this.cmbBoxDisplayParity.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxDisplayParity.TabIndex = 14;
@@ -693,7 +707,7 @@
             // lblDisplayParity
             // 
             this.lblDisplayParity.AutoSize = true;
-            this.lblDisplayParity.Location = new System.Drawing.Point(542, 19);
+            this.lblDisplayParity.Location = new System.Drawing.Point(542, 20);
             this.lblDisplayParity.Name = "lblDisplayParity";
             this.lblDisplayParity.Size = new System.Drawing.Size(33, 13);
             this.lblDisplayParity.TabIndex = 13;
@@ -701,7 +715,7 @@
             // 
             // txtBoxDisplayBaudRate
             // 
-            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(474, 15);
+            this.txtBoxDisplayBaudRate.Location = new System.Drawing.Point(474, 16);
             this.txtBoxDisplayBaudRate.Name = "txtBoxDisplayBaudRate";
             this.txtBoxDisplayBaudRate.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayBaudRate.TabIndex = 12;
@@ -709,7 +723,7 @@
             // lblDisplayBaudRate
             // 
             this.lblDisplayBaudRate.AutoSize = true;
-            this.lblDisplayBaudRate.Location = new System.Drawing.Point(413, 18);
+            this.lblDisplayBaudRate.Location = new System.Drawing.Point(413, 19);
             this.lblDisplayBaudRate.Name = "lblDisplayBaudRate";
             this.lblDisplayBaudRate.Size = new System.Drawing.Size(55, 13);
             this.lblDisplayBaudRate.TabIndex = 11;
@@ -719,7 +733,7 @@
             // 
             this.cmbBoxDisplayDspFullName.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cmbBoxDisplayDspFullName.FormattingEnabled = true;
-            this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(91, 18);
+            this.cmbBoxDisplayDspFullName.Location = new System.Drawing.Point(91, 19);
             this.cmbBoxDisplayDspFullName.Name = "cmbBoxDisplayDspFullName";
             this.cmbBoxDisplayDspFullName.Size = new System.Drawing.Size(137, 21);
             this.cmbBoxDisplayDspFullName.TabIndex = 8;
@@ -727,7 +741,7 @@
             // lblDisplayDspFullName
             // 
             this.lblDisplayDspFullName.AutoSize = true;
-            this.lblDisplayDspFullName.Location = new System.Drawing.Point(10, 21);
+            this.lblDisplayDspFullName.Location = new System.Drawing.Point(10, 22);
             this.lblDisplayDspFullName.Name = "lblDisplayDspFullName";
             this.lblDisplayDspFullName.Size = new System.Drawing.Size(71, 13);
             this.lblDisplayDspFullName.TabIndex = 7;
@@ -735,7 +749,7 @@
             // 
             // txtBoxDisplayPort
             // 
-            this.txtBoxDisplayPort.Location = new System.Drawing.Point(331, 18);
+            this.txtBoxDisplayPort.Location = new System.Drawing.Point(331, 19);
             this.txtBoxDisplayPort.Name = "txtBoxDisplayPort";
             this.txtBoxDisplayPort.Size = new System.Drawing.Size(49, 20);
             this.txtBoxDisplayPort.TabIndex = 10;
@@ -743,7 +757,7 @@
             // lblDisplayPort
             // 
             this.lblDisplayPort.AutoSize = true;
-            this.lblDisplayPort.Location = new System.Drawing.Point(248, 21);
+            this.lblDisplayPort.Location = new System.Drawing.Point(248, 22);
             this.lblDisplayPort.Name = "lblDisplayPort";
             this.lblDisplayPort.Size = new System.Drawing.Size(77, 13);
             this.lblDisplayPort.TabIndex = 9;
@@ -774,7 +788,7 @@
             this.groupBox2.Controls.Add(this.lblSmsTypGatewayLogin);
             this.groupBox2.Controls.Add(this.PnlSmsTypGateway);
             this.groupBox2.Controls.Add(this.txtBoxSmsTypGatewayLogin);
-            this.groupBox2.Location = new System.Drawing.Point(11, 254);
+            this.groupBox2.Location = new System.Drawing.Point(11, 282);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(747, 115);
             this.groupBox2.TabIndex = 38;
@@ -914,6 +928,8 @@
             // 
             // groupBoxFfd
             // 
+            this.groupBoxFfd.Controls.Add(this.txtBoxFrSerialNumber);
+            this.groupBoxFfd.Controls.Add(this.lblFrSerialNumber);
             this.groupBoxFfd.Controls.Add(this.chkIsFrEnable);
             this.groupBoxFfd.Controls.Add(this.lblTagInfo1260);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrTag1264);
@@ -929,17 +945,27 @@
             this.groupBoxFfd.Controls.Add(this.lblFfd);
             this.groupBoxFfd.Controls.Add(this.txtBoxFrPort);
             this.groupBoxFfd.Controls.Add(this.lblFrPort);
-            this.groupBoxFfd.Location = new System.Drawing.Point(11, 133);
+            this.groupBoxFfd.Location = new System.Drawing.Point(11, 139);
             this.groupBoxFfd.Name = "groupBoxFfd";
-            this.groupBoxFfd.Size = new System.Drawing.Size(747, 115);
+            this.groupBoxFfd.Size = new System.Drawing.Size(747, 137);
             this.groupBoxFfd.TabIndex = 2;
             this.groupBoxFfd.TabStop = false;
             this.groupBoxFfd.Text = "Фискальный регистратор";
             // 
+            // chkIsFrEnable
+            // 
+            this.chkIsFrEnable.AutoSize = true;
+            this.chkIsFrEnable.Location = new System.Drawing.Point(542, 6);
+            this.chkIsFrEnable.Name = "chkIsFrEnable";
+            this.chkIsFrEnable.Size = new System.Drawing.Size(205, 17);
+            this.chkIsFrEnable.TabIndex = 21;
+            this.chkIsFrEnable.Text = "Фискальный регистратор включен";
+            this.chkIsFrEnable.UseVisualStyleBackColor = true;
+            // 
             // lblTagInfo1260
             // 
             this.lblTagInfo1260.AutoSize = true;
-            this.lblTagInfo1260.Location = new System.Drawing.Point(460, 26);
+            this.lblTagInfo1260.Location = new System.Drawing.Point(595, 49);
             this.lblTagInfo1260.Name = "lblTagInfo1260";
             this.lblTagInfo1260.Size = new System.Drawing.Size(146, 13);
             this.lblTagInfo1260.TabIndex = 20;
@@ -947,21 +973,21 @@
             // 
             // txtBoxFrTag1264
             // 
-            this.txtBoxFrTag1264.Location = new System.Drawing.Point(501, 93);
+            this.txtBoxFrTag1264.Location = new System.Drawing.Point(636, 112);
             this.txtBoxFrTag1264.Name = "txtBoxFrTag1264";
             this.txtBoxFrTag1264.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFrTag1264.TabIndex = 19;
             // 
             // txtBoxFrTag1263
             // 
-            this.txtBoxFrTag1263.Location = new System.Drawing.Point(501, 70);
+            this.txtBoxFrTag1263.Location = new System.Drawing.Point(636, 89);
             this.txtBoxFrTag1263.Name = "txtBoxFrTag1263";
             this.txtBoxFrTag1263.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFrTag1263.TabIndex = 18;
             // 
             // txtBoxFrTag1262
             // 
-            this.txtBoxFrTag1262.Location = new System.Drawing.Point(501, 47);
+            this.txtBoxFrTag1262.Location = new System.Drawing.Point(636, 66);
             this.txtBoxFrTag1262.Name = "txtBoxFrTag1262";
             this.txtBoxFrTag1262.Size = new System.Drawing.Size(100, 20);
             this.txtBoxFrTag1262.TabIndex = 17;
@@ -969,7 +995,7 @@
             // lblFrTag1264
             // 
             this.lblFrTag1264.AutoSize = true;
-            this.lblFrTag1264.Location = new System.Drawing.Point(436, 96);
+            this.lblFrTag1264.Location = new System.Drawing.Point(571, 115);
             this.lblFrTag1264.Name = "lblFrTag1264";
             this.lblFrTag1264.Size = new System.Drawing.Size(59, 13);
             this.lblFrTag1264.TabIndex = 16;
@@ -978,7 +1004,7 @@
             // lblFrTag1263
             // 
             this.lblFrTag1263.AutoSize = true;
-            this.lblFrTag1263.Location = new System.Drawing.Point(436, 73);
+            this.lblFrTag1263.Location = new System.Drawing.Point(571, 92);
             this.lblFrTag1263.Name = "lblFrTag1263";
             this.lblFrTag1263.Size = new System.Drawing.Size(59, 13);
             this.lblFrTag1263.TabIndex = 15;
@@ -987,7 +1013,7 @@
             // lblFrTag1262
             // 
             this.lblFrTag1262.AutoSize = true;
-            this.lblFrTag1262.Location = new System.Drawing.Point(436, 50);
+            this.lblFrTag1262.Location = new System.Drawing.Point(571, 69);
             this.lblFrTag1262.Name = "lblFrTag1262";
             this.lblFrTag1262.Size = new System.Drawing.Size(59, 13);
             this.lblFrTag1262.TabIndex = 14;
@@ -996,7 +1022,7 @@
             // chkBoxPrintingIpForFr
             // 
             this.chkBoxPrintingIpForFr.AutoSize = true;
-            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(6, 95);
+            this.chkBoxPrintingIpForFr.Location = new System.Drawing.Point(6, 106);
             this.chkBoxPrintingIpForFr.Name = "chkBoxPrintingIpForFr";
             this.chkBoxPrintingIpForFr.Size = new System.Drawing.Size(321, 17);
             this.chkBoxPrintingIpForFr.TabIndex = 13;
@@ -1007,7 +1033,7 @@
             // chkBoxPrintingUrikForFr
             // 
             this.chkBoxPrintingUrikForFr.AutoSize = true;
-            this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(6, 72);
+            this.chkBoxPrintingUrikForFr.Location = new System.Drawing.Point(6, 83);
             this.chkBoxPrintingUrikForFr.Name = "chkBoxPrintingUrikForFr";
             this.chkBoxPrintingUrikForFr.Size = new System.Drawing.Size(347, 17);
             this.chkBoxPrintingUrikForFr.TabIndex = 12;
@@ -1018,7 +1044,7 @@
             // chkBoxProcessingUrikForFr
             // 
             this.chkBoxProcessingUrikForFr.AutoSize = true;
-            this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(6, 49);
+            this.chkBoxProcessingUrikForFr.Location = new System.Drawing.Point(6, 60);
             this.chkBoxProcessingUrikForFr.Name = "chkBoxProcessingUrikForFr";
             this.chkBoxProcessingUrikForFr.Size = new System.Drawing.Size(381, 17);
             this.chkBoxProcessingUrikForFr.TabIndex = 11;
@@ -1455,6 +1481,9 @@
             // 
             // tabPage9
             // 
+            this.tabPage9.Controls.Add(this.grpBoxEnisey);
+            this.tabPage9.Controls.Add(this.txtBoxCdnRequestTimeout);
+            this.tabPage9.Controls.Add(this.lblCdnRequestTimeout);
             this.tabPage9.Controls.Add(this.txtBoxDefaultTokenEcp);
             this.tabPage9.Controls.Add(this.txtBoxClearJsonCdnFarmMin);
             this.tabPage9.Controls.Add(this.lblDefaultTokenEcp);
@@ -1463,7 +1492,7 @@
             this.tabPage9.Controls.Add(this.lblWebSiteForIsmp);
             this.tabPage9.Location = new System.Drawing.Point(4, 22);
             this.tabPage9.Name = "tabPage9";
-            this.tabPage9.Size = new System.Drawing.Size(766, 455);
+            this.tabPage9.Size = new System.Drawing.Size(766, 494);
             this.tabPage9.TabIndex = 5;
             this.tabPage9.Text = "Настройка CDN площадки";
             this.tabPage9.UseVisualStyleBackColor = true;
@@ -1521,7 +1550,7 @@
             // 
             this.pnlBotton.Controls.Add(this.btnSave);
             this.pnlBotton.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlBotton.Location = new System.Drawing.Point(0, 481);
+            this.pnlBotton.Location = new System.Drawing.Point(0, 520);
             this.pnlBotton.Name = "pnlBotton";
             this.pnlBotton.Size = new System.Drawing.Size(774, 36);
             this.pnlBotton.TabIndex = 39;
@@ -1532,24 +1561,127 @@
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
             this.pnlFill.Location = new System.Drawing.Point(0, 0);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(774, 481);
+            this.pnlFill.Size = new System.Drawing.Size(774, 520);
             this.pnlFill.TabIndex = 40;
             // 
-            // chkIsFrEnable
+            // txtBoxFrSerialNumber
             // 
-            this.chkIsFrEnable.AutoSize = true;
-            this.chkIsFrEnable.Location = new System.Drawing.Point(542, 6);
-            this.chkIsFrEnable.Name = "chkIsFrEnable";
-            this.chkIsFrEnable.Size = new System.Drawing.Size(205, 17);
-            this.chkIsFrEnable.TabIndex = 21;
-            this.chkIsFrEnable.Text = "Фискальный регистратор включен";
-            this.chkIsFrEnable.UseVisualStyleBackColor = true;
+            this.txtBoxFrSerialNumber.Location = new System.Drawing.Point(508, 26);
+            this.txtBoxFrSerialNumber.Name = "txtBoxFrSerialNumber";
+            this.txtBoxFrSerialNumber.Size = new System.Drawing.Size(228, 20);
+            this.txtBoxFrSerialNumber.TabIndex = 23;
+            // 
+            // lblFrSerialNumber
+            // 
+            this.lblFrSerialNumber.AutoSize = true;
+            this.lblFrSerialNumber.Location = new System.Drawing.Point(399, 29);
+            this.lblFrSerialNumber.Name = "lblFrSerialNumber";
+            this.lblFrSerialNumber.Size = new System.Drawing.Size(103, 13);
+            this.lblFrSerialNumber.TabIndex = 22;
+            this.lblFrSerialNumber.Text = "Порт фискальника";
+            // 
+            // txtBoxCdnRequestTimeout
+            // 
+            this.txtBoxCdnRequestTimeout.Location = new System.Drawing.Point(272, 154);
+            this.txtBoxCdnRequestTimeout.Name = "txtBoxCdnRequestTimeout";
+            this.txtBoxCdnRequestTimeout.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxCdnRequestTimeout.TabIndex = 7;
+            // 
+            // lblCdnRequestTimeout
+            // 
+            this.lblCdnRequestTimeout.AutoSize = true;
+            this.lblCdnRequestTimeout.Location = new System.Drawing.Point(32, 157);
+            this.lblCdnRequestTimeout.Name = "lblCdnRequestTimeout";
+            this.lblCdnRequestTimeout.Size = new System.Drawing.Size(234, 13);
+            this.lblCdnRequestTimeout.TabIndex = 6;
+            this.lblCdnRequestTimeout.Text = "Установка таймаута для ответа  онлайн (ms)";
+            // 
+            // grpBoxEnisey
+            // 
+            this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyPassword);
+            this.grpBoxEnisey.Controls.Add(this.lblEniseyPassword);
+            this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyLogin);
+            this.grpBoxEnisey.Controls.Add(this.lblEniseyLogin);
+            this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyPort);
+            this.grpBoxEnisey.Controls.Add(this.lblEniseyPort);
+            this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyHost);
+            this.grpBoxEnisey.Controls.Add(this.lblEniseyHost);
+            this.grpBoxEnisey.Location = new System.Drawing.Point(30, 217);
+            this.grpBoxEnisey.Name = "grpBoxEnisey";
+            this.grpBoxEnisey.Size = new System.Drawing.Size(632, 93);
+            this.grpBoxEnisey.TabIndex = 8;
+            this.grpBoxEnisey.TabStop = false;
+            this.grpBoxEnisey.Text = "Настройки локального модуля Енисей";
+            // 
+            // txtBoxEniseyHost
+            // 
+            this.txtBoxEniseyHost.Location = new System.Drawing.Point(87, 29);
+            this.txtBoxEniseyHost.Name = "txtBoxEniseyHost";
+            this.txtBoxEniseyHost.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxEniseyHost.TabIndex = 9;
+            // 
+            // lblEniseyHost
+            // 
+            this.lblEniseyHost.AutoSize = true;
+            this.lblEniseyHost.Location = new System.Drawing.Point(22, 32);
+            this.lblEniseyHost.Name = "lblEniseyHost";
+            this.lblEniseyHost.Size = new System.Drawing.Size(31, 13);
+            this.lblEniseyHost.TabIndex = 8;
+            this.lblEniseyHost.Text = "Хост";
+            // 
+            // txtBoxEniseyPort
+            // 
+            this.txtBoxEniseyPort.Location = new System.Drawing.Point(87, 55);
+            this.txtBoxEniseyPort.Name = "txtBoxEniseyPort";
+            this.txtBoxEniseyPort.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxEniseyPort.TabIndex = 11;
+            // 
+            // lblEniseyPort
+            // 
+            this.lblEniseyPort.AutoSize = true;
+            this.lblEniseyPort.Location = new System.Drawing.Point(22, 58);
+            this.lblEniseyPort.Name = "lblEniseyPort";
+            this.lblEniseyPort.Size = new System.Drawing.Size(32, 13);
+            this.lblEniseyPort.TabIndex = 10;
+            this.lblEniseyPort.Text = "Порт";
+            // 
+            // txtBoxEniseyLogin
+            // 
+            this.txtBoxEniseyLogin.Location = new System.Drawing.Point(292, 29);
+            this.txtBoxEniseyLogin.Name = "txtBoxEniseyLogin";
+            this.txtBoxEniseyLogin.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxEniseyLogin.TabIndex = 13;
+            // 
+            // lblEniseyLogin
+            // 
+            this.lblEniseyLogin.AutoSize = true;
+            this.lblEniseyLogin.Location = new System.Drawing.Point(227, 32);
+            this.lblEniseyLogin.Name = "lblEniseyLogin";
+            this.lblEniseyLogin.Size = new System.Drawing.Size(38, 13);
+            this.lblEniseyLogin.TabIndex = 12;
+            this.lblEniseyLogin.Text = "Логин";
+            // 
+            // txtBoxEniseyPassword
+            // 
+            this.txtBoxEniseyPassword.Location = new System.Drawing.Point(292, 55);
+            this.txtBoxEniseyPassword.Name = "txtBoxEniseyPassword";
+            this.txtBoxEniseyPassword.Size = new System.Drawing.Size(100, 20);
+            this.txtBoxEniseyPassword.TabIndex = 15;
+            // 
+            // lblEniseyPassword
+            // 
+            this.lblEniseyPassword.AutoSize = true;
+            this.lblEniseyPassword.Location = new System.Drawing.Point(227, 58);
+            this.lblEniseyPassword.Name = "lblEniseyPassword";
+            this.lblEniseyPassword.Size = new System.Drawing.Size(45, 13);
+            this.lblEniseyPassword.TabIndex = 14;
+            this.lblEniseyPassword.Text = "Пароль";
             // 
             // FConfig
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(774, 517);
+            this.ClientSize = new System.Drawing.Size(774, 556);
             this.Controls.Add(this.pnlFill);
             this.Controls.Add(this.pnlBotton);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -1592,6 +1724,8 @@
             this.tabPage9.PerformLayout();
             this.pnlBotton.ResumeLayout(false);
             this.pnlFill.ResumeLayout(false);
+            this.grpBoxEnisey.ResumeLayout(false);
+            this.grpBoxEnisey.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -1738,5 +1872,18 @@
         private System.Windows.Forms.Label lblWebSecurityProtocolType;
         private System.Windows.Forms.ComboBox cmbBoxWebSecurityProtocolType;
         private System.Windows.Forms.CheckBox chkIsFrEnable;
+        private System.Windows.Forms.TextBox txtBoxFrSerialNumber;
+        private System.Windows.Forms.Label lblFrSerialNumber;
+        private System.Windows.Forms.TextBox txtBoxCdnRequestTimeout;
+        private System.Windows.Forms.Label lblCdnRequestTimeout;
+        private System.Windows.Forms.GroupBox grpBoxEnisey;
+        private System.Windows.Forms.TextBox txtBoxEniseyPassword;
+        private System.Windows.Forms.Label lblEniseyPassword;
+        private System.Windows.Forms.TextBox txtBoxEniseyLogin;
+        private System.Windows.Forms.Label lblEniseyLogin;
+        private System.Windows.Forms.TextBox txtBoxEniseyPort;
+        private System.Windows.Forms.Label lblEniseyPort;
+        private System.Windows.Forms.TextBox txtBoxEniseyHost;
+        private System.Windows.Forms.Label lblEniseyHost;
     }
 }

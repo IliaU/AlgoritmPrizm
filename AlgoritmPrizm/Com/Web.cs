@@ -479,8 +479,8 @@ namespace AlgoritmPrizm.Com
                                         {
                                             // Строим заголовки которые будем цеплять во все запросы
                                             List<HederHttp> HederHttpList = new List<HederHttp>();
-                                            HederHttpList.Add(new HederHttp("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.Default.GetBytes(@"admin:admin")))));
-                                            HederHttpList.Add(new Web.HederHttp("X-ClientId", "9999078902009263"));
+                                            HederHttpList.Add(new HederHttp("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.Default.GetBytes(string.Format(@"{0}:{1}", Config.EniseyLogin, Config.EniseyPassword))))));
+                                            HederHttpList.Add(new Web.HederHttp("X-ClientId", Config.FrSerialNumber));
 
                                             //Построение запроса к базе Енисей
                                             JsonEniseyRequest reqEnisey = JsonEniseyRequest.DeserializeJson(JsonEniseyRequest.SampleTest);
