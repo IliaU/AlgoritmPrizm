@@ -197,6 +197,7 @@
     <Compile Include="Com\SmtpLib\Mail.cs" />
     <Compile Include="Com\SmtpLib\SMTPClient.cs" />
     <Compile Include="Com\SQLList.cs" />
+    <Compile Include="Com\WebCdnForIsmpCheckAsinh.cs" />
     <Compile Include="FBlockAction.cs">
       <SubType>Form</SubType>
     </Compile>

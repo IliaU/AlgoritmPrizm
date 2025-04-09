@@ -471,7 +471,9 @@ namespace AlgoritmPrizm.Com
                                     JsonCdnForIsmpResponce resp = null;
                                     try
                                     {
-                                        resp = Com.Web.CdnForIsmpCheck(BufPostRequest);
+                                        //resp = Com.Web.CdnForIsmpCheck(BufPostRequest);
+                                        WebCdnForIsmpCheckAsinh webrespAsinCdnCheck = new WebCdnForIsmpCheckAsinh(BufPostRequest);
+                                        resp = webrespAsinCdnCheck.rez;
                                     }
                                     catch (Exception)
                                     {
@@ -499,6 +501,7 @@ namespace AlgoritmPrizm.Com
                                                 resp.codes[0].errorCode = respEnisey.results[0].code;
                                                 resp.codes[0].realizable = (respEnisey.results[0].description == "ok" ? true : false);
                                                 resp.codes[0].isBlocked = respEnisey.results[0].codes[0].isBlocked;
+                                                resp.codes[0].cis = respEnisey.results[0].codes[0].cis;
                                             }
                                         }
                                         catch (Exception){ }
