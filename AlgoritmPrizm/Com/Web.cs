@@ -469,6 +469,7 @@ namespace AlgoritmPrizm.Com
                                 {
                                     // Пробуем сделать запрос через площадку CDN
                                     JsonCdnForIsmpResponce resp = null;
+                                    
                                     try
                                     {
                                         //resp = Com.Web.CdnForIsmpCheck(BufPostRequest);
@@ -485,23 +486,32 @@ namespace AlgoritmPrizm.Com
                                             HederHttpList.Add(new Web.HederHttp("X-ClientId", Config.FrSerialNumber));
 
                                             //Построение запроса к базе Енисей
-                                            JsonEniseyRequest reqEnisey = JsonEniseyRequest.DeserializeJson(JsonEniseyRequest.SampleTest);
+                                            JsonEniseyRequest reqEnisey = new JsonEniseyRequest();
+                                            reqEnisey.cis_list.Add(BufPostRequest.Substring(0, 29));
+                                            //JsonEniseyRequest reqEnisey = JsonEniseyRequest.DeserializeJson(JsonEniseyRequest.SampleTest);
 
                                             // Получение даных от Енисея
                                             string respEniseyTmp = Web.GetObjectEnisey(Web.MethodTyp.POST, @"/api/v1/cis/outCheck", "application/json", HederHttpList, null, true, Encoding.UTF8, JsonEniseyRequest.SerializeObject(reqEnisey), false, false);
                                             JsonEniseyResponce respEnisey = JsonEniseyResponce.DeserializeJson(respEniseyTmp);
 
                                             // Проверяем ответ от енисея
-                                            if (respEnisey.results[0].codes[0].isBlocked==false
-                                                || respEnisey.results[0].codes[0].isGreyGtin == false)
+                                            if (respEnisey != null)
                                             {
                                                 resp = new JsonCdnForIsmpResponce();
                                                 resp.codes.Add(new JsonCdnForIsmpResponceItem());
-                                                resp.codes[0].valid = true;
                                                 resp.codes[0].errorCode = respEnisey.results[0].code;
-                                                resp.codes[0].realizable = (respEnisey.results[0].description == "ok" ? true : false);
-                                                resp.codes[0].isBlocked = respEnisey.results[0].codes[0].isBlocked;
-                                                resp.codes[0].cis = respEnisey.results[0].codes[0].cis;
+                                                resp.reqTimestamp = (long)respEnisey.results[0].reqTimestamp;
+                                                resp.description = respEnisey.results[0].description;
+                                                //
+                                                if (respEnisey.results[0].codes[0].isBlocked == false
+                                                    || respEnisey.results[0].codes[0].isGreyGtin == false)
+                                                {
+                                                    resp.codes[0].valid = true;
+                                                    resp.codes[0].realizable = (respEnisey.results[0].description == "ok" ? true : false);
+                                                    resp.codes[0].isBlocked = respEnisey.results[0].codes[0].isBlocked;
+                                                    resp.codes[0].cis = respEnisey.results[0].codes[0].cis;
+                                                    resp.reqId = respEnisey.results[0].reqId;
+                                                }
                                             }
                                         }
                                         catch (Exception){ }

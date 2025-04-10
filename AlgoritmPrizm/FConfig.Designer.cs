@@ -1253,7 +1253,7 @@
             this.tabPage6.Location = new System.Drawing.Point(23, 4);
             this.tabPage6.Name = "tabPage6";
             this.tabPage6.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage6.Size = new System.Drawing.Size(739, 447);
+            this.tabPage6.Size = new System.Drawing.Size(739, 486);
             this.tabPage6.TabIndex = 1;
             this.tabPage6.Text = "Лимит по Юр лицам";
             this.tabPage6.UseVisualStyleBackColor = true;
@@ -1289,7 +1289,7 @@
             this.tabPage8.Controls.Add(this.grpBoxHeldForDocements);
             this.tabPage8.Location = new System.Drawing.Point(23, 4);
             this.tabPage8.Name = "tabPage8";
-            this.tabPage8.Size = new System.Drawing.Size(739, 447);
+            this.tabPage8.Size = new System.Drawing.Size(739, 486);
             this.tabPage8.TabIndex = 2;
             this.tabPage8.Text = "Операции с чеками";
             this.tabPage8.UseVisualStyleBackColor = true;

@@ -10,6 +10,7 @@ namespace AlgoritmPrizm.BLL
     {
         public string version;
         public Int64? reqTimestamp;
+        public string reqId;
         public string inst;
         public string description;
         public List<JsonEniseyResponceResultCode> codes = new List<JsonEniseyResponceResultCode>();

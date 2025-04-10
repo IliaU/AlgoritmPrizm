@@ -53,14 +53,14 @@ namespace AlgoritmPrizm.Com
                     {
                         Thr.Abort();
                     }
-
-                    catch (Exception) { throw new ApplicationException("Не дождались ответа а течении заданнго времени"); }
+                    catch (Exception) {  }
+                    throw new ApplicationException("Не дождались ответа а течении заданнго времени");
                 }
             }
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, GetType().Name, EventEn.Error);
+                Log.EventSave(ae.Message, string.Format("{0}.WebCdnForIsmpCheckAsinh", GetType().Name), EventEn.Error);
                 throw ae;
             }
         }
@@ -78,8 +78,8 @@ namespace AlgoritmPrizm.Com
             catch (Exception ex)
             {
                 ApplicationException ae = new ApplicationException(string.Format("Упали при запуске метода с ошибкой: {0}", ex.Message));
-                Log.EventSave(ae.Message, string.Format("{0}.CdnForIsmpCheck", this.GetType().Name), EventEn.Error);
-                throw ae;
+                Log.EventSave(ae.Message, string.Format("{0}.ACdnForIsmpCheck", this.GetType().Name), EventEn.Error);
+                //throw ae;
             }
         }
 
