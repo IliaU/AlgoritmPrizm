@@ -40,6 +40,7 @@ namespace AlgoritmPrizm.Com
                 int waittime = Config.CdnRequestTimeout;
                 while (waittime>0)
                 {
+                    Thread.Sleep(100);
                     waittime = waittime - 100;
 
                     if (rez != null) break;
