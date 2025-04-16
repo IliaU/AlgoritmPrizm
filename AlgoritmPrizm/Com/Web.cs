@@ -516,7 +516,12 @@ namespace AlgoritmPrizm.Com
                                                 }
                                             }
                                         }
-                                        catch (Exception){ }
+                                        catch (Exception ex)
+                                        {
+                                            ApplicationException ae = new ApplicationException(string.Format("Упали при загрузке с ошибкой: {0}", ex.Message));
+                                            Log.EventSave(ae.Message, string.Format("{0}.AListen", GetType().Name), EventEn.Error, true, false);
+                                            throw ae;
+                                        }
                                     }
                                     
                                     
