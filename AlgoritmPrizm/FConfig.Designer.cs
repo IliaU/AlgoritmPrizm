@@ -182,6 +182,8 @@
             this.lblWebSiteForIsmp = new System.Windows.Forms.Label();
             this.pnlBotton = new System.Windows.Forms.Panel();
             this.pnlFill = new System.Windows.Forms.Panel();
+            this.btnEniseyStatus = new System.Windows.Forms.Button();
+            this.btnEniseyInit = new System.Windows.Forms.Button();
             this.tabControl1.SuspendLayout();
             this.tabPage1.SuspendLayout();
             this.grpBoxBlockAction.SuspendLayout();
@@ -1515,6 +1517,8 @@
             // 
             // grpBoxEnisey
             // 
+            this.grpBoxEnisey.Controls.Add(this.btnEniseyInit);
+            this.grpBoxEnisey.Controls.Add(this.btnEniseyStatus);
             this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyPassword);
             this.grpBoxEnisey.Controls.Add(this.lblEniseyPassword);
             this.grpBoxEnisey.Controls.Add(this.txtBoxEniseyLogin);
@@ -1676,6 +1680,27 @@
             this.pnlFill.Name = "pnlFill";
             this.pnlFill.Size = new System.Drawing.Size(774, 520);
             this.pnlFill.TabIndex = 40;
+            // 
+            // btnEniseyStatus
+            // 
+            this.btnEniseyStatus.Location = new System.Drawing.Point(470, 27);
+            this.btnEniseyStatus.Name = "btnEniseyStatus";
+            this.btnEniseyStatus.Size = new System.Drawing.Size(98, 23);
+            this.btnEniseyStatus.TabIndex = 16;
+            this.btnEniseyStatus.Text = "Статус Базы";
+            this.btnEniseyStatus.UseVisualStyleBackColor = true;
+            this.btnEniseyStatus.Click += new System.EventHandler(this.btnEniseyStatus_Click);
+            // 
+            // btnEniseyInit
+            // 
+            this.btnEniseyInit.Location = new System.Drawing.Point(470, 53);
+            this.btnEniseyInit.Name = "btnEniseyInit";
+            this.btnEniseyInit.Size = new System.Drawing.Size(98, 23);
+            this.btnEniseyInit.TabIndex = 17;
+            this.btnEniseyInit.Text = "Инициализация";
+            this.btnEniseyInit.UseVisualStyleBackColor = true;
+            this.btnEniseyInit.Visible = false;
+            this.btnEniseyInit.Click += new System.EventHandler(this.btnEniseyInit_Click);
             // 
             // FConfig
             // 
@@ -1885,5 +1910,7 @@
         private System.Windows.Forms.Label lblEniseyPort;
         private System.Windows.Forms.TextBox txtBoxEniseyHost;
         private System.Windows.Forms.Label lblEniseyHost;
+        private System.Windows.Forms.Button btnEniseyInit;
+        private System.Windows.Forms.Button btnEniseyStatus;
     }
 }

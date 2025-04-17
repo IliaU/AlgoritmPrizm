@@ -775,5 +775,43 @@ namespace AlgoritmPrizm
                 throw ae;
             }
         }
+
+        /// <summary>
+        /// Статус базы данных Енисей
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEniseyStatus_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(Web.GetStatusEnisey());
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при получении статуса Базы: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error, true, true);
+                //throw ae;
+            }
+        }
+
+        /// <summary>
+        /// Инициализация базы данных Енисей
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnEniseyInit_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MessageBox.Show(Web.GetInitEnisey());
+            }
+            catch (Exception ex)
+            {
+                ApplicationException ae = new ApplicationException(string.Format("Упали при инициализации Базы: ({0})", ex.Message));
+                Log.EventSave(ae.Message, GetType().Name, EventEn.Error, true, true);
+                //throw ae;
+            }
+        }
     }
 }

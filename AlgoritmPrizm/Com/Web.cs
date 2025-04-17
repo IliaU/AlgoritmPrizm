@@ -476,8 +476,11 @@ namespace AlgoritmPrizm.Com
                                         WebCdnForIsmpCheckAsinh webrespAsinCdnCheck = new WebCdnForIsmpCheckAsinh(BufPostRequest);
                                         resp = webrespAsinCdnCheck.rez;
                                     }
-                                    catch (Exception)
+                                    catch (Exception exCdn)
                                     {
+                                        ApplicationException aeCdn = new ApplicationException(string.Format("Упали при оращении к порталу честный знак с ошибкой: {0} \r\nПереключились на локальный модуль.", exCdn.Message));
+                                        Log.EventSave(aeCdn.Message, string.Format("{0}.AListen", GetType().Name), EventEn.Error, true, false);
+
                                         try
                                         {
                                             // Строим заголовки которые будем цеплять во все запросы
@@ -1057,7 +1060,7 @@ namespace AlgoritmPrizm.Com
 
                     string ErrorMessage = string.Format("Упали при обработке запроса пользователя с ошибкой: {0}", exw.Message);
                     ApplicationException ae = new ApplicationException(ErrorMessage);
-                    Log.EventSave(ae.Message, "Com.Web.Listen", EventEn.Warning);
+                    Log.EventSave(ae.Message, "Com.Web.AListen", EventEn.Warning);
 
                     // пытаемся передать ошибку но при неудачи падать нельзя
                     try
@@ -2018,11 +2021,11 @@ namespace AlgoritmPrizm.Com
                     }
 
                     // В настройка включена трасировка всех запросов и ответов к web серверу
-                    if (Config.Trace)
-                    {
+                    //if (Config.Trace)
+                    //{
                         if (!IsNotWriteLog) Log.EventSave("\r\nrequest=" + JsonQuery, @"Web.GetObjectEnisey", Lib.EventEn.Trace);
                         if (!IsNotWriteLog) Log.EventSave("\r\nresponse=" + rez, @"Web.GetObjectEnisey", Lib.EventEn.Trace);
-                    }
+                    //}
                 }
                 catch (Exception ex)
                 {
@@ -2041,6 +2044,55 @@ namespace AlgoritmPrizm.Com
                 throw ex;
             }
             //return null;
+        }
+        //
+        /// <summary>
+        /// Инициализация базы данных Енисей
+        /// </summary>
+        /// <returns>Ответ веб сервиса</returns>
+        public static string GetInitEnisey()
+        {
+            try
+            {
+                // Строим заголовки которые будем цеплять во все запросы
+                List<HederHttp> HederHttpList = new List<HederHttp>();
+                HederHttpList.Add(new HederHttp("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.Default.GetBytes(string.Format(@"{0}:{1}", Config.EniseyLogin, Config.EniseyPassword))))));
+                //HederHttpList.Add(new Web.HederHttp("X-ClientId", Config.FrSerialNumber));
+
+                //Построение запроса к базе Енисей
+                string reqtmp = string.Format(@"{{""token"" : ""{0}""}}", Config.DefaultTokenEcp);
+
+                // Получение даных от Енисея
+                return Web.GetObjectEnisey(Web.MethodTyp.POST, @"/api/v1/init", "text/plain", HederHttpList, null, false, Encoding.UTF8, reqtmp, false, false);
+
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetInitEnisey", ex.Message), "Web", EventEn.Error, true, false);
+                throw ex;
+            }
+        }
+        //
+        /// <summary>
+        /// Статус базы данных Енисей
+        /// </summary>
+        /// <returns>Ответ веб сервиса</returns>
+        public static string GetStatusEnisey()
+        {
+            try
+            {
+                // Строим заголовки которые будем цеплять во все запросы
+                List<HederHttp> HederHttpList = new List<HederHttp>();
+                HederHttpList.Add(new HederHttp("Authorization", String.Format("Basic {0}", Convert.ToBase64String(Encoding.Default.GetBytes(string.Format(@"{0}:{1}", Config.EniseyLogin, Config.EniseyPassword))))));
+
+                // Получение даных от Енисея
+                return Web.GetObjectEnisey(Web.MethodTyp.GET, @"/api/v1/status", "application/json", HederHttpList, null, true, Encoding.UTF8, null, false, false);
+            }
+            catch (Exception ex)
+            {
+                Com.Log.EventSave(string.Format(@"Ошибка в методе {0}:""{1}""", "GetStatusEnisey", ex.Message), "Web", EventEn.Error, true, false);
+                throw ex;
+            }
         }
         //
         /// <summary>
