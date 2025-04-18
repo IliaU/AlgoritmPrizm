@@ -491,7 +491,7 @@ namespace AlgoritmPrizm.Com
                                             //Построение запроса к базе Енисей
                                             JsonEniseyRequest reqEnisey = new JsonEniseyRequest();
                                             int GetObjectEnisey29tmp = BufPostRequest.IndexOf(string.Format("\u001d"));
-                                            if (GetObjectEnisey29tmp <= 0) GetObjectEnisey29tmp = 25;
+                                            if (GetObjectEnisey29tmp <= 0) GetObjectEnisey29tmp = 31; // 25;
                                             reqEnisey.cis_list.Add(BufPostRequest.Substring(0, GetObjectEnisey29tmp));
                                             //JsonEniseyRequest reqEnisey = JsonEniseyRequest.DeserializeJson(JsonEniseyRequest.SampleTest);
 
