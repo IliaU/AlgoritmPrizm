@@ -19,6 +19,7 @@ namespace AlgoritmPrizmComListener
     {
 
         public static string ProgramDir = @"C:\Program Files\AlgoritmPrizmCom";
+        public static string ProgramLogDir = @"C:\Program Files\AlgoritmPrizmCom\Log";
 
         public Service1()
         {
@@ -28,6 +29,7 @@ namespace AlgoritmPrizmComListener
         protected override async void OnStart(string[] args)
         {
             if (!Directory.Exists(ProgramDir)) Directory.CreateDirectory(ProgramDir);
+            if (!Directory.Exists(ProgramLogDir)) Directory.CreateDirectory(ProgramLogDir);
             Log lg = new Log(string.Format(@"{0}\AlgoritmPrizmCom.txt", ProgramDir));
             Config conf = new Config(string.Format(@"{0}\AlgoritmPrizmCom.xml", ProgramDir));
 
@@ -55,6 +57,14 @@ namespace AlgoritmPrizmComListener
                         // Если обнаружен файл и он не пустой
                         if (!string.IsNullOrWhiteSpace(buf))
                         {
+                            // сохраняем файл для истории
+                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year*10000 + (DateTime.Now.Month*100) +DateTime.Now.Day).ToString()), true))
+                            {
+                                SwFile.WriteLine("Получили файл:");
+                                SwFile.WriteLine(buf);
+                            }
+
+
                             string[] bufrow = buf.Split('\r');
                             buf = null;
                             if (bufrow.Length >= 2 && bufrow[1].Trim() == "Sale")
@@ -63,16 +73,25 @@ namespace AlgoritmPrizmComListener
                                 {
                                     if (!string.IsNullOrWhiteSpace(bufrow[0].Trim()) && bufrow[0].Trim().Length > 37)
                                     {
-
-
-
                                         // Получение настроек конфигурации с AlgoritmPrizm
                                         CdnResponceConfig cdnConf = Web.CdnForIsmpConfig();
+
+                                        // Сделали запрос для истории
+                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                        {
+                                            SwFile.WriteLine(string.Format("Сделали запрос: {0}",bufrow[0].Trim()));
+                                        }
 
                                         // Проверка матрикс кода через наш плагин AlgoritmPrizm
                                         CdnResponce cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
                                         buf = CdnResponce.SerializeObject(cndResp);
                                         if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+
+                                        // Сохраняем ответ для истории
+                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                        {
+                                           SwFile.WriteLine(string.Format("Получили ответ: {0}", cndResp));
+                                        }
 
                                         // Проверяем на наличие ошибки
                                         if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
