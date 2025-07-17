@@ -12,6 +12,7 @@ using System.IO;
 using AlgoritmPrizmCom;
 using AlgoritmPrizmCom.Lib;
 using AlgoritmPrizmCom.Com;
+using System.Threading;
 
 namespace AlgoritmPrizmComListener
 {
@@ -82,10 +83,40 @@ namespace AlgoritmPrizmComListener
                                             SwFile.WriteLine(string.Format("Сделали запрос: {0}",bufrow[0].Trim()));
                                         }
 
-                                        // Проверка матрикс кода через наш плагин AlgoritmPrizm
-                                        CdnResponce cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
-                                        buf = CdnResponce.SerializeObject(cndResp);
-                                        if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+                                        // Делаем несколько запросов с перезапуском служб енисея если ответа нет
+                                        CdnResponce cndResp = null;
+                                        int CounterRepeateRequest = 4;
+                                        while ((cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId)) && CounterRepeateRequest>0)
+                                        {
+                                            // Проверка матрикс кода через наш плагин AlgoritmPrizm
+                                            cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
+                                            buf = CdnResponce.SerializeObject(cndResp);
+                                            if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+
+                                            // Проверяем на наличие ответа, если его нет то рестартим службы
+                                            if ((cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId)))
+                                            {
+                                                try
+                                                {
+                                                    ServiceController CurServiceEnisey = GetServiceController("yenisey");
+                                                    ServiceController CurServiceRegime = GetServiceController("regime");
+
+                                                    CurServiceRegime.Stop();
+                                                    Thread.Sleep(5000);
+                                                    CurServiceEnisey.Stop();
+                                                    Thread.Sleep(5000);
+                                                    CurServiceEnisey.Start();
+                                                    Thread.Sleep(5000);
+                                                    CurServiceRegime.Start();
+                                                    Thread.Sleep(5000);
+
+                                                    CurServiceRegime.Dispose();
+                                                    CurServiceEnisey.Dispose();
+                                                }
+                                                catch (Exception){}
+                                            }
+                                            CounterRepeateRequest--;
+                                        }
 
                                         // Сохраняем ответ для истории
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
@@ -103,20 +134,28 @@ namespace AlgoritmPrizmComListener
                                         }
                                         else
                                         {
-                                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                            if (cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId))
                                             {
-                                                SwFile.WriteLine("True");
-                                                SwFile.WriteLine(cdnConf.FrTag1262);
-                                                SwFile.WriteLine(cdnConf.FrTag1263);
-                                                SwFile.WriteLine(cdnConf.FrTag1264);
-                                                SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                                using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                                {
+                                                    SwFile.WriteLine("Error");
+                                                }
+                                            }
+                                            else
+                                            {
+                                                using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
+                                                {
+                                                    SwFile.WriteLine("True");
+                                                    SwFile.WriteLine(cdnConf.FrTag1262);
+                                                    SwFile.WriteLine(cdnConf.FrTag1263);
+                                                    SwFile.WriteLine(cdnConf.FrTag1264);
+                                                    SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                                }
                                             }
                                         }
                                     }
                                     else
                                     {
-                                        
-                                        
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                         {
                                             // матрикс код из раздела КИЗ
@@ -177,6 +216,37 @@ namespace AlgoritmPrizmComListener
                 Log.EventSave("Cлужба остановлена.", "AlgoritmPrizmComListener", EventEn.Message);
             }
             catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Найти сервис по имени
+        /// </summary>
+        /// <param name="ServiceName">Имя сенрвиса для поиска</param>
+        /// <returns>Найденный сервис</returns>
+        private ServiceController GetServiceController(string ServiceName)
+        {
+            try
+            {
+                ServiceController rez = null;
+
+                ServiceController[] scServices;
+                scServices = ServiceController.GetServices();
+
+                foreach (ServiceController item in scServices)
+                {
+                    if (item.ServiceName == ServiceName)
+                    {
+                        rez = item;
+                        break;
+                    }
+                }
+
+                return rez;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }
