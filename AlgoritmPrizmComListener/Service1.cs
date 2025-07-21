@@ -24,7 +24,7 @@ namespace AlgoritmPrizmComListener
 
         public Service1()
         {
-            InitializeComponent(); 
+            InitializeComponent();
         }
 
         protected override async void OnStart(string[] args)
@@ -36,7 +36,7 @@ namespace AlgoritmPrizmComListener
 
 
             if (!Directory.Exists(Config.RequestsFolder)) Directory.CreateDirectory(Config.RequestsFolder);
-            string buf=null;
+            string buf = null;
 
             // Запускаем службу чтобы работала бесконечно
             while (true)
@@ -50,7 +50,7 @@ namespace AlgoritmPrizmComListener
                         // Читаем файл
                         using (StreamReader SwFile = new StreamReader(string.Format(@"{0}\request.txt", Config.RequestsFolder)))
                         {
-                            buf=SwFile.ReadToEnd();
+                            buf = SwFile.ReadToEnd();
 
                             if (Config.Trace) Log.EventSave(string.Format("Обнаружен файл request.txt с содержимым: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
                         }
@@ -59,7 +59,7 @@ namespace AlgoritmPrizmComListener
                         if (!string.IsNullOrWhiteSpace(buf))
                         {
                             // сохраняем файл для истории
-                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year*10000 + (DateTime.Now.Month*100) +DateTime.Now.Day).ToString()), true))
+                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                             {
                                 SwFile.WriteLine("Получили файл:");
                                 SwFile.WriteLine(buf);
@@ -80,13 +80,13 @@ namespace AlgoritmPrizmComListener
                                         // Сделали запрос для истории
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                                         {
-                                            SwFile.WriteLine(string.Format("Сделали запрос: {0}",bufrow[0].Trim()));
+                                            SwFile.WriteLine(string.Format("Сделали запрос: {0}", bufrow[0].Trim()));
                                         }
 
                                         // Делаем несколько запросов с перезапуском служб енисея если ответа нет
                                         CdnResponce cndResp = null;
                                         int CounterRepeateRequest = 4;
-                                        while ((cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId)) && CounterRepeateRequest>0)
+                                        while ((cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId)) && CounterRepeateRequest > 0)
                                         {
                                             // Проверка матрикс кода через наш плагин AlgoritmPrizm
                                             cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
@@ -98,22 +98,9 @@ namespace AlgoritmPrizmComListener
                                             {
                                                 try
                                                 {
-                                                    ServiceController CurServiceEnisey = GetServiceController("yenisey");
-                                                    ServiceController CurServiceRegime = GetServiceController("regime");
-
-                                                    CurServiceRegime.Stop();
-                                                    Thread.Sleep(5000);
-                                                    CurServiceEnisey.Stop();
-                                                    Thread.Sleep(5000);
-                                                    CurServiceEnisey.Start();
-                                                    Thread.Sleep(5000);
-                                                    CurServiceRegime.Start();
-                                                    Thread.Sleep(5000);
-
-                                                    CurServiceRegime.Dispose();
-                                                    CurServiceEnisey.Dispose();
+                                                    PrizmServiceController.ServiceControllerRegimeYeniseyRestart();
                                                 }
-                                                catch (Exception){}
+                                                catch (Exception) { }
                                             }
                                             CounterRepeateRequest--;
                                         }
@@ -121,7 +108,7 @@ namespace AlgoritmPrizmComListener
                                         // Сохраняем ответ для истории
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                                         {
-                                           SwFile.WriteLine(string.Format("Получили ответ: {0}", cndResp));
+                                            SwFile.WriteLine(string.Format("Получили ответ: {0}", cndResp));
                                         }
 
                                         // Проверяем на наличие ошибки
@@ -177,7 +164,7 @@ namespace AlgoritmPrizmComListener
                                 }
 
                                 // Удаляем файл запроса
-                                if(File.Exists(string.Format(@"{0}\request.txt", Config.RequestsFolder))) File.Delete(string.Format(@"{0}\request.txt", Config.RequestsFolder));
+                                if (File.Exists(string.Format(@"{0}\request.txt", Config.RequestsFolder))) File.Delete(string.Format(@"{0}\request.txt", Config.RequestsFolder));
                             }
                         }
                     }
@@ -186,7 +173,7 @@ namespace AlgoritmPrizmComListener
                 {
                     try
                     {
-                        if (ex.Message.IndexOf("Unable to connect to the remote server")>=0)
+                        if (ex.Message.IndexOf("Unable to connect to the remote server") >= 0)
                         {
                             // Наша служба AlgoritmPrizm не включена
                             using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
@@ -216,37 +203,6 @@ namespace AlgoritmPrizmComListener
                 Log.EventSave("Cлужба остановлена.", "AlgoritmPrizmComListener", EventEn.Message);
             }
             catch (Exception) { }
-        }
-
-        /// <summary>
-        /// Найти сервис по имени
-        /// </summary>
-        /// <param name="ServiceName">Имя сенрвиса для поиска</param>
-        /// <returns>Найденный сервис</returns>
-        private ServiceController GetServiceController(string ServiceName)
-        {
-            try
-            {
-                ServiceController rez = null;
-
-                ServiceController[] scServices;
-                scServices = ServiceController.GetServices();
-
-                foreach (ServiceController item in scServices)
-                {
-                    if (item.ServiceName == ServiceName)
-                    {
-                        rez = item;
-                        break;
-                    }
-                }
-
-                return rez;
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
         }
     }
 }

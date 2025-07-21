@@ -39,35 +39,41 @@ namespace AlgoritmPrizmComTst
             this.pnlButtom = new System.Windows.Forms.Panel();
             this.btnReguestCdnForIsmpCheck = new System.Windows.Forms.Button();
             this.tabPageConfig = new System.Windows.Forms.TabPage();
-            this.lblCdnForIsmpConfig = new System.Windows.Forms.Label();
-            this.txtBoxCdnForIsmpConfig = new System.Windows.Forms.TextBox();
             this.btnCdnForIsmpConfig = new System.Windows.Forms.Button();
+            this.txtBoxCdnForIsmpConfig = new System.Windows.Forms.TextBox();
+            this.lblCdnForIsmpConfig = new System.Windows.Forms.Label();
+            this.tabServices = new System.Windows.Forms.TabPage();
+            this.btnRestartServices = new System.Windows.Forms.Button();
             this.tabControl.SuspendLayout();
             this.tabPageCdnForIsmpCheck.SuspendLayout();
             this.pnlFill.SuspendLayout();
             this.pnlButtom.SuspendLayout();
             this.tabPageConfig.SuspendLayout();
+            this.tabServices.SuspendLayout();
             this.SuspendLayout();
             // 
             // tabControl
             // 
             this.tabControl.Controls.Add(this.tabPageCdnForIsmpCheck);
             this.tabControl.Controls.Add(this.tabPageConfig);
+            this.tabControl.Controls.Add(this.tabServices);
             this.tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tabControl.Location = new System.Drawing.Point(0, 0);
+            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(800, 450);
+            this.tabControl.Size = new System.Drawing.Size(1067, 554);
             this.tabControl.TabIndex = 3;
             // 
             // tabPageCdnForIsmpCheck
             // 
             this.tabPageCdnForIsmpCheck.Controls.Add(this.pnlFill);
             this.tabPageCdnForIsmpCheck.Controls.Add(this.pnlButtom);
-            this.tabPageCdnForIsmpCheck.Location = new System.Drawing.Point(4, 22);
+            this.tabPageCdnForIsmpCheck.Location = new System.Drawing.Point(4, 25);
+            this.tabPageCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPageCdnForIsmpCheck.Name = "tabPageCdnForIsmpCheck";
-            this.tabPageCdnForIsmpCheck.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageCdnForIsmpCheck.Size = new System.Drawing.Size(792, 424);
+            this.tabPageCdnForIsmpCheck.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPageCdnForIsmpCheck.Size = new System.Drawing.Size(1059, 525);
             this.tabPageCdnForIsmpCheck.TabIndex = 0;
             this.tabPageCdnForIsmpCheck.Text = "Проверка метода CdnForIsmpCheck";
             this.tabPageCdnForIsmpCheck.UseVisualStyleBackColor = true;
@@ -79,42 +85,47 @@ namespace AlgoritmPrizmComTst
             this.pnlFill.Controls.Add(this.lblReguestCdnForIsmpCheck);
             this.pnlFill.Controls.Add(this.txtBoxReguestCdnForIsmpCheck);
             this.pnlFill.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.pnlFill.Location = new System.Drawing.Point(3, 3);
+            this.pnlFill.Location = new System.Drawing.Point(4, 4);
+            this.pnlFill.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlFill.Name = "pnlFill";
-            this.pnlFill.Size = new System.Drawing.Size(786, 389);
+            this.pnlFill.Size = new System.Drawing.Size(1051, 481);
             this.pnlFill.TabIndex = 2;
             // 
             // lblResponceCdnForIsmpCheck
             // 
             this.lblResponceCdnForIsmpCheck.AutoSize = true;
-            this.lblResponceCdnForIsmpCheck.Location = new System.Drawing.Point(22, 68);
+            this.lblResponceCdnForIsmpCheck.Location = new System.Drawing.Point(29, 84);
+            this.lblResponceCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblResponceCdnForIsmpCheck.Name = "lblResponceCdnForIsmpCheck";
-            this.lblResponceCdnForIsmpCheck.Size = new System.Drawing.Size(195, 13);
+            this.lblResponceCdnForIsmpCheck.Size = new System.Drawing.Size(255, 17);
             this.lblResponceCdnForIsmpCheck.TabIndex = 3;
             this.lblResponceCdnForIsmpCheck.Text = "Ответ от площадки CdnForIsmpCheck";
             // 
             // txtBoxResponceCdnForIsmpCheck
             // 
-            this.txtBoxResponceCdnForIsmpCheck.Location = new System.Drawing.Point(25, 84);
+            this.txtBoxResponceCdnForIsmpCheck.Location = new System.Drawing.Point(33, 103);
+            this.txtBoxResponceCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBoxResponceCdnForIsmpCheck.Multiline = true;
             this.txtBoxResponceCdnForIsmpCheck.Name = "txtBoxResponceCdnForIsmpCheck";
-            this.txtBoxResponceCdnForIsmpCheck.Size = new System.Drawing.Size(671, 216);
+            this.txtBoxResponceCdnForIsmpCheck.Size = new System.Drawing.Size(893, 265);
             this.txtBoxResponceCdnForIsmpCheck.TabIndex = 2;
             // 
             // lblReguestCdnForIsmpCheck
             // 
             this.lblReguestCdnForIsmpCheck.AutoSize = true;
-            this.lblReguestCdnForIsmpCheck.Location = new System.Drawing.Point(22, 16);
+            this.lblReguestCdnForIsmpCheck.Location = new System.Drawing.Point(29, 20);
+            this.lblReguestCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lblReguestCdnForIsmpCheck.Name = "lblReguestCdnForIsmpCheck";
-            this.lblReguestCdnForIsmpCheck.Size = new System.Drawing.Size(260, 13);
+            this.lblReguestCdnForIsmpCheck.Size = new System.Drawing.Size(337, 17);
             this.lblReguestCdnForIsmpCheck.TabIndex = 1;
             this.lblReguestCdnForIsmpCheck.Text = "Проверка запроса на полщадку CdnForIsmpCheck";
             // 
             // txtBoxReguestCdnForIsmpCheck
             // 
-            this.txtBoxReguestCdnForIsmpCheck.Location = new System.Drawing.Point(25, 32);
+            this.txtBoxReguestCdnForIsmpCheck.Location = new System.Drawing.Point(33, 39);
+            this.txtBoxReguestCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.txtBoxReguestCdnForIsmpCheck.Name = "txtBoxReguestCdnForIsmpCheck";
-            this.txtBoxReguestCdnForIsmpCheck.Size = new System.Drawing.Size(671, 20);
+            this.txtBoxReguestCdnForIsmpCheck.Size = new System.Drawing.Size(893, 22);
             this.txtBoxReguestCdnForIsmpCheck.TabIndex = 0;
             this.txtBoxReguestCdnForIsmpCheck.Text = "0102900002249316215hOQ5IVWGHp%X91FFD092dGVzdDXXAcucssljH6c6cZ6kfs2kb97+T0Aca5NZBf" +
     "E=";
@@ -123,17 +134,19 @@ namespace AlgoritmPrizmComTst
             // 
             this.pnlButtom.Controls.Add(this.btnReguestCdnForIsmpCheck);
             this.pnlButtom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.pnlButtom.Location = new System.Drawing.Point(3, 392);
+            this.pnlButtom.Location = new System.Drawing.Point(4, 485);
+            this.pnlButtom.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.pnlButtom.Name = "pnlButtom";
-            this.pnlButtom.Size = new System.Drawing.Size(786, 29);
+            this.pnlButtom.Size = new System.Drawing.Size(1051, 36);
             this.pnlButtom.TabIndex = 1;
             // 
             // btnReguestCdnForIsmpCheck
             // 
             this.btnReguestCdnForIsmpCheck.Dock = System.Windows.Forms.DockStyle.Right;
-            this.btnReguestCdnForIsmpCheck.Location = new System.Drawing.Point(639, 0);
+            this.btnReguestCdnForIsmpCheck.Location = new System.Drawing.Point(855, 0);
+            this.btnReguestCdnForIsmpCheck.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnReguestCdnForIsmpCheck.Name = "btnReguestCdnForIsmpCheck";
-            this.btnReguestCdnForIsmpCheck.Size = new System.Drawing.Size(147, 29);
+            this.btnReguestCdnForIsmpCheck.Size = new System.Drawing.Size(196, 36);
             this.btnReguestCdnForIsmpCheck.TabIndex = 0;
             this.btnReguestCdnForIsmpCheck.Text = "Отправить на проверку";
             this.btnReguestCdnForIsmpCheck.UseVisualStyleBackColor = true;
@@ -144,47 +157,72 @@ namespace AlgoritmPrizmComTst
             this.tabPageConfig.Controls.Add(this.btnCdnForIsmpConfig);
             this.tabPageConfig.Controls.Add(this.txtBoxCdnForIsmpConfig);
             this.tabPageConfig.Controls.Add(this.lblCdnForIsmpConfig);
-            this.tabPageConfig.Location = new System.Drawing.Point(4, 22);
+            this.tabPageConfig.Location = new System.Drawing.Point(4, 25);
+            this.tabPageConfig.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.tabPageConfig.Name = "tabPageConfig";
-            this.tabPageConfig.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageConfig.Size = new System.Drawing.Size(792, 424);
+            this.tabPageConfig.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.tabPageConfig.Size = new System.Drawing.Size(1059, 525);
             this.tabPageConfig.TabIndex = 1;
             this.tabPageConfig.Text = "Проверка получения конфигурации";
             this.tabPageConfig.UseVisualStyleBackColor = true;
             // 
-            // lblCdnForIsmpConfig
-            // 
-            this.lblCdnForIsmpConfig.AutoSize = true;
-            this.lblCdnForIsmpConfig.Location = new System.Drawing.Point(25, 19);
-            this.lblCdnForIsmpConfig.Name = "lblCdnForIsmpConfig";
-            this.lblCdnForIsmpConfig.Size = new System.Drawing.Size(195, 13);
-            this.lblCdnForIsmpConfig.TabIndex = 4;
-            this.lblCdnForIsmpConfig.Text = "Ответ от площадки CdnForIsmpCheck";
-            // 
-            // txtBoxCdnForIsmpConfig
-            // 
-            this.txtBoxCdnForIsmpConfig.Location = new System.Drawing.Point(28, 50);
-            this.txtBoxCdnForIsmpConfig.Multiline = true;
-            this.txtBoxCdnForIsmpConfig.Name = "txtBoxCdnForIsmpConfig";
-            this.txtBoxCdnForIsmpConfig.Size = new System.Drawing.Size(671, 216);
-            this.txtBoxCdnForIsmpConfig.TabIndex = 5;
-            // 
             // btnCdnForIsmpConfig
             // 
-            this.btnCdnForIsmpConfig.Location = new System.Drawing.Point(275, 11);
+            this.btnCdnForIsmpConfig.Location = new System.Drawing.Point(367, 14);
+            this.btnCdnForIsmpConfig.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.btnCdnForIsmpConfig.Name = "btnCdnForIsmpConfig";
-            this.btnCdnForIsmpConfig.Size = new System.Drawing.Size(147, 29);
+            this.btnCdnForIsmpConfig.Size = new System.Drawing.Size(196, 36);
             this.btnCdnForIsmpConfig.TabIndex = 6;
             this.btnCdnForIsmpConfig.Text = "Отправить на проверку";
             this.btnCdnForIsmpConfig.UseVisualStyleBackColor = true;
             this.btnCdnForIsmpConfig.Click += new System.EventHandler(this.btnCdnForIsmpConfig_Click);
             // 
+            // txtBoxCdnForIsmpConfig
+            // 
+            this.txtBoxCdnForIsmpConfig.Location = new System.Drawing.Point(37, 62);
+            this.txtBoxCdnForIsmpConfig.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.txtBoxCdnForIsmpConfig.Multiline = true;
+            this.txtBoxCdnForIsmpConfig.Name = "txtBoxCdnForIsmpConfig";
+            this.txtBoxCdnForIsmpConfig.Size = new System.Drawing.Size(893, 265);
+            this.txtBoxCdnForIsmpConfig.TabIndex = 5;
+            // 
+            // lblCdnForIsmpConfig
+            // 
+            this.lblCdnForIsmpConfig.AutoSize = true;
+            this.lblCdnForIsmpConfig.Location = new System.Drawing.Point(33, 23);
+            this.lblCdnForIsmpConfig.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.lblCdnForIsmpConfig.Name = "lblCdnForIsmpConfig";
+            this.lblCdnForIsmpConfig.Size = new System.Drawing.Size(255, 17);
+            this.lblCdnForIsmpConfig.TabIndex = 4;
+            this.lblCdnForIsmpConfig.Text = "Ответ от площадки CdnForIsmpCheck";
+            // 
+            // tabServices
+            // 
+            this.tabServices.Controls.Add(this.btnRestartServices);
+            this.tabServices.Location = new System.Drawing.Point(4, 25);
+            this.tabServices.Name = "tabServices";
+            this.tabServices.Size = new System.Drawing.Size(1059, 525);
+            this.tabServices.TabIndex = 2;
+            this.tabServices.Text = "Проверка Сервисов";
+            this.tabServices.UseVisualStyleBackColor = true;
+            // 
+            // btnRestartServices
+            // 
+            this.btnRestartServices.Location = new System.Drawing.Point(41, 28);
+            this.btnRestartServices.Name = "btnRestartServices";
+            this.btnRestartServices.Size = new System.Drawing.Size(198, 29);
+            this.btnRestartServices.TabIndex = 0;
+            this.btnRestartServices.Text = "Перезагрузить Сервисы";
+            this.btnRestartServices.UseVisualStyleBackColor = true;
+            this.btnRestartServices.Click += new System.EventHandler(this.btnRestartServices_Click);
+            // 
             // FStart
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(1067, 554);
             this.Controls.Add(this.tabControl);
+            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
             this.Name = "FStart";
             this.Text = "Form1";
             this.tabControl.ResumeLayout(false);
@@ -194,6 +232,7 @@ namespace AlgoritmPrizmComTst
             this.pnlButtom.ResumeLayout(false);
             this.tabPageConfig.ResumeLayout(false);
             this.tabPageConfig.PerformLayout();
+            this.tabServices.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -213,6 +252,8 @@ namespace AlgoritmPrizmComTst
         private System.Windows.Forms.Button btnCdnForIsmpConfig;
         private System.Windows.Forms.TextBox txtBoxCdnForIsmpConfig;
         private System.Windows.Forms.Label lblCdnForIsmpConfig;
+        private System.Windows.Forms.TabPage tabServices;
+        private System.Windows.Forms.Button btnRestartServices;
     }
 }
 

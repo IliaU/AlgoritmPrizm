@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -55,6 +56,7 @@
     <Compile Include="Lib\EventEn.cs" />
     <Compile Include="Lib\EventLog.cs" />
     <Compile Include="Lib\MethodTyp.cs" />
+    <Compile Include="PrizmServiceController.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Web.cs" />
   </ItemGroup>

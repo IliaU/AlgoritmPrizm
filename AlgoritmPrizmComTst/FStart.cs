@@ -42,5 +42,23 @@ namespace AlgoritmPrizmComTst
                 MessageBox.Show(ex.Message);
             }
         }
+
+        /// <summary>
+        /// Перезагрузка Сервисов
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void btnRestartServices_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                PrizmServiceController.ServiceControllerRegimeYeniseyRestart();
+                MessageBox.Show("Сервисы успешно перезагружены");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
     }
 }
