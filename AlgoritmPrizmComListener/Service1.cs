@@ -61,10 +61,9 @@ namespace AlgoritmPrizmComListener
                             // сохраняем файл для истории
                             using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                             {
-                                SwFile.WriteLine("Получили файл:");
+                                SwFile.WriteLine(string.Format("{0}\tПолучили файл:", DateTime.Now.ToString()));
                                 SwFile.WriteLine(buf);
                             }
-
 
                             string[] bufrow = buf.Split('\r');
                             buf = null;
@@ -80,7 +79,7 @@ namespace AlgoritmPrizmComListener
                                         // Сделали запрос для истории
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                                         {
-                                            SwFile.WriteLine(string.Format("Сделали запрос: {0}", bufrow[0].Trim()));
+                                            SwFile.WriteLine(string.Format("{0}\tСделали запрос: {1}", DateTime.Now.ToString(), bufrow[0].Trim()));
                                         }
 
                                         // Делаем несколько запросов с перезапуском служб енисея если ответа нет
@@ -91,7 +90,12 @@ namespace AlgoritmPrizmComListener
                                             // Проверка матрикс кода через наш плагин AlgoritmPrizm
                                             cndResp = Web.CdnForIsmpCheck(bufrow[0].Trim());
                                             buf = CdnResponce.SerializeObject(cndResp);
-                                            if (Config.Trace) Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+                                            Log.EventSave(string.Format("Получен ответ от ЦРПТ: {0}", buf), "AlgoritmPrizmComListener", EventEn.Message);
+                                            // Сделали запрос для истории
+                                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                            {
+                                                SwFile.WriteLine(string.Format("{0}\tПолучен ответ от ЦРПТ: {1}", DateTime.Now.ToString(), buf));
+                                            }
 
                                             // Проверяем на наличие ответа, если его нет то рестартим службы
                                             if ((cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId)))
@@ -108,24 +112,34 @@ namespace AlgoritmPrizmComListener
                                         // Сохраняем ответ для истории
                                         using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
                                         {
-                                            SwFile.WriteLine(string.Format("Получили ответ: {0}", cndResp));
+                                            SwFile.WriteLine(string.Format("{0}\tПолучили ответ: {0}", DateTime.Now.ToString(), cndResp));
                                         }
 
                                         // Проверяем на наличие ошибки
                                         if (!string.IsNullOrWhiteSpace(buf) && buf.IndexOf("ошибка") > 0)
                                         {
+                                            string MessageWrite = "False";
                                             using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                             {
-                                                SwFile.WriteLine("False");
+                                                SwFile.WriteLine(MessageWrite);
+                                            }
+                                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                            {
+                                                SwFile.WriteLine(string.Format("{0}\t{1}", DateTime.Now.ToString(), MessageWrite));
                                             }
                                         }
                                         else
                                         {
                                             if (cndResp == null || string.IsNullOrWhiteSpace(cndResp.reqId))
                                             {
+                                                string MessageWrite = "Error";
                                                 using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                                 {
-                                                    SwFile.WriteLine("Error");
+                                                    SwFile.WriteLine(MessageWrite);
+                                                }
+                                                using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                                {
+                                                    SwFile.WriteLine(string.Format("{0}\t{1}", DateTime.Now.ToString(), MessageWrite));
                                                 }
                                             }
                                             else
@@ -133,6 +147,15 @@ namespace AlgoritmPrizmComListener
                                                 using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                                 {
                                                     SwFile.WriteLine("True");
+                                                    SwFile.WriteLine(cdnConf.FrTag1262);
+                                                    SwFile.WriteLine(cdnConf.FrTag1263);
+                                                    SwFile.WriteLine(cdnConf.FrTag1264);
+                                                    SwFile.WriteLine(string.Format(@"UUID={0}&Time={1}", cndResp.reqId, cndResp.reqTimestamp));
+                                                }
+
+                                                using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                                {
+                                                    SwFile.WriteLine(string.Format("{0}\tTrue", DateTime.Now.ToString()));
                                                     SwFile.WriteLine(cdnConf.FrTag1262);
                                                     SwFile.WriteLine(cdnConf.FrTag1263);
                                                     SwFile.WriteLine(cdnConf.FrTag1264);
@@ -153,6 +176,17 @@ namespace AlgoritmPrizmComListener
                                             // EAN-13
                                             else SwFile.WriteLine("Error");
                                         }
+
+                                        using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                        {
+                                            // матрикс код из раздела КИЗ
+                                            if (bufrow[0].Trim().IndexOf("RU-") == 0)
+                                            {
+                                                SwFile.WriteLine(string.Format("{0}\tTimeout", DateTime.Now.ToString()));
+                                            }
+                                            // EAN-13
+                                            else SwFile.WriteLine(string.Format("{0}\tError", DateTime.Now.ToString())); 
+                                        }
                                     }
                                 }
                                 catch (Exception ex)
@@ -160,6 +194,10 @@ namespace AlgoritmPrizmComListener
                                     using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                                     {
                                         SwFile.WriteLine("Error");
+                                    }
+                                    using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                                    {
+                                        SwFile.WriteLine(string.Format("{0}\tError", DateTime.Now.ToString()));
                                     }
                                 }
 
@@ -178,7 +216,11 @@ namespace AlgoritmPrizmComListener
                             // Наша служба AlgoritmPrizm не включена
                             using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\response.txt", Config.RequestsFolder), true))
                             {
-                                SwFile.WriteLine("Timeout");
+                                SwFile.WriteLine("Error");
+                            }
+                            using (StreamWriter SwFile = new StreamWriter(string.Format(@"{0}\{1}.log", ProgramLogDir, (DateTime.Now.Year * 10000 + (DateTime.Now.Month * 100) + DateTime.Now.Day).ToString()), true))
+                            {
+                                SwFile.WriteLine(string.Format("{0}\tError", DateTime.Now.ToString()));
                             }
 
                             // Удаляем файл запроса
